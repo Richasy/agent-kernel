@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <LangVersion>preview</LangVersion>
+    <Nullable>enable</Nullable>
+	<NoWarn>$(NoWarn);</NoWarn>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+	<EditorConfigFilePath>$(MSBuildThisFileDirectory).editorconfig</EditorConfigFilePath>
+  </PropertyGroup>
+
+  <ItemGroup>
+  	<AdditionalFiles Include="$(EditorConfigFilePath)" />
+  </ItemGroup>
+</Project>
