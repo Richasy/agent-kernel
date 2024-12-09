@@ -9,6 +9,9 @@ internal sealed class ChatConfiguration
 {
     [JsonPropertyName("azure_openai")]
     public AzureOpenAIConfiguration? AzureOpenAI { get; set; }
+
+    [JsonPropertyName("xai")]
+    public XAIConfiguration? XAI { get; set; }
 }
 
 internal sealed class AzureOpenAIConfiguration
@@ -16,6 +19,15 @@ internal sealed class AzureOpenAIConfiguration
     [JsonPropertyName("endpoint")]
     public string? Endpoint { get; set; }
 
+    [JsonPropertyName("key")]
+    public string? AccessKey { get; set; }
+
+    [JsonPropertyName("model")]
+    public string? Model { get; set; }
+}
+
+internal sealed class XAIConfiguration
+{
     [JsonPropertyName("key")]
     public string? AccessKey { get; set; }
 

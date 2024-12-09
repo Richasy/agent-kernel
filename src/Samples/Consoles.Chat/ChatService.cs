@@ -29,7 +29,6 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
         if (_chatTask != null)
         {
             await _stopCts.CancelAsync();
-            await Task.WhenAny(_chatTask, Task.Delay(Timeout.Infinite, cancellationToken));
         }
     }
 
@@ -50,46 +49,61 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
         return provider switch
         {
             ProviderType.AzureOpenAI => "Azure OpenAI",
+            ProviderType.XAI => "xAI",
             _ => throw new NotSupportedException(),
         };
     }
 
     private async Task RunChatAsync(CancellationToken cancellationToken)
     {
-        var provider = AskProvider();
-        var service = DispatchService(provider);
-        AnsiConsole.Clear();
-        var messages = new List<ChatMessage>();
-#if USE_SYSTEM_PROMPT
-        var sysPrompt = AnsiConsole.Prompt(
-            new TextPrompt<string>("System prompt [green](Optional)[/]: ")
-            .AllowEmpty());
-
-        if (!string.IsNullOrEmpty(sysPrompt))
+        try
         {
-            messages.Add(new ChatMessage(ChatRole.System, sysPrompt));
-        }
+            AnsiConsole.Clear();
+            var provider = AskProvider();
+            var service = DispatchService(provider);
+            List<ChatMessage> chatMessages = [];
+#if USE_SYSTEM_PROMPT
+            var sysPrompt = AnsiConsole.Prompt(
+                new TextPrompt<string>("System prompt [green](Optional)[/]: ")
+                .AllowEmpty());
+
+            if (!string.IsNullOrEmpty(sysPrompt))
+            {
+                chatMessages.Add(new ChatMessage(ChatRole.System, sysPrompt));
+            }
 #endif
 
-        while (!cancellationToken.IsCancellationRequested)
-        {
-            AnsiConsole.WriteLine();
-
-            var userPrompt = AnsiConsole.Prompt(
-                new TextPrompt<string>("[grey]>>>[/] ")
-                .Validate(x => !string.IsNullOrWhiteSpace(x) ? ValidationResult.Success() : ValidationResult.Error("The prompt cannot be empty.")));
-
-            if (userPrompt == "bye")
+            while (!cancellationToken.IsCancellationRequested)
             {
-                lifetime.StopApplication();
-                break;
-            }
+                AnsiConsole.WriteLine();
 
-            messages.Add(new ChatMessage(ChatRole.User, userPrompt));
-            var response = await service.Client!.CompleteAsync(messages, cancellationToken: cancellationToken);
-            var responseMessage = response.Message.Text;
-            messages.Add(new ChatMessage(ChatRole.Assistant, responseMessage));
-            PrintAssistantMessage(response.Message);
+                var userPrompt = AnsiConsole.Prompt(
+                    new TextPrompt<string>("[grey]>>>[/] ")
+                    .Validate(x => !string.IsNullOrWhiteSpace(x) ? ValidationResult.Success() : ValidationResult.Error("The prompt cannot be empty.")));
+
+                if (userPrompt == "bye")
+                {
+                    lifetime.StopApplication();
+                    break;
+                }
+                else if (userPrompt == "clear")
+                {
+                    chatMessages.RemoveAll(x => x.Role != ChatRole.System);
+                    AnsiConsole.Clear();
+                    continue;
+                }
+
+                chatMessages.Add(new ChatMessage(ChatRole.User, userPrompt));
+                var response = await service.Client!.CompleteAsync(chatMessages, cancellationToken: cancellationToken);
+                var responseMessage = response.Message.Text;
+                chatMessages.Add(new ChatMessage(ChatRole.Assistant, responseMessage));
+                PrintAssistantMessage(response.Message);
+            }
+        }
+        catch (Exception ex)
+        {
+            AnsiConsole.WriteException(ex);
+            throw;
         }
     }
 
@@ -99,6 +113,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
         var serviceConfig = provider switch
         {
             ProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig(),
+            ProviderType.XAI => config.XAI.ToAIServiceConfig(),
             _ => throw new NotSupportedException(),
         };
 

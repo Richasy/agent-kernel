@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{02EA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consoles.Chat", "Samples\Consoles.Chat\Consoles.Chat.csproj", "{4D35C286-F5F6-456E-ACCD-161D93F3B04D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.XAI", "Connectors\Connectors.XAI\Connectors.XAI.csproj", "{12660A88-0AC2-4D08-A033-72443A6F65C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,10 @@ Global
 		{4D35C286-F5F6-456E-ACCD-161D93F3B04D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D35C286-F5F6-456E-ACCD-161D93F3B04D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D35C286-F5F6-456E-ACCD-161D93F3B04D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12660A88-0AC2-4D08-A033-72443A6F65C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12660A88-0AC2-4D08-A033-72443A6F65C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12660A88-0AC2-4D08-A033-72443A6F65C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12660A88-0AC2-4D08-A033-72443A6F65C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
