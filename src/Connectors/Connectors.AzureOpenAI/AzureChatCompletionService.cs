@@ -14,7 +14,7 @@ namespace Richasy.AgentKernel.Connectors.AzureOpenAI;
 /// </summary>
 public sealed class AzureChatCompletionService : IChatCompletionService
 {
-    private AzureAIServiceConfig? _config;
+    private AzureOpenAIServiceConfig? _config;
 
     /// <inheritdoc/>
     public IChatClient? Client
@@ -26,7 +26,7 @@ public sealed class AzureChatCompletionService : IChatCompletionService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
-        if (config is not AzureAIServiceConfig azureConfig)
+        if (config is not AzureOpenAIServiceConfig azureConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }

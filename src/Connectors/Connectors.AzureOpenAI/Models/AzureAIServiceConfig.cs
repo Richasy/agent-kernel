@@ -4,9 +4,9 @@
 namespace Richasy.AgentKernel.Connectors.AzureOpenAI.Models;
 
 /// <summary>
-/// Configuration for Azure AI service.
+/// Configuration for Azure OpenAI service.
 /// </summary>
-public class AzureAIServiceConfig(Uri endpoint, string key, string model) : AIServiceConfig
+public class AzureOpenAIServiceConfig(Uri endpoint, string key, string model) : AIServiceConfig
 {
     /// <summary>
     /// Gets or sets the endpoint of the service.
@@ -24,7 +24,7 @@ public class AzureAIServiceConfig(Uri endpoint, string key, string model) : AISe
     public string Model { get; set; } = model;
 
     /// <inheritdoc/>
-    public override bool Equals(object? obj) => obj is AzureAIServiceConfig config && EqualityComparer<Uri>.Default.Equals(Endpoint, config.Endpoint) && AccessKey == config.AccessKey && Model == config.Model;
+    public override bool Equals(object? obj) => obj is AzureOpenAIServiceConfig config && EqualityComparer<Uri>.Default.Equals(Endpoint, config.Endpoint) && AccessKey == config.AccessKey && Model == config.Model;
 
     /// <inheritdoc/>
     public override int GetHashCode() => HashCode.Combine(Endpoint, AccessKey, Model);
