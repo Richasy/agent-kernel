@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<AssemblyName>Richasy.AgentKernel.Connectors.AzureOpenAI</AssemblyName>
+	<RootNamespace>$(AssemblyName)</RootNamespace>
+    <TargetFramework>net9.0</TargetFramework>
+	<NoWarn>$(NoWarn)</NoWarn>
+	<IsAotCompatible>true</IsAotCompatible>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.AI.OpenAI" />
+    <PackageReference Include="Microsoft.Extensions.AI.OpenAI" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\AgentKernel.Abstractions\AgentKernel.Abstractions.csproj" />
+    <ProjectReference Include="..\..\AgentKernel.Core\AgentKernel.Core.csproj" />
+  </ItemGroup>
+
+</Project>
