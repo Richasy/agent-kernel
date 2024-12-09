@@ -12,6 +12,7 @@ await LoadConfigurationAsync();
 var builder = Host.CreateApplicationBuilder(args);
 builder.Environment.ContentRootPath = AppDomain.CurrentDomain.BaseDirectory;
 var kernel = Kernel.CreateBuilder()
+    .AddOpenAIChatCompletion()
     .AddAzureOpenAIChatCompletion()
     .AddXAIChatCompletion()
     .Build();

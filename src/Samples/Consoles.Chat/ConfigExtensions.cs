@@ -3,12 +3,21 @@
 
 using Richasy.AgentKernel;
 using Richasy.AgentKernel.Connectors.AzureOpenAI.Models;
+using Richasy.AgentKernel.Connectors.OpenAI.Models;
 using Richasy.AgentKernel.Connectors.XAI.Models;
 
 namespace Consoles.Chat;
 
 internal static class ConfigExtensions
 {
+    public static AIServiceConfig ToAIServiceConfig(this OpenAIConfiguration? config)
+    {
+        var endpoint = string.IsNullOrEmpty(config?.Endpoint) ? null : new Uri(config.Endpoint);
+        return config is null || string.IsNullOrWhiteSpace(config.AccessKey) || string.IsNullOrWhiteSpace(config.Model)
+            ? throw new ArgumentException("The configuration is not valid.", nameof(config))
+            : new OpenAIServiceConfig(config.AccessKey, config.Model, endpoint, config.Organization);
+    }
+
     public static AIServiceConfig ToAIServiceConfig(this AzureOpenAIConfiguration? config)
     {
         return config is null || string.IsNullOrWhiteSpace(config.Endpoint) || string.IsNullOrWhiteSpace(config.AccessKey) || string.IsNullOrWhiteSpace(config.Model)

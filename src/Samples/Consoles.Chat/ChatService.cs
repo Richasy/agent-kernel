@@ -48,6 +48,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
     {
         return provider switch
         {
+            ProviderType.OpenAI => "OpenAI",
             ProviderType.AzureOpenAI => "Azure OpenAI",
             ProviderType.XAI => "xAI",
             _ => throw new NotSupportedException(),
@@ -112,6 +113,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
         var service = kernel.GetRequiredService<IChatCompletionService>(provider.ToString());
         var serviceConfig = provider switch
         {
+            ProviderType.OpenAI => config.OpenAI.ToAIServiceConfig(),
             ProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig(),
             ProviderType.XAI => config.XAI.ToAIServiceConfig(),
             _ => throw new NotSupportedException(),

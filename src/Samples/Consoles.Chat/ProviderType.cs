@@ -9,6 +9,11 @@ namespace Consoles.Chat;
 internal enum ProviderType
 {
     /// <summary>
+    /// OpenAI.
+    /// </summary>
+    OpenAI,
+
+    /// <summary>
     /// Azure OpenAI.
     /// </summary>
     AzureOpenAI,
