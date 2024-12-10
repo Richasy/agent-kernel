@@ -5,7 +5,10 @@ using Consoles.Chat;
 using System.Text;
 using System.Text.Json;
 
-public partial class Program
+/// <summary>
+/// Program entry.
+/// </summary>
+internal partial class Program
 {
     private static ChatConfiguration? _config;
 

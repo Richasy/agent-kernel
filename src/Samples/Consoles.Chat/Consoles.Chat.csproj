@@ -16,6 +16,7 @@
     <ProjectReference Include="..\..\Connectors\Connectors.AzureOpenAI\Connectors.AzureOpenAI.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.OpenAI\Connectors.OpenAI.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.XAI\Connectors.XAI.csproj" />
+    <ProjectReference Include="..\..\Connectors\Connectors.ZhiPu\Connectors.ZhiPu.csproj" />
   </ItemGroup>
 
   <ItemGroup>

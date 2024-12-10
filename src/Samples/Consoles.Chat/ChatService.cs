@@ -51,6 +51,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.OpenAI => "OpenAI",
             ProviderType.AzureOpenAI => "Azure OpenAI",
             ProviderType.XAI => "xAI",
+            ProviderType.ZhiPu => "智谱",
             _ => throw new NotSupportedException(),
         };
     }
@@ -116,6 +117,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.OpenAI => config.OpenAI.ToAIServiceConfig(),
             ProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig(),
             ProviderType.XAI => config.XAI.ToAIServiceConfig(),
+            ProviderType.ZhiPu => config.ZhiPu.ToAIServiceConfig(),
             _ => throw new NotSupportedException(),
         };
 

@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Consoles.Chat;
 
-[JsonSourceGenerationOptions]
+[JsonSourceGenerationOptions(DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 [JsonSerializable(typeof(ChatConfiguration))]
 internal sealed partial class JsonGenerationContext : JsonSerializerContext
 {

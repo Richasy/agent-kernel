@@ -22,4 +22,9 @@ internal enum ProviderType
     /// xAI.
     /// </summary>
     XAI,
+
+    /// <summary>
+    /// 智谱.
+    /// </summary>
+    ZhiPu,
 }

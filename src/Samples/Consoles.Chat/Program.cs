@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Richasy.AgentKernel;
 
-#pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
 ConfigureConsole();
 await LoadConfigurationAsync();
 var builder = Host.CreateApplicationBuilder(args);
@@ -15,6 +14,7 @@ var kernel = Kernel.CreateBuilder()
     .AddOpenAIChatCompletion()
     .AddAzureOpenAIChatCompletion()
     .AddXAIChatCompletion()
+    .AddZhiPuChatCompletion()
     .Build();
 
 builder.Services.AddSingleton(kernel);
@@ -23,4 +23,3 @@ builder.Services.AddHostedService<ChatService>();
 
 using var host = builder.Build();
 await host.RunAsync();
-#pragma warning restore CS1591 // 缺少对公共可见类型或成员的 XML 注释

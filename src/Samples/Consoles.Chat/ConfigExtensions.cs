@@ -5,6 +5,7 @@ using Richasy.AgentKernel;
 using Richasy.AgentKernel.Connectors.AzureOpenAI.Models;
 using Richasy.AgentKernel.Connectors.OpenAI.Models;
 using Richasy.AgentKernel.Connectors.XAI.Models;
+using Richasy.AgentKernel.Connectors.ZhiPu.Models;
 
 namespace Consoles.Chat;
 
@@ -30,5 +31,12 @@ internal static class ConfigExtensions
         return config is null || string.IsNullOrWhiteSpace(config.AccessKey) || string.IsNullOrWhiteSpace(config.Model)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
             : new XAIServiceConfig(config.AccessKey, config.Model);
+    }
+
+    public static AIServiceConfig ToAIServiceConfig(this ZhiPuConfiguration? config)
+    {
+        return config is null || string.IsNullOrWhiteSpace(config.AccessKey) || string.IsNullOrWhiteSpace(config.Model)
+            ? throw new ArgumentException("The configuration is not valid.", nameof(config))
+            : new ZhiPuServiceConfig(config.AccessKey, config.Model);
     }
 }
