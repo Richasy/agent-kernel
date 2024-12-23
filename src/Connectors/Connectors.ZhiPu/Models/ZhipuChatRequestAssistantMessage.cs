@@ -3,11 +3,11 @@
 
 namespace Richasy.AgentKernel.Connectors.ZhiPu.Models;
 
-internal sealed class ZhiPuChatResponseMessage
+internal sealed class ZhiPuChatRequestAssistantMessage
 {
-    public required string Role { get; set; }
+    public required string Role { get; set; } = "assistant";
 
     public string? Content { get; set; }
 
-    public ZhiPuToolCall[]? ToolCalls { get; set; }
+    public IList<ZhiPuToolCall>? ToolCalls { get; set; }
 }

@@ -8,6 +8,9 @@ using Microsoft.Extensions.Hosting;
 using Richasy.AgentKernel.ChatCompletion;
 using RichasyKernel;
 using Spectre.Console;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Consoles.Chat;
 
@@ -56,6 +59,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
         };
     }
 
+    [UnconditionalSuppressMessage("AOT", "IL3050:Calling members annotated with 'RequiresDynamicCodeAttribute' may break functionality when AOT compiling.", Justification = "<Pending>")]
     private async Task RunChatAsync(CancellationToken cancellationToken)
     {
         try
@@ -63,6 +67,9 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             AnsiConsole.Clear();
             var provider = AskProvider();
             var service = DispatchService(provider);
+            var client = new ChatClientBuilder(service.Client!)
+                .UseFunctionInvocation()
+                .Build();
             List<ChatMessage> chatMessages = [];
 #if USE_SYSTEM_PROMPT
             var sysPrompt = AnsiConsole.Prompt(
@@ -96,10 +103,22 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
                 }
 
                 chatMessages.Add(new ChatMessage(ChatRole.User, userPrompt));
-                var response = await service.Client!.CompleteAsync(chatMessages, cancellationToken: cancellationToken);
-                var responseMessage = response.Message.Text;
+                // var response = await service.Client!.CompleteAsync(chatMessages, cancellationToken: cancellationToken);
+                // var responseMessage = response.Message.Text;
+                var responseMessage = string.Empty;
+                var options = new ChatOptions()
+                {
+                    Tools = [AIFunctionFactory.Create(
+                        ([Description("The person whose age is being requested")] string personName) => 42, "GetPersonAge", "Gets the age of the specified person.")],
+                };
+                await foreach (var message in client.CompleteStreamingAsync(chatMessages, options, cancellationToken: cancellationToken))
+                {
+                    Debug.WriteLine(message.Text);
+                    responseMessage += message.Text;
+                }
+
                 chatMessages.Add(new ChatMessage(ChatRole.Assistant, responseMessage));
-                PrintAssistantMessage(response.Message);
+                PrintAssistantMessage(chatMessages.Last());
             }
         }
         catch (Exception ex)

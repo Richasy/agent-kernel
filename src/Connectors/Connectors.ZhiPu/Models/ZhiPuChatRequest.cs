@@ -111,6 +111,10 @@ internal sealed class ZhiPuChatListConverter : JsonConverter<IList<object>>
             {
                 JsonSerializer.Serialize(writer, toolMessage, JsonGenerationContext.Default.ZhiPuChatRequestToolMessage);
             }
+            else if (item is ZhiPuChatRequestAssistantMessage assistantMessage)
+            {
+                JsonSerializer.Serialize(writer, assistantMessage, JsonGenerationContext.Default.ZhiPuChatRequestAssistantMessage);
+            }
             else
             {
                 throw new JsonException($"Unsupported type: {item.GetType()}");

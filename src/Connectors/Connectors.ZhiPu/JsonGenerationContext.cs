@@ -12,6 +12,7 @@ namespace Richasy.AgentKernel.Connectors.ZhiPu;
 [JsonSerializable(typeof(ZhiPuBasicChatRequest))]
 [JsonSerializable(typeof(ZhiPuContentChatRequest))]
 [JsonSerializable(typeof(ZhiPuChatRequestBasicMessage))]
+[JsonSerializable(typeof(ZhiPuChatRequestAssistantMessage))]
 [JsonSerializable(typeof(ZhiPuChatRequestContentMessage))]
 [JsonSerializable(typeof(ZhiPuChatRequestToolMessage))]
 [JsonSerializable(typeof(ZhiPuErrorResponse))]
