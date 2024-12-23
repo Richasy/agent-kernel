@@ -3,6 +3,7 @@
 
 using Microsoft.Extensions.AI;
 using Richasy.AgentKernel.Connectors.ZhiPu.Models;
+using RichasyKernel;
 using System.Globalization;
 using System.Text;
 using System.Text.Json;

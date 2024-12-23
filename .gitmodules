@@ -1,0 +1,3 @@
+[submodule "src/Libs/richasy-kernel"]
+	path = src/Libs/richasy-kernel
+	url = https://github.com/Richasy/richasy-kernel.git

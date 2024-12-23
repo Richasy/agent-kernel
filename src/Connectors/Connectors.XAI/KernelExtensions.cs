@@ -4,6 +4,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Richasy.AgentKernel.ChatCompletion;
 using Richasy.AgentKernel.Connectors.XAI;
+using RichasyKernel;
 
 namespace Richasy.AgentKernel;
 

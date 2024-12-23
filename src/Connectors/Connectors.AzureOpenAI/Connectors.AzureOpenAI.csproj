@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\AgentKernel.Abstractions\AgentKernel.Abstractions.csproj" />
     <ProjectReference Include="..\..\AgentKernel.Core\AgentKernel.Core.csproj" />
+    <ProjectReference Include="..\..\Libs\richasy-kernel\src\RichasyKernel.Abstractions\RichasyKernel.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

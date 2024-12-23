@@ -5,8 +5,8 @@
 
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Hosting;
-using Richasy.AgentKernel;
 using Richasy.AgentKernel.ChatCompletion;
+using RichasyKernel;
 using Spectre.Console;
 
 namespace Consoles.Chat;

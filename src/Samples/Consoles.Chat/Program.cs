@@ -5,6 +5,7 @@ using Consoles.Chat;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Richasy.AgentKernel;
+using RichasyKernel;
 
 ConfigureConsole();
 await LoadConfigurationAsync();
