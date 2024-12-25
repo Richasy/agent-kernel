@@ -37,4 +37,9 @@ internal enum ProviderType
     /// Anthropic.
     /// </summary>
     Anthropic,
+
+    /// <summary>
+    /// Moonshot.
+    /// </summary>
+    Moonshot,
 }

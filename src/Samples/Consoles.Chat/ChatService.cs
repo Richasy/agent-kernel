@@ -54,6 +54,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.ZhiPu => "智谱",
             ProviderType.LingYi => "零一万物",
             ProviderType.Anthropic => "Anthropic",
+            ProviderType.Moonshot => "月之暗面",
             _ => throw new NotSupportedException(),
         };
     }
@@ -120,7 +121,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
                     AdditionalProperties = [],
                 };
 
-                options.AdditionalProperties!.Add("visual", true);
+                // options.AdditionalProperties!.Add("visual", true);
 
                 await foreach (var message in client.CompleteStreamingAsync(chatMessages, options, cancellationToken: cancellationToken))
                 {
@@ -149,6 +150,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.ZhiPu => config.ZhiPu.ToAIServiceConfig(),
             ProviderType.LingYi => config.LingYi.ToAIServiceConfig(),
             ProviderType.Anthropic => config.Anthropic.ToAIServiceConfig(),
+            ProviderType.Moonshot => config.Moonshot.ToAIServiceConfig(),
             _ => throw new NotSupportedException(),
         };
 

@@ -5,6 +5,7 @@ using Richasy.AgentKernel;
 using Richasy.AgentKernel.Connectors.Anthropic.Models;
 using Richasy.AgentKernel.Connectors.AzureOpenAI.Models;
 using Richasy.AgentKernel.Connectors.LingYi.Models;
+using Richasy.AgentKernel.Connectors.Moonshot.Models;
 using Richasy.AgentKernel.Connectors.OpenAI.Models;
 using Richasy.AgentKernel.Connectors.XAI.Models;
 using Richasy.AgentKernel.Connectors.ZhiPu.Models;
@@ -54,5 +55,12 @@ internal static class ConfigExtensions
         return config is null || string.IsNullOrWhiteSpace(config.AccessKey)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
             : new AnthropicServiceConfig(config.AccessKey, config.Model, string.IsNullOrEmpty(config.Endpoint) ? default : new(config.Endpoint));
+    }
+
+    public static AIServiceConfig ToAIServiceConfig(this MoonshotConfiguration? config)
+    {
+        return config is null || string.IsNullOrEmpty(config.AccessKey) || string.IsNullOrEmpty(config.Model)
+            ? throw new ArgumentException("The configuration is not valid.", nameof(config))
+            : new MoonshotServiceConfig(config.AccessKey, config.Model);
     }
 }

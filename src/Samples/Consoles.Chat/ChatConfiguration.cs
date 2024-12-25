@@ -24,6 +24,9 @@ internal sealed class ChatConfiguration
 
     [JsonPropertyName("anthropic")]
     public AnthropicConfiguration? Anthropic { get; set; }
+
+    [JsonPropertyName("moonshot")]
+    public MoonshotConfiguration? Moonshot { get; set; }
 }
 
 internal sealed class AzureOpenAIConfiguration
@@ -103,4 +106,15 @@ internal sealed class AnthropicConfiguration
 
     [JsonPropertyName("endpoint")]
     public string? Endpoint { get; set; }
+}
+
+internal sealed class MoonshotConfiguration
+{
+    [JsonPropertyName("key")]
+    [JsonRequired]
+    public string? AccessKey { get; set; }
+
+    [JsonPropertyName("model")]
+    [JsonRequired]
+    public string? Model { get; set; }
 }
