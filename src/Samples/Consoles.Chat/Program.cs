@@ -17,6 +17,7 @@ var kernel = Kernel.CreateBuilder()
     .AddXAIChatCompletion()
     .AddZhiPuChatCompletion()
     .AddLingYiChatCompletion()
+    .AddAnthropicChatCompletion()
     .Build();
 
 builder.Services.AddSingleton(kernel);

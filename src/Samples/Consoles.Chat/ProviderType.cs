@@ -32,4 +32,9 @@ internal enum ProviderType
     /// 零一万物.
     /// </summary>
     LingYi,
+
+    /// <summary>
+    /// Anthropic.
+    /// </summary>
+    Anthropic,
 }

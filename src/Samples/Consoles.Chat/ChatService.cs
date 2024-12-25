@@ -53,6 +53,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.XAI => "xAI",
             ProviderType.ZhiPu => "智谱",
             ProviderType.LingYi => "零一万物",
+            ProviderType.Anthropic => "Anthropic",
             _ => throw new NotSupportedException(),
         };
     }
@@ -147,6 +148,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.XAI => config.XAI.ToAIServiceConfig(),
             ProviderType.ZhiPu => config.ZhiPu.ToAIServiceConfig(),
             ProviderType.LingYi => config.LingYi.ToAIServiceConfig(),
+            ProviderType.Anthropic => config.Anthropic.ToAIServiceConfig(),
             _ => throw new NotSupportedException(),
         };
 

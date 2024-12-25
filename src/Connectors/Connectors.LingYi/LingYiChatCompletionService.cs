@@ -25,17 +25,17 @@ public sealed class LingYiChatCompletionService : IChatCompletionService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
-        if (config is not LingYiServiceConfig LingYiConfig)
+        if (config is not LingYiServiceConfig lingYiConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }
 
-        if (_config != null && LingYiConfig.Equals(_config))
+        if (_config != null && lingYiConfig.Equals(_config))
         {
             return;
         }
 
-        _config = LingYiConfig;
+        _config = lingYiConfig;
         var coreClient = new OpenAIClient(new(_config.AccessKey), new OpenAIClientOptions
         {
             Endpoint = new Uri("https://api.lingyiwanwu.com/v1"),
