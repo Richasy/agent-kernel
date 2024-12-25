@@ -1,3 +1,4 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35507.96
@@ -19,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RichasyKernel.Core", "Libs\richasy-kernel\src\RichasyKernel.Core\RichasyKernel.Core.csproj", "{305A51F5-BB79-501B-A836-A0BE8B9AEA91}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentKernel.Core", "AgentKernel.Core\AgentKernel.Core.csproj", "{17EAEA52-90E3-4B2C-AC9C-0F530FE32128}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.LingYi", "Connectors\Connectors.LingYi\Connectors.LingYi.csproj", "{5C5CE117-C75B-4B4F-BCD3-0C037EA9F1C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +61,10 @@ Global
 		{17EAEA52-90E3-4B2C-AC9C-0F530FE32128}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17EAEA52-90E3-4B2C-AC9C-0F530FE32128}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17EAEA52-90E3-4B2C-AC9C-0F530FE32128}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C5CE117-C75B-4B4F-BCD3-0C037EA9F1C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C5CE117-C75B-4B4F-BCD3-0C037EA9F1C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C5CE117-C75B-4B4F-BCD3-0C037EA9F1C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C5CE117-C75B-4B4F-BCD3-0C037EA9F1C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

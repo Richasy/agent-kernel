@@ -16,6 +16,7 @@ var kernel = Kernel.CreateBuilder()
     .AddAzureOpenAIChatCompletion()
     .AddXAIChatCompletion()
     .AddZhiPuChatCompletion()
+    .AddLingYiChatCompletion()
     .Build();
 
 builder.Services.AddSingleton(kernel);

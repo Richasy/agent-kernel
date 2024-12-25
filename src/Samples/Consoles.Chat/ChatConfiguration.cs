@@ -18,6 +18,9 @@ internal sealed class ChatConfiguration
 
     [JsonPropertyName("zhipu")]
     public ZhiPuConfiguration? ZhiPu { get; set; }
+
+    [JsonPropertyName("lingyi")]
+    public LingYiConfiguration? LingYi { get; set; }
 }
 
 internal sealed class AzureOpenAIConfiguration
@@ -64,6 +67,17 @@ internal sealed class OpenAIConfiguration
 }
 
 internal sealed class ZhiPuConfiguration
+{
+    [JsonPropertyName("key")]
+    [JsonRequired]
+    public string? AccessKey { get; set; }
+
+    [JsonPropertyName("model")]
+    [JsonRequired]
+    public string? Model { get; set; }
+}
+
+internal sealed class LingYiConfiguration
 {
     [JsonPropertyName("key")]
     [JsonRequired]

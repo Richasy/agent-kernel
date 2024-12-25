@@ -165,17 +165,17 @@ public sealed class ZhiPuChatClient : IChatClient
         ZhiPuChatRequest request = isVisualModel
             ? new ZhiPuContentChatRequest()
             {
-                Messages = chatMessages.Select(x => global::Richasy.AgentKernel.Connectors.ZhiPu.ZhiPuChatClient.ToZhiPuChatRequestMessages(x, useContentMessage: true)).OfType<ZhiPuChatRequestContentMessage>().ToList() ?? [],
+                Messages = chatMessages.Select(x => ToZhiPuChatRequestMessages(x, useContentMessage: true)).OfType<ZhiPuChatRequestContentMessage>().ToList() ?? [],
                 Model = options?.ModelId ?? Metadata.ModelId ?? string.Empty,
                 Stream = stream,
             }
             : new ZhiPuBasicChatRequest()
             {
                 ResponseFormat = options?.ResponseFormat is ChatResponseFormatJson ? ZhiPuResponseFormat.JsonFormat : default,
-                Messages = chatMessages.Select(x => global::Richasy.AgentKernel.Connectors.ZhiPu.ZhiPuChatClient.ToZhiPuChatRequestMessages(x, useContentMessage: false)).ToList() ?? [],
+                Messages = chatMessages.Select(x => ToZhiPuChatRequestMessages(x, useContentMessage: false)).ToList() ?? [],
                 Model = options?.ModelId ?? Metadata.ModelId ?? string.Empty,
                 Stream = stream,
-                Tools = options?.Tools is { Count: > 0 } tools ? [.. tools.OfType<AIFunction>().Select(ToZhiPuTool)] : null,
+                Tools = options?.Tools is { Count: > 0 } tools ? [.. tools.Select(ToZhiPuTool)] : null,
             };
 
         if (options is not null)
@@ -206,6 +206,9 @@ public sealed class ZhiPuChatClient : IChatClient
                         break;
                     case ImageContent imgContent when imgContent.Uri != null:
                         contentMsg.Content.Add(ZhiPuChatContent.CreateImageMessage(imgContent.Uri));
+                        break;
+                    case VideoContent videoContent when videoContent.Uri != null:
+                        contentMsg.Content.Add(ZhiPuChatContent.CreateVideoMessage(videoContent.Uri));
                         break;
                     default:
                         break;
@@ -290,22 +293,43 @@ public sealed class ZhiPuChatClient : IChatClient
         return default;
     }
 
-    private static ZhiPuTool ToZhiPuTool(AIFunction function)
+    private static ZhiPuTool ToZhiPuTool(AITool tool)
     {
-        return new()
+        if (tool is AIFunction function)
         {
-            Type = "function",
-            Function = new()
+            return new()
             {
-                Name = function.Metadata.Name,
-                Description = function.Metadata.Description,
-                Parameters = new ZhiPuFunctionToolParameters
+                Type = "function",
+                Function = new()
                 {
-                    Properties = function.Metadata.Parameters.ToDictionary(p => p.Name, p => p.Schema is JsonElement e ? e : _defaultParameterSchema),
-                    Required = [.. function.Metadata.Parameters.Where(p => p.IsRequired).Select(p => p.Name)],
+                    Name = function.Metadata.Name,
+                    Description = function.Metadata.Description,
+                    Parameters = new ZhiPuFunctionToolParameters
+                    {
+                        Properties = function.Metadata.Parameters.ToDictionary(p => p.Name, p => p.Schema is JsonElement e ? e : _defaultParameterSchema),
+                        Required = [.. function.Metadata.Parameters.Where(p => p.IsRequired).Select(p => p.Name)],
+                    }
                 }
-            }
-        };
+            };
+        }
+        else if (tool is ZhiPuWebSearchTool webSearchTool)
+        {
+            return new()
+            {
+                Type = "web_search",
+                WebSearch = webSearchTool,
+            };
+        }
+        else if (tool is ZhiPuRetrievalTool retrievalTool)
+        {
+            return new()
+            {
+                Type = "retrieval",
+                Retrieval = retrievalTool,
+            };
+        }
+
+        throw new NotSupportedException($"{tool.GetType()} is not a valid type");
     }
 
     private static ChatFinishReason? ToFinishReason(ZhiPuChatResponse response) =>
@@ -384,6 +408,7 @@ public sealed class ZhiPuChatClient : IChatClient
             case JsonValueKind.False:
                 return false;
             case JsonValueKind.Null:
+            case JsonValueKind.Undefined:
                 return null;
             default:
                 throw new InvalidOperationException("Unsupported JsonValueKind");

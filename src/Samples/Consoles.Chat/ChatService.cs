@@ -1,15 +1,12 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-#define USE_SYSTEM_PROMPT
-
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Hosting;
 using Richasy.AgentKernel.ChatCompletion;
 using RichasyKernel;
 using Spectre.Console;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Consoles.Chat;
@@ -55,6 +52,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.AzureOpenAI => "Azure OpenAI",
             ProviderType.XAI => "xAI",
             ProviderType.ZhiPu => "智谱",
+            ProviderType.LingYi => "零一万物",
             _ => throw new NotSupportedException(),
         };
     }
@@ -103,17 +101,28 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
                 }
 
                 chatMessages.Add(new ChatMessage(ChatRole.User, userPrompt));
+                // var userMessage = new ChatMessage(ChatRole.User, [new VideoContent("https://sfile.chatglm.cn/testpath/video/b844f8f1-5df9-556c-a515-3d3bfaa736e8_0.mp4"), new TextContent(userPrompt)]);
+                // chatMessages.Add(userMessage);
                 // var response = await service.Client!.CompleteAsync(chatMessages, cancellationToken: cancellationToken);
                 // var responseMessage = response.Message.Text;
                 var responseMessage = string.Empty;
                 var options = new ChatOptions()
                 {
-                    Tools = [AIFunctionFactory.Create(
-                        ([Description("The person whose age is being requested")] string personName) => 42, "GetPersonAge", "Gets the age of the specified person.")],
+                    Tools =
+                    [
+                         AIFunctionFactory.Create(
+                             ([Description("The person whose age is being requested")] string personName) => 42, "GetPersonAge", "Gets the age of the specified person."),
+                        // new ZhiPuWebSearchTool { Enable = true }
+                        // new ZhiPuRetrievalTool { KnowledgeId = "1871787212023255040", PromptTemplate = "从文档\n\"\"\"\n{{knowledge}}\n\"\"\"\n中找问题\n\"\"\"\n{{question}}\n\"\"\"\n的答案，找到答案就仅使用文档语句回答问题，找不到答案就用自身知识回答并且告诉用户该信息不是来自文档。\n不要复述问题，直接开始回答。"}
+                    ],
+
+                    AdditionalProperties = [],
                 };
+
+                options.AdditionalProperties!.Add("visual", true);
+
                 await foreach (var message in client.CompleteStreamingAsync(chatMessages, options, cancellationToken: cancellationToken))
                 {
-                    Debug.WriteLine(message.Text);
                     responseMessage += message.Text;
                 }
 
@@ -137,6 +146,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig(),
             ProviderType.XAI => config.XAI.ToAIServiceConfig(),
             ProviderType.ZhiPu => config.ZhiPu.ToAIServiceConfig(),
+            ProviderType.LingYi => config.LingYi.ToAIServiceConfig(),
             _ => throw new NotSupportedException(),
         };
 

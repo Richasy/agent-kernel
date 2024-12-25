@@ -27,4 +27,9 @@ internal enum ProviderType
     /// 智谱.
     /// </summary>
     ZhiPu,
+
+    /// <summary>
+    /// 零一万物.
+    /// </summary>
+    LingYi,
 }
