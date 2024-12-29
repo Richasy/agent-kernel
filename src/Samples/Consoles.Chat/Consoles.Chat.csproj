@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Connectors\Connectors.Ali\Connectors.Ali.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.Anthropic\Connectors.Anthropic.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.AzureOpenAI\Connectors.AzureOpenAI.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.DeepSeek\Connectors.DeepSeek.csproj" />

@@ -52,4 +52,9 @@ internal enum ProviderType
     /// DeepSeek.
     /// </summary>
     DeepSeek,
+
+    /// <summary>
+    /// 通义千问.
+    /// </summary>
+    Qwen,
 }

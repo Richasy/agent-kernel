@@ -3,6 +3,7 @@
 
 using Connectors.DeepSeek.Models;
 using Richasy.AgentKernel;
+using Richasy.AgentKernel.Connectors.Ali.Models;
 using Richasy.AgentKernel.Connectors.Anthropic.Models;
 using Richasy.AgentKernel.Connectors.AzureOpenAI.Models;
 using Richasy.AgentKernel.Connectors.Gemini.Models;
@@ -79,5 +80,12 @@ internal static class ConfigExtensions
         return config is null || string.IsNullOrEmpty(config.AccessKey) || string.IsNullOrEmpty(config.Model)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
             : new DeepSeekServiceConfig(config.AccessKey, config.Model);
+    }
+
+    public static AIServiceConfig ToAIServiceConfig(this QwenConfiguration? config)
+    {
+        return config is null || string.IsNullOrEmpty(config.AccessKey) || string.IsNullOrEmpty(config.Model)
+            ? throw new ArgumentException("The configuration is not valid.", nameof(config))
+            : new QwenServiceConfig(config.AccessKey, config.Model);
     }
 }
