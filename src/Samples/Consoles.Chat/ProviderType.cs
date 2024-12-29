@@ -47,4 +47,9 @@ internal enum ProviderType
     /// Gemini.
     /// </summary>
     Gemini,
+
+    /// <summary>
+    /// DeepSeek.
+    /// </summary>
+    DeepSeek,
 }

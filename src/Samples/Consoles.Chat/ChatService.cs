@@ -58,6 +58,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.Anthropic => "Anthropic",
             ProviderType.Moonshot => "月之暗面",
             ProviderType.Gemini => "Gemini",
+            ProviderType.DeepSeek => "DeepSeek",
             _ => throw new NotSupportedException(),
         };
     }
@@ -157,6 +158,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.Anthropic => config.Anthropic.ToAIServiceConfig(),
             ProviderType.Moonshot => config.Moonshot.ToAIServiceConfig(),
             ProviderType.Gemini => config.Gemini.ToAIServiceConfig(),
+            ProviderType.DeepSeek => config.DeepSeek.ToAIServiceConfig(),
             _ => throw new NotSupportedException(),
         };
 

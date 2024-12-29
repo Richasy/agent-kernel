@@ -30,6 +30,9 @@ internal sealed class ChatConfiguration
 
     [JsonPropertyName("gemini")]
     public GeminiConfiguration? Gemini { get; set; }
+
+    [JsonPropertyName("deepseek")]
+    public DeepSeekConfiguration? DeepSeek { get; set; }
 }
 
 internal sealed class AzureOpenAIConfiguration
@@ -134,4 +137,15 @@ internal sealed class GeminiConfiguration
 
     [JsonPropertyName("endpoint")]
     public string? Endpoint { get; set; }
+}
+
+internal sealed class DeepSeekConfiguration
+{
+    [JsonPropertyName("key")]
+    [JsonRequired]
+    public string? AccessKey { get; set; }
+
+    [JsonPropertyName("model")]
+    [JsonRequired]
+    public string? Model { get; set; }
 }

@@ -20,6 +20,7 @@ var kernel = Kernel.CreateBuilder()
     .AddAnthropicChatCompletion()
     .AddMoonshotChatCompletion()
     .AddGeminiChatCompletion()
+    .AddDeepSeekChatCompletion()
     .Build();
 
 builder.Services.AddSingleton(kernel);

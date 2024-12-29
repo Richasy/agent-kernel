@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
+using Connectors.DeepSeek.Models;
 using Richasy.AgentKernel;
 using Richasy.AgentKernel.Connectors.Anthropic.Models;
 using Richasy.AgentKernel.Connectors.AzureOpenAI.Models;
@@ -71,5 +72,12 @@ internal static class ConfigExtensions
         return config is null || string.IsNullOrEmpty(config.AccessKey) || string.IsNullOrEmpty(config.Model)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
             : new GeminiServiceConfig(config.AccessKey, config.Model, endpoint);
+    }
+
+    public static AIServiceConfig ToAIServiceConfig(this DeepSeekConfiguration? config)
+    {
+        return config is null || string.IsNullOrEmpty(config.AccessKey) || string.IsNullOrEmpty(config.Model)
+            ? throw new ArgumentException("The configuration is not valid.", nameof(config))
+            : new DeepSeekServiceConfig(config.AccessKey, config.Model);
     }
 }
