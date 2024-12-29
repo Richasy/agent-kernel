@@ -19,6 +19,7 @@ var kernel = Kernel.CreateBuilder()
     .AddLingYiChatCompletion()
     .AddAnthropicChatCompletion()
     .AddMoonshotChatCompletion()
+    .AddGeminiChatCompletion()
     .Build();
 
 builder.Services.AddSingleton(kernel);

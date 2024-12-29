@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
+#define USE_SYSTEM_PROMPT
+
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Hosting;
 using Richasy.AgentKernel.ChatCompletion;
@@ -55,6 +57,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.LingYi => "零一万物",
             ProviderType.Anthropic => "Anthropic",
             ProviderType.Moonshot => "月之暗面",
+            ProviderType.Gemini => "Gemini",
             _ => throw new NotSupportedException(),
         };
     }
@@ -125,10 +128,12 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
 
                 await foreach (var message in client.CompleteStreamingAsync(chatMessages, options, cancellationToken: cancellationToken))
                 {
+                    System.Diagnostics.Debug.WriteLine(message.Text);
                     responseMessage += message.Text;
                 }
-
-                chatMessages.Add(new ChatMessage(ChatRole.Assistant, responseMessage));
+                //var response = await client.CompleteAsync(chatMessages, options, cancellationToken: cancellationToken);
+                //responseMessage = response.Message.Text;
+                chatMessages.Add(new ChatMessage(ChatRole.Assistant, responseMessage.Trim()));
                 PrintAssistantMessage(chatMessages.Last());
             }
         }
@@ -151,6 +156,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.LingYi => config.LingYi.ToAIServiceConfig(),
             ProviderType.Anthropic => config.Anthropic.ToAIServiceConfig(),
             ProviderType.Moonshot => config.Moonshot.ToAIServiceConfig(),
+            ProviderType.Gemini => config.Gemini.ToAIServiceConfig(),
             _ => throw new NotSupportedException(),
         };
 

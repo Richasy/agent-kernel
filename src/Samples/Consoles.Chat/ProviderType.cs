@@ -42,4 +42,9 @@ internal enum ProviderType
     /// Moonshot.
     /// </summary>
     Moonshot,
+
+    /// <summary>
+    /// Gemini.
+    /// </summary>
+    Gemini,
 }

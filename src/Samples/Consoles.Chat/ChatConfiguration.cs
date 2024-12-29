@@ -27,6 +27,9 @@ internal sealed class ChatConfiguration
 
     [JsonPropertyName("moonshot")]
     public MoonshotConfiguration? Moonshot { get; set; }
+
+    [JsonPropertyName("gemini")]
+    public GeminiConfiguration? Gemini { get; set; }
 }
 
 internal sealed class AzureOpenAIConfiguration
@@ -117,4 +120,18 @@ internal sealed class MoonshotConfiguration
     [JsonPropertyName("model")]
     [JsonRequired]
     public string? Model { get; set; }
+}
+
+internal sealed class GeminiConfiguration
+{
+    [JsonPropertyName("key")]
+    [JsonRequired]
+    public string? AccessKey { get; set; }
+
+    [JsonPropertyName("model")]
+    [JsonRequired]
+    public string? Model { get; set; }
+
+    [JsonPropertyName("endpoint")]
+    public string? Endpoint { get; set; }
 }
