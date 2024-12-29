@@ -11,6 +11,7 @@ using Richasy.AgentKernel.Connectors.Gemini.Models;
 using Richasy.AgentKernel.Connectors.LingYi.Models;
 using Richasy.AgentKernel.Connectors.Moonshot.Models;
 using Richasy.AgentKernel.Connectors.OpenAI.Models;
+using Richasy.AgentKernel.Connectors.Tencent.Models;
 using Richasy.AgentKernel.Connectors.XAI.Models;
 using Richasy.AgentKernel.Connectors.ZhiPu.Models;
 
@@ -95,5 +96,12 @@ internal static class ConfigExtensions
         return config is null || string.IsNullOrEmpty(config.AccessKey) || string.IsNullOrEmpty(config.Model)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
             : new ErnieServiceConfig(config.AccessKey, config.Model);
+    }
+
+    public static AIServiceConfig ToAIServiceConfig(this HunyuanConfiguration? config)
+    {
+        return config is null || string.IsNullOrEmpty(config.AccessKey) || string.IsNullOrEmpty(config.Model)
+            ? throw new ArgumentException("The configuration is not valid.", nameof(config))
+            : new HunyuanServiceConfig(config.AccessKey, config.Model);
     }
 }

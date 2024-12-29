@@ -23,6 +23,7 @@ var kernel = Kernel.CreateBuilder()
     .AddDeepSeekChatCompletion()
     .AddQwenChatCompletion()
     .AddErnieChatCompletion()
+    .AddHunyuanChatCompletion()
     .Build();
 
 builder.Services.AddSingleton(kernel);

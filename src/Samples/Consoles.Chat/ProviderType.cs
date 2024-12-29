@@ -62,4 +62,9 @@ internal enum ProviderType
     /// 文心一言.
     /// </summary>
     Ernie,
+
+    /// <summary>
+    /// 混元.
+    /// </summary>
+    Hunyuan,
 }
