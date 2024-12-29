@@ -42,6 +42,9 @@ internal sealed class ChatConfiguration
 
     [JsonPropertyName("hunyuan")]
     public HunyuanConfiguration? Hunyuan { get; set; }
+
+    [JsonPropertyName("spark")]
+    public SparkConfiguration? Spark { get; set; }
 }
 
 internal sealed class AzureOpenAIConfiguration
@@ -182,6 +185,17 @@ internal sealed class ErnieConfiguration
 }
 
 internal sealed class HunyuanConfiguration
+{
+    [JsonPropertyName("key")]
+    [JsonRequired]
+    public string? AccessKey { get; set; }
+
+    [JsonPropertyName("model")]
+    [JsonRequired]
+    public string? Model { get; set; }
+}
+
+internal sealed class SparkConfiguration
 {
     [JsonPropertyName("key")]
     [JsonRequired]

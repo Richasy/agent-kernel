@@ -62,6 +62,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.Qwen => "通义千问",
             ProviderType.Ernie => "文心一言",
             ProviderType.Hunyuan => "混元",
+            ProviderType.Spark => "讯飞星火",
             _ => throw new NotSupportedException(),
         };
     }
@@ -165,6 +166,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.Qwen => config.Qwen.ToAIServiceConfig(),
             ProviderType.Ernie => config.Ernie.ToAIServiceConfig(),
             ProviderType.Hunyuan => config.Hunyuan.ToAIServiceConfig(),
+            ProviderType.Spark => config.Spark.ToAIServiceConfig(),
             _ => throw new NotSupportedException(),
         };
 

@@ -24,6 +24,7 @@ var kernel = Kernel.CreateBuilder()
     .AddQwenChatCompletion()
     .AddErnieChatCompletion()
     .AddHunyuanChatCompletion()
+    .AddSparkChatCompletion()
     .Build();
 
 builder.Services.AddSingleton(kernel);

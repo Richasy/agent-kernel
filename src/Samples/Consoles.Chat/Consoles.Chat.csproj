@@ -20,6 +20,7 @@
     <ProjectReference Include="..\..\Connectors\Connectors.Baidu\Connectors.Baidu.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.DeepSeek\Connectors.DeepSeek.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.Gemini\Connectors.Gemini.csproj" />
+    <ProjectReference Include="..\..\Connectors\Connectors.IFlyTek\Connectors.IFlyTek.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.LingYi\Connectors.LingYi.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.Moonshot\Connectors.Moonshot.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.OpenAI\Connectors.OpenAI.csproj" />

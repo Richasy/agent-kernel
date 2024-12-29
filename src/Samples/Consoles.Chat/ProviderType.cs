@@ -67,4 +67,9 @@ internal enum ProviderType
     /// 混元.
     /// </summary>
     Hunyuan,
+
+    /// <summary>
+    /// 讯飞星火.
+    /// </summary>
+    Spark,
 }
