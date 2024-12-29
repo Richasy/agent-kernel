@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-using Google.Gemini;
 using Microsoft.Extensions.AI;
 using Richasy.AgentKernel.Connectors.Gemini.Models;
 using Richasy.AgentKernel.Connectors.Gemini.Models.Core;
@@ -17,7 +16,6 @@ namespace Richasy.AgentKernel.Connectors.Gemini;
 /// </summary>
 public sealed class GeminiChatClient : IChatClient
 {
-    private readonly GeminiClient _client;
     private readonly Uri _chatGenerationEndpoint;
     private readonly Uri _chatStreamingEndpoint;
     private readonly HttpClient _httpClient;
@@ -27,12 +25,12 @@ public sealed class GeminiChatClient : IChatClient
     /// </summary>
     public GeminiChatClient(string accessKey, string? modelId = null, Uri? endpoint = null, GeminiVersion version = GeminiVersion.V1Beta)
     {
-        _client = new GeminiClient(accessKey, baseUri: endpoint);
-        Metadata = new("gemini", endpoint ?? _client.BaseUri, modelId);
+        endpoint ??= new Uri("https://generativelanguage.googleapis.com");
+        Metadata = new("gemini", endpoint, modelId);
         var versionSubLink = GetApiVersionSubLink(version);
         _httpClient = HttpExtensions.CreateHttpClient();
-        _chatGenerationEndpoint = new Uri($"https://generativelanguage.googleapis.com/{versionSubLink}/models/{modelId}:generateContent?key={accessKey}");
-        _chatStreamingEndpoint = new Uri($"https://generativelanguage.googleapis.com/{versionSubLink}/models/{modelId}:streamGenerateContent?key={accessKey}&alt=sse");
+        _chatGenerationEndpoint = new Uri($"{endpoint.ToString().TrimEnd('/')}/{versionSubLink}/models/{modelId}:generateContent?key={accessKey}");
+        _chatStreamingEndpoint = new Uri($"{endpoint.ToString().TrimEnd('/')}/{versionSubLink}/models/{modelId}:streamGenerateContent?key={accessKey}&alt=sse");
     }
 
     /// <inheritdoc/>
@@ -128,10 +126,7 @@ public sealed class GeminiChatClient : IChatClient
 
     /// <inheritdoc/>
     public void Dispose()
-    {
-        _client?.Dispose();
-        _httpClient?.Dispose();
-    }
+        => _httpClient?.Dispose();
 
     /// <inheritdoc/>
     public object? GetService(Type serviceType, object? serviceKey = null)
