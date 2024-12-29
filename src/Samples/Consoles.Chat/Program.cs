@@ -22,6 +22,7 @@ var kernel = Kernel.CreateBuilder()
     .AddGeminiChatCompletion()
     .AddDeepSeekChatCompletion()
     .AddQwenChatCompletion()
+    .AddErnieChatCompletion()
     .Build();
 
 builder.Services.AddSingleton(kernel);

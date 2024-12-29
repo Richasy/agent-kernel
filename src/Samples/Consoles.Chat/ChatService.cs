@@ -60,6 +60,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.Gemini => "Gemini",
             ProviderType.DeepSeek => "DeepSeek",
             ProviderType.Qwen => "通义千问",
+            ProviderType.Ernie => "文心一言",
             _ => throw new NotSupportedException(),
         };
     }
@@ -128,14 +129,14 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
 
                 // options.AdditionalProperties!.Add("visual", true);
 
-                await foreach (var message in client.CompleteStreamingAsync(chatMessages, options, cancellationToken: cancellationToken))
-                {
-                    System.Diagnostics.Debug.WriteLine(message.Text);
-                    responseMessage += message.Text;
-                }
-                //var response = await client.CompleteAsync(chatMessages, options, cancellationToken: cancellationToken);
-                //responseMessage = response.Message.Text;
-                chatMessages.Add(new ChatMessage(ChatRole.Assistant, responseMessage.Trim()));
+                //await foreach (var message in client.CompleteStreamingAsync(chatMessages, options, cancellationToken: cancellationToken))
+                //{
+                //    System.Diagnostics.Debug.WriteLine(message.Text);
+                //    responseMessage += message.Text;
+                //}
+                var response = await client.CompleteAsync(chatMessages, options, cancellationToken: cancellationToken);
+                responseMessage = response.Message.Text;
+                chatMessages.Add(new ChatMessage(ChatRole.Assistant, responseMessage?.Trim()));
                 PrintAssistantMessage(chatMessages.Last());
             }
         }
@@ -161,6 +162,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.Gemini => config.Gemini.ToAIServiceConfig(),
             ProviderType.DeepSeek => config.DeepSeek.ToAIServiceConfig(),
             ProviderType.Qwen => config.Qwen.ToAIServiceConfig(),
+            ProviderType.Ernie => config.Ernie.ToAIServiceConfig(),
             _ => throw new NotSupportedException(),
         };
 

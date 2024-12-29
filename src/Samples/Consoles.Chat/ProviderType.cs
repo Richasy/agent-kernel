@@ -57,4 +57,9 @@ internal enum ProviderType
     /// 通义千问.
     /// </summary>
     Qwen,
+
+    /// <summary>
+    /// 文心一言.
+    /// </summary>
+    Ernie,
 }
