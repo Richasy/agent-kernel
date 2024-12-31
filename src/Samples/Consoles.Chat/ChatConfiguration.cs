@@ -57,6 +57,9 @@ internal sealed class ChatConfiguration
 
     [JsonPropertyName("togetherai")]
     public KeyConfiguration? TogetherAI { get; set; }
+
+    [JsonPropertyName("groq")]
+    public KeyConfiguration? Groq { get; set; }
 }
 
 internal sealed class OpenAIConfiguration : EndpointConfiguration

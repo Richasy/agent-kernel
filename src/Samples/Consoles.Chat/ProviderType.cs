@@ -92,4 +92,9 @@ internal enum ProviderType
     /// TogetherAI.
     /// </summary>
     TogetherAI,
+
+    /// <summary>
+    /// Groq.
+    /// </summary>
+    Groq,
 }

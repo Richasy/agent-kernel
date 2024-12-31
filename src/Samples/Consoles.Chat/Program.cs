@@ -29,6 +29,7 @@ var kernel = Kernel.CreateBuilder()
     .AddSiliconFlowChatCompletion()
     .AddOpenRouterChatCompletion()
     .AddTogetherAIChatCompletion()
+    .AddGroqChatCompletion()
     .Build();
 
 builder.Services.AddSingleton(kernel);

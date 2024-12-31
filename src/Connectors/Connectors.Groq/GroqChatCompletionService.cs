@@ -1,0 +1,46 @@
+﻿// Copyright (c) Richasy. All rights reserved.
+// Licensed under the MIT License.
+
+using Microsoft.Extensions.AI;
+using OpenAI;
+using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Connectors.Groq.Models;
+
+namespace Richasy.AgentKernel.Connectors.Groq;
+
+/// <summary>
+/// Groq Chat Completion Service.
+/// </summary>
+public sealed class GroqChatCompletionService : IChatCompletionService
+{
+    private GroqServiceConfig? _config;
+
+    /// <inheritdoc/>
+    public IChatClient? Client
+    {
+        get => field ?? throw new InvalidOperationException("The service has not been initialized.");
+        set;
+    }
+
+    /// <inheritdoc/>
+    public void Initialize(AIServiceConfig config)
+    {
+        if (config is not GroqServiceConfig groqConfig)
+        {
+            throw new ArgumentException("The configuration is not valid.", nameof(config));
+        }
+
+        if (_config != null && groqConfig.Equals(_config))
+        {
+            return;
+        }
+
+        _config = groqConfig;
+        var coreClient = new OpenAIClient(new(_config.AccessKey), new OpenAIClientOptions
+        {
+            Endpoint = new Uri("https://api.groq.com/openai/v1"),
+        });
+
+        Client = coreClient.AsChatClient(_config.Model);
+    }
+}

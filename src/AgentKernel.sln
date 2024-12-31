@@ -46,6 +46,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.OpenRouter", "Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.TogetherAI", "Connectors\Connectors.TogetherAI\Connectors.TogetherAI.csproj", "{E43B1176-8537-4F79-B6B8-DFF73BBED632}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.Groq", "Connectors\Connectors.Groq\Connectors.Groq.csproj", "{A239AECF-273C-483A-BDAF-A163D7619784}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -136,6 +138,10 @@ Global
 		{E43B1176-8537-4F79-B6B8-DFF73BBED632}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E43B1176-8537-4F79-B6B8-DFF73BBED632}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E43B1176-8537-4F79-B6B8-DFF73BBED632}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A239AECF-273C-483A-BDAF-A163D7619784}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A239AECF-273C-483A-BDAF-A163D7619784}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A239AECF-273C-483A-BDAF-A163D7619784}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A239AECF-273C-483A-BDAF-A163D7619784}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

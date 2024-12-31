@@ -11,6 +11,7 @@ using Richasy.AgentKernel.Connectors.Anthropic.Models;
 using Richasy.AgentKernel.Connectors.AzureOpenAI.Models;
 using Richasy.AgentKernel.Connectors.Baidu.Models;
 using Richasy.AgentKernel.Connectors.Gemini.Models;
+using Richasy.AgentKernel.Connectors.Groq.Models;
 using Richasy.AgentKernel.Connectors.IFlyTek.Models;
 using Richasy.AgentKernel.Connectors.LingYi.Models;
 using Richasy.AgentKernel.Connectors.Moonshot.Models;
@@ -82,6 +83,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.SiliconFlow => "硅基流动",
             ProviderType.OpenRouter => "OpenRouter",
             ProviderType.TogetherAI => "Together.AI",
+            ProviderType.Groq => "Groq",
             _ => throw new NotSupportedException(),
         };
     }
@@ -190,6 +192,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.SiliconFlow => config.SiliconFlow.ToAIServiceConfig<SiliconFlowServiceConfig>(),
             ProviderType.OpenRouter => config.OpenRouter.ToAIServiceConfig<OpenRouterServiceConfig>(),
             ProviderType.TogetherAI => config.TogetherAI.ToAIServiceConfig<TogetherAIServiceConfig>(),
+            ProviderType.Groq => config.Groq.ToAIServiceConfig<GroqServiceConfig>(),
             _ => throw new NotSupportedException(),
         } ?? throw new InvalidOperationException("The configuration is not valid.");
         service.Initialize(serviceConfig);
