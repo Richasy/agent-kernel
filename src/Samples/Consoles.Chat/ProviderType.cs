@@ -87,4 +87,9 @@ internal enum ProviderType
     /// OpenRouter.
     /// </summary>
     OpenRouter,
+
+    /// <summary>
+    /// TogetherAI.
+    /// </summary>
+    TogetherAI,
 }

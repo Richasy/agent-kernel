@@ -28,6 +28,7 @@ var kernel = Kernel.CreateBuilder()
     .AddDoubaoChatCompletion()
     .AddSiliconFlowChatCompletion()
     .AddOpenRouterChatCompletion()
+    .AddTogetherAIChatCompletion()
     .Build();
 
 builder.Services.AddSingleton(kernel);

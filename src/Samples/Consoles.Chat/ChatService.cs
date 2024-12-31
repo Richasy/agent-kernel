@@ -17,6 +17,7 @@ using Richasy.AgentKernel.Connectors.Moonshot.Models;
 using Richasy.AgentKernel.Connectors.OpenRouter.Models;
 using Richasy.AgentKernel.Connectors.SiliconFlow.Models;
 using Richasy.AgentKernel.Connectors.Tencent.Models;
+using Richasy.AgentKernel.Connectors.TogetherAI.Models;
 using Richasy.AgentKernel.Connectors.Volcano.Models;
 using Richasy.AgentKernel.Connectors.XAI.Models;
 using Richasy.AgentKernel.Connectors.ZhiPu.Models;
@@ -80,6 +81,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.Doubao => "豆包",
             ProviderType.SiliconFlow => "硅基流动",
             ProviderType.OpenRouter => "OpenRouter",
+            ProviderType.TogetherAI => "Together.AI",
             _ => throw new NotSupportedException(),
         };
     }
@@ -187,6 +189,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.Doubao => config.Doubao.ToAIServiceConfig<DoubaoServiceConfig>(),
             ProviderType.SiliconFlow => config.SiliconFlow.ToAIServiceConfig<SiliconFlowServiceConfig>(),
             ProviderType.OpenRouter => config.OpenRouter.ToAIServiceConfig<OpenRouterServiceConfig>(),
+            ProviderType.TogetherAI => config.TogetherAI.ToAIServiceConfig<TogetherAIServiceConfig>(),
             _ => throw new NotSupportedException(),
         } ?? throw new InvalidOperationException("The configuration is not valid.");
         service.Initialize(serviceConfig);

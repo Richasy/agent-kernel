@@ -27,6 +27,7 @@
     <ProjectReference Include="..\..\Connectors\Connectors.OpenRouter\Connectors.OpenRouter.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.SiliconFlow\Connectors.SiliconFlow.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.Tencent\Connectors.Tencent.csproj" />
+    <ProjectReference Include="..\..\Connectors\Connectors.TogetherAI\Connectors.TogetherAI.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.Volcano\Connectors.Volcano.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.XAI\Connectors.XAI.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.ZhiPu\Connectors.ZhiPu.csproj" />

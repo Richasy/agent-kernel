@@ -54,6 +54,9 @@ internal sealed class ChatConfiguration
 
     [JsonPropertyName("openrouter")]
     public KeyConfiguration? OpenRouter { get; set; }
+
+    [JsonPropertyName("togetherai")]
+    public KeyConfiguration? TogetherAI { get; set; }
 }
 
 internal sealed class OpenAIConfiguration : EndpointConfiguration
