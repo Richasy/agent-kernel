@@ -8,194 +8,65 @@ namespace Consoles.Chat;
 internal sealed class ChatConfiguration
 {
     [JsonPropertyName("azure_openai")]
-    public AzureOpenAIConfiguration? AzureOpenAI { get; set; }
+    public EndpointConfiguration? AzureOpenAI { get; set; }
 
     [JsonPropertyName("xai")]
-    public XAIConfiguration? XAI { get; set; }
+    public KeyConfiguration? XAI { get; set; }
 
     [JsonPropertyName("openai")]
     public OpenAIConfiguration? OpenAI { get; set; }
 
     [JsonPropertyName("zhipu")]
-    public ZhiPuConfiguration? ZhiPu { get; set; }
+    public KeyConfiguration? ZhiPu { get; set; }
 
     [JsonPropertyName("lingyi")]
-    public LingYiConfiguration? LingYi { get; set; }
+    public KeyConfiguration? LingYi { get; set; }
 
     [JsonPropertyName("anthropic")]
-    public AnthropicConfiguration? Anthropic { get; set; }
+    public EndpointConfiguration? Anthropic { get; set; }
 
     [JsonPropertyName("moonshot")]
-    public MoonshotConfiguration? Moonshot { get; set; }
+    public KeyConfiguration? Moonshot { get; set; }
 
     [JsonPropertyName("gemini")]
-    public GeminiConfiguration? Gemini { get; set; }
+    public EndpointConfiguration? Gemini { get; set; }
 
     [JsonPropertyName("deepseek")]
-    public DeepSeekConfiguration? DeepSeek { get; set; }
+    public KeyConfiguration? DeepSeek { get; set; }
 
     [JsonPropertyName("qwen")]
-    public QwenConfiguration? Qwen { get; set; }
+    public KeyConfiguration? Qwen { get; set; }
 
     [JsonPropertyName("ernie")]
-    public ErnieConfiguration? Ernie { get; set; }
+    public KeyConfiguration? Ernie { get; set; }
 
     [JsonPropertyName("hunyuan")]
-    public HunyuanConfiguration? Hunyuan { get; set; }
+    public KeyConfiguration? Hunyuan { get; set; }
 
     [JsonPropertyName("spark")]
-    public SparkConfiguration? Spark { get; set; }
+    public KeyConfiguration? Spark { get; set; }
+
+    [JsonPropertyName("doubao")]
+    public KeyConfiguration? Doubao { get; set; }
+
+    [JsonPropertyName("siliconflow")]
+    public KeyConfiguration? SiliconFlow { get; set; }
 }
 
-internal sealed class AzureOpenAIConfiguration
+internal sealed class OpenAIConfiguration : EndpointConfiguration
 {
-    [JsonPropertyName("endpoint")]
-    [JsonRequired]
-    public string? Endpoint { get; set; }
-
-    [JsonPropertyName("key")]
-    [JsonRequired]
-    public string? AccessKey { get; set; }
-
-    [JsonPropertyName("model")]
-    [JsonRequired]
-    public string? Model { get; set; }
-}
-
-internal sealed class XAIConfiguration
-{
-    [JsonPropertyName("key")]
-    [JsonRequired]
-    public string? AccessKey { get; set; }
-
-    [JsonPropertyName("model")]
-    [JsonRequired]
-    public string? Model { get; set; }
-}
-
-internal sealed class OpenAIConfiguration
-{
-    [JsonPropertyName("key")]
-    [JsonRequired]
-    public string? AccessKey { get; set; }
-
-    [JsonPropertyName("model")]
-    [JsonRequired]
-    public string? Model { get; set; }
-
-    [JsonPropertyName("endpoint")]
-    public string? Endpoint { get; set; }
 
     [JsonPropertyName("organization")]
     public string? Organization { get; set; }
 }
 
-internal sealed class ZhiPuConfiguration
+internal class EndpointConfiguration : KeyConfiguration
 {
-    [JsonPropertyName("key")]
-    [JsonRequired]
-    public string? AccessKey { get; set; }
-
-    [JsonPropertyName("model")]
-    [JsonRequired]
-    public string? Model { get; set; }
-}
-
-internal sealed class LingYiConfiguration
-{
-    [JsonPropertyName("key")]
-    [JsonRequired]
-    public string? AccessKey { get; set; }
-
-    [JsonPropertyName("model")]
-    [JsonRequired]
-    public string? Model { get; set; }
-}
-
-internal sealed class AnthropicConfiguration
-{
-    [JsonPropertyName("key")]
-    [JsonRequired]
-    public string? AccessKey { get; set; }
-
-    [JsonPropertyName("model")]
-    [JsonRequired]
-    public string? Model { get; set; }
-
     [JsonPropertyName("endpoint")]
     public string? Endpoint { get; set; }
 }
 
-internal sealed class MoonshotConfiguration
-{
-    [JsonPropertyName("key")]
-    [JsonRequired]
-    public string? AccessKey { get; set; }
-
-    [JsonPropertyName("model")]
-    [JsonRequired]
-    public string? Model { get; set; }
-}
-
-internal sealed class GeminiConfiguration
-{
-    [JsonPropertyName("key")]
-    [JsonRequired]
-    public string? AccessKey { get; set; }
-
-    [JsonPropertyName("model")]
-    [JsonRequired]
-    public string? Model { get; set; }
-
-    [JsonPropertyName("endpoint")]
-    public string? Endpoint { get; set; }
-}
-
-internal sealed class DeepSeekConfiguration
-{
-    [JsonPropertyName("key")]
-    [JsonRequired]
-    public string? AccessKey { get; set; }
-
-    [JsonPropertyName("model")]
-    [JsonRequired]
-    public string? Model { get; set; }
-}
-
-internal sealed class QwenConfiguration
-{
-    [JsonPropertyName("key")]
-    [JsonRequired]
-    public string? AccessKey { get; set; }
-
-    [JsonPropertyName("model")]
-    [JsonRequired]
-    public string? Model { get; set; }
-}
-
-internal sealed class ErnieConfiguration
-{
-    [JsonPropertyName("key")]
-    [JsonRequired]
-    public string? AccessKey { get; set; }
-
-    [JsonPropertyName("model")]
-    [JsonRequired]
-    public string? Model { get; set; }
-}
-
-internal sealed class HunyuanConfiguration
-{
-    [JsonPropertyName("key")]
-    [JsonRequired]
-    public string? AccessKey { get; set; }
-
-    [JsonPropertyName("model")]
-    [JsonRequired]
-    public string? Model { get; set; }
-}
-
-internal sealed class SparkConfiguration
+internal class KeyConfiguration
 {
     [JsonPropertyName("key")]
     [JsonRequired]

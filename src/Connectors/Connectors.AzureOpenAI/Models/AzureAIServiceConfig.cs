@@ -6,7 +6,7 @@ namespace Richasy.AgentKernel.Connectors.AzureOpenAI.Models;
 /// <summary>
 /// Configuration for Azure OpenAI service.
 /// </summary>
-public class AzureOpenAIServiceConfig(Uri endpoint, string key, string model) : AIServiceConfig
+public class AzureOpenAIServiceConfig(string key, string model, Uri endpoint) : AIServiceConfig
 {
     /// <summary>
     /// Gets or sets the endpoint of the service.

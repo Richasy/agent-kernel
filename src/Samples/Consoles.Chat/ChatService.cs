@@ -3,9 +3,22 @@
 
 #define USE_SYSTEM_PROMPT
 
+using Connectors.DeepSeek.Models;
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Hosting;
 using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Connectors.Anthropic.Models;
+using Richasy.AgentKernel.Connectors.AzureOpenAI.Models;
+using Richasy.AgentKernel.Connectors.Baidu.Models;
+using Richasy.AgentKernel.Connectors.Gemini.Models;
+using Richasy.AgentKernel.Connectors.IFlyTek.Models;
+using Richasy.AgentKernel.Connectors.LingYi.Models;
+using Richasy.AgentKernel.Connectors.Moonshot.Models;
+using Richasy.AgentKernel.Connectors.SiliconFlow.Models;
+using Richasy.AgentKernel.Connectors.Tencent.Models;
+using Richasy.AgentKernel.Connectors.Volcano.Models;
+using Richasy.AgentKernel.Connectors.XAI.Models;
+using Richasy.AgentKernel.Connectors.ZhiPu.Models;
 using RichasyKernel;
 using Spectre.Console;
 using System.ComponentModel;
@@ -39,7 +52,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
         var providers = Enum.GetValues<ProviderType>();
         var provider = AnsiConsole.Prompt(new SelectionPrompt<ProviderType>()
             .Title("Select a provider")
-            .PageSize(10)
+            .PageSize(20)
             .MoreChoicesText("More")
             .UseConverter(ProviderToName)
             .AddChoices(providers));
@@ -63,6 +76,8 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.Ernie => "文心一言",
             ProviderType.Hunyuan => "混元",
             ProviderType.Spark => "讯飞星火",
+            ProviderType.Doubao => "豆包",
+            ProviderType.SiliconFlow => "硅基流动",
             _ => throw new NotSupportedException(),
         };
     }
@@ -155,21 +170,22 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
         var serviceConfig = provider switch
         {
             ProviderType.OpenAI => config.OpenAI.ToAIServiceConfig(),
-            ProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig(),
-            ProviderType.XAI => config.XAI.ToAIServiceConfig(),
-            ProviderType.ZhiPu => config.ZhiPu.ToAIServiceConfig(),
-            ProviderType.LingYi => config.LingYi.ToAIServiceConfig(),
-            ProviderType.Anthropic => config.Anthropic.ToAIServiceConfig(),
-            ProviderType.Moonshot => config.Moonshot.ToAIServiceConfig(),
-            ProviderType.Gemini => config.Gemini.ToAIServiceConfig(),
-            ProviderType.DeepSeek => config.DeepSeek.ToAIServiceConfig(),
-            ProviderType.Qwen => config.Qwen.ToAIServiceConfig(),
-            ProviderType.Ernie => config.Ernie.ToAIServiceConfig(),
-            ProviderType.Hunyuan => config.Hunyuan.ToAIServiceConfig(),
-            ProviderType.Spark => config.Spark.ToAIServiceConfig(),
+            ProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig<AzureOpenAIServiceConfig>(),
+            ProviderType.XAI => config.XAI.ToAIServiceConfig<XAIServiceConfig>(),
+            ProviderType.ZhiPu => config.ZhiPu.ToAIServiceConfig<ZhiPuServiceConfig>(),
+            ProviderType.LingYi => config.LingYi.ToAIServiceConfig<LingYiServiceConfig>(),
+            ProviderType.Anthropic => config.Anthropic.ToAIServiceConfig<AnthropicServiceConfig>(),
+            ProviderType.Moonshot => config.Moonshot.ToAIServiceConfig<MoonshotServiceConfig>(),
+            ProviderType.Gemini => config.Gemini.ToAIServiceConfig<GeminiServiceConfig>(),
+            ProviderType.DeepSeek => config.DeepSeek.ToAIServiceConfig<DeepSeekServiceConfig>(),
+            ProviderType.Qwen => config.Qwen.ToAIServiceConfig<DeepSeekServiceConfig>(),
+            ProviderType.Ernie => config.Ernie.ToAIServiceConfig<ErnieServiceConfig>(),
+            ProviderType.Hunyuan => config.Hunyuan.ToAIServiceConfig<HunyuanServiceConfig>(),
+            ProviderType.Spark => config.Spark.ToAIServiceConfig<SparkServiceConfig>(),
+            ProviderType.Doubao => config.Doubao.ToAIServiceConfig<DoubaoServiceConfig>(),
+            ProviderType.SiliconFlow => config.SiliconFlow.ToAIServiceConfig<SiliconFlowServiceConfig>(),
             _ => throw new NotSupportedException(),
-        };
-
+        } ?? throw new InvalidOperationException("The configuration is not valid.");
         service.Initialize(serviceConfig);
         return service;
     }

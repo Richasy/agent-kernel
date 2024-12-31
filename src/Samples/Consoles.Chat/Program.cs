@@ -25,6 +25,8 @@ var kernel = Kernel.CreateBuilder()
     .AddErnieChatCompletion()
     .AddHunyuanChatCompletion()
     .AddSparkChatCompletion()
+    .AddDoubaoChatCompletion()
+    .AddSiliconFlowChatCompletion()
     .Build();
 
 builder.Services.AddSingleton(kernel);

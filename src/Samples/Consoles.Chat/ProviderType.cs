@@ -72,4 +72,14 @@ internal enum ProviderType
     /// 讯飞星火.
     /// </summary>
     Spark,
+
+    /// <summary>
+    /// 豆包.
+    /// </summary>
+    Doubao,
+
+    /// <summary>
+    /// 硅基流动.
+    /// </summary>
+    SiliconFlow,
 }
