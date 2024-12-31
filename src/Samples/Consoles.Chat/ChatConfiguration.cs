@@ -51,6 +51,9 @@ internal sealed class ChatConfiguration
 
     [JsonPropertyName("siliconflow")]
     public KeyConfiguration? SiliconFlow { get; set; }
+
+    [JsonPropertyName("openrouter")]
+    public KeyConfiguration? OpenRouter { get; set; }
 }
 
 internal sealed class OpenAIConfiguration : EndpointConfiguration

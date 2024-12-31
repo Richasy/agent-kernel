@@ -27,6 +27,7 @@ var kernel = Kernel.CreateBuilder()
     .AddSparkChatCompletion()
     .AddDoubaoChatCompletion()
     .AddSiliconFlowChatCompletion()
+    .AddOpenRouterChatCompletion()
     .Build();
 
 builder.Services.AddSingleton(kernel);

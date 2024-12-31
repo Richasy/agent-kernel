@@ -82,4 +82,9 @@ internal enum ProviderType
     /// 硅基流动.
     /// </summary>
     SiliconFlow,
+
+    /// <summary>
+    /// OpenRouter.
+    /// </summary>
+    OpenRouter,
 }
