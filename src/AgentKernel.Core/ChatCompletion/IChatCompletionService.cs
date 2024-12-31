@@ -16,6 +16,11 @@ public interface IChatCompletionService
     IChatClient? Client { get; }
 
     /// <summary>
+    /// Gets the configuration of the service.
+    /// </summary>
+    AIServiceConfig? Config { get; }
+
+    /// <summary>
     /// Initialize the service.
     /// </summary>
     /// <param name="config">Service configuration.</param>

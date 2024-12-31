@@ -6,22 +6,12 @@ namespace Richasy.AgentKernel.Connectors.OpenAI.Models;
 /// <summary>
 /// Configuration for OpenAI service.
 /// </summary>
-public class OpenAIServiceConfig(string key, string model, Uri? endpoint, string? organization) : AIServiceConfig
+public class OpenAIServiceConfig(string key, string model, Uri? endpoint, string? organization) : AIServiceConfig(key, model)
 {
     /// <summary>
     /// Gets or sets the endpoint of the service.
     /// </summary>
     public Uri? Endpoint { get; set; } = endpoint;
-
-    /// <summary>
-    /// Gets or sets the access key of the service.
-    /// </summary>
-    public string AccessKey { get; set; } = key;
-
-    /// <summary>
-    /// Gets or sets the model of the service.
-    /// </summary>
-    public string Model { get; set; } = model;
 
     /// <summary>
     /// Gets or sets the organization of the service.

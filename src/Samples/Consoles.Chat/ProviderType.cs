@@ -97,4 +97,9 @@ internal enum ProviderType
     /// Groq.
     /// </summary>
     Groq,
+
+    /// <summary>
+    /// Mistral.
+    /// </summary>
+    Mistral,
 }

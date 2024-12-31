@@ -23,6 +23,9 @@ public sealed class QwenChatCompletionService : IChatCompletionService
     }
 
     /// <inheritdoc/>
+    public AIServiceConfig? Config => _config;
+
+    /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
         if (config is not QwenServiceConfig qwenConfig)
@@ -41,6 +44,6 @@ public sealed class QwenChatCompletionService : IChatCompletionService
             Endpoint = new Uri("https://dashscope.aliyuncs.com/compatible-mode/v1"),
         });
 
-        Client = coreClient.AsChatClient(_config.Model);
+        Client = coreClient.AsChatClient(_config.Model!);
     }
 }

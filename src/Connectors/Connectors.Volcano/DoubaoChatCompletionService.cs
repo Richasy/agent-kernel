@@ -23,6 +23,9 @@ public sealed class DoubaoChatCompletionService : IChatCompletionService
     }
 
     /// <inheritdoc/>
+    public AIServiceConfig? Config => _config;
+
+    /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
         if (config is not DoubaoServiceConfig doubaoConfig)
@@ -41,6 +44,6 @@ public sealed class DoubaoChatCompletionService : IChatCompletionService
             Endpoint = new Uri("https://ark.cn-beijing.volces.com/api/v3"),
         });
 
-        Client = coreClient.AsChatClient(_config.Model);
+        Client = coreClient.AsChatClient(_config.Model!);
     }
 }

@@ -60,6 +60,9 @@ internal sealed class ChatConfiguration
 
     [JsonPropertyName("groq")]
     public KeyConfiguration? Groq { get; set; }
+
+    [JsonPropertyName("mistral")]
+    public KeyConfiguration? Mistral { get; set; }
 }
 
 internal sealed class OpenAIConfiguration : EndpointConfiguration

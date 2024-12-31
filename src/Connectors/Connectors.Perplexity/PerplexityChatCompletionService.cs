@@ -4,16 +4,16 @@
 using Microsoft.Extensions.AI;
 using OpenAI;
 using Richasy.AgentKernel.ChatCompletion;
-using Richasy.AgentKernel.Connectors.SiliconFlow.Models;
+using Richasy.AgentKernel.Connectors.Perplexity.Models;
 
-namespace Richasy.AgentKernel.Connectors.SiliconFlow;
+namespace Richasy.AgentKernel.Connectors.Perplexity;
 
 /// <summary>
-/// 硅基流动 Chat Completion Service.
+/// Perplexity Chat Completion Service.
 /// </summary>
-public sealed class SiliconFlowChatCompletionService : IChatCompletionService
+public sealed class PerplexityChatCompletionService : IChatCompletionService
 {
-    private SiliconFlowServiceConfig? _config;
+    private PerplexityServiceConfig? _config;
 
     /// <inheritdoc/>
     public IChatClient? Client
@@ -28,20 +28,20 @@ public sealed class SiliconFlowChatCompletionService : IChatCompletionService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
-        if (config is not SiliconFlowServiceConfig sfConfig)
+        if (config is not PerplexityServiceConfig plexConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }
 
-        if (_config != null && sfConfig.Equals(_config))
+        if (_config != null && plexConfig.Equals(_config))
         {
             return;
         }
 
-        _config = sfConfig;
+        _config = plexConfig;
         var coreClient = new OpenAIClient(new(_config.AccessKey), new OpenAIClientOptions
         {
-            Endpoint = new Uri("https://api.siliconflow.cn/v1"),
+            Endpoint = new Uri("https://api.perplexity.ai"),
         });
 
         Client = coreClient.AsChatClient(_config.Model!);

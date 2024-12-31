@@ -23,6 +23,9 @@ public sealed class XAIChatCompletionService : IChatCompletionService
     }
 
     /// <inheritdoc/>
+    public AIServiceConfig? Config => _config;
+
+    /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
         if (config is not XAIServiceConfig xaiConfig)
@@ -41,6 +44,6 @@ public sealed class XAIChatCompletionService : IChatCompletionService
             Endpoint = new Uri("https://api.x.ai/v1"),
         });
 
-        Client = coreClient.AsChatClient(_config.Model);
+        Client = coreClient.AsChatClient(_config.Model!);
     }
 }

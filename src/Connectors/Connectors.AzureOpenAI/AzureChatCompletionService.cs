@@ -24,6 +24,9 @@ public sealed class AzureChatCompletionService : IChatCompletionService
     }
 
     /// <inheritdoc/>
+    public AIServiceConfig? Config => _config;
+
+    /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
         if (config is not AzureOpenAIServiceConfig azureConfig)
@@ -38,6 +41,6 @@ public sealed class AzureChatCompletionService : IChatCompletionService
 
         _config = azureConfig;
         var coreClient = new AzureOpenAIClient(_config.Endpoint, new ApiKeyCredential(_config.AccessKey));
-        Client = coreClient.AsChatClient(_config.Model);
+        Client = coreClient.AsChatClient(_config.Model!);
     }
 }

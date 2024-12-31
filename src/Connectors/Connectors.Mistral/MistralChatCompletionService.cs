@@ -2,18 +2,18 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.AI;
-using OpenAI;
+using Mistral.SDK;
 using Richasy.AgentKernel.ChatCompletion;
-using Richasy.AgentKernel.Connectors.SiliconFlow.Models;
+using Richasy.AgentKernel.Connectors.Mistral.Models;
 
-namespace Richasy.AgentKernel.Connectors.SiliconFlow;
+namespace Richasy.AgentKernel.Connectors.Mistral;
 
 /// <summary>
-/// 硅基流动 Chat Completion Service.
+/// Mistral Chat Completion Service.
 /// </summary>
-public sealed class SiliconFlowChatCompletionService : IChatCompletionService
+public sealed class MistralChatCompletionService : IChatCompletionService
 {
-    private SiliconFlowServiceConfig? _config;
+    private MistralServiceConfig? _config;
 
     /// <inheritdoc/>
     public IChatClient? Client
@@ -28,22 +28,17 @@ public sealed class SiliconFlowChatCompletionService : IChatCompletionService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
-        if (config is not SiliconFlowServiceConfig sfConfig)
+        if (config is not MistralServiceConfig mistralConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }
 
-        if (_config != null && sfConfig.Equals(_config))
+        if (_config != null && mistralConfig.Equals(_config))
         {
             return;
         }
 
-        _config = sfConfig;
-        var coreClient = new OpenAIClient(new(_config.AccessKey), new OpenAIClientOptions
-        {
-            Endpoint = new Uri("https://api.siliconflow.cn/v1"),
-        });
-
-        Client = coreClient.AsChatClient(_config.Model!);
+        _config = mistralConfig;
+        Client = new MistralClient(new APIAuthentication(_config.AccessKey)).Completions;
     }
 }

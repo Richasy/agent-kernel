@@ -23,6 +23,9 @@ public sealed class HunyuanChatCompletionService : IChatCompletionService
     }
 
     /// <inheritdoc/>
+    public AIServiceConfig? Config => _config;
+
+    /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
         if (config is not HunyuanServiceConfig hunyuanConfig)
@@ -41,6 +44,6 @@ public sealed class HunyuanChatCompletionService : IChatCompletionService
             Endpoint = new Uri("https://api.hunyuan.cloud.tencent.com/v1"),
         });
 
-        Client = coreClient.AsChatClient(_config.Model);
+        Client = coreClient.AsChatClient(_config.Model!);
     }
 }

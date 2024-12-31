@@ -30,6 +30,7 @@ var kernel = Kernel.CreateBuilder()
     .AddOpenRouterChatCompletion()
     .AddTogetherAIChatCompletion()
     .AddGroqChatCompletion()
+    .AddMistralChatCompletion()
     .Build();
 
 builder.Services.AddSingleton(kernel);

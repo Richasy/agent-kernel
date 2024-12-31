@@ -23,6 +23,9 @@ public sealed class ErnieChatCompletionService : IChatCompletionService
     }
 
     /// <inheritdoc/>
+    public AIServiceConfig? Config => _config;
+
+    /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
         if (config is not ErnieServiceConfig qwenConfig)
@@ -41,6 +44,6 @@ public sealed class ErnieChatCompletionService : IChatCompletionService
             Endpoint = new Uri("https://qianfan.baidubce.com/v2"),
         });
 
-        Client = coreClient.AsChatClient(_config.Model);
+        Client = coreClient.AsChatClient(_config.Model!);
     }
 }

@@ -23,6 +23,9 @@ public sealed class DeepSeekChatCompletionService : IChatCompletionService
     }
 
     /// <inheritdoc/>
+    public AIServiceConfig? Config => _config;
+
+    /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
         if (config is not DeepSeekServiceConfig deepseekConfig)
@@ -41,6 +44,6 @@ public sealed class DeepSeekChatCompletionService : IChatCompletionService
             Endpoint = new Uri("https://api.deepseek.com"),
         });
 
-        Client = coreClient.AsChatClient(_config.Model);
+        Client = coreClient.AsChatClient(_config.Model!);
     }
 }

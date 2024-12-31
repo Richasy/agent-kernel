@@ -14,6 +14,7 @@ using Richasy.AgentKernel.Connectors.Gemini.Models;
 using Richasy.AgentKernel.Connectors.Groq.Models;
 using Richasy.AgentKernel.Connectors.IFlyTek.Models;
 using Richasy.AgentKernel.Connectors.LingYi.Models;
+using Richasy.AgentKernel.Connectors.Mistral.Models;
 using Richasy.AgentKernel.Connectors.Moonshot.Models;
 using Richasy.AgentKernel.Connectors.OpenRouter.Models;
 using Richasy.AgentKernel.Connectors.SiliconFlow.Models;
@@ -84,6 +85,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.OpenRouter => "OpenRouter",
             ProviderType.TogetherAI => "Together.AI",
             ProviderType.Groq => "Groq",
+            ProviderType.Mistral => "Mistral",
             _ => throw new NotSupportedException(),
         };
     }
@@ -146,7 +148,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
                         // new ZhiPuWebSearchTool { Enable = true }
                         // new ZhiPuRetrievalTool { KnowledgeId = "1871787212023255040", PromptTemplate = "从文档\n\"\"\"\n{{knowledge}}\n\"\"\"\n中找问题\n\"\"\"\n{{question}}\n\"\"\"\n的答案，找到答案就仅使用文档语句回答问题，找不到答案就用自身知识回答并且告诉用户该信息不是来自文档。\n不要复述问题，直接开始回答。"}
                     ],
-
+                    ModelId = service.Config?.Model,
                     AdditionalProperties = [],
                 };
 
@@ -193,6 +195,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.OpenRouter => config.OpenRouter.ToAIServiceConfig<OpenRouterServiceConfig>(),
             ProviderType.TogetherAI => config.TogetherAI.ToAIServiceConfig<TogetherAIServiceConfig>(),
             ProviderType.Groq => config.Groq.ToAIServiceConfig<GroqServiceConfig>(),
+            ProviderType.Mistral => config.Mistral.ToAIServiceConfig<MistralServiceConfig>(),
             _ => throw new NotSupportedException(),
         } ?? throw new InvalidOperationException("The configuration is not valid.");
         service.Initialize(serviceConfig);

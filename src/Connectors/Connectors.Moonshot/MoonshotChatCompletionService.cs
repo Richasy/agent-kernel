@@ -23,6 +23,9 @@ public sealed class MoonshotChatCompletionService : IChatCompletionService
     }
 
     /// <inheritdoc/>
+    public AIServiceConfig? Config => _config;
+
+    /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
         if (config is not MoonshotServiceConfig moonshotConfig)
@@ -41,6 +44,6 @@ public sealed class MoonshotChatCompletionService : IChatCompletionService
             Endpoint = new Uri("https://api.moonshot.cn/v1"),
         });
 
-        Client = coreClient.AsChatClient(_config.Model);
+        Client = coreClient.AsChatClient(_config.Model!);
     }
 }

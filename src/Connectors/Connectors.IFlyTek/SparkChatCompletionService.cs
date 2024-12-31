@@ -23,6 +23,9 @@ public sealed class SparkChatCompletionService : IChatCompletionService
     }
 
     /// <inheritdoc/>
+    public AIServiceConfig? Config => _config;
+
+    /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
         if (config is not SparkServiceConfig hunyuanConfig)
@@ -41,6 +44,6 @@ public sealed class SparkChatCompletionService : IChatCompletionService
             Endpoint = new Uri("https://spark-api-open.xf-yun.com/v1"),
         });
 
-        Client = coreClient.AsChatClient(_config.Model);
+        Client = coreClient.AsChatClient(_config.Model!);
     }
 }

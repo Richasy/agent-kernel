@@ -23,6 +23,9 @@ public sealed class TogetherAIChatCompletionService : IChatCompletionService
     }
 
     /// <inheritdoc/>
+    public AIServiceConfig? Config => _config;
+
+    /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
         if (config is not TogetherAIServiceConfig taiConfig)
@@ -41,6 +44,6 @@ public sealed class TogetherAIChatCompletionService : IChatCompletionService
             Endpoint = new Uri("https://api.together.xyz/v1"),
         });
 
-        Client = coreClient.AsChatClient(_config.Model);
+        Client = coreClient.AsChatClient(_config.Model!);
     }
 }

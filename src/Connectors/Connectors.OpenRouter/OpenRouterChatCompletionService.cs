@@ -23,6 +23,9 @@ public sealed class OpenRouterChatCompletionService : IChatCompletionService
     }
 
     /// <inheritdoc/>
+    public AIServiceConfig? Config => _config;
+
+    /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
         if (config is not OpenRouterServiceConfig orConfig)
@@ -41,6 +44,6 @@ public sealed class OpenRouterChatCompletionService : IChatCompletionService
             Endpoint = new Uri("https://openrouter.ai/api/v1"),
         });
 
-        Client = coreClient.AsChatClient(_config.Model);
+        Client = coreClient.AsChatClient(_config.Model!);
     }
 }

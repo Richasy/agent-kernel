@@ -23,6 +23,9 @@ public sealed class OpenAIChatCompletionService : IChatCompletionService
     }
 
     /// <inheritdoc/>
+    public AIServiceConfig? Config => _config;
+
+    /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
         if (config is not OpenAIServiceConfig oaiConfig)
@@ -48,6 +51,6 @@ public sealed class OpenAIChatCompletionService : IChatCompletionService
         }
 
         var coreClient = new OpenAIClient(new(_config.AccessKey), options);
-        Client = coreClient.AsChatClient(_config.Model);
+        Client = coreClient.AsChatClient(_config.Model!);
     }
 }
