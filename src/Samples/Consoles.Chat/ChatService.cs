@@ -86,6 +86,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.TogetherAI => "Together.AI",
             ProviderType.Groq => "Groq",
             ProviderType.Mistral => "Mistral",
+            ProviderType.Ollama => "Ollama",
             _ => throw new NotSupportedException(),
         };
     }
@@ -196,6 +197,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.TogetherAI => config.TogetherAI.ToAIServiceConfig<TogetherAIServiceConfig>(),
             ProviderType.Groq => config.Groq.ToAIServiceConfig<GroqServiceConfig>(),
             ProviderType.Mistral => config.Mistral.ToAIServiceConfig<MistralServiceConfig>(),
+            ProviderType.Ollama => config.Ollama.ToAIServiceConfig(),
             _ => throw new NotSupportedException(),
         } ?? throw new InvalidOperationException("The configuration is not valid.");
         service.Initialize(serviceConfig);

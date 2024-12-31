@@ -102,4 +102,9 @@ internal enum ProviderType
     /// Mistral.
     /// </summary>
     Mistral,
+
+    /// <summary>
+    /// Ollama.
+    /// </summary>
+    Ollama,
 }

@@ -31,6 +31,7 @@ var kernel = Kernel.CreateBuilder()
     .AddTogetherAIChatCompletion()
     .AddGroqChatCompletion()
     .AddMistralChatCompletion()
+    .AddOllamaChatCompletion()
     .Build();
 
 builder.Services.AddSingleton(kernel);

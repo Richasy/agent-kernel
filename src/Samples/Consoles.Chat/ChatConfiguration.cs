@@ -63,6 +63,9 @@ internal sealed class ChatConfiguration
 
     [JsonPropertyName("mistral")]
     public KeyConfiguration? Mistral { get; set; }
+
+    [JsonPropertyName("ollama")]
+    public OllamaConfiguration? Ollama { get; set; }
 }
 
 internal sealed class OpenAIConfiguration : EndpointConfiguration
@@ -70,6 +73,15 @@ internal sealed class OpenAIConfiguration : EndpointConfiguration
 
     [JsonPropertyName("organization")]
     public string? Organization { get; set; }
+}
+
+internal sealed class OllamaConfiguration
+{
+    [JsonPropertyName("model")]
+    public required string Model { get; set; }
+
+    [JsonPropertyName("endpoint")]
+    public required string Endpoint { get; set; }
 }
 
 internal class EndpointConfiguration : KeyConfiguration
