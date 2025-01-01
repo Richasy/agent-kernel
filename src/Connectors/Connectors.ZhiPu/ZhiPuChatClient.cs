@@ -78,9 +78,13 @@ public sealed class ZhiPuChatClient : IChatClient
         var json = chatRequest is ZhiPuBasicChatRequest basicRequest
             ? JsonSerializer.Serialize(basicRequest, JsonGenerationContext.Default.ZhiPuBasicChatRequest)
             : JsonSerializer.Serialize((ZhiPuContentChatRequest)chatRequest, JsonGenerationContext.Default.ZhiPuContentChatRequest);
-        using var httpResponse = await _httpClient.PostAsync(
-            new Uri(_apiEndpoint),
-            new StringContent(json, Encoding.UTF8, "application/json"),
+        var request = new HttpRequestMessage(HttpMethod.Post, new Uri(_apiEndpoint))
+        {
+            Content = new StringContent(json, Encoding.UTF8, "application/json"),
+        };
+        using var httpResponse = await _httpClient.SendAsync(
+            request,
+            HttpCompletionOption.ResponseHeadersRead,
             cancellationToken).ConfigureAwait(false);
         using var httpResponseStream = await httpResponse.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
         using var streamReader = new StreamReader(httpResponseStream);
@@ -165,14 +169,14 @@ public sealed class ZhiPuChatClient : IChatClient
         ZhiPuChatRequest request = isVisualModel
             ? new ZhiPuContentChatRequest()
             {
-                Messages = chatMessages.Select(x => ToZhiPuChatRequestMessages(x, useContentMessage: true)).OfType<ZhiPuChatRequestContentMessage>().ToList() ?? [],
+                Messages = chatMessages.Select(x => ToZhiPuChatRequestMessage(x, useContentMessage: true)).OfType<ZhiPuChatRequestContentMessage>().ToList() ?? [],
                 Model = options?.ModelId ?? Metadata.ModelId ?? string.Empty,
                 Stream = stream,
             }
             : new ZhiPuBasicChatRequest()
             {
                 ResponseFormat = options?.ResponseFormat is ChatResponseFormatJson ? ZhiPuResponseFormat.JsonFormat : default,
-                Messages = chatMessages.Select(x => ToZhiPuChatRequestMessages(x, useContentMessage: false)).ToList() ?? [],
+                Messages = chatMessages.Select(x => ToZhiPuChatRequestMessage(x, useContentMessage: false)).ToList() ?? [],
                 Model = options?.ModelId ?? Metadata.ModelId ?? string.Empty,
                 Stream = stream,
                 Tools = options?.Tools is { Count: > 0 } tools ? [.. tools.Select(ToZhiPuTool)] : null,
@@ -192,7 +196,7 @@ public sealed class ZhiPuChatClient : IChatClient
         return request;
     }
 
-    private static object ToZhiPuChatRequestMessages(ChatMessage content, bool useContentMessage)
+    private static object ToZhiPuChatRequestMessage(ChatMessage content, bool useContentMessage)
     {
         if (useContentMessage)
         {
@@ -225,7 +229,7 @@ public sealed class ZhiPuChatClient : IChatClient
                     return new ZhiPuChatRequestBasicMessage { Role = content.Role.Value, Content = textContent.Text };
                 case FunctionCallContent fcc:
                     var sb = new StringBuilder();
-                    DictionaryToolkit.WriteDictionary(sb, fcc.Arguments!);
+                    DictionaryToolkit.WriteDictionary(sb, fcc.Arguments ?? new Dictionary<string, object?>());
                     return new ZhiPuChatRequestAssistantMessage
                     {
                         Role = "assistant",
@@ -283,14 +287,14 @@ public sealed class ZhiPuChatClient : IChatClient
 
     private static FunctionCallContent? ToFunctionCallContent(ZhiPuToolCall toolCall)
     {
+        var callContent = new FunctionCallContent(toolCall.Id, toolCall.Function?.Name ?? string.Empty);
         if (toolCall.Function?.Arguments is string json)
         {
             var ele = JsonDocument.Parse(json).RootElement;
-            var arguments = JsonElementToDictionary(ele);
-            return new(toolCall.Id, toolCall.Function?.Name ?? string.Empty, arguments);
+            callContent.Arguments = JsonTools.JsonElementToDictionary(ele);
         }
 
-        return default;
+        return callContent;
     }
 
     private static ZhiPuTool ToZhiPuTool(AITool tool)
@@ -354,64 +358,5 @@ public sealed class ZhiPuChatClient : IChatClient
             };
     }
 
-    private static Dictionary<string, object?> JsonElementToDictionary(JsonElement element)
-    {
-        if (element.ValueKind != JsonValueKind.Object)
-        {
-            throw new ArgumentException("The JsonElement must be of Object type", nameof(element));
-        }
-
-        var dictionary = new Dictionary<string, object?>();
-        foreach (var property in element.EnumerateObject())
-        {
-            dictionary[property.Name] = ConvertJsonElement(property.Value);
-        }
-
-        return dictionary;
-    }
-
-    private static object? ConvertJsonElement(JsonElement element)
-    {
-        switch (element.ValueKind)
-        {
-            case JsonValueKind.Object:
-                return JsonElementToDictionary(element);
-            case JsonValueKind.Array:
-                var list = new List<object?>();
-                foreach (var item in element.EnumerateArray())
-                {
-                    list.Add(ConvertJsonElement(item));
-                }
-
-                return list;
-            case JsonValueKind.String:
-                return element.GetString();
-            case JsonValueKind.Number:
-                if (element.TryGetInt32(out var intValue))
-                {
-                    return intValue;
-                }
-
-                if (element.TryGetInt64(out var longValue))
-                {
-                    return longValue;
-                }
-
-                if (element.TryGetDouble(out var doubleValue))
-                {
-                    return doubleValue;
-                }
-
-                throw new InvalidOperationException("Unsupported number type");
-            case JsonValueKind.True:
-                return true;
-            case JsonValueKind.False:
-                return false;
-            case JsonValueKind.Null:
-            case JsonValueKind.Undefined:
-                return null;
-            default:
-                throw new InvalidOperationException("Unsupported JsonValueKind");
-        }
-    }
+    
 }

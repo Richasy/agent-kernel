@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.AI;
-using OpenAI;
 using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Connectors.Baidu.Core;
 using Richasy.AgentKernel.Connectors.Baidu.Models;
 
 namespace Richasy.AgentKernel.Connectors.Baidu;
@@ -28,22 +28,17 @@ public sealed class ErnieChatCompletionService : IChatCompletionService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
-        if (config is not ErnieServiceConfig qwenConfig)
+        if (config is not ErnieServiceConfig ernieConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }
 
-        if (_config != null && qwenConfig.Equals(_config))
+        if (_config != null && ernieConfig.Equals(_config))
         {
             return;
         }
 
-        _config = qwenConfig;
-        var coreClient = new OpenAIClient(new(_config.AccessKey), new OpenAIClientOptions
-        {
-            Endpoint = new Uri("https://qianfan.baidubce.com/v2"),
-        });
-
-        Client = coreClient.AsChatClient(_config.Model!);
+        _config = ernieConfig;
+        Client = new ErnieChatClient(ernieConfig.AccessKey, ernieConfig.SecretKey, ernieConfig.Model);
     }
 }

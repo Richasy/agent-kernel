@@ -19,8 +19,8 @@ public abstract class AIServiceConfig(string key, string? model)
     public string? Model { get; set; } = model;
 
     /// <inheritdoc/>
-    public override bool Equals(object? obj) => obj is AIServiceConfig config && AccessKey == config.AccessKey && Model == config.Model;
+    public override bool Equals(object? obj) => obj is AIServiceConfig config && AccessKey == config.AccessKey;
 
     /// <inheritdoc/>
-    public override int GetHashCode() => HashCode.Combine(AccessKey, Model);
+    public override int GetHashCode() => HashCode.Combine(AccessKey);
 }

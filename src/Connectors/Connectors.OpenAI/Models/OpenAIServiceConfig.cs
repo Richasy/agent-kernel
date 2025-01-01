@@ -19,8 +19,8 @@ public class OpenAIServiceConfig(string key, string model, Uri? endpoint, string
     public string? Organization { get; set; } = organization;
 
     /// <inheritdoc/>
-    public override bool Equals(object? obj) => obj is OpenAIServiceConfig config && EqualityComparer<Uri>.Default.Equals(Endpoint, config.Endpoint) && AccessKey == config.AccessKey && Model == config.Model && Organization == config.Organization;
+    public override bool Equals(object? obj) => obj is OpenAIServiceConfig config && EqualityComparer<Uri>.Default.Equals(Endpoint, config.Endpoint) && AccessKey == config.AccessKey && Organization == config.Organization;
 
     /// <inheritdoc/>
-    public override int GetHashCode() => HashCode.Combine(Endpoint, AccessKey, Model, Organization);
+    public override int GetHashCode() => HashCode.Combine(Endpoint, AccessKey, Organization);
 }

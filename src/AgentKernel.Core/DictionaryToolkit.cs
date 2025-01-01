@@ -4,10 +4,16 @@
 using System.Globalization;
 using System.Text;
 
-namespace Richasy.AgentKernel.Connectors.ZhiPu;
+namespace Richasy.AgentKernel;
 
-internal static class DictionaryToolkit
+/// <summary>
+/// 字典工具.
+/// </summary>
+public static class DictionaryToolkit
 {
+    /// <summary>
+    /// 写入字典.
+    /// </summary>
     public static void WriteDictionary(StringBuilder stringBuilder, IDictionary<string, object?> dictionary)
     {
         stringBuilder.Append('{');

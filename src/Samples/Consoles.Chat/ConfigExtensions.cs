@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Richasy.AgentKernel;
+using Richasy.AgentKernel.Connectors.Baidu.Models;
 using Richasy.AgentKernel.Connectors.Ollama.Models;
 using Richasy.AgentKernel.Connectors.OpenAI.Models;
 
@@ -38,5 +39,12 @@ internal static class ConfigExtensions
         return config is null || string.IsNullOrWhiteSpace(config.Endpoint) || string.IsNullOrWhiteSpace(config.Model)
              ? throw new ArgumentException("The configuration is not valid.", nameof(config))
              : new OllamaServiceConfig(config.Model, new Uri(config.Endpoint));
+    }
+
+    public static AIServiceConfig? ToAIServiceConfig(this ErnieConfiguration? config)
+    {
+        return config is null || string.IsNullOrWhiteSpace(config.AccessKey) || string.IsNullOrWhiteSpace(config.Model)
+            ? throw new ArgumentException("The configuration is not valid.", nameof(config))
+            : new ErnieServiceConfig(config.AccessKey, config.SecretKey, config.Model);
     }
 }

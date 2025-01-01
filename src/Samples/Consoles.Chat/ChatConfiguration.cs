@@ -38,7 +38,7 @@ internal sealed class ChatConfiguration
     public KeyConfiguration? Qwen { get; set; }
 
     [JsonPropertyName("ernie")]
-    public KeyConfiguration? Ernie { get; set; }
+    public ErnieConfiguration? Ernie { get; set; }
 
     [JsonPropertyName("hunyuan")]
     public KeyConfiguration? Hunyuan { get; set; }
@@ -82,6 +82,12 @@ internal sealed class OllamaConfiguration
 
     [JsonPropertyName("endpoint")]
     public required string Endpoint { get; set; }
+}
+
+internal sealed class ErnieConfiguration : KeyConfiguration
+{
+    [JsonPropertyName("secret")]
+    public required string SecretKey { get; set; }
 }
 
 internal class EndpointConfiguration : KeyConfiguration

@@ -9,7 +9,6 @@ using Microsoft.Extensions.Hosting;
 using Richasy.AgentKernel.ChatCompletion;
 using Richasy.AgentKernel.Connectors.Anthropic.Models;
 using Richasy.AgentKernel.Connectors.AzureOpenAI.Models;
-using Richasy.AgentKernel.Connectors.Baidu.Models;
 using Richasy.AgentKernel.Connectors.Gemini.Models;
 using Richasy.AgentKernel.Connectors.Groq.Models;
 using Richasy.AgentKernel.Connectors.IFlyTek.Models;
@@ -144,8 +143,9 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
                 {
                     Tools =
                     [
-                         AIFunctionFactory.Create(
+                        AIFunctionFactory.Create(
                              ([Description("The person whose age is being requested")] string personName) => 42, "GetPersonAge", "Gets the age of the specified person."),
+                        // new ErnieWebSearchTool { Enable = true }
                         // new ZhiPuWebSearchTool { Enable = true }
                         // new ZhiPuRetrievalTool { KnowledgeId = "1871787212023255040", PromptTemplate = "从文档\n\"\"\"\n{{knowledge}}\n\"\"\"\n中找问题\n\"\"\"\n{{question}}\n\"\"\"\n的答案，找到答案就仅使用文档语句回答问题，找不到答案就用自身知识回答并且告诉用户该信息不是来自文档。\n不要复述问题，直接开始回答。"}
                     ],
@@ -188,7 +188,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.Gemini => config.Gemini.ToAIServiceConfig<GeminiServiceConfig>(),
             ProviderType.DeepSeek => config.DeepSeek.ToAIServiceConfig<DeepSeekServiceConfig>(),
             ProviderType.Qwen => config.Qwen.ToAIServiceConfig<DeepSeekServiceConfig>(),
-            ProviderType.Ernie => config.Ernie.ToAIServiceConfig<ErnieServiceConfig>(),
+            ProviderType.Ernie => config.Ernie.ToAIServiceConfig(),
             ProviderType.Hunyuan => config.Hunyuan.ToAIServiceConfig<HunyuanServiceConfig>(),
             ProviderType.Spark => config.Spark.ToAIServiceConfig<SparkServiceConfig>(),
             ProviderType.Doubao => config.Doubao.ToAIServiceConfig<DoubaoServiceConfig>(),

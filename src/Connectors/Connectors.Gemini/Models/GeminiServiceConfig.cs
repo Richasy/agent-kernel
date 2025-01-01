@@ -14,8 +14,8 @@ public sealed class GeminiServiceConfig(string key, string model, Uri? endpoint)
     public Uri? Endpoint { get; set; } = endpoint;
 
     /// <inheritdoc/>
-    public override bool Equals(object? obj) => obj is GeminiServiceConfig config && EqualityComparer<Uri>.Default.Equals(Endpoint, config.Endpoint) && AccessKey == config.AccessKey && Model == config.Model;
+    public override bool Equals(object? obj) => obj is GeminiServiceConfig config && EqualityComparer<Uri>.Default.Equals(Endpoint, config.Endpoint) && AccessKey == config.AccessKey;
 
     /// <inheritdoc/>
-    public override int GetHashCode() => HashCode.Combine(AccessKey, Model);
+    public override int GetHashCode() => HashCode.Combine(Endpoint, AccessKey);
 }

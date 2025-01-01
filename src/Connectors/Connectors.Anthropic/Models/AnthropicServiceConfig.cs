@@ -14,8 +14,8 @@ public sealed class AnthropicServiceConfig(string key, string? model, Uri? endpo
     public Uri? Endpoint { get; set; } = endpoint;
 
     /// <inheritdoc/>
-    public override bool Equals(object? obj) => obj is AnthropicServiceConfig config && EqualityComparer<Uri?>.Default.Equals(Endpoint, config.Endpoint) && AccessKey == config.AccessKey && Model == config.Model;
+    public override bool Equals(object? obj) => obj is AnthropicServiceConfig config && EqualityComparer<Uri?>.Default.Equals(Endpoint, config.Endpoint) && AccessKey == config.AccessKey;
 
     /// <inheritdoc/>
-    public override int GetHashCode() => HashCode.Combine(Endpoint, AccessKey, Model);
+    public override int GetHashCode() => HashCode.Combine(Endpoint, AccessKey);
 }
