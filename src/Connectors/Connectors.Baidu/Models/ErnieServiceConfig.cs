@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 
+using Richasy.AgentKernel.Models;
+
 namespace Richasy.AgentKernel.Connectors.Baidu.Models;
 
 /// <summary>

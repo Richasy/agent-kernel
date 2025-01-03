@@ -4,6 +4,7 @@
 using Microsoft.Extensions.AI;
 using Richasy.AgentKernel.ChatCompletion;
 using Richasy.AgentKernel.Connectors.ZhiPu.Models;
+using Richasy.AgentKernel.Models;
 
 namespace Richasy.AgentKernel.Connectors.ZhiPu;
 

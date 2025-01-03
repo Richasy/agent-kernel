@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.AI;
+using Richasy.AgentKernel.Models;
 
 namespace Richasy.AgentKernel.ChatCompletion;
 

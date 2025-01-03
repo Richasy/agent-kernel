@@ -5,6 +5,7 @@ using Anthropic;
 using Microsoft.Extensions.AI;
 using Richasy.AgentKernel.ChatCompletion;
 using Richasy.AgentKernel.Connectors.Anthropic.Models;
+using Richasy.AgentKernel.Models;
 
 namespace Richasy.AgentKernel.Connectors.Anthropic;
 

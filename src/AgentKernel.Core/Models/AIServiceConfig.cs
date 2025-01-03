@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Richasy.AgentKernel;
+namespace Richasy.AgentKernel.Models;
 
 /// <summary>
 /// Represents the configuration of an AI service.

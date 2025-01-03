@@ -5,6 +5,7 @@ using Microsoft.Extensions.AI;
 using Richasy.AgentKernel.ChatCompletion;
 using Richasy.AgentKernel.Connectors.Baidu.Core;
 using Richasy.AgentKernel.Connectors.Baidu.Models;
+using Richasy.AgentKernel.Models;
 
 namespace Richasy.AgentKernel.Connectors.Baidu;
 

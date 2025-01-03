@@ -5,6 +5,7 @@ using Microsoft.Extensions.AI;
 using OpenAI;
 using Richasy.AgentKernel.ChatCompletion;
 using Richasy.AgentKernel.Connectors.Ali.Models;
+using Richasy.AgentKernel.Models;
 
 namespace Richasy.AgentKernel.Connectors.Ali;
 

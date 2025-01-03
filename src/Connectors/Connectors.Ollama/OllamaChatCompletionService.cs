@@ -4,6 +4,7 @@
 using Microsoft.Extensions.AI;
 using Richasy.AgentKernel.ChatCompletion;
 using Richasy.AgentKernel.Connectors.Ollama.Models;
+using Richasy.AgentKernel.Models;
 
 namespace Richasy.AgentKernel.Connectors.Ollama;
 

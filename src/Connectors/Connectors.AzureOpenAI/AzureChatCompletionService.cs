@@ -5,6 +5,7 @@ using Azure.AI.OpenAI;
 using Microsoft.Extensions.AI;
 using Richasy.AgentKernel.ChatCompletion;
 using Richasy.AgentKernel.Connectors.AzureOpenAI.Models;
+using Richasy.AgentKernel.Models;
 using System.ClientModel;
 
 namespace Richasy.AgentKernel.Connectors.AzureOpenAI;

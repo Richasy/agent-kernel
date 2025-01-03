@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-using Richasy.AgentKernel;
+using Richasy.AgentKernel.Models;
 
 namespace Connectors.DeepSeek.Models;
 

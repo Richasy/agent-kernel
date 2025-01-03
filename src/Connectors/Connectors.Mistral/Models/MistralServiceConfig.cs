@@ -1,4 +1,6 @@
 ﻿
+using Richasy.AgentKernel.Models;
+
 namespace Richasy.AgentKernel.Connectors.Mistral.Models;
 
 /// <summary>

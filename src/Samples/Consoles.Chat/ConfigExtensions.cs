@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-using Richasy.AgentKernel;
 using Richasy.AgentKernel.Connectors.Baidu.Models;
 using Richasy.AgentKernel.Connectors.Ollama.Models;
 using Richasy.AgentKernel.Connectors.OpenAI.Models;
+using Richasy.AgentKernel.Models;
 
 namespace Consoles.Chat;
 

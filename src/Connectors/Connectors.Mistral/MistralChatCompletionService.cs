@@ -5,6 +5,7 @@ using Microsoft.Extensions.AI;
 using Mistral.SDK;
 using Richasy.AgentKernel.ChatCompletion;
 using Richasy.AgentKernel.Connectors.Mistral.Models;
+using Richasy.AgentKernel.Models;
 
 namespace Richasy.AgentKernel.Connectors.Mistral;
 
