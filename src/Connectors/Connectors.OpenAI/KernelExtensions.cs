@@ -22,4 +22,14 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IChatCompletionService, OpenAIChatCompletionService>("OpenAI");
         return builder;
     }
+
+    /// <summary>
+    /// Add OpenAI chat model provider.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddOpenAIChatModelProvider(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IChatModelProvider, OpenAIChatModelProvider>("OpenAI");
+        return builder;
+    }
 }

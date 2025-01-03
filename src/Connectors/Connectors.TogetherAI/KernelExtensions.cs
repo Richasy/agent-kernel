@@ -22,4 +22,14 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IChatCompletionService, TogetherAIChatCompletionService>("TogetherAI");
         return builder;
     }
+
+    /// <summary>
+    /// 添加 Together.AI 模型提供程序.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddTogetherAIChatModelProvider(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IChatModelProvider, TogetherAIChatModelProvider>("TogetherAI");
+        return builder;
+    }
 }

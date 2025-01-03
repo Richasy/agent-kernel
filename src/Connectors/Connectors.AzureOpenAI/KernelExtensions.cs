@@ -22,4 +22,14 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IChatCompletionService, AzureChatCompletionService>("AzureOpenAI");
         return builder;
     }
+
+    /// <summary>
+    /// Add Azure OpenAI chat model provider.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddAzureOpenAIChatModelProvider(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IChatModelProvider, AzureOpenAIChatModelProvider>("AzureOpenAI");
+        return builder;
+    }
 }

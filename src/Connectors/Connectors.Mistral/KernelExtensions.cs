@@ -14,12 +14,22 @@ namespace Richasy.AgentKernel;
 public static class KernelExtensions
 {
     /// <summary>
-    /// 添加硅基流动对话服务.
+    /// 添加 Mistral 对话服务.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
     public static IKernelBuilder AddMistralChatCompletion(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatCompletionService, MistralChatCompletionService>("Mistral");
+        return builder;
+    }
+
+    /// <summary>
+    /// 添加 Mistral 模型提供程序.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddMistralChatModelProvider(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IChatModelProvider, MistralChatModelProvider>("Mistral");
         return builder;
     }
 }

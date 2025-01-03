@@ -22,4 +22,14 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IChatCompletionService, XAIChatCompletionService>("XAI");
         return builder;
     }
+
+    /// <summary>
+    /// Add xAI chat model provider.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddXAIChatModelProvider(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IChatModelProvider, XAIChatModelProvider>("XAI");
+        return builder;
+    }
 }

@@ -22,4 +22,14 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IChatCompletionService, ZhiPuChatCompletionService>("ZhiPu");
         return builder;
     }
+
+    /// <summary>
+    /// Add ZhiPu chat model provider.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddZhiPuChatModelProvider(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IChatModelProvider, ZhiPuChatModelProvider>("ZhiPu");
+        return builder;
+    }
 }

@@ -22,4 +22,14 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IChatCompletionService, HunyuanChatCompletionService>("Hunyuan");
         return builder;
     }
+
+    /// <summary>
+    /// 添加腾讯混元模型提供程序.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddHunyuanChatModelProvider(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IChatModelProvider, HunyuanChatModelProvider>("Hunyuan");
+        return builder;
+    }
 }

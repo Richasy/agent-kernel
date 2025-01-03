@@ -22,4 +22,14 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IChatCompletionService, GroqChatCompletionService>("Groq");
         return builder;
     }
+
+    /// <summary>
+    /// Add Groq chat model provider.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddGroqChatModelProvider(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IChatModelProvider, GroqChatModelProvider>("Groq");
+        return builder;
+    }
 }

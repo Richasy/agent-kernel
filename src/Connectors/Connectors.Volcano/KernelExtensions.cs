@@ -22,4 +22,14 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IChatCompletionService, DoubaoChatCompletionService>("Doubao");
         return builder;
     }
+
+    /// <summary>
+    /// 添加字节豆包模型提供程序.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddDoubaoChatModelProvider(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IChatModelProvider, DoubaoChatModelProvider>("Doubao");
+        return builder;
+    }
 }

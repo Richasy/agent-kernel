@@ -22,4 +22,14 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IChatCompletionService, ErnieChatCompletionService>("Ernie");
         return builder;
     }
+
+    /// <summary>
+    /// 添加文心一言模型提供程序.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddErnieChatModelProvider(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IChatModelProvider, ErnieChatModelProvider>("Ernie");
+        return builder;
+    }
 }

@@ -22,4 +22,14 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IChatCompletionService, AnthropicChatCompletionService>("Anthropic");
         return builder;
     }
+
+    /// <summary>
+    /// Add Anthropic chat model provider.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddAnthropicChatModelProvider(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IChatModelProvider, AnthropicChatModelProvider>("Anthropic");
+        return builder;
+    }
 }

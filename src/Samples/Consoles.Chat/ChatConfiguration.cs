@@ -103,6 +103,5 @@ internal class KeyConfiguration
     public string? AccessKey { get; set; }
 
     [JsonPropertyName("model")]
-    [JsonRequired]
     public string? Model { get; set; }
 }

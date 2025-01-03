@@ -165,8 +165,13 @@ public sealed class ZhiPuChatClient : IChatClient
 
     private ZhiPuChatRequest ToZhiPuChatRequest(IList<ChatMessage> chatMessages, ChatOptions? options, bool stream)
     {
-        var isVisualModel = options?.AdditionalProperties?.TryGetValue("visual", out var isVisualModelValue) is true && Convert.ToBoolean(isVisualModelValue, CultureInfo.InvariantCulture);
-        ZhiPuChatRequest request = isVisualModel
+        var isVisionModel = false;
+        if (options is ZhiPuChatOptions zhipuOptions)
+        {
+            isVisionModel = zhipuOptions.VisionSupport;
+        }
+
+        ZhiPuChatRequest request = isVisionModel
             ? new ZhiPuContentChatRequest()
             {
                 Messages = chatMessages.Select(x => ToZhiPuChatRequestMessage(x, useContentMessage: true)).OfType<ZhiPuChatRequestContentMessage>().ToList() ?? [],
@@ -358,5 +363,5 @@ public sealed class ZhiPuChatClient : IChatClient
             };
     }
 
-    
+
 }

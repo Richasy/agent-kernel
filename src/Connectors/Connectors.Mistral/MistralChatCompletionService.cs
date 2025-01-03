@@ -39,6 +39,12 @@ public sealed class MistralChatCompletionService : IChatCompletionService
         }
 
         _config = mistralConfig;
-        Client = new MistralClient(new APIAuthentication(_config.AccessKey)).Completions;
+        var c = new MistralClient(new APIAuthentication(_config.AccessKey));
+        if (mistralConfig.UseCodestralApi)
+        {
+            c.ApiUrlFormat = "https://codestral.mistral.ai/{0}/{1}";
+        }
+
+        Client = c.Completions;
     }
 }

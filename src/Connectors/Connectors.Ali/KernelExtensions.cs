@@ -22,4 +22,14 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IChatCompletionService, QwenChatCompletionService>("Qwen");
         return builder;
     }
+
+    /// <summary>
+    /// 添加通义千问模型提供程序.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddQwenChatModelProvider(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IChatModelProvider, QwenChatModelProvider>("Qwen");
+        return builder;
+    }
 }

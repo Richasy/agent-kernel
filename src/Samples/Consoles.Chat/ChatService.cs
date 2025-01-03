@@ -7,6 +7,7 @@ using Connectors.DeepSeek.Models;
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Hosting;
 using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Connectors.Ali.Models;
 using Richasy.AgentKernel.Connectors.Anthropic.Models;
 using Richasy.AgentKernel.Connectors.AzureOpenAI.Models;
 using Richasy.AgentKernel.Connectors.Gemini.Models;
@@ -22,6 +23,7 @@ using Richasy.AgentKernel.Connectors.TogetherAI.Models;
 using Richasy.AgentKernel.Connectors.Volcano.Models;
 using Richasy.AgentKernel.Connectors.XAI.Models;
 using Richasy.AgentKernel.Connectors.ZhiPu.Models;
+using Richasy.AgentKernel.Models;
 using RichasyKernel;
 using Spectre.Console;
 using System.ComponentModel;
@@ -53,13 +55,29 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
     private ProviderType AskProvider()
     {
         var providers = Enum.GetValues<ProviderType>();
-        var provider = AnsiConsole.Prompt(new SelectionPrompt<ProviderType>()
+        return AnsiConsole.Prompt(new SelectionPrompt<ProviderType>()
             .Title("Select a provider")
             .PageSize(20)
             .MoreChoicesText("More")
             .UseConverter(ProviderToName)
             .AddChoices(providers));
-        return provider;
+    }
+
+    private ChatModel? AskModel(ProviderType providerType)
+    {
+        var provider = kernel.GetRequiredService<IChatModelProvider>(providerType.ToString());
+        var models = provider.GetModels();
+        if (models?.Count > 0)
+        {
+            return AnsiConsole.Prompt(new SelectionPrompt<ChatModel>()
+            .Title("Select a model")
+            .PageSize(20)
+            .MoreChoicesText("More")
+            .UseConverter(x => x.Name)
+            .AddChoices(models));
+        }
+
+        return default;
     }
 
     private string ProviderToName(ProviderType provider)
@@ -86,6 +104,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.Groq => "Groq",
             ProviderType.Mistral => "Mistral",
             ProviderType.Ollama => "Ollama",
+            ProviderType.Codestral => "Codestral",
             _ => throw new NotSupportedException(),
         };
     }
@@ -97,7 +116,8 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
         {
             AnsiConsole.Clear();
             var provider = AskProvider();
-            var service = DispatchService(provider);
+            var model = AskModel(provider);
+            var service = DispatchService(provider, model);
             var client = new ChatClientBuilder(service.Client!)
                 .UseFunctionInvocation()
                 .Build();
@@ -141,17 +161,20 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
                 var responseMessage = string.Empty;
                 var options = new ChatOptions()
                 {
-                    Tools =
-                    [
+                    ModelId = service.Config?.Model,
+                    AdditionalProperties = [],
+                };
+
+                if (model?.ToolSupport ?? false)
+                {
+                    options.Tools = [
                         AIFunctionFactory.Create(
                              ([Description("The person whose age is being requested")] string personName) => 42, "GetPersonAge", "Gets the age of the specified person."),
                         // new ErnieWebSearchTool { Enable = true }
                         // new ZhiPuWebSearchTool { Enable = true }
                         // new ZhiPuRetrievalTool { KnowledgeId = "1871787212023255040", PromptTemplate = "从文档\n\"\"\"\n{{knowledge}}\n\"\"\"\n中找问题\n\"\"\"\n{{question}}\n\"\"\"\n的答案，找到答案就仅使用文档语句回答问题，找不到答案就用自身知识回答并且告诉用户该信息不是来自文档。\n不要复述问题，直接开始回答。"}
-                    ],
-                    ModelId = service.Config?.Model,
-                    AdditionalProperties = [],
-                };
+                    ];
+                }
 
                 // options.AdditionalProperties!.Add("visual", true);
 
@@ -173,7 +196,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
         }
     }
 
-    private IChatCompletionService DispatchService(ProviderType provider)
+    private IChatCompletionService DispatchService(ProviderType provider, ChatModel? model)
     {
         var service = kernel.GetRequiredService<IChatCompletionService>(provider.ToString());
         var serviceConfig = provider switch
@@ -187,7 +210,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.Moonshot => config.Moonshot.ToAIServiceConfig<MoonshotServiceConfig>(),
             ProviderType.Gemini => config.Gemini.ToAIServiceConfig<GeminiServiceConfig>(),
             ProviderType.DeepSeek => config.DeepSeek.ToAIServiceConfig<DeepSeekServiceConfig>(),
-            ProviderType.Qwen => config.Qwen.ToAIServiceConfig<DeepSeekServiceConfig>(),
+            ProviderType.Qwen => config.Qwen.ToAIServiceConfig<QwenServiceConfig>(),
             ProviderType.Ernie => config.Ernie.ToAIServiceConfig(),
             ProviderType.Hunyuan => config.Hunyuan.ToAIServiceConfig<HunyuanServiceConfig>(),
             ProviderType.Spark => config.Spark.ToAIServiceConfig<SparkServiceConfig>(),
@@ -200,6 +223,11 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.Ollama => config.Ollama.ToAIServiceConfig(),
             _ => throw new NotSupportedException(),
         } ?? throw new InvalidOperationException("The configuration is not valid.");
+        if (model != null)
+        {
+            serviceConfig.Model = model.Id;
+        }
+
         service.Initialize(serviceConfig);
         return service;
     }
