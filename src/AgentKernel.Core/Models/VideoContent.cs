@@ -5,7 +5,7 @@ using Microsoft.Extensions.AI;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
-namespace Richasy.AgentKernel;
+namespace Richasy.AgentKernel.Models;
 
 /// <summary>
 /// Represents audio content.

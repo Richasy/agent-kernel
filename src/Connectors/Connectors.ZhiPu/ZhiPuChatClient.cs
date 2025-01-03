@@ -3,6 +3,7 @@
 
 using Microsoft.Extensions.AI;
 using Richasy.AgentKernel.Connectors.ZhiPu.Models;
+using Richasy.AgentKernel.Models;
 using RichasyKernel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -296,7 +297,7 @@ public sealed class ZhiPuChatClient : IChatClient
         if (toolCall.Function?.Arguments is string json)
         {
             var ele = JsonDocument.Parse(json).RootElement;
-            callContent.Arguments = JsonTools.JsonElementToDictionary(ele);
+            callContent.Arguments = JsonToolkit.JsonElementToDictionary(ele);
         }
 
         return callContent;

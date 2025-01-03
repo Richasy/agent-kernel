@@ -8,7 +8,7 @@ namespace Richasy.AgentKernel;
 /// <summary>
 /// Json工具.
 /// </summary>
-public static class JsonTools
+public static class JsonToolkit
 {
     /// <summary>
     /// 将Json字符串转换为指定类型的对象.

@@ -325,7 +325,7 @@ public sealed class ErnieChatClient : IChatClient
         if (call.Function.Arguments is string json)
         {
             var ele = JsonDocument.Parse(json).RootElement;
-            callContent.Arguments = JsonTools.JsonElementToDictionary(ele);
+            callContent.Arguments = JsonToolkit.JsonElementToDictionary(ele);
         }
 
         return callContent;
