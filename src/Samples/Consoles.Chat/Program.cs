@@ -32,7 +32,7 @@ var kernel = Kernel.CreateBuilder()
     .AddGroqChatCompletion()
     .AddMistralChatCompletion()
     .AddOllamaChatCompletion()
-    
+
     .AddQwenChatModelProvider()
     .AddAnthropicChatModelProvider()
     .AddAzureOpenAIChatModelProvider()

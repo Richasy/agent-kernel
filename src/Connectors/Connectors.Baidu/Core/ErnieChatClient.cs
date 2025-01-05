@@ -184,6 +184,9 @@ public sealed class ErnieChatClient : IChatClient
             request.FrequencyPenalty = options.FrequencyPenalty;
             request.Stop = options.StopSequences;
             request.Seed = options.Seed;
+            request.ResponseFormat = options.ResponseFormat is not null
+                ? options.ResponseFormat is ChatResponseFormatJson ? ErnieResponseFormat.JsonFormat : ErnieResponseFormat.TextFormat
+                : null;
         }
 
         if (options?.Tools is { Count: > 0 } tools)
@@ -290,7 +293,7 @@ public sealed class ErnieChatClient : IChatClient
             {
                 OpenAIChatToolJson toolJson = new();
 
-                foreach (AIFunctionParameterMetadata parameter in parameters)
+                foreach (var parameter in parameters)
                 {
                     toolJson.Properties.Add(parameter.Name, parameter.Schema is JsonElement e ? e : _defaultParameterSchema);
 

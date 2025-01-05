@@ -107,9 +107,4 @@ internal enum ProviderType
     /// Ollama.
     /// </summary>
     Ollama,
-
-    /// <summary>
-    /// Codestral.
-    /// </summary>
-    Codestral,
 }

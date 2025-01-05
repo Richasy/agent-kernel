@@ -184,7 +184,7 @@ public sealed class GeminiChatClient : IChatClient
 
     private static GeminiChatMessageContent GetChatMessageContentFromCandidate(GeminiResponse geminiResponse, GeminiResponseCandidate candidate)
     {
-        GeminiPart? part = candidate.Content?.Parts?[0];
+        var part = candidate.Content?.Parts?[0];
         return new GeminiChatMessageContent
         {
             Role = candidate.Content?.Role ?? ChatRole.Assistant,
@@ -215,12 +215,12 @@ public sealed class GeminiChatClient : IChatClient
         var contents = chatMessages.Where(p => p.Role != ChatRole.System).Select(GeminiRequest.CreateGeminiContentFromChatMessage).ToList();
         var request = new GeminiRequest { Contents = contents };
         GeminiRequest.AddConfiguration(options, request);
-        request.SafetySettings = new List<GeminiSafetySetting>
-        {
+        request.SafetySettings =
+        [
             new(GeminiSafetyCategory.DangerousContent, GeminiSafetyThreshold.BlockNone),
             new(GeminiSafetyCategory.SexuallyExplicit, GeminiSafetyThreshold.BlockNone),
             new(GeminiSafetyCategory.Harassment, GeminiSafetyThreshold.BlockNone),
-        };
+        ];
 
         var systemPrompt = chatMessages.FirstOrDefault(x => x.Role == ChatRole.System)?.Text;
         if (!string.IsNullOrEmpty(systemPrompt))

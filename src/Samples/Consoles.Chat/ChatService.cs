@@ -67,17 +67,14 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
     {
         var provider = kernel.GetRequiredService<IChatModelProvider>(providerType.ToString());
         var models = provider.GetModels();
-        if (models?.Count > 0)
-        {
-            return AnsiConsole.Prompt(new SelectionPrompt<ChatModel>()
+        return models?.Count > 0
+            ? AnsiConsole.Prompt(new SelectionPrompt<ChatModel>()
             .Title("Select a model")
             .PageSize(20)
             .MoreChoicesText("More")
             .UseConverter(x => x.Name)
-            .AddChoices(models));
-        }
-
-        return default;
+            .AddChoices(models))
+            : default;
     }
 
     private string ProviderToName(ProviderType provider)
@@ -104,7 +101,6 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.Groq => "Groq",
             ProviderType.Mistral => "Mistral",
             ProviderType.Ollama => "Ollama",
-            ProviderType.Codestral => "Codestral",
             _ => throw new NotSupportedException(),
         };
     }
@@ -169,7 +165,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
                 {
                     options.Tools = [
                         AIFunctionFactory.Create(
-                             ([Description("The person whose age is being requested")] string personName) => 42, "GetPersonAge", "Gets the age of the specified person."),
+                             ([Description("The person whose age is being requested")] string personName) => "42岁", "GetPersonAge", "Gets the age of the specified person."),
                         // new ErnieWebSearchTool { Enable = true }
                         // new ZhiPuWebSearchTool { Enable = true }
                         // new ZhiPuRetrievalTool { KnowledgeId = "1871787212023255040", PromptTemplate = "从文档\n\"\"\"\n{{knowledge}}\n\"\"\"\n中找问题\n\"\"\"\n{{question}}\n\"\"\"\n的答案，找到答案就仅使用文档语句回答问题，找不到答案就用自身知识回答并且告诉用户该信息不是来自文档。\n不要复述问题，直接开始回答。"}
@@ -178,13 +174,14 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
 
                 // options.AdditionalProperties!.Add("visual", true);
 
-                //await foreach (var message in client.CompleteStreamingAsync(chatMessages, options, cancellationToken: cancellationToken))
-                //{
-                //    System.Diagnostics.Debug.WriteLine(message.Text);
-                //    responseMessage += message.Text;
-                //}
-                var response = await client.CompleteAsync(chatMessages, options, cancellationToken: cancellationToken);
-                responseMessage = response.Message.Text;
+                await foreach (var message in client.CompleteStreamingAsync(chatMessages, options, cancellationToken: cancellationToken))
+                {
+                    System.Diagnostics.Debug.WriteLine(message.Text);
+                    responseMessage += message.Text;
+                }
+
+                //var response = await client.CompleteAsync(chatMessages, options, cancellationToken: cancellationToken);
+                //responseMessage = response.Message.Text;
                 chatMessages.Add(new ChatMessage(ChatRole.Assistant, responseMessage?.Trim()));
                 PrintAssistantMessage(chatMessages.Last());
             }
