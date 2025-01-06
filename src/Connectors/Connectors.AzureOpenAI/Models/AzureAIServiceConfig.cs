@@ -3,7 +3,7 @@
 
 using Richasy.AgentKernel.Models;
 
-namespace Richasy.AgentKernel.Connectors.AzureOpenAI.Models;
+namespace Richasy.AgentKernel.Connectors.Azure.Models;
 
 /// <summary>
 /// Configuration for Azure OpenAI service.

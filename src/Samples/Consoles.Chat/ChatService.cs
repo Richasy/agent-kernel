@@ -9,7 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Richasy.AgentKernel.ChatCompletion;
 using Richasy.AgentKernel.Connectors.Ali.Models;
 using Richasy.AgentKernel.Connectors.Anthropic.Models;
-using Richasy.AgentKernel.Connectors.AzureOpenAI.Models;
+using Richasy.AgentKernel.Connectors.Azure.Models;
 using Richasy.AgentKernel.Connectors.Gemini.Models;
 using Richasy.AgentKernel.Connectors.Groq.Models;
 using Richasy.AgentKernel.Connectors.IFlyTek.Models;
@@ -115,7 +115,10 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             var model = AskModel(provider);
             var service = DispatchService(provider, model);
             var client = new ChatClientBuilder(service.Client!)
-                .UseFunctionInvocation()
+                .UseFunctionInvocation(configure: client =>
+                {
+                    client.MaximumIterationsPerRequest = 2;
+                })
                 .Build();
             List<ChatMessage> chatMessages = [];
 #if USE_SYSTEM_PROMPT

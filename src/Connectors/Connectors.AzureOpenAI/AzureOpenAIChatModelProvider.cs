@@ -4,7 +4,7 @@
 using Richasy.AgentKernel.ChatCompletion;
 using Richasy.AgentKernel.Models;
 
-namespace Richasy.AgentKernel.Connectors.AzureOpenAI;
+namespace Richasy.AgentKernel.Connectors.Azure;
 
 /// <summary>
 /// Provides chat models for the Azure OpenAI connector.
