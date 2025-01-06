@@ -4,6 +4,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Richasy.AgentKernel.ChatCompletion;
 using Richasy.AgentKernel.Connectors.Ali;
+using Richasy.AgentKernel.Translation;
 using RichasyKernel;
 
 namespace Richasy.AgentKernel;
@@ -30,6 +31,17 @@ public static class KernelExtensions
     public static IKernelBuilder AddQwenChatModelProvider(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatModelProvider, QwenChatModelProvider>("Qwen");
+        return builder;
+    }
+
+    /// <summary>
+    /// Add Ali translation service.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddAliTranslationService(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<ITextTranslationService, AliTranslationService>("Ali");
+        builder.Services.AddKeyedSingleton<IHtmlTranslationService, AliTranslationService>("Ali");
         return builder;
     }
 }

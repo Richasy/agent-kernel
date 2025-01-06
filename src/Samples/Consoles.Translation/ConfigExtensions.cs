@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
+using Richasy.AgentKernel.Connectors.Ali.Models;
 using Richasy.AgentKernel.Connectors.Azure.Models;
 using Richasy.AgentKernel.Models;
 
@@ -13,5 +14,12 @@ internal static class ConfigExtensions
         return config is null || string.IsNullOrWhiteSpace(config.AccessKey)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
             : new AzureTranslationServiceConfig(config.AccessKey, config.Region ?? string.Empty);
+    }
+
+    public static TranslationServiceConfig ToTranslationServiceConfig(this AliConfiguration? config)
+    {
+        return config is null || string.IsNullOrWhiteSpace(config.AccessKey)
+            ? throw new ArgumentException("The configuration is not valid.", nameof(config))
+            : new AliTranslationServiceConfig(config.AccessKey, config.Secret ?? string.Empty);
     }
 }

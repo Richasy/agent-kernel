@@ -6,4 +6,5 @@ namespace Consoles.Translation;
 internal enum ProviderType
 {
     Azure,
+    Ali,
 }

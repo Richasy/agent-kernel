@@ -48,6 +48,7 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
         return provider switch
         {
             ProviderType.Azure => "Azure",
+            ProviderType.Ali => "阿里云",
             _ => throw new NotSupportedException(),
         };
     }
@@ -120,13 +121,15 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
         var service = kernel.GetRequiredService<ITextTranslationService>(provider.ToString());
         var originConfig = provider switch
         {
-            ProviderType.Azure => config.Azure,
+            ProviderType.Azure => config.Azure as KeyConfiguration,
+            ProviderType.Ali => config.Ali,
             _ => throw new NotSupportedException(),
         };
 
         var serviceConfig = provider switch
         {
             ProviderType.Azure => config.Azure.ToTranslationServiceConfig(),
+            ProviderType.Ali => config.Ali.ToTranslationServiceConfig(),
             _ => throw new NotSupportedException(),
         };
 

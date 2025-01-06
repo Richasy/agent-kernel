@@ -9,6 +9,7 @@
   </PropertyGroup>
   
   <ItemGroup>
+  	<PackageReference Include="AlibabaCloud.SDK.Alimt20181012" />
   	<PackageReference Include="Microsoft.Extensions.AI.OpenAI" />
   	<PackageReference Include="OpenAI" />
   </ItemGroup>
@@ -16,6 +17,7 @@
   <ItemGroup>
   	<ProjectReference Include="..\..\AgentKernel.Core\AgentKernel.Core.csproj" />
   	<ProjectReference Include="..\..\Libs\richasy-kernel\src\RichasyKernel.Abstractions\RichasyKernel.Abstractions.csproj" />
+  	<ProjectReference Include="..\..\Libs\richasy-kernel\src\RichasyKernel.Core\RichasyKernel.Core.csproj" />
   </ItemGroup>
   
 </Project>

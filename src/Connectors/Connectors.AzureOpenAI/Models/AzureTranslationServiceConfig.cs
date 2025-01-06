@@ -11,7 +11,7 @@ namespace Richasy.AgentKernel.Connectors.Azure.Models;
 public sealed class AzureTranslationServiceConfig(string key, string? region) : TranslationServiceConfig(key)
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="AzureTranslationServiceConfig"/> class.
+    /// The region of the translation service.
     /// </summary>
     public string? Region { get; set; } = region;
 
