@@ -16,6 +16,7 @@
   <ItemGroup>
   	<ProjectReference Include="..\..\AgentKernel.Core\AgentKernel.Core.csproj" />
   	<ProjectReference Include="..\..\Libs\richasy-kernel\src\RichasyKernel.Abstractions\RichasyKernel.Abstractions.csproj" />
+  	<ProjectReference Include="..\..\Libs\richasy-kernel\src\RichasyKernel.Core\RichasyKernel.Core.csproj" />
   </ItemGroup>
   
 </Project>

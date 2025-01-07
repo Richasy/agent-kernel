@@ -8,4 +8,5 @@ internal enum ProviderType
     Azure,
     Ali,
     Baidu,
+    Tencent,
 }

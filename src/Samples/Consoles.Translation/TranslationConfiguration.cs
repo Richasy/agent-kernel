@@ -15,6 +15,9 @@ internal sealed class TranslationConfiguration
 
     [JsonPropertyName("baidu")]
     public SecretConfiguration? Baidu { get; set; }
+
+    [JsonPropertyName("tencent")]
+    public TencentConfiguration? Tencent { get; set; }
 }
 
 internal sealed class AzureConfiguration : KeyConfiguration
@@ -27,6 +30,12 @@ internal sealed class SecretConfiguration : KeyConfiguration
 {
     [JsonPropertyName("secret")]
     public string? Secret { get; set; }
+}
+
+internal sealed class TencentConfiguration : KeyConfiguration
+{
+    [JsonPropertyName("id")]
+    public string? SecretId { get; set; }
 }
 
 internal class KeyConfiguration

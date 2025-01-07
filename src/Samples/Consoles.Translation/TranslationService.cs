@@ -52,6 +52,7 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
             ProviderType.Azure => "Azure",
             ProviderType.Ali => "阿里云",
             ProviderType.Baidu => "百度",
+            ProviderType.Tencent => "腾讯",
             _ => throw new NotSupportedException(),
         };
     }
@@ -127,6 +128,7 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
             ProviderType.Azure => config.Azure as KeyConfiguration,
             ProviderType.Ali => config.Ali,
             ProviderType.Baidu => config.Baidu,
+            ProviderType.Tencent => config.Tencent,
             _ => throw new NotSupportedException(),
         };
 
@@ -135,6 +137,7 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
             ProviderType.Azure => config.Azure.ToTranslationServiceConfig(),
             ProviderType.Ali => config.Ali.ToTranslationServiceConfig<AliTranslationServiceConfig>(),
             ProviderType.Baidu => config.Baidu.ToTranslationServiceConfig<BaiduTranslationServiceConfig>(),
+            ProviderType.Tencent => config.Tencent.ToTranslationServiceConfig(),
             _ => throw new NotSupportedException(),
         };
 

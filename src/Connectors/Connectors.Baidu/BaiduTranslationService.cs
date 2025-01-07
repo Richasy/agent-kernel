@@ -3,10 +3,6 @@
 
 using Richasy.AgentKernel.Connectors.Baidu.Models;
 using Richasy.AgentKernel.Models;
-
-// Copyright (c) Richasy. All rights reserved.
-// Licensed under the MIT License.
-
 using Richasy.AgentKernel.Translation;
 using RichasyKernel;
 using System.Globalization;
