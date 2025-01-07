@@ -16,6 +16,7 @@ var kernel = Kernel.CreateBuilder()
     .AddAliTranslationService()
     .AddBaiduTranslationService()
     .AddTencentTranslationService()
+    .AddVolcanoTranslationService()
     .Build();
 
 builder.Services.AddSingleton(kernel);

@@ -17,7 +17,10 @@ internal sealed class TranslationConfiguration
     public SecretConfiguration? Baidu { get; set; }
 
     [JsonPropertyName("tencent")]
-    public TencentConfiguration? Tencent { get; set; }
+    public IdConfiguration? Tencent { get; set; }
+
+    [JsonPropertyName("volcano")]
+    public IdConfiguration? Volcano { get; set; }
 }
 
 internal sealed class AzureConfiguration : KeyConfiguration
@@ -32,7 +35,7 @@ internal sealed class SecretConfiguration : KeyConfiguration
     public string? Secret { get; set; }
 }
 
-internal sealed class TencentConfiguration : KeyConfiguration
+internal sealed class IdConfiguration : KeyConfiguration
 {
     [JsonPropertyName("id")]
     public string? SecretId { get; set; }

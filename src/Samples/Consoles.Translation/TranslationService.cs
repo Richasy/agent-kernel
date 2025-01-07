@@ -4,6 +4,8 @@
 using Microsoft.Extensions.Hosting;
 using Richasy.AgentKernel.Connectors.Ali.Models;
 using Richasy.AgentKernel.Connectors.Baidu.Models;
+using Richasy.AgentKernel.Connectors.Tencent.Models;
+using Richasy.AgentKernel.Connectors.Volcano.Models;
 using Richasy.AgentKernel.Models;
 using Richasy.AgentKernel.Translation;
 using RichasyKernel;
@@ -53,6 +55,7 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
             ProviderType.Ali => "阿里云",
             ProviderType.Baidu => "百度",
             ProviderType.Tencent => "腾讯",
+            ProviderType.Volcano => "火山",
             _ => throw new NotSupportedException(),
         };
     }
@@ -129,6 +132,7 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
             ProviderType.Ali => config.Ali,
             ProviderType.Baidu => config.Baidu,
             ProviderType.Tencent => config.Tencent,
+            ProviderType.Volcano => config.Volcano,
             _ => throw new NotSupportedException(),
         };
 
@@ -137,7 +141,8 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
             ProviderType.Azure => config.Azure.ToTranslationServiceConfig(),
             ProviderType.Ali => config.Ali.ToTranslationServiceConfig<AliTranslationServiceConfig>(),
             ProviderType.Baidu => config.Baidu.ToTranslationServiceConfig<BaiduTranslationServiceConfig>(),
-            ProviderType.Tencent => config.Tencent.ToTranslationServiceConfig(),
+            ProviderType.Tencent => config.Tencent.ToTranslationServiceConfig<TencentTranslationServiceConfig>(),
+            ProviderType.Volcano => config.Volcano.ToTranslationServiceConfig<VolcanoTranslationServiceConfig>(),
             _ => throw new NotSupportedException(),
         };
 

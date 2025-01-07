@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Richasy.AgentKernel.Connectors.Azure.Models;
-using Richasy.AgentKernel.Connectors.Tencent.Models;
 using Richasy.AgentKernel.Models;
 
 namespace Consoles.Translation;
@@ -19,15 +18,16 @@ internal static class ConfigExtensions
     public static TranslationServiceConfig? ToTranslationServiceConfig<TConfig>(this SecretConfiguration? config)
         where TConfig : TranslationServiceConfig
     {
-        return config is null || string.IsNullOrWhiteSpace(config.AccessKey)
+        return config is null || string.IsNullOrWhiteSpace(config.AccessKey) || string.IsNullOrWhiteSpace(config.Secret)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
             : Activator.CreateInstance(typeof(TConfig), config.AccessKey, config.Secret) as TranslationServiceConfig;
     }
 
-    public static TranslationServiceConfig ToTranslationServiceConfig(this TencentConfiguration? config)
+    public static TranslationServiceConfig? ToTranslationServiceConfig<TConfig>(this IdConfiguration? config)
+        where TConfig : TranslationServiceConfig
     {
-        return config is null || string.IsNullOrWhiteSpace(config.AccessKey)
+        return config is null || string.IsNullOrWhiteSpace(config.AccessKey) || string.IsNullOrWhiteSpace(config.SecretId)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
-            : new TencentTranslationServiceConfig(config.SecretId!, config.AccessKey);
+            : Activator.CreateInstance(typeof(TConfig), config.SecretId, config.AccessKey) as TranslationServiceConfig;
     }
 }

@@ -9,4 +9,5 @@ internal enum ProviderType
     Ali,
     Baidu,
     Tencent,
+    Volcano,
 }
