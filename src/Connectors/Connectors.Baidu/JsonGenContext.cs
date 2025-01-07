@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Richasy.AgentKernel.Connectors.Baidu.Models;
+using Richasy.AgentKernel.Connectors.Baidu.Models.Translation;
 using System.Text.Json.Serialization;
 
 namespace Richasy.AgentKernel.Connectors.Baidu;
@@ -12,6 +13,7 @@ namespace Richasy.AgentKernel.Connectors.Baidu;
 [JsonSerializable(typeof(ErnieChatResponse))]
 [JsonSerializable(typeof(ErnieErrorResponse))]
 [JsonSerializable(typeof(OpenAIChatToolJson))]
+[JsonSerializable(typeof(BaiduTranslateResponse))]
 internal sealed partial class JsonGenContext : JsonSerializerContext
 {
 }

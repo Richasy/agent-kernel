@@ -11,7 +11,10 @@ internal sealed class TranslationConfiguration
     public AzureConfiguration? Azure { get; set; }
 
     [JsonPropertyName("ali")]
-    public AliConfiguration? Ali { get; set; }
+    public SecretConfiguration? Ali { get; set; }
+
+    [JsonPropertyName("baidu")]
+    public SecretConfiguration? Baidu { get; set; }
 }
 
 internal sealed class AzureConfiguration : KeyConfiguration
@@ -20,7 +23,7 @@ internal sealed class AzureConfiguration : KeyConfiguration
     public string? Region { get; set; }
 }
 
-internal sealed class AliConfiguration : KeyConfiguration
+internal sealed class SecretConfiguration : KeyConfiguration
 {
     [JsonPropertyName("secret")]
     public string? Secret { get; set; }

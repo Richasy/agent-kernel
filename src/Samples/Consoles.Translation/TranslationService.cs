@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.Hosting;
+using Richasy.AgentKernel.Connectors.Ali.Models;
+using Richasy.AgentKernel.Connectors.Baidu.Models;
 using Richasy.AgentKernel.Models;
 using Richasy.AgentKernel.Translation;
 using RichasyKernel;
@@ -49,6 +51,7 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
         {
             ProviderType.Azure => "Azure",
             ProviderType.Ali => "阿里云",
+            ProviderType.Baidu => "百度",
             _ => throw new NotSupportedException(),
         };
     }
@@ -123,19 +126,21 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
         {
             ProviderType.Azure => config.Azure as KeyConfiguration,
             ProviderType.Ali => config.Ali,
+            ProviderType.Baidu => config.Baidu,
             _ => throw new NotSupportedException(),
         };
 
         var serviceConfig = provider switch
         {
             ProviderType.Azure => config.Azure.ToTranslationServiceConfig(),
-            ProviderType.Ali => config.Ali.ToTranslationServiceConfig(),
+            ProviderType.Ali => config.Ali.ToTranslationServiceConfig<AliTranslationServiceConfig>(),
+            ProviderType.Baidu => config.Baidu.ToTranslationServiceConfig<BaiduTranslationServiceConfig>(),
             _ => throw new NotSupportedException(),
         };
 
         _sourceLanguage = originConfig!.SourceLanguage;
         _targetLanguage = originConfig!.TargetLanguage;
-        service.Initialize(serviceConfig);
+        service.Initialize(serviceConfig!);
         return service;
     }
 }
