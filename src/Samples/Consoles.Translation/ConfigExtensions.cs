@@ -3,6 +3,7 @@
 
 using Richasy.AgentKernel.Connectors.Azure.Models;
 using Richasy.AgentKernel.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Consoles.Translation;
 
@@ -15,7 +16,15 @@ internal static class ConfigExtensions
             : new AzureTranslationServiceConfig(config.AccessKey, config.Region ?? string.Empty);
     }
 
-    public static TranslationServiceConfig? ToTranslationServiceConfig<TConfig>(this SecretConfiguration? config)
+    public static TranslationServiceConfig? ToTranslationServiceConfig<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TConfig>(this KeyConfiguration? config)
+        where TConfig : TranslationServiceConfig
+    {
+        return config is null || string.IsNullOrWhiteSpace(config.AccessKey)
+            ? throw new ArgumentException("The configuration is not valid.", nameof(config))
+            : Activator.CreateInstance(typeof(TConfig), config.AccessKey) as TranslationServiceConfig;
+    }
+
+    public static TranslationServiceConfig? ToTranslationServiceConfig<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TConfig>(this SecretConfiguration? config)
         where TConfig : TranslationServiceConfig
     {
         return config is null || string.IsNullOrWhiteSpace(config.AccessKey) || string.IsNullOrWhiteSpace(config.Secret)
@@ -23,7 +32,7 @@ internal static class ConfigExtensions
             : Activator.CreateInstance(typeof(TConfig), config.AccessKey, config.Secret) as TranslationServiceConfig;
     }
 
-    public static TranslationServiceConfig? ToTranslationServiceConfig<TConfig>(this IdConfiguration? config)
+    public static TranslationServiceConfig? ToTranslationServiceConfig<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TConfig>(this IdConfiguration? config)
         where TConfig : TranslationServiceConfig
     {
         return config is null || string.IsNullOrWhiteSpace(config.AccessKey) || string.IsNullOrWhiteSpace(config.SecretId)

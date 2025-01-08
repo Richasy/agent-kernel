@@ -19,7 +19,7 @@
     <ProjectReference Include="..\..\Connectors\Connectors.AzureOpenAI\Connectors.Azure.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.Baidu\Connectors.Baidu.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.DeepSeek\Connectors.DeepSeek.csproj" />
-    <ProjectReference Include="..\..\Connectors\Connectors.Gemini\Connectors.Google.csproj" />
+    <ProjectReference Include="..\..\Connectors\Connectors.Google\Connectors.Google.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.Groq\Connectors.Groq.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.IFlyTek\Connectors.IFlyTek.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.LingYi\Connectors.LingYi.csproj" />

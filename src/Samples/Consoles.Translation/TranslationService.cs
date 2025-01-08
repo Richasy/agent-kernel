@@ -4,6 +4,7 @@
 using Microsoft.Extensions.Hosting;
 using Richasy.AgentKernel.Connectors.Ali.Models;
 using Richasy.AgentKernel.Connectors.Baidu.Models;
+using Richasy.AgentKernel.Connectors.Google.Models;
 using Richasy.AgentKernel.Connectors.Tencent.Models;
 using Richasy.AgentKernel.Connectors.Volcano.Models;
 using Richasy.AgentKernel.Connectors.Youdao.Models;
@@ -58,6 +59,7 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
             ProviderType.Tencent => "腾讯",
             ProviderType.Volcano => "火山",
             ProviderType.Youdao => "有道",
+            ProviderType.Google => "Google",
             _ => throw new NotSupportedException(),
         };
     }
@@ -94,9 +96,9 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
                 PrintResult(result);
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            AnsiConsole.WriteException(ex);
+            // AnsiConsole.WriteException(ex);
             throw;
         }
     }
@@ -136,6 +138,7 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
             ProviderType.Tencent => config.Tencent,
             ProviderType.Volcano => config.Volcano,
             ProviderType.Youdao => config.Youdao,
+            ProviderType.Google => config.Google,
             _ => throw new NotSupportedException(),
         };
 
@@ -147,6 +150,7 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
             ProviderType.Tencent => config.Tencent.ToTranslationServiceConfig<TencentTranslationServiceConfig>(),
             ProviderType.Volcano => config.Volcano.ToTranslationServiceConfig<VolcanoTranslationServiceConfig>(),
             ProviderType.Youdao => config.Youdao.ToTranslationServiceConfig<YoudaoTranslationServiceConfig>(),
+            ProviderType.Google => config.Google.ToTranslationServiceConfig<GoogleTranslationServiceConfig>(),
             _ => throw new NotSupportedException(),
         };
 

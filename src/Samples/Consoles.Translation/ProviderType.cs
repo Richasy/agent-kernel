@@ -11,4 +11,5 @@ internal enum ProviderType
     Tencent,
     Volcano,
     Youdao,
+    Google,
 }

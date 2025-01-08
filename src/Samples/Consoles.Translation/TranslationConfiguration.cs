@@ -24,6 +24,9 @@ internal sealed class TranslationConfiguration
 
     [JsonPropertyName("youdao")]
     public IdConfiguration? Youdao { get; set; }
+
+    [JsonPropertyName("google")]
+    public KeyConfiguration? Google { get; set; }
 }
 
 internal sealed class AzureConfiguration : KeyConfiguration

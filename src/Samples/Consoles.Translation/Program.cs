@@ -18,6 +18,7 @@ var kernel = Kernel.CreateBuilder()
     .AddTencentTranslationService()
     .AddVolcanoTranslationService()
     .AddYoudaoTranslationService()
+    .AddGoogleTranslationService()
     .Build();
 
 builder.Services.AddSingleton(kernel);

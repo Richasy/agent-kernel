@@ -4,6 +4,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Richasy.AgentKernel.ChatCompletion;
 using Richasy.AgentKernel.Connectors.Google;
+using Richasy.AgentKernel.Translation;
 using RichasyKernel;
 
 namespace Richasy.AgentKernel;
@@ -30,6 +31,16 @@ public static class KernelExtensions
     public static IKernelBuilder AddGeminiChatModelProvider(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatModelProvider, GeminiChatModelProvider>("Gemini");
+        return builder;
+    }
+
+    /// <summary>
+    /// Add Google translation service.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddGoogleTranslationService(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<ITextTranslationService, GoogleTranslationService>("Google");
         return builder;
     }
 }
