@@ -3,7 +3,7 @@
 
 using System.Text.Json.Serialization;
 
-namespace Richasy.AgentKernel.Connectors.Gemini.Models.Core;
+namespace Richasy.AgentKernel.Connectors.Google.Models.Core;
 
 /// <summary>
 /// A response candidate generated from the model.

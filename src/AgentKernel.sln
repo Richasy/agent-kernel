@@ -29,7 +29,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.Anthropic", "Con
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.Moonshot", "Connectors\Connectors.Moonshot\Connectors.Moonshot.csproj", "{7B77FE89-3B94-482F-8670-278093266615}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.Gemini", "Connectors\Connectors.Gemini\Connectors.Gemini.csproj", "{876C93F9-CDDB-4D87-86A4-33B585F9EBD6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.Google", "Connectors\Connectors.Gemini\Connectors.Google.csproj", "{876C93F9-CDDB-4D87-86A4-33B585F9EBD6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.DeepSeek", "Connectors\Connectors.DeepSeek\Connectors.DeepSeek.csproj", "{ED9826B2-12F4-4C09-BA4A-E84378F1F2BB}"
 EndProject

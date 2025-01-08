@@ -10,7 +10,7 @@ using Richasy.AgentKernel.ChatCompletion;
 using Richasy.AgentKernel.Connectors.Ali.Models;
 using Richasy.AgentKernel.Connectors.Anthropic.Models;
 using Richasy.AgentKernel.Connectors.Azure.Models;
-using Richasy.AgentKernel.Connectors.Gemini.Models;
+using Richasy.AgentKernel.Connectors.Google.Models;
 using Richasy.AgentKernel.Connectors.Groq.Models;
 using Richasy.AgentKernel.Connectors.IFlyTek.Models;
 using Richasy.AgentKernel.Connectors.LingYi.Models;

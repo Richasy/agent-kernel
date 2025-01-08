@@ -3,7 +3,7 @@
 
 using Microsoft.Extensions.AI;
 
-namespace Richasy.AgentKernel.Connectors.Gemini.Models;
+namespace Richasy.AgentKernel.Connectors.Google.Models;
 
 internal sealed class GeminiChatMessageContent : ChatMessage
 {

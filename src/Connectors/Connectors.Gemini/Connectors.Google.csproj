@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-  	<AssemblyName>Richasy.AgentKernel.Connectors.Gemini</AssemblyName>
+  	<AssemblyName>Richasy.AgentKernel.Connectors.Google</AssemblyName>
   	<RootNamespace>$(AssemblyName)</RootNamespace>
   	<TargetFramework>net9.0</TargetFramework>
   	<NoWarn>$(NoWarn)</NoWarn>

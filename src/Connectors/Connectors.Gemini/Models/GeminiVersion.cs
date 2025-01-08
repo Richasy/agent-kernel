@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Richasy.AgentKernel.Connectors.Gemini;
+namespace Richasy.AgentKernel.Connectors.Google.Models;
 
 /// <summary>
 /// Gemini version.

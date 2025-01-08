@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.AI;
-using Richasy.AgentKernel.Connectors.Gemini.Models;
-using Richasy.AgentKernel.Connectors.Gemini.Models.Core;
+using Richasy.AgentKernel.Connectors.Google.Models;
+using Richasy.AgentKernel.Connectors.Google.Models.Core;
 using RichasyKernel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 
-namespace Richasy.AgentKernel.Connectors.Gemini;
+namespace Richasy.AgentKernel.Connectors.Google;
 
 /// <summary>
 /// Gemini chat client.

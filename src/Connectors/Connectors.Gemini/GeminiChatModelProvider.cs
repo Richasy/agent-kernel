@@ -4,7 +4,7 @@
 using Richasy.AgentKernel.ChatCompletion;
 using Richasy.AgentKernel.Models;
 
-namespace Richasy.AgentKernel.Connectors.Gemini;
+namespace Richasy.AgentKernel.Connectors.Google;
 
 /// <summary>
 /// Gemini chat model provider.

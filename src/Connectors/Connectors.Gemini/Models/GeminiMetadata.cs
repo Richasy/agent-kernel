@@ -3,7 +3,7 @@
 
 using System.Collections.ObjectModel;
 
-namespace Richasy.AgentKernel.Connectors.Gemini.Models;
+namespace Richasy.AgentKernel.Connectors.Google.Models;
 
 /// <summary>
 /// Represents the metadata associated with a Gemini response.

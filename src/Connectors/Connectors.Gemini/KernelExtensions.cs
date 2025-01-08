@@ -3,7 +3,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Richasy.AgentKernel.ChatCompletion;
-using Richasy.AgentKernel.Connectors.Gemini;
+using Richasy.AgentKernel.Connectors.Google;
 using RichasyKernel;
 
 namespace Richasy.AgentKernel;

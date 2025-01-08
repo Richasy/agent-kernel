@@ -4,7 +4,7 @@
 using System.Text.Json.Serialization;
 using System.Text.Json;
 
-namespace Richasy.AgentKernel.Connectors.Gemini.Models.Core;
+namespace Richasy.AgentKernel.Connectors.Google.Models.Core;
 
 /// <summary>
 /// Union field data can be only one of properties in class GeminiPart

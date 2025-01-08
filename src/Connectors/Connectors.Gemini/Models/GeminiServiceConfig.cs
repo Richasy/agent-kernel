@@ -3,7 +3,7 @@
 
 using Richasy.AgentKernel.Models;
 
-namespace Richasy.AgentKernel.Connectors.Gemini.Models;
+namespace Richasy.AgentKernel.Connectors.Google.Models;
 
 /// <summary>
 /// Gemini Service Configuration.

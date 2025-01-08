@@ -3,10 +3,10 @@
 
 using Microsoft.Extensions.AI;
 using Richasy.AgentKernel.ChatCompletion;
-using Richasy.AgentKernel.Connectors.Gemini.Models;
+using Richasy.AgentKernel.Connectors.Google.Models;
 using Richasy.AgentKernel.Models;
 
-namespace Richasy.AgentKernel.Connectors.Gemini;
+namespace Richasy.AgentKernel.Connectors.Google;
 
 /// <summary>
 /// Gemini Chat Completion Service.

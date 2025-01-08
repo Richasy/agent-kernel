@@ -4,7 +4,7 @@
 using Microsoft.Extensions.AI;
 using System.Text.Json.Serialization;
 
-namespace Richasy.AgentKernel.Connectors.Gemini.Models.Core;
+namespace Richasy.AgentKernel.Connectors.Google.Models.Core;
 
 /// <summary>
 /// The base structured datatype containing multi-part content of a message.
