@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+  <PropertyGroup>
+  	<AssemblyName>Richasy.AgentKernel.Connectors.Youdao</AssemblyName>
+  	<RootNamespace>$(AssemblyName)</RootNamespace>
+  	<TargetFramework>net9.0</TargetFramework>
+  	<NoWarn>$(NoWarn)</NoWarn>
+  	<IsAotCompatible>true</IsAotCompatible>
+  </PropertyGroup>
+  
+  <ItemGroup>
+  	<ProjectReference Include="..\..\AgentKernel.Core\AgentKernel.Core.csproj" />
+  	<ProjectReference Include="..\..\Libs\richasy-kernel\src\RichasyKernel.Abstractions\RichasyKernel.Abstractions.csproj" />
+  	<ProjectReference Include="..\..\Libs\richasy-kernel\src\RichasyKernel.Core\RichasyKernel.Core.csproj" />
+  </ItemGroup>
+  
+</Project>

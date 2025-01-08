@@ -6,6 +6,7 @@ using Richasy.AgentKernel.Connectors.Ali.Models;
 using Richasy.AgentKernel.Connectors.Baidu.Models;
 using Richasy.AgentKernel.Connectors.Tencent.Models;
 using Richasy.AgentKernel.Connectors.Volcano.Models;
+using Richasy.AgentKernel.Connectors.Youdao.Models;
 using Richasy.AgentKernel.Models;
 using Richasy.AgentKernel.Translation;
 using RichasyKernel;
@@ -56,6 +57,7 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
             ProviderType.Baidu => "百度",
             ProviderType.Tencent => "腾讯",
             ProviderType.Volcano => "火山",
+            ProviderType.Youdao => "有道",
             _ => throw new NotSupportedException(),
         };
     }
@@ -133,6 +135,7 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
             ProviderType.Baidu => config.Baidu,
             ProviderType.Tencent => config.Tencent,
             ProviderType.Volcano => config.Volcano,
+            ProviderType.Youdao => config.Youdao,
             _ => throw new NotSupportedException(),
         };
 
@@ -143,6 +146,7 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
             ProviderType.Baidu => config.Baidu.ToTranslationServiceConfig<BaiduTranslationServiceConfig>(),
             ProviderType.Tencent => config.Tencent.ToTranslationServiceConfig<TencentTranslationServiceConfig>(),
             ProviderType.Volcano => config.Volcano.ToTranslationServiceConfig<VolcanoTranslationServiceConfig>(),
+            ProviderType.Youdao => config.Youdao.ToTranslationServiceConfig<YoudaoTranslationServiceConfig>(),
             _ => throw new NotSupportedException(),
         };
 

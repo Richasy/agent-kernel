@@ -18,6 +18,7 @@
     <ProjectReference Include="..\..\Connectors\Connectors.Baidu\Connectors.Baidu.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.Tencent\Connectors.Tencent.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.Volcano\Connectors.Volcano.csproj" />
+    <ProjectReference Include="..\..\Connectors\Connectors.Youdao\Connectors.Youdao.csproj" />
   </ItemGroup>
 
   <ItemGroup>

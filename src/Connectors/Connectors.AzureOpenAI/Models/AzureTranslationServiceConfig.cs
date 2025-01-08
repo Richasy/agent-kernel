@@ -17,7 +17,7 @@ public sealed class AzureTranslationServiceConfig(string key, string? region) : 
 
     /// <inheritdoc/>
     public override bool Equals(object? obj) => obj is AzureTranslationServiceConfig config && base.Equals(obj) && AccessKey == config.AccessKey && Region == config.Region;
-    
+
     /// <inheritdoc/>
     public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), AccessKey, Region);
 }
