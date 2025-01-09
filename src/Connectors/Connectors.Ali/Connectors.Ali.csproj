@@ -9,7 +9,6 @@
   </PropertyGroup>
   
   <ItemGroup>
-  	<PackageReference Include="AlibabaCloud.SDK.Alimt20181012" />
   	<PackageReference Include="Microsoft.Extensions.AI.OpenAI" />
   	<PackageReference Include="OpenAI" />
   </ItemGroup>
