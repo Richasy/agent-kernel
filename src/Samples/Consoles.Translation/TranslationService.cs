@@ -150,7 +150,7 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
             ProviderType.Tencent => config.Tencent.ToTranslationServiceConfig<TencentTranslationServiceConfig>(),
             ProviderType.Volcano => config.Volcano.ToTranslationServiceConfig<VolcanoTranslationServiceConfig>(),
             ProviderType.Youdao => config.Youdao.ToTranslationServiceConfig<YoudaoTranslationServiceConfig>(),
-            ProviderType.Google => config.Google.ToTranslationServiceConfig<GoogleTranslationServiceConfig>(),
+            ProviderType.Google => new GoogleTranslationServiceConfig(string.Empty),
             _ => throw new NotSupportedException(),
         };
 
