@@ -8,7 +8,7 @@ namespace Richasy.AgentKernel.Connectors.Google.Models;
 /// <summary>
 /// Represents the metadata associated with a Gemini response.
 /// </summary>
-public sealed class GeminiMetadata : ReadOnlyDictionary<string, object?>
+internal sealed class GeminiMetadata : ReadOnlyDictionary<string, object?>
 {
     internal GeminiMetadata() : base(new Dictionary<string, object?>()) { }
 

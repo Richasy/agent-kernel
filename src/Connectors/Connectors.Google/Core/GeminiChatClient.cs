@@ -16,6 +16,7 @@ namespace Richasy.AgentKernel.Connectors.Google;
 /// </summary>
 public sealed class GeminiChatClient : IChatClient
 {
+    private static readonly JsonElement _defaultParameterSchema = JsonDocument.Parse("{}").RootElement;
     private readonly Uri _chatGenerationEndpoint;
     private readonly Uri _chatStreamingEndpoint;
     private readonly HttpClient _httpClient;
@@ -72,13 +73,22 @@ public sealed class GeminiChatClient : IChatClient
         }
         catch (Exception)
         {
+            if (response is { IsSuccessStatusCode: false } res)
+            {
+                var content = await res.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                throw new KernelException($"Failed to get response from Gemini. Status code: {res.StatusCode}. Response: {content}");
+            }
+
+            throw;
+        }
+        finally
+        {
             response?.Dispose();
 #pragma warning disable VSTHRD103 // Call async methods when in an async method
 #pragma warning disable CA1849 // 当在异步方法中时，调用异步方法
             responseStream?.Dispose();
 #pragma warning restore CA1849 // 当在异步方法中时，调用异步方法
 #pragma warning restore VSTHRD103 // Call async methods when in an async method
-            throw;
         }
 
         using var reader = new StreamReader(responseStream);
@@ -232,6 +242,12 @@ public sealed class GeminiChatClient : IChatClient
             };
         }
 
+        if (options?.Tools is { Count: > 0 } tools)
+        {
+            var actualTools = tools.Select(ToGeminiTool).Where(p => p is not null).Select(p => p!).ToList();
+            request.Tools = actualTools?.Count > 0 ? actualTools : null;
+        }
+
         return request;
     }
 
@@ -239,9 +255,52 @@ public sealed class GeminiChatClient : IChatClient
     {
         using var requestMessage = CreateHttpRequest(request, endpoint);
         var response = await _httpClient.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
-        response.EnsureSuccessStatusCode();
         var responseContent = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new KernelException($"Failed to get response from Gemini. Status code: {response.StatusCode}. Response: {responseContent}");
+        }
+
+        response.EnsureSuccessStatusCode();
         return JsonSerializer.Deserialize(responseContent, JsonGenContext.Default.GeminiResponse)
             ?? throw new KernelException("Failed to deserialize response.");
+    }
+
+    private static GeminiTool? ToGeminiTool(AITool tool)
+    {
+        if (tool is AIFunction function)
+        {
+            var parameters = function.Metadata.Parameters;
+            var resultParameters = OpenAIChatToolJson.ZeroFunctionParametersSchema;
+            if (parameters is { Count: > 0 })
+            {
+                OpenAIChatToolJson toolJson = new();
+
+                foreach (var parameter in parameters)
+                {
+                    toolJson.Properties.Add(parameter.Name, parameter.Schema is JsonElement e ? e : _defaultParameterSchema);
+
+                    if (parameter.IsRequired)
+                    {
+                        _ = toolJson.Required.Add(parameter.Name);
+                    }
+                }
+
+                resultParameters = BinaryData.FromBytes(
+                    JsonSerializer.SerializeToUtf8Bytes(toolJson, JsonGenContext.Default.OpenAIChatToolJson));
+            }
+
+            return new GeminiTool
+            {
+                Functions = [new GeminiTool.FunctionDeclaration
+                {
+                    Name = function.Metadata.Name,
+                    Description = function.Metadata.Description,
+                    Parameters = resultParameters,
+                }],
+            };
+        }
+
+        return default;
     }
 }

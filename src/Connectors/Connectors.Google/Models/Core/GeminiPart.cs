@@ -2,14 +2,13 @@
 // Licensed under the MIT License.
 
 using System.Text.Json.Serialization;
-using System.Text.Json;
 
 namespace Richasy.AgentKernel.Connectors.Google.Models.Core;
 
 /// <summary>
 /// Union field data can be only one of properties in class GeminiPart
 /// </summary>
-internal sealed class GeminiPart : IJsonOnDeserialized
+internal sealed class GeminiPart
 {
     /// <summary>
     /// Gets or sets the text data.
@@ -33,6 +32,20 @@ internal sealed class GeminiPart : IJsonOnDeserialized
     public FileDataPart? FileData { get; set; }
 
     /// <summary>
+    /// Function call data.
+    /// </summary>
+    [JsonPropertyName("functionCall")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public FunctionCallPart? FunctionCall { get; set; }
+
+    /// <summary>
+    /// Object representing the function call response.
+    /// </summary>
+    [JsonPropertyName("functionResponse")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public FunctionResponsePart? FunctionResponse { get; set; }
+
+    /// <summary>
     /// Checks whether only one property of the GeminiPart instance is not null.
     /// Returns true if only one property among Text, InlineData, FileData, FunctionCall, and FunctionResponse is not null,
     /// Otherwise, it returns false.
@@ -42,16 +55,6 @@ internal sealed class GeminiPart : IJsonOnDeserialized
         return (Text is not null ? 1 : 0) +
             (InlineData is not null ? 1 : 0) +
             (FileData is not null ? 1 : 0) == 1;
-    }
-
-    /// <inheritdoc />
-    public void OnDeserialized()
-    {
-        if (!IsValid())
-        {
-            throw new JsonException(
-                "GeminiPart is invalid. One and only one property among Text, InlineData, FileData, FunctionCall, and FunctionResponse should be set.");
-        }
     }
 
     /// <summary>
@@ -99,5 +102,66 @@ internal sealed class GeminiPart : IJsonOnDeserialized
         [JsonPropertyName("fileUri")]
         [JsonRequired]
         public Uri FileUri { get; set; } = null!;
+    }
+
+    /// <summary>
+    /// A predicted FunctionCall returned from the model that contains a
+    /// string representing the FunctionDeclaration.name with the arguments and their values.
+    /// </summary>
+    internal sealed class FunctionCallPart
+    {
+        /// <summary>
+        /// Required. The name of the function to call. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 63.
+        /// </summary>
+        [JsonPropertyName("name")]
+        [JsonRequired]
+        public string FunctionName { get; set; } = null!;
+
+        /// <summary>
+        /// Optional. The function parameters and values in JSON object format.
+        /// </summary>
+        [JsonPropertyName("args")]
+        [JsonConverter(typeof(BinaryJsonSchemaConverter))]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public BinaryData? Arguments { get; set; }
+
+        /// <inheritdoc />
+        public override string ToString()
+            => $"FunctionName={FunctionName}, Arguments={Arguments}";
+    }
+
+    /// <summary>
+    /// The result output of a FunctionCall that contains a string representing the FunctionDeclaration.name and
+    /// a structured JSON object containing any output from the function is used as context to the model.
+    /// </summary>
+    internal sealed class FunctionResponsePart
+    {
+        /// <summary>
+        /// Required. The name of the function to call. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 63.
+        /// </summary>
+        [JsonPropertyName("name")]
+        [JsonRequired]
+        public string FunctionName { get; set; } = null!;
+
+        /// <summary>
+        /// Required. The function response.
+        /// </summary>
+        [JsonPropertyName("response")]
+        [JsonRequired]
+        public FunctionResponseEntity Response { get; set; } = null!;
+
+        internal sealed class FunctionResponseEntity
+        {
+            [JsonPropertyName("name")]
+            public string? Name { get; set; }
+
+            /// <summary>
+            /// Required. The function response in JSON object format.
+            /// </summary>
+            [JsonPropertyName("content")]
+            [JsonConverter(typeof(BinaryJsonSchemaConverter))]
+            [JsonRequired]
+            public BinaryData? Content { get; set; } = null!;
+        }
     }
 }

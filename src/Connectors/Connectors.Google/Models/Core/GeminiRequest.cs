@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.AI;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace Richasy.AgentKernel.Connectors.Google.Models.Core;
@@ -18,6 +19,10 @@ internal sealed class GeminiRequest
     [JsonPropertyName("generationConfig")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public ConfigurationElement? Configuration { get; set; }
+
+    [JsonPropertyName("tools")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public IList<GeminiTool>? Tools { get; set; }
 
     [JsonPropertyName("systemInstruction")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -64,39 +69,65 @@ internal sealed class GeminiRequest
     {
         TextContent textContent => new GeminiPart { Text = textContent.Text },
         ImageContent imageContent => CreateGeminiPartFromImage(imageContent),
+        FunctionCallContent fcc => CreateGeminiPartFromFunctionCall(fcc),
+        FunctionResultContent frc => CreateGeminiPartFromFunctionResult(frc),
         _ => throw new NotSupportedException($"Unsupported content type. {content.GetType().Name} is not supported by Gemini.")
     };
 
     private static GeminiPart CreateGeminiPartFromImage(ImageContent imageContent)
     {
         // Binary data takes precedence over URI as per the ImageContent.ToString() implementation.
-        if (imageContent.Data is { IsEmpty: false })
-        {
-            return new GeminiPart
+        return imageContent.Data is { IsEmpty: false }
+            ? new GeminiPart
             {
                 InlineData = new GeminiPart.InlineDataPart
                 {
                     MimeType = GetMimeTypeFromImageContent(imageContent),
                     InlineData = Convert.ToBase64String(imageContent.Data.Value.ToArray())
                 }
-            };
-        }
-
-        if (imageContent.Uri is not null)
-        {
-            return new GeminiPart
-            {
-                FileData = new GeminiPart.FileDataPart
+            }
+            : imageContent.Uri is not null
+                ? new GeminiPart
                 {
-                    MimeType = GetMimeTypeFromImageContent(imageContent),
-                    FileUri = string.IsNullOrEmpty(imageContent.Uri)
-                        ? throw new InvalidOperationException("Image content URI is empty.")
-                        : new Uri(imageContent.Uri)
+                    FileData = new GeminiPart.FileDataPart
+                    {
+                        MimeType = GetMimeTypeFromImageContent(imageContent),
+                        FileUri = string.IsNullOrEmpty(imageContent.Uri)
+                            ? throw new InvalidOperationException("Image content URI is empty.")
+                            : new Uri(imageContent.Uri)
+                    }
                 }
-            };
-        }
+                : throw new InvalidOperationException("Image content does not contain any data or uri.");
+    }
 
-        throw new InvalidOperationException("Image content does not contain any data or uri.");
+    private static GeminiPart CreateGeminiPartFromFunctionCall(FunctionCallContent functionCallContent)
+    {
+        var sb = new StringBuilder();
+        DictionaryToolkit.WriteDictionary(sb, functionCallContent.Arguments ?? new Dictionary<string, object?>());
+        return new GeminiPart
+        {
+            FunctionCall = new GeminiPart.FunctionCallPart
+            {
+                FunctionName = functionCallContent.Name,
+                Arguments = BinaryData.FromString(sb.ToString())
+            }
+        };
+    }
+
+    private static GeminiPart CreateGeminiPartFromFunctionResult(FunctionResultContent functionResultContent)
+    {
+        return new GeminiPart
+        {
+            FunctionResponse = new GeminiPart.FunctionResponsePart
+            {
+                FunctionName = functionResultContent.Name,
+                Response = new GeminiPart.FunctionResponsePart.FunctionResponseEntity
+                {
+                    Name = functionResultContent.Name,
+                    Content = BinaryData.FromString(functionResultContent.Result?.ToString() ?? string.Empty),
+                }
+            }
+        };
     }
 
     private static string GetMimeTypeFromImageContent(ImageContent imageContent)

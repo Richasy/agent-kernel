@@ -10,7 +10,7 @@ namespace Richasy.AgentKernel.Connectors.Google.Models;
 /// Represents a Gemini Finish Reason.
 /// </summary>
 [JsonConverter(typeof(GeminiFinishReasonConverter))]
-public readonly struct GeminiFinishReason : IEquatable<GeminiFinishReason>
+internal readonly struct GeminiFinishReason : IEquatable<GeminiFinishReason>
 {
     /// <summary>
     /// Default value. This value is unused.

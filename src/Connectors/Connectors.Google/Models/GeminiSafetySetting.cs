@@ -9,7 +9,7 @@ namespace Richasy.AgentKernel.Connectors.Google.Models;
 /// <summary>
 /// Represents a safety setting for the Gemini prompt.
 /// </summary>
-public sealed class GeminiSafetySetting
+internal sealed class GeminiSafetySetting
 {
     /// <summary>
     /// Initializes a new instance of the Gemini <see cref="GeminiSafetySetting"/> class.

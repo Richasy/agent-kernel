@@ -9,7 +9,7 @@ namespace Richasy.AgentKernel.Connectors.Google.Models;
 /// <summary>
 /// Represents a safety rating for a Gemini.
 /// </summary>
-public sealed class GeminiSafetyRating
+internal sealed class GeminiSafetyRating
 {
     /// <summary>
     /// Was this content blocked because of this rating?
@@ -34,7 +34,7 @@ public sealed class GeminiSafetyRating
 /// Represents a Gemini Safety Probability.
 /// </summary>
 [JsonConverter(typeof(GeminiSafetyProbabilityConverter))]
-public readonly struct GeminiSafetyProbability : IEquatable<GeminiSafetyProbability>
+internal readonly struct GeminiSafetyProbability : IEquatable<GeminiSafetyProbability>
 {
     /// <summary>
     /// Probability is unspecified.
