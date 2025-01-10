@@ -41,7 +41,6 @@ public static class KernelExtensions
     public static IKernelBuilder AddAliTranslationService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<ITranslationService, AliTranslationService>("Ali");
-        builder.Services.AddKeyedSingleton<IHtmlTranslationService, AliTranslationService>("Ali");
         return builder;
     }
 }
