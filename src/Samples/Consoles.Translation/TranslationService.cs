@@ -12,6 +12,7 @@ using Richasy.AgentKernel.Models;
 using Richasy.AgentKernel.Translation;
 using RichasyKernel;
 using Spectre.Console;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Consoles.Translation;
 
@@ -64,6 +65,7 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
         };
     }
 
+    [UnconditionalSuppressMessage("AOT", "IL3050:Calling members annotated with 'RequiresDynamicCodeAttribute' may break functionality when AOT compiling.", Justification = "<Pending>")]
     private async Task RunTranslateAsync(CancellationToken cancellationToken)
     {
         try
@@ -96,9 +98,9 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
                 PrintResult(result);
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // AnsiConsole.WriteException(ex);
+            AnsiConsole.WriteException(ex);
             throw;
         }
     }
@@ -132,7 +134,7 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
         var service = kernel.GetRequiredService<ITextTranslationService>(provider.ToString());
         var originConfig = provider switch
         {
-            ProviderType.Azure => config.Azure as KeyConfiguration,
+            ProviderType.Azure => config.Azure,
             ProviderType.Ali => config.Ali,
             ProviderType.Baidu => config.Baidu,
             ProviderType.Tencent => config.Tencent,

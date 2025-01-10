@@ -5,6 +5,9 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<PublishAot>true</PublishAot>
+	<TrimmerSingleWarn>false</TrimmerSingleWarn>
+	<NoWarn>$(NoWarn);IL2067</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
