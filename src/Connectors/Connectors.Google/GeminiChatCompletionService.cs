@@ -16,11 +16,7 @@ public sealed class GeminiChatCompletionService : IChatCompletionService
     private GeminiServiceConfig? _config;
 
     /// <inheritdoc/>
-    public IChatClient? Client
-    {
-        get => field ?? throw new InvalidOperationException("The service has not been initialized.");
-        set;
-    }
+    public IChatClient? Client { get; set; }
 
     /// <inheritdoc/>
     public AIServiceConfig? Config => _config;
@@ -39,6 +35,7 @@ public sealed class GeminiChatCompletionService : IChatCompletionService
         }
 
         _config = geminiConfig;
+        Client?.Dispose();
         Client = new GeminiChatClient(_config.AccessKey, _config.Model, _config.Endpoint);
     }
 }

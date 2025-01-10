@@ -17,11 +17,7 @@ public sealed class GroqChatCompletionService : IChatCompletionService
     private GroqServiceConfig? _config;
 
     /// <inheritdoc/>
-    public IChatClient? Client
-    {
-        get => field ?? throw new InvalidOperationException("The service has not been initialized.");
-        set;
-    }
+    public IChatClient? Client { get; set; }
 
     /// <inheritdoc/>
     public AIServiceConfig? Config => _config;
@@ -45,6 +41,7 @@ public sealed class GroqChatCompletionService : IChatCompletionService
             Endpoint = new Uri("https://api.groq.com/openai/v1"),
         });
 
+        Client?.Dispose();
         Client = coreClient.AsChatClient(_config.Model!);
     }
 }

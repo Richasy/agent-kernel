@@ -18,11 +18,7 @@ public sealed class AzureOpenAIChatCompletionService : IChatCompletionService
     private AzureOpenAIServiceConfig? _config;
 
     /// <inheritdoc/>
-    public IChatClient? Client
-    {
-        get => field ?? throw new InvalidOperationException("The service has not been initialized.");
-        set;
-    }
+    public IChatClient? Client { get; set; }
 
     /// <inheritdoc/>
     public AIServiceConfig? Config => _config;
@@ -42,6 +38,7 @@ public sealed class AzureOpenAIChatCompletionService : IChatCompletionService
 
         _config = azureConfig;
         var coreClient = new AzureOpenAIClient(_config.Endpoint, new ApiKeyCredential(_config.AccessKey));
+        Client?.Dispose();
         Client = coreClient.AsChatClient(_config.Model!);
     }
 }

@@ -17,11 +17,7 @@ public sealed class AnthropicChatCompletionService : IChatCompletionService
     private AnthropicServiceConfig? _config;
 
     /// <inheritdoc/>
-    public IChatClient? Client
-    {
-        get => field ?? throw new InvalidOperationException("The service has not been initialized.");
-        set;
-    }
+    public IChatClient? Client { get; set; }
 
     /// <inheritdoc/>
     public AIServiceConfig? Config => _config;
@@ -40,6 +36,7 @@ public sealed class AnthropicChatCompletionService : IChatCompletionService
         }
 
         _config = anthropicConfig;
+        Client?.Dispose();
         Client = new AnthropicClient(_config.AccessKey, baseUri: _config.Endpoint);
     }
 }

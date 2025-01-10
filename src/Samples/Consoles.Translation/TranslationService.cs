@@ -94,7 +94,8 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
                     SourceLanguage = _sourceLanguage,
                     TargetLanguage = _targetLanguage,
                 };
-                var result = await service.TranslateTextAsync(input, options, cancellationToken).ConfigureAwait(true);
+
+                var result = await service.Client!.TranslateTextAsync(input, options, cancellationToken).ConfigureAwait(true);
                 PrintResult(result);
             }
         }

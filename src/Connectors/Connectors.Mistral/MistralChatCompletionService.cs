@@ -17,11 +17,7 @@ public sealed class MistralChatCompletionService : IChatCompletionService
     private MistralServiceConfig? _config;
 
     /// <inheritdoc/>
-    public IChatClient? Client
-    {
-        get => field ?? throw new InvalidOperationException("The service has not been initialized.");
-        set;
-    }
+    public IChatClient? Client { get; set; }
 
     /// <inheritdoc/>
     public AIServiceConfig? Config => _config;
@@ -46,6 +42,7 @@ public sealed class MistralChatCompletionService : IChatCompletionService
             c.ApiUrlFormat = "https://codestral.mistral.ai/{0}/{1}";
         }
 
+        Client?.Dispose();
         Client = c.Completions;
     }
 }

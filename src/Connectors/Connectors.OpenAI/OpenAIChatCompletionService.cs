@@ -17,11 +17,7 @@ public sealed class OpenAIChatCompletionService : IChatCompletionService
     private OpenAIServiceConfig? _config;
 
     /// <inheritdoc/>
-    public IChatClient? Client
-    {
-        get => field ?? throw new InvalidOperationException("The service has not been initialized.");
-        set;
-    }
+    public IChatClient? Client { get; set; }
 
     /// <inheritdoc/>
     public AIServiceConfig? Config => _config;
@@ -52,6 +48,7 @@ public sealed class OpenAIChatCompletionService : IChatCompletionService
         }
 
         var coreClient = new OpenAIClient(new(_config.AccessKey), options);
+        Client?.Dispose();
         Client = coreClient.AsChatClient(_config.Model!);
     }
 }

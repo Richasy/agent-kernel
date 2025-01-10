@@ -20,11 +20,7 @@ public sealed class AliTranslationService : ITranslationService
     public TranslationServiceConfig? Config => _config;
 
     /// <inheritdoc/>
-    public ITranslateClient? Client
-    {
-        get => field ?? throw new InvalidOperationException("The service has not been initialized.");
-        set;
-    }
+    public ITranslateClient? Client { get; set; }
 
     /// <inheritdoc/>
     public void Initialize(TranslationServiceConfig config)

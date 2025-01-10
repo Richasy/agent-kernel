@@ -17,11 +17,7 @@ public sealed class TogetherAIChatCompletionService : IChatCompletionService
     private TogetherAIServiceConfig? _config;
 
     /// <inheritdoc/>
-    public IChatClient? Client
-    {
-        get => field ?? throw new InvalidOperationException("The service has not been initialized.");
-        set;
-    }
+    public IChatClient? Client { get; set; }
 
     /// <inheritdoc/>
     public AIServiceConfig? Config => _config;
@@ -45,6 +41,7 @@ public sealed class TogetherAIChatCompletionService : IChatCompletionService
             Endpoint = new Uri("https://api.together.xyz/v1"),
         });
 
+        Client?.Dispose();
         Client = coreClient.AsChatClient(_config.Model!);
     }
 }
