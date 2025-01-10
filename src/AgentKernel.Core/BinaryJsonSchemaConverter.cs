@@ -15,10 +15,13 @@ public class BinaryJsonSchemaConverter : JsonConverter<BinaryData?>
     public override BinaryData? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         // 读取 JSON 并转换为 BinaryData
-        var jsonString = reader.GetString();
-        if (string.IsNullOrEmpty(jsonString))
+        if (reader.TokenType == JsonTokenType.String)
         {
-            return default;
+            var jsonString = reader.GetString();
+            if (string.IsNullOrEmpty(jsonString))
+            {
+                return default;
+            }
         }
 
         using var jsonDoc = JsonDocument.ParseValue(ref reader);
@@ -35,7 +38,18 @@ public class BinaryJsonSchemaConverter : JsonConverter<BinaryData?>
             return;
         }
 
-        var jsonEle = JsonDocument.Parse(value.ToString()).RootElement;
-        jsonEle.WriteTo(writer);
+        var content = value.ToString();
+        // 替换属性值中的单引号为双引号
+        content = content.Replace("'", "\"", StringComparison.InvariantCultureIgnoreCase);
+
+        if (content.StartsWith('{'))
+        {
+            var jsonEle = JsonDocument.Parse(content).RootElement;
+            jsonEle.WriteTo(writer);
+        }
+        else
+        {
+            writer.WriteStringValue(content);
+        }
     }
 }

@@ -81,15 +81,6 @@ public sealed class GeminiChatClient : IChatClient
 
             throw;
         }
-        finally
-        {
-            response?.Dispose();
-#pragma warning disable VSTHRD103 // Call async methods when in an async method
-#pragma warning disable CA1849 // 当在异步方法中时，调用异步方法
-            responseStream?.Dispose();
-#pragma warning restore CA1849 // 当在异步方法中时，调用异步方法
-#pragma warning restore VSTHRD103 // Call async methods when in an async method
-        }
 
         using var reader = new StreamReader(responseStream);
         while ((await reader.ReadLineAsync(cancellationToken).ConfigureAwait(false)) is { } line)
@@ -195,12 +186,30 @@ public sealed class GeminiChatClient : IChatClient
     private static GeminiChatMessageContent GetChatMessageContentFromCandidate(GeminiResponse geminiResponse, GeminiResponseCandidate candidate)
     {
         var part = candidate.Content?.Parts?[0];
-        return new GeminiChatMessageContent
+        var msg = new GeminiChatMessageContent { Role = candidate.Content?.Role ?? ChatRole.Assistant, };
+        if (part?.FunctionCall != null)
         {
-            Role = candidate.Content?.Role ?? ChatRole.Assistant,
-            Contents = [new TextContent(part?.Text)],
-            Metadata = GetResponseMetadata(geminiResponse, candidate),
-        };
+            var argumentJson = part.FunctionCall.Arguments?.ToString() ?? "{}";
+            var functionCallContent = new FunctionCallContent(part.FunctionCall.FunctionName, part.FunctionCall.FunctionName)
+            {
+                Arguments = JsonToolkit.JsonElementToDictionary(JsonDocument.Parse(argumentJson).RootElement)
+            };
+
+            msg.Contents = [functionCallContent];
+        }
+        else if (part?.FunctionResponse != null)
+        {
+            var resultText = part.FunctionResponse.Response.Content?.ToString();
+            var functionResultContent = new FunctionResultContent(part.FunctionResponse.FunctionName, part.FunctionResponse.FunctionName, resultText);
+            msg.Contents = [functionResultContent];
+        }
+        else
+        {
+            msg.Contents = [new TextContent(part?.Text)];
+            msg.Metadata = GetResponseMetadata(geminiResponse, candidate);
+        }
+
+        return msg;
     }
 
     private static GeminiMetadata GetResponseMetadata(
