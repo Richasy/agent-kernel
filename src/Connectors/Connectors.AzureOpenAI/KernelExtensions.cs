@@ -40,7 +40,7 @@ public static class KernelExtensions
     /// <returns><see cref="IKernelBuilder"/>.</returns>
     public static IKernelBuilder AddAzureTranslationService(this IKernelBuilder builder)
     {
-        builder.Services.AddKeyedSingleton<ITextTranslationService, AzureTranslationService>("Azure");
+        builder.Services.AddKeyedSingleton<ITranslationService, AzureTranslationService>("Azure");
         builder.Services.AddKeyedSingleton<IHtmlTranslationService, AzureTranslationService>("Azure");
         return builder;
     }

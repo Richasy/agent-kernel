@@ -40,6 +40,7 @@ public sealed class ErnieChatCompletionService : IChatCompletionService
         }
 
         _config = ernieConfig;
+        Client?.Dispose();
         Client = new ErnieChatClient(ernieConfig.AccessKey, ernieConfig.SecretKey, ernieConfig.Model);
     }
 }

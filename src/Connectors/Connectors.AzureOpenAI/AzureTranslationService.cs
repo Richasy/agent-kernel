@@ -14,7 +14,7 @@ namespace Richasy.AgentKernel.Connectors.Azure;
 /// <summary>
 /// Azure 翻译服务.
 /// </summary>
-public sealed class AzureTranslationService : ITextTranslationService, IHtmlTranslationService
+public sealed class AzureTranslationService : ITranslationService, IHtmlTranslationService
 {
     private const string _apiEndpoint = "https://api.cognitive.microsofttranslator.com/translate";
     private const string _version = "3.0";

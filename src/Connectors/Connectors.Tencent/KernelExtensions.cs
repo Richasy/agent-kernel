@@ -40,7 +40,7 @@ public static class KernelExtensions
     /// <returns><see cref="IKernelBuilder"/>.</returns>
     public static IKernelBuilder AddTencentTranslationService(this IKernelBuilder builder)
     {
-        builder.Services.AddKeyedSingleton<ITextTranslationService, TencentTranslationService>("Tencent");
+        builder.Services.AddKeyedSingleton<ITranslationService, TencentTranslationService>("Tencent");
         return builder;
     }
 }

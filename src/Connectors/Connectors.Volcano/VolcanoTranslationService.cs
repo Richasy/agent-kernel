@@ -18,7 +18,7 @@ namespace Richasy.AgentKernel.Connectors.Volcano;
 /// <summary>
 /// Translation service that uses the Volcano translation service.
 /// </summary>
-public sealed class VolcanoTranslationService : ITextTranslationService
+public sealed class VolcanoTranslationService : ITranslationService
 {
     private const string _apiEndpoint = "https://translate.volcengineapi.com";
     private const string _version = "2020-06-01";

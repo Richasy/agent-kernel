@@ -45,6 +45,7 @@ public sealed class QwenChatCompletionService : IChatCompletionService
             Endpoint = new Uri("https://dashscope.aliyuncs.com/compatible-mode/v1"),
         });
 
+        Client?.Dispose();
         Client = coreClient.AsChatClient(_config.Model!);
     }
 }

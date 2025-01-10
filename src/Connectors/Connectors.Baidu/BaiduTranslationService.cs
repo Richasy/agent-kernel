@@ -14,7 +14,7 @@ namespace Richasy.AgentKernel.Connectors.Baidu;
 /// <summary>
 /// Baidu translation service.
 /// </summary>
-public sealed class BaiduTranslationService : ITextTranslationService
+public sealed class BaiduTranslationService : ITranslationService
 {
     private const string _apiEndpoint = "https://fanyi-api.baidu.com/api/trans/vip/translate";
     private readonly HttpClient _httpClient;

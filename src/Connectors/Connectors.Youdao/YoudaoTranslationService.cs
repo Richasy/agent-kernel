@@ -18,7 +18,7 @@ namespace Richasy.AgentKernel.Connectors.Youdao;
 /// <summary>
 /// Youdao translation service.
 /// </summary>
-public sealed class YoudaoTranslationService : ITextTranslationService
+public sealed class YoudaoTranslationService : ITranslationService
 {
     private const string _apiEndpoint = "https://openapi.youdao.com/api";
     private readonly string _salt;

@@ -129,9 +129,9 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
         AnsiConsole.Write(panel);
     }
 
-    private ITextTranslationService DispatchService(ProviderType provider)
+    private ITranslationService DispatchService(ProviderType provider)
     {
-        var service = kernel.GetRequiredService<ITextTranslationService>(provider.ToString());
+        var service = kernel.GetRequiredService<ITranslationService>(provider.ToString());
         var originConfig = provider switch
         {
             ProviderType.Azure => config.Azure,

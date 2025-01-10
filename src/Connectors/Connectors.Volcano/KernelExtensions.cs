@@ -40,7 +40,7 @@ public static class KernelExtensions
     /// <returns><see cref="IKernelBuilder"/>.</returns>
     public static IKernelBuilder AddVolcanoTranslationService(this IKernelBuilder builder)
     {
-        builder.Services.AddKeyedSingleton<ITextTranslationService, VolcanoTranslationService>("Volcano");
+        builder.Services.AddKeyedSingleton<ITranslationService, VolcanoTranslationService>("Volcano");
         return builder;
     }
 }
