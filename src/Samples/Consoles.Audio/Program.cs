@@ -14,6 +14,7 @@ builder.Environment.ContentRootPath = AppDomain.CurrentDomain.BaseDirectory;
 var kernel = Kernel.CreateBuilder()
     .AddAzureAudioService()
     .AddEdgeAudioService()
+    .AddAzureOpenAIAudioService()
     .Build();
 
 builder.Services.AddSingleton(kernel);

@@ -64,4 +64,14 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IAudioService, EdgeAudioService>("Edge");
         return builder;
     }
+
+    /// <summary>
+    /// Add Azure OpenAI audio service.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddAzureOpenAIAudioService(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IAudioService, AzureOpenAIAudioService>("AzureOpenAI");
+        return builder;
+    }
 }

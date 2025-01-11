@@ -19,6 +19,7 @@ internal sealed class AudioService(Kernel kernel, AudioConfiguration config, IHo
     private Task? _chatTask;
     private string? _languageCode;
     private string? _voiceId;
+    private string? _model;
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
@@ -51,6 +52,7 @@ internal sealed class AudioService(Kernel kernel, AudioConfiguration config, IHo
         {
             ProviderType.Azure => "Azure",
             ProviderType.Edge => "Edge",
+            ProviderType.AzureOpenAI => "Azure OpenAI",
             _ => throw new NotSupportedException(),
         };
     }
@@ -118,6 +120,11 @@ internal sealed class AudioService(Kernel kernel, AudioConfiguration config, IHo
                 _voiceId = config.Edge!.Voice;
                 _languageCode = config.Edge.Language;
                 break;
+            case ProviderType.AzureOpenAI:
+                _voiceId = config.AzureOpenAI!.Voice;
+                _languageCode = config.AzureOpenAI.Language;
+                _model = config.AzureOpenAI.Model;
+                break;
             default:
                 break;
         }
@@ -125,6 +132,7 @@ internal sealed class AudioService(Kernel kernel, AudioConfiguration config, IHo
         var serviceConfig = provider switch
         {
             ProviderType.Azure => config.Azure.ToAIServiceConfig(),
+            ProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig(),
             ProviderType.Edge => null,
             _ => throw new NotSupportedException(),
         };

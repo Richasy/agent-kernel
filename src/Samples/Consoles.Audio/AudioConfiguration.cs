@@ -12,12 +12,24 @@ internal sealed class AudioConfiguration
 
     [JsonPropertyName("edge")]
     public KeyConfiguration? Edge { get; set; }
+
+    [JsonPropertyName("azure_openai")]
+    public AzureOpenAIConfiguration? AzureOpenAI { get; set; }
 }
 
 internal sealed class AzureConfiguration : KeyConfiguration
 {
     [JsonPropertyName("region")]
     public string? Region { get; set; }
+}
+
+internal sealed class AzureOpenAIConfiguration : KeyConfiguration
+{
+    [JsonPropertyName("endpoint")]
+    public string? Endpoint { get; set; }
+
+    [JsonPropertyName("model")]
+    public string? Model { get; set; }
 }
 
 internal class KeyConfiguration

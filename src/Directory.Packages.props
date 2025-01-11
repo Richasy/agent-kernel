@@ -5,7 +5,7 @@
   <ItemGroup>
     <PackageVersion Include="AlibabaCloud.SDK.Alimt20181012" Version="2.3.0" />
     <PackageVersion Include="Anthropic" Version="3.1.0" />
-    <PackageVersion Include="Azure.AI.OpenAI" Version="2.1.0" />
+    <PackageVersion Include="Azure.AI.OpenAI" Version="2.1.0-beta.2" />
     <PackageVersion Include="Google.Cloud.Translate.V3" Version="3.9.0" />
     <PackageVersion Include="Google_Gemini" Version="0.9.1-dev.9" />
     <PackageVersion Include="Microsoft.Bcl.HashCode" Version="1.1.1" />

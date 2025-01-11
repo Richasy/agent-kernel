@@ -7,4 +7,5 @@ internal enum ProviderType
 {
     Azure,
     Edge,
+    AzureOpenAI,
 }
