@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.DependencyInjection;
+using Richasy.AgentKernel.Audio;
 using Richasy.AgentKernel.ChatCompletion;
 using Richasy.AgentKernel.Connectors.Azure;
 using Richasy.AgentKernel.Translation;
@@ -41,6 +42,26 @@ public static class KernelExtensions
     public static IKernelBuilder AddAzureTranslationService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<ITranslationService, AzureTranslationService>("Azure");
+        return builder;
+    }
+
+    /// <summary>
+    /// Add Azure audio service.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddAzureAudioService(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IAudioService, AzureAudioService>("Azure");
+        return builder;
+    }
+
+    /// <summary>
+    /// Add Edge audio service.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddEdgeAudioService(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IAudioService, EdgeAudioService>("Edge");
         return builder;
     }
 }

@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Richasy.AgentKernel.Translation;
+using Richasy.AgentKernel.Translation;
+
+namespace Richasy.AgentKernel.Models;
 
 /// <summary>
 /// Provides metadata about an <see cref="ITranslateClient"/>.

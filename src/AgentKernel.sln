@@ -61,6 +61,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consoles.Translation", "Sam
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.Youdao", "Connectors\Connectors.Youdao\Connectors.Youdao.csproj", "{ECA054C1-5BDC-414F-8376-B0972AD9DCA3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consoles.Audio", "Samples\Consoles.Audio\Consoles.Audio.csproj", "{F165DDCC-FB27-4CE8-BC0A-DBA67F38A826}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -175,6 +177,10 @@ Global
 		{ECA054C1-5BDC-414F-8376-B0972AD9DCA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECA054C1-5BDC-414F-8376-B0972AD9DCA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECA054C1-5BDC-414F-8376-B0972AD9DCA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F165DDCC-FB27-4CE8-BC0A-DBA67F38A826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F165DDCC-FB27-4CE8-BC0A-DBA67F38A826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F165DDCC-FB27-4CE8-BC0A-DBA67F38A826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F165DDCC-FB27-4CE8-BC0A-DBA67F38A826}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -204,6 +210,7 @@ Global
 		{03D0AB17-430E-445E-9EAA-92421E088A26} = {BE6BB6A9-68C9-489A-8EDB-59BDCA239D6D}
 		{9BF5051F-3FAB-40F4-BD4F-782402773961} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{ECA054C1-5BDC-414F-8376-B0972AD9DCA3} = {BE6BB6A9-68C9-489A-8EDB-59BDCA239D6D}
+		{F165DDCC-FB27-4CE8-BC0A-DBA67F38A826} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {75EFBD6D-9C6C-4E70-9AEA-80654AA48D1A}
