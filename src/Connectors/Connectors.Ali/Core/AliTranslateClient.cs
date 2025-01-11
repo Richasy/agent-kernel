@@ -18,7 +18,7 @@ namespace Richasy.AgentKernel.Connectors.Ali.Core;
 /// <remarks>
 /// Initializes a new instance of the <see cref="AliTranslateClient"/> class.
 /// </remarks>
-public sealed class AliTranslateClient(AliTranslationServiceConfig config) : ITranslateClient
+public sealed partial class AliTranslateClient(AliTranslationServiceConfig config) : ITranslateClient
 {
     private const string _apiEndpoint = "http://mt.cn-hangzhou.aliyuncs.com/api/translate/web/general";
     private readonly HttpClient _httpClient = HttpExtensions.CreateHttpClient();

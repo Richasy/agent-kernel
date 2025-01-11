@@ -14,7 +14,7 @@ namespace Richasy.AgentKernel.Connectors.Youdao.Core;
 /// <summary>
 /// Youdao translation client.
 /// </summary>
-public sealed class YoudaoTranslateClient(YoudaoTranslationServiceConfig config) : ITranslateClient
+public sealed partial class YoudaoTranslateClient(YoudaoTranslationServiceConfig config) : ITranslateClient
 {
     private const string _apiEndpoint = "https://openapi.youdao.com/api";
     private readonly string _salt = Guid.NewGuid().ToString("N");

@@ -14,7 +14,7 @@ namespace Richasy.AgentKernel.Connectors.Baidu.Core;
 /// <summary>
 /// Baidu translation client.
 /// </summary>
-public sealed class BaiduTranslateClient(BaiduTranslationServiceConfig config) : ITranslateClient
+public sealed partial class BaiduTranslateClient(BaiduTranslationServiceConfig config) : ITranslateClient
 {
     private const string _apiEndpoint = "https://fanyi-api.baidu.com/api/trans/vip/translate";
     private readonly HttpClient _httpClient = HttpExtensions.CreateHttpClient();

@@ -13,7 +13,7 @@ namespace Richasy.AgentKernel.Connectors.Tencent.Core;
 /// <summary>
 /// Tencent translation client.
 /// </summary>
-public sealed class TencentTranslateClient(TencentTranslationServiceConfig config) : ITranslateClient
+public sealed partial class TencentTranslateClient(TencentTranslationServiceConfig config) : ITranslateClient
 {
     private const string _apiEndpoint = "https://tmt.tencentcloudapi.com";
     private const string _action = "TextTranslate";

@@ -17,7 +17,7 @@ namespace Richasy.AgentKernel.Connectors.Volcano.Core;
 /// <summary>
 /// Volcano translation client.
 /// </summary>
-public sealed class VolcanoTranslateClient(VolcanoTranslationServiceConfig config) : ITranslateClient
+public sealed partial class VolcanoTranslateClient(VolcanoTranslationServiceConfig config) : ITranslateClient
 {
     private const string _apiEndpoint = "https://translate.volcengineapi.com";
     private const string _version = "2020-06-01";
@@ -45,7 +45,7 @@ public sealed class VolcanoTranslateClient(VolcanoTranslationServiceConfig confi
         var endpoint = $"{_apiEndpoint}?Action={_action}&Version={_version}";
         var req = new VolcanoTranslateRequest
         {
-            SourceLanguage = options?.SourceLanguage,
+            SourceLanguage = options?.SourceLanguage is "auto" ? null : options?.SourceLanguage,
             TargetLanguage = options?.TargetLanguage ?? "en",
             TextList = [text],
         };
