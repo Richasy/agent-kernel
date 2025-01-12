@@ -17,10 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.OpenAI", "Connec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.ZhiPu", "Connectors\Connectors.ZhiPu\Connectors.ZhiPu.csproj", "{3B2A902D-DA49-40DE-BED3-43DEC1737978}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RichasyKernel.Abstractions", "Libs\richasy-kernel\src\RichasyKernel.Abstractions\RichasyKernel.Abstractions.csproj", "{605BA8C5-6E55-2B22-19CE-292C3B0D109D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RichasyKernel.Core", "Libs\richasy-kernel\src\RichasyKernel.Core\RichasyKernel.Core.csproj", "{305A51F5-BB79-501B-A836-A0BE8B9AEA91}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentKernel.Core", "AgentKernel.Core\AgentKernel.Core.csproj", "{17EAEA52-90E3-4B2C-AC9C-0F530FE32128}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.LingYi", "Connectors\Connectors.LingYi\Connectors.LingYi.csproj", "{5C5CE117-C75B-4B4F-BCD3-0C037EA9F1C1}"
@@ -89,14 +85,6 @@ Global
 		{3B2A902D-DA49-40DE-BED3-43DEC1737978}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B2A902D-DA49-40DE-BED3-43DEC1737978}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B2A902D-DA49-40DE-BED3-43DEC1737978}.Release|Any CPU.Build.0 = Release|Any CPU
-		{605BA8C5-6E55-2B22-19CE-292C3B0D109D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{605BA8C5-6E55-2B22-19CE-292C3B0D109D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{605BA8C5-6E55-2B22-19CE-292C3B0D109D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{605BA8C5-6E55-2B22-19CE-292C3B0D109D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{305A51F5-BB79-501B-A836-A0BE8B9AEA91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{305A51F5-BB79-501B-A836-A0BE8B9AEA91}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{305A51F5-BB79-501B-A836-A0BE8B9AEA91}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{305A51F5-BB79-501B-A836-A0BE8B9AEA91}.Release|Any CPU.Build.0 = Release|Any CPU
 		{17EAEA52-90E3-4B2C-AC9C-0F530FE32128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{17EAEA52-90E3-4B2C-AC9C-0F530FE32128}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17EAEA52-90E3-4B2C-AC9C-0F530FE32128}.Release|Any CPU.ActiveCfg = Release|Any CPU

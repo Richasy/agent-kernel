@@ -10,11 +10,11 @@
   
   <ItemGroup>
   	<PackageReference Include="Anthropic" />
+	<PackageReference Include="RichasyKernel.Abstractions" />
   </ItemGroup>
   
   <ItemGroup>
   	<ProjectReference Include="..\..\AgentKernel.Core\AgentKernel.Core.csproj" />
-  	<ProjectReference Include="..\..\Libs\richasy-kernel\src\RichasyKernel.Abstractions\RichasyKernel.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
