@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{02EA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Connectors", "Connectors", "{BE6BB6A9-68C9-489A-8EDB-59BDCA239D6D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{11B7F1A3-1179-44DD-B461-1C3449081BF1}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consoles.Chat", "Samples\Consoles.Chat\Consoles.Chat.csproj", "{4D35C286-F5F6-456E-ACCD-161D93F3B04D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.XAI", "Connectors\Connectors.XAI\Connectors.XAI.csproj", "{12660A88-0AC2-4D08-A033-72443A6F65C5}"
@@ -58,6 +60,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.Youdao", "Connectors\Connectors.Youdao\Connectors.Youdao.csproj", "{ECA054C1-5BDC-414F-8376-B0972AD9DCA3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consoles.Audio", "Samples\Consoles.Audio\Consoles.Audio.csproj", "{F165DDCC-FB27-4CE8-BC0A-DBA67F38A826}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenAI", "Libs\OpenAI\OpenAI.csproj", "{7543AC71-537B-68C4-7C33-E00395F91868}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -169,6 +173,10 @@ Global
 		{F165DDCC-FB27-4CE8-BC0A-DBA67F38A826}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F165DDCC-FB27-4CE8-BC0A-DBA67F38A826}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F165DDCC-FB27-4CE8-BC0A-DBA67F38A826}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7543AC71-537B-68C4-7C33-E00395F91868}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7543AC71-537B-68C4-7C33-E00395F91868}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7543AC71-537B-68C4-7C33-E00395F91868}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7543AC71-537B-68C4-7C33-E00395F91868}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -199,6 +207,7 @@ Global
 		{9BF5051F-3FAB-40F4-BD4F-782402773961} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{ECA054C1-5BDC-414F-8376-B0972AD9DCA3} = {BE6BB6A9-68C9-489A-8EDB-59BDCA239D6D}
 		{F165DDCC-FB27-4CE8-BC0A-DBA67F38A826} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{7543AC71-537B-68C4-7C33-E00395F91868} = {11B7F1A3-1179-44DD-B461-1C3449081BF1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {75EFBD6D-9C6C-4E70-9AEA-80654AA48D1A}

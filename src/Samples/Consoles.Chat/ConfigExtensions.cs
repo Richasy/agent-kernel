@@ -5,6 +5,7 @@ using Richasy.AgentKernel.Connectors.Baidu.Models;
 using Richasy.AgentKernel.Connectors.Ollama.Models;
 using Richasy.AgentKernel.Connectors.OpenAI.Models;
 using Richasy.AgentKernel.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Consoles.Chat;
 
@@ -18,7 +19,7 @@ internal static class ConfigExtensions
             : new OpenAIServiceConfig(config.AccessKey, config.Model ?? string.Empty, endpoint, config.Organization);
     }
 
-    public static AIServiceConfig? ToAIServiceConfig<TAIServiceConfig>(this EndpointConfiguration? config)
+    public static AIServiceConfig? ToAIServiceConfig<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TAIServiceConfig>(this EndpointConfiguration? config)
         where TAIServiceConfig : AIServiceConfig
     {
         return config is null || string.IsNullOrWhiteSpace(config.AccessKey)
@@ -26,7 +27,7 @@ internal static class ConfigExtensions
             : Activator.CreateInstance(typeof(TAIServiceConfig), config.AccessKey, config.Model, string.IsNullOrEmpty(config.Endpoint) ? default : new Uri(config.Endpoint)) as TAIServiceConfig;
     }
 
-    public static AIServiceConfig? ToAIServiceConfig<TAIServiceConfig>(this KeyConfiguration? config)
+    public static AIServiceConfig? ToAIServiceConfig<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TAIServiceConfig>(this KeyConfiguration? config)
         where TAIServiceConfig : AIServiceConfig
     {
         return config is null || string.IsNullOrWhiteSpace(config.AccessKey)
