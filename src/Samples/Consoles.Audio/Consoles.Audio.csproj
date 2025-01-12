@@ -7,6 +7,8 @@
     <Nullable>enable</Nullable>
 	<TrimmerSingleWarn>false</TrimmerSingleWarn>
     <InvariantGlobalization>true</InvariantGlobalization>
+	<NoWarn>$(NoWarn);IL2067</NoWarn>
+	<PublishAot>true</PublishAot>
   </PropertyGroup>
 
   <ItemGroup>
