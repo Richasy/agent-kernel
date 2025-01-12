@@ -3,8 +3,8 @@
 
 using System.Text.Json.Serialization;
 
-namespace Consoles.Audio;
+namespace Consoles.Draw;
 
 [JsonSourceGenerationOptions(DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
-[JsonSerializable(typeof(AudioConfiguration))]
+[JsonSerializable(typeof(DrawConfiguration))]
 internal sealed partial class JsonGenerationContext : JsonSerializerContext;

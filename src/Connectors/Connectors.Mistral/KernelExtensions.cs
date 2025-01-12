@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.DependencyInjection;
-using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Mistral;
 using RichasyKernel;
 
@@ -19,7 +19,7 @@ public static class KernelExtensions
     /// <returns><see cref="IKernelBuilder"/>.</returns>
     public static IKernelBuilder AddMistralChatCompletion(this IKernelBuilder builder)
     {
-        builder.Services.AddKeyedSingleton<IChatCompletionService, MistralChatCompletionService>("Mistral");
+        builder.Services.AddKeyedSingleton<IChatService, MistralChatService>("Mistral");
         return builder;
     }
 

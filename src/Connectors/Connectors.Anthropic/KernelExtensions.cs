@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.DependencyInjection;
-using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Anthropic;
 using RichasyKernel;
 
@@ -19,7 +19,7 @@ public static class KernelExtensions
     /// <returns><see cref="IKernelBuilder"/>.</returns>
     public static IKernelBuilder AddAnthropicChatCompletion(this IKernelBuilder builder)
     {
-        builder.Services.AddKeyedSingleton<IChatCompletionService, AnthropicChatCompletionService>("Anthropic");
+        builder.Services.AddKeyedSingleton<IChatService, AnthropicChatService>("Anthropic");
         return builder;
     }
 

@@ -3,7 +3,7 @@
 
 using Microsoft.Extensions.AI;
 using OpenAI;
-using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Tencent.Models;
 using Richasy.AgentKernel.Models;
 
@@ -12,7 +12,7 @@ namespace Richasy.AgentKernel.Connectors.Tencent;
 /// <summary>
 /// 腾讯混元 Chat Completion Service.
 /// </summary>
-public sealed class HunyuanChatCompletionService : IChatCompletionService
+public sealed class HunyuanChatService : IChatService
 {
     private HunyuanServiceConfig? _config;
 

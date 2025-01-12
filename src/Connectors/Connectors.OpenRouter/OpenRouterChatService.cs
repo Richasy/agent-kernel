@@ -3,25 +3,21 @@
 
 using Microsoft.Extensions.AI;
 using OpenAI;
-using Richasy.AgentKernel.ChatCompletion;
-using Richasy.AgentKernel.Connectors.Volcano.Models;
+using Richasy.AgentKernel.Chat;
+using Richasy.AgentKernel.Connectors.OpenRouter.Models;
 using Richasy.AgentKernel.Models;
 
-namespace Richasy.AgentKernel.Connectors.Volcano;
+namespace Richasy.AgentKernel.Connectors.OpenRouter;
 
 /// <summary>
-/// 字节豆包 Chat Completion Service.
+/// OpenRouter Chat Completion Service.
 /// </summary>
-public sealed class DoubaoChatCompletionService : IChatCompletionService
+public sealed class OpenRouterChatService : IChatService
 {
-    private DoubaoServiceConfig? _config;
+    private OpenRouterServiceConfig? _config;
 
     /// <inheritdoc/>
-    public IChatClient? Client
-    {
-        get => field ?? throw new InvalidOperationException("The service has not been initialized.");
-        set;
-    }
+    public IChatClient? Client { get; set; }
 
     /// <inheritdoc/>
     public AIServiceConfig? Config => _config;
@@ -29,22 +25,23 @@ public sealed class DoubaoChatCompletionService : IChatCompletionService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
-        if (config is not DoubaoServiceConfig doubaoConfig)
+        if (config is not OpenRouterServiceConfig orConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }
 
-        if (_config != null && doubaoConfig.Equals(_config))
+        if (_config != null && orConfig.Equals(_config))
         {
             return;
         }
 
-        _config = doubaoConfig;
+        _config = orConfig;
         var coreClient = new OpenAIClient(new(_config.AccessKey), new OpenAIClientOptions
         {
-            Endpoint = new Uri("https://ark.cn-beijing.volces.com/api/v3"),
+            Endpoint = new Uri("https://openrouter.ai/api/v1"),
         });
 
+        Client?.Dispose();
         Client = coreClient.AsChatClient(_config.Model!);
     }
 }

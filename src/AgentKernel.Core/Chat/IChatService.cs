@@ -4,12 +4,12 @@
 using Microsoft.Extensions.AI;
 using Richasy.AgentKernel.Models;
 
-namespace Richasy.AgentKernel.ChatCompletion;
+namespace Richasy.AgentKernel.Chat;
 
 /// <summary>
 /// Provides methods to complete chat.
 /// </summary>
-public interface IChatCompletionService
+public interface IChatService
 {
     /// <summary>
     /// Gets the client that is used to complete chat.

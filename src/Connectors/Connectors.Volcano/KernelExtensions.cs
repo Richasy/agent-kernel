@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.DependencyInjection;
-using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Volcano;
 using Richasy.AgentKernel.Translation;
 using RichasyKernel;
@@ -20,7 +20,7 @@ public static class KernelExtensions
     /// <returns><see cref="IKernelBuilder"/>.</returns>
     public static IKernelBuilder AddDoubaoChatCompletion(this IKernelBuilder builder)
     {
-        builder.Services.AddKeyedSingleton<IChatCompletionService, DoubaoChatCompletionService>("Doubao");
+        builder.Services.AddKeyedSingleton<IChatService, DoubaoChatService>("Doubao");
         return builder;
     }
 

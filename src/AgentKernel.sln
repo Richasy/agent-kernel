@@ -67,6 +67,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.OpenAI", "Libs\Azu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Extensions.AI.OpenAI", "Libs\Microsoft.Extensions.AI.OpenAI\Microsoft.Extensions.AI.OpenAI.csproj", "{EEE8FB62-926F-3CBB-3A15-2F3A9611D52C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consoles.Draw", "Samples\Consoles.Draw\Consoles.Draw.csproj", "{827C90E6-C159-42CE-8E9F-EDD302110D02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -189,6 +191,10 @@ Global
 		{EEE8FB62-926F-3CBB-3A15-2F3A9611D52C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEE8FB62-926F-3CBB-3A15-2F3A9611D52C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEE8FB62-926F-3CBB-3A15-2F3A9611D52C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{827C90E6-C159-42CE-8E9F-EDD302110D02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{827C90E6-C159-42CE-8E9F-EDD302110D02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{827C90E6-C159-42CE-8E9F-EDD302110D02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{827C90E6-C159-42CE-8E9F-EDD302110D02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -222,6 +228,7 @@ Global
 		{7543AC71-537B-68C4-7C33-E00395F91868} = {11B7F1A3-1179-44DD-B461-1C3449081BF1}
 		{BC13E940-2A84-F5A0-5DE6-AA9C5DA90CD0} = {11B7F1A3-1179-44DD-B461-1C3449081BF1}
 		{EEE8FB62-926F-3CBB-3A15-2F3A9611D52C} = {11B7F1A3-1179-44DD-B461-1C3449081BF1}
+		{827C90E6-C159-42CE-8E9F-EDD302110D02} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {75EFBD6D-9C6C-4E70-9AEA-80654AA48D1A}

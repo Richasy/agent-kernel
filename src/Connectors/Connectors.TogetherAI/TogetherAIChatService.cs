@@ -1,20 +1,20 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-using Connectors.DeepSeek.Models;
 using Microsoft.Extensions.AI;
 using OpenAI;
-using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Chat;
+using Richasy.AgentKernel.Connectors.TogetherAI.Models;
 using Richasy.AgentKernel.Models;
 
-namespace Richasy.AgentKernel.Connectors.DeepSeek;
+namespace Richasy.AgentKernel.Connectors.TogetherAI;
 
 /// <summary>
-/// DeepSeek Chat Completion Service.
+/// Together.AI Chat Completion Service.
 /// </summary>
-public sealed class DeepSeekChatCompletionService : IChatCompletionService
+public sealed class TogetherAIChatService : IChatService
 {
-    private DeepSeekServiceConfig? _config;
+    private TogetherAIServiceConfig? _config;
 
     /// <inheritdoc/>
     public IChatClient? Client { get; set; }
@@ -25,20 +25,20 @@ public sealed class DeepSeekChatCompletionService : IChatCompletionService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
-        if (config is not DeepSeekServiceConfig deepseekConfig)
+        if (config is not TogetherAIServiceConfig taiConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }
 
-        if (_config != null && deepseekConfig.Equals(_config))
+        if (_config != null && taiConfig.Equals(_config))
         {
             return;
         }
 
-        _config = deepseekConfig;
+        _config = taiConfig;
         var coreClient = new OpenAIClient(new(_config.AccessKey), new OpenAIClientOptions
         {
-            Endpoint = new Uri("https://api.deepseek.com"),
+            Endpoint = new Uri("https://api.together.xyz/v1"),
         });
 
         Client?.Dispose();

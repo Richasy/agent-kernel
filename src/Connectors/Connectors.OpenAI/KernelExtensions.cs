@@ -3,7 +3,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Richasy.AgentKernel.Audio;
-using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.OpenAI;
 using RichasyKernel;
 
@@ -20,7 +20,7 @@ public static class KernelExtensions
     /// <returns><see cref="IKernelBuilder"/>.</returns>
     public static IKernelBuilder AddOpenAIChatCompletion(this IKernelBuilder builder)
     {
-        builder.Services.AddKeyedSingleton<IChatCompletionService, OpenAIChatCompletionService>("OpenAI");
+        builder.Services.AddKeyedSingleton<IChatService, OpenAIChatService>("OpenAI");
         return builder;
     }
 

@@ -3,18 +3,18 @@
 
 using Microsoft.Extensions.AI;
 using OpenAI;
-using Richasy.AgentKernel.ChatCompletion;
-using Richasy.AgentKernel.Connectors.XAI.Models;
+using Richasy.AgentKernel.Chat;
+using Richasy.AgentKernel.Connectors.LingYi.Models;
 using Richasy.AgentKernel.Models;
 
-namespace Richasy.AgentKernel.Connectors.XAI;
+namespace Richasy.AgentKernel.Connectors.LingYi;
 
 /// <summary>
-/// XAI Chat Completion Service.
+/// LingYi Chat Completion Service.
 /// </summary>
-public sealed class XAIChatCompletionService : IChatCompletionService
+public sealed class LingYiChatService : IChatService
 {
-    private XAIServiceConfig? _config;
+    private LingYiServiceConfig? _config;
 
     /// <inheritdoc/>
     public IChatClient? Client { get; set; }
@@ -25,20 +25,20 @@ public sealed class XAIChatCompletionService : IChatCompletionService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
-        if (config is not XAIServiceConfig xaiConfig)
+        if (config is not LingYiServiceConfig lingYiConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }
 
-        if (_config != null && xaiConfig.Equals(_config))
+        if (_config != null && lingYiConfig.Equals(_config))
         {
             return;
         }
 
-        _config = xaiConfig;
+        _config = lingYiConfig;
         var coreClient = new OpenAIClient(new(_config.AccessKey), new OpenAIClientOptions
         {
-            Endpoint = new Uri("https://api.x.ai/v1"),
+            Endpoint = new Uri("https://api.lingyiwanwu.com/v1"),
         });
 
         Client?.Dispose();

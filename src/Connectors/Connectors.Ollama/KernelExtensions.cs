@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.DependencyInjection;
-using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Ollama;
 using RichasyKernel;
 
@@ -19,7 +19,7 @@ public static class KernelExtensions
     /// <returns><see cref="IKernelBuilder"/>.</returns>
     public static IKernelBuilder AddOllamaChatCompletion(this IKernelBuilder builder)
     {
-        builder.Services.AddKeyedSingleton<IChatCompletionService, OllamaChatCompletionService>("Ollama");
+        builder.Services.AddKeyedSingleton<IChatService, OllamaChatService>("Ollama");
         return builder;
     }
 

@@ -1,20 +1,20 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
+using Connectors.DeepSeek.Models;
 using Microsoft.Extensions.AI;
 using OpenAI;
-using Richasy.AgentKernel.ChatCompletion;
-using Richasy.AgentKernel.Connectors.Groq.Models;
+using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Models;
 
-namespace Richasy.AgentKernel.Connectors.Groq;
+namespace Richasy.AgentKernel.Connectors.DeepSeek;
 
 /// <summary>
-/// Groq Chat Completion Service.
+/// DeepSeek Chat Completion Service.
 /// </summary>
-public sealed class GroqChatCompletionService : IChatCompletionService
+public sealed class DeepSeekChatService : IChatService
 {
-    private GroqServiceConfig? _config;
+    private DeepSeekServiceConfig? _config;
 
     /// <inheritdoc/>
     public IChatClient? Client { get; set; }
@@ -25,20 +25,20 @@ public sealed class GroqChatCompletionService : IChatCompletionService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
-        if (config is not GroqServiceConfig groqConfig)
+        if (config is not DeepSeekServiceConfig deepseekConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }
 
-        if (_config != null && groqConfig.Equals(_config))
+        if (_config != null && deepseekConfig.Equals(_config))
         {
             return;
         }
 
-        _config = groqConfig;
+        _config = deepseekConfig;
         var coreClient = new OpenAIClient(new(_config.AccessKey), new OpenAIClientOptions
         {
-            Endpoint = new Uri("https://api.groq.com/openai/v1"),
+            Endpoint = new Uri("https://api.deepseek.com"),
         });
 
         Client?.Dispose();

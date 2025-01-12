@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.DependencyInjection;
-using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Google;
 using Richasy.AgentKernel.Translation;
 using RichasyKernel;
@@ -20,7 +20,7 @@ public static class KernelExtensions
     /// <returns><see cref="IKernelBuilder"/>.</returns>
     public static IKernelBuilder AddGeminiChatCompletion(this IKernelBuilder builder)
     {
-        builder.Services.AddKeyedSingleton<IChatCompletionService, GeminiChatCompletionService>("Gemini");
+        builder.Services.AddKeyedSingleton<IChatService, GeminiChatService>("Gemini");
         return builder;
     }
 

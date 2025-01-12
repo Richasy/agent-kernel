@@ -1,19 +1,20 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
+using Anthropic;
 using Microsoft.Extensions.AI;
-using Richasy.AgentKernel.ChatCompletion;
-using Richasy.AgentKernel.Connectors.Google.Models;
+using Richasy.AgentKernel.Chat;
+using Richasy.AgentKernel.Connectors.Anthropic.Models;
 using Richasy.AgentKernel.Models;
 
-namespace Richasy.AgentKernel.Connectors.Google;
+namespace Richasy.AgentKernel.Connectors.Anthropic;
 
 /// <summary>
-/// Gemini Chat Completion Service.
+/// Anthropic Chat Completion Service.
 /// </summary>
-public sealed class GeminiChatCompletionService : IChatCompletionService
+public sealed class AnthropicChatService : IChatService
 {
-    private GeminiServiceConfig? _config;
+    private AnthropicServiceConfig? _config;
 
     /// <inheritdoc/>
     public IChatClient? Client { get; set; }
@@ -24,18 +25,18 @@ public sealed class GeminiChatCompletionService : IChatCompletionService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
-        if (config is not GeminiServiceConfig geminiConfig)
+        if (config is not AnthropicServiceConfig anthropicConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }
 
-        if (_config != null && geminiConfig.Equals(_config))
+        if (_config != null && anthropicConfig.Equals(_config))
         {
             return;
         }
 
-        _config = geminiConfig;
+        _config = anthropicConfig;
         Client?.Dispose();
-        Client = new GeminiChatClient(_config.AccessKey, _config.Model, _config.Endpoint);
+        Client = new AnthropicClient(_config.AccessKey, baseUri: _config.Endpoint);
     }
 }

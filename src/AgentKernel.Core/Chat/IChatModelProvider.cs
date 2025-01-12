@@ -3,7 +3,7 @@
 
 using Richasy.AgentKernel.Models;
 
-namespace Richasy.AgentKernel.ChatCompletion;
+namespace Richasy.AgentKernel.Chat;
 
 /// <summary>
 /// 聊天模型提供程序.

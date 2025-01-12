@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.AI;
-using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Mistral.Core;
 using Richasy.AgentKernel.Connectors.Mistral.Models;
 using Richasy.AgentKernel.Models;
@@ -12,7 +12,7 @@ namespace Richasy.AgentKernel.Connectors.Mistral;
 /// <summary>
 /// Mistral Chat Completion Service.
 /// </summary>
-public sealed class MistralChatCompletionService : IChatCompletionService
+public sealed class MistralChatService : IChatService
 {
     private MistralServiceConfig? _config;
 

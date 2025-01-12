@@ -39,7 +39,8 @@ public sealed class AzureOpenAIAudioClient : IAudioClient
     /// <inheritdoc/>
     public async Task<BinaryData> TextToSpeechAsync(string text, AudioOptions? options, CancellationToken cancellationToken = default)
     {
-        var audioClient = _client.GetAudioClient(_config.Model);
+        var model = options?.ModelId ?? _config.Model;
+        var audioClient = _client.GetAudioClient(model);
         var voice = new GeneratedSpeechVoice(options!.VoiceId);
         var opt = new SpeechGenerationOptions
         {

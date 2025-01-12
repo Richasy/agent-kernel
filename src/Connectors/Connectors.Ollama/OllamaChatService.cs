@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.AI;
-using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Ollama.Models;
 using Richasy.AgentKernel.Models;
 
@@ -11,7 +11,7 @@ namespace Richasy.AgentKernel.Connectors.Ollama;
 /// <summary>
 /// Ollama Chat Completion Service.
 /// </summary>
-public sealed class OllamaChatCompletionService : IChatCompletionService
+public sealed class OllamaChatService : IChatService
 {
     private OllamaServiceConfig? _config;
 

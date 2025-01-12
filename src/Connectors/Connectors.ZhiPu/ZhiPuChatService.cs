@@ -1,20 +1,19 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-using Anthropic;
 using Microsoft.Extensions.AI;
-using Richasy.AgentKernel.ChatCompletion;
-using Richasy.AgentKernel.Connectors.Anthropic.Models;
+using Richasy.AgentKernel.Chat;
+using Richasy.AgentKernel.Connectors.ZhiPu.Models;
 using Richasy.AgentKernel.Models;
 
-namespace Richasy.AgentKernel.Connectors.Anthropic;
+namespace Richasy.AgentKernel.Connectors.ZhiPu;
 
 /// <summary>
-/// Anthropic Chat Completion Service.
+/// Chat completion service for ZhiPu.
 /// </summary>
-public sealed class AnthropicChatCompletionService : IChatCompletionService
+public sealed class ZhiPuChatService : IChatService
 {
-    private AnthropicServiceConfig? _config;
+    private ZhiPuServiceConfig? _config;
 
     /// <inheritdoc/>
     public IChatClient? Client { get; set; }
@@ -25,18 +24,18 @@ public sealed class AnthropicChatCompletionService : IChatCompletionService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
-        if (config is not AnthropicServiceConfig anthropicConfig)
+        if (config is not ZhiPuServiceConfig zhipuConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }
 
-        if (_config != null && anthropicConfig.Equals(_config))
+        if (_config != null && zhipuConfig.Equals(_config))
         {
             return;
         }
 
-        _config = anthropicConfig;
+        _config = zhipuConfig;
         Client?.Dispose();
-        Client = new AnthropicClient(_config.AccessKey, baseUri: _config.Endpoint);
+        Client = new ZhiPuChatClient(_config.AccessKey, _config.Model);
     }
 }

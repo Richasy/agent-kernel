@@ -3,7 +3,7 @@
 
 using Microsoft.Extensions.AI;
 using OpenAI;
-using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Moonshot.Models;
 using Richasy.AgentKernel.Models;
 
@@ -12,7 +12,7 @@ namespace Richasy.AgentKernel.Connectors.Moonshot;
 /// <summary>
 /// Moonshot Chat Completion Service.
 /// </summary>
-public sealed class MoonshotChatCompletionService : IChatCompletionService
+public sealed class MoonshotChatService : IChatService
 {
     private MoonshotServiceConfig? _config;
 

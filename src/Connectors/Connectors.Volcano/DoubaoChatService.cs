@@ -3,21 +3,25 @@
 
 using Microsoft.Extensions.AI;
 using OpenAI;
-using Richasy.AgentKernel.ChatCompletion;
-using Richasy.AgentKernel.Connectors.SiliconFlow.Models;
+using Richasy.AgentKernel.Chat;
+using Richasy.AgentKernel.Connectors.Volcano.Models;
 using Richasy.AgentKernel.Models;
 
-namespace Richasy.AgentKernel.Connectors.SiliconFlow;
+namespace Richasy.AgentKernel.Connectors.Volcano;
 
 /// <summary>
-/// 硅基流动 Chat Completion Service.
+/// 字节豆包 Chat Completion Service.
 /// </summary>
-public sealed class SiliconFlowChatCompletionService : IChatCompletionService
+public sealed class DoubaoChatService : IChatService
 {
-    private SiliconFlowServiceConfig? _config;
+    private DoubaoServiceConfig? _config;
 
     /// <inheritdoc/>
-    public IChatClient? Client { get; set; }
+    public IChatClient? Client
+    {
+        get => field ?? throw new InvalidOperationException("The service has not been initialized.");
+        set;
+    }
 
     /// <inheritdoc/>
     public AIServiceConfig? Config => _config;
@@ -25,23 +29,22 @@ public sealed class SiliconFlowChatCompletionService : IChatCompletionService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
-        if (config is not SiliconFlowServiceConfig sfConfig)
+        if (config is not DoubaoServiceConfig doubaoConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }
 
-        if (_config != null && sfConfig.Equals(_config))
+        if (_config != null && doubaoConfig.Equals(_config))
         {
             return;
         }
 
-        _config = sfConfig;
+        _config = doubaoConfig;
         var coreClient = new OpenAIClient(new(_config.AccessKey), new OpenAIClientOptions
         {
-            Endpoint = new Uri("https://api.siliconflow.cn/v1"),
+            Endpoint = new Uri("https://ark.cn-beijing.volces.com/api/v3"),
         });
 
-        Client?.Dispose();
         Client = coreClient.AsChatClient(_config.Model!);
     }
 }

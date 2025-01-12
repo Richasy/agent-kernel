@@ -3,18 +3,18 @@
 
 using Microsoft.Extensions.AI;
 using OpenAI;
-using Richasy.AgentKernel.ChatCompletion;
-using Richasy.AgentKernel.Connectors.OpenRouter.Models;
+using Richasy.AgentKernel.Chat;
+using Richasy.AgentKernel.Connectors.Ali.Models;
 using Richasy.AgentKernel.Models;
 
-namespace Richasy.AgentKernel.Connectors.OpenRouter;
+namespace Richasy.AgentKernel.Connectors.Ali;
 
 /// <summary>
-/// OpenRouter Chat Completion Service.
+/// 千问 Chat Completion Service.
 /// </summary>
-public sealed class OpenRouterChatCompletionService : IChatCompletionService
+public sealed class QwenChatService : IChatService
 {
-    private OpenRouterServiceConfig? _config;
+    private QwenServiceConfig? _config;
 
     /// <inheritdoc/>
     public IChatClient? Client { get; set; }
@@ -25,20 +25,20 @@ public sealed class OpenRouterChatCompletionService : IChatCompletionService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
-        if (config is not OpenRouterServiceConfig orConfig)
+        if (config is not QwenServiceConfig qwenConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }
 
-        if (_config != null && orConfig.Equals(_config))
+        if (_config != null && qwenConfig.Equals(_config))
         {
             return;
         }
 
-        _config = orConfig;
+        _config = qwenConfig;
         var coreClient = new OpenAIClient(new(_config.AccessKey), new OpenAIClientOptions
         {
-            Endpoint = new Uri("https://openrouter.ai/api/v1"),
+            Endpoint = new Uri("https://dashscope.aliyuncs.com/compatible-mode/v1"),
         });
 
         Client?.Dispose();

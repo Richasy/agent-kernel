@@ -6,7 +6,7 @@
 using Connectors.DeepSeek.Models;
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Hosting;
-using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Ali.Models;
 using Richasy.AgentKernel.Connectors.Anthropic.Models;
 using Richasy.AgentKernel.Connectors.Azure.Models;
@@ -195,9 +195,9 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
         }
     }
 
-    private IChatCompletionService DispatchService(ProviderType provider, ChatModel? model)
+    private IChatService DispatchService(ProviderType provider, ChatModel? model)
     {
-        var service = kernel.GetRequiredService<IChatCompletionService>(provider.ToString());
+        var service = kernel.GetRequiredService<IChatService>(provider.ToString());
         var serviceConfig = provider switch
         {
             ProviderType.OpenAI => config.OpenAI.ToAIServiceConfig(),

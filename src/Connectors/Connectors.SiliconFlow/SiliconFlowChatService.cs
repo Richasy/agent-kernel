@@ -3,18 +3,18 @@
 
 using Microsoft.Extensions.AI;
 using OpenAI;
-using Richasy.AgentKernel.ChatCompletion;
-using Richasy.AgentKernel.Connectors.Ali.Models;
+using Richasy.AgentKernel.Chat;
+using Richasy.AgentKernel.Connectors.SiliconFlow.Models;
 using Richasy.AgentKernel.Models;
 
-namespace Richasy.AgentKernel.Connectors.Ali;
+namespace Richasy.AgentKernel.Connectors.SiliconFlow;
 
 /// <summary>
-/// 千问 Chat Completion Service.
+/// 硅基流动 Chat Completion Service.
 /// </summary>
-public sealed class QwenChatCompletionService : IChatCompletionService
+public sealed class SiliconFlowChatService : IChatService
 {
-    private QwenServiceConfig? _config;
+    private SiliconFlowServiceConfig? _config;
 
     /// <inheritdoc/>
     public IChatClient? Client { get; set; }
@@ -25,20 +25,20 @@ public sealed class QwenChatCompletionService : IChatCompletionService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
-        if (config is not QwenServiceConfig qwenConfig)
+        if (config is not SiliconFlowServiceConfig sfConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }
 
-        if (_config != null && qwenConfig.Equals(_config))
+        if (_config != null && sfConfig.Equals(_config))
         {
             return;
         }
 
-        _config = qwenConfig;
+        _config = sfConfig;
         var coreClient = new OpenAIClient(new(_config.AccessKey), new OpenAIClientOptions
         {
-            Endpoint = new Uri("https://dashscope.aliyuncs.com/compatible-mode/v1"),
+            Endpoint = new Uri("https://api.siliconflow.cn/v1"),
         });
 
         Client?.Dispose();

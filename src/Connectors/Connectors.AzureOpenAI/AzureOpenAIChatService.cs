@@ -3,7 +3,7 @@
 
 using Azure.AI.OpenAI;
 using Microsoft.Extensions.AI;
-using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Azure.Models;
 using Richasy.AgentKernel.Models;
 using System.ClientModel;
@@ -13,7 +13,7 @@ namespace Richasy.AgentKernel.Connectors.Azure;
 /// <summary>
 /// Azure Chat Completion Service.
 /// </summary>
-public sealed class AzureOpenAIChatCompletionService : IChatCompletionService
+public sealed class AzureOpenAIChatService : IChatService
 {
     private AzureOpenAIServiceConfig? _config;
 

@@ -3,18 +3,18 @@
 
 using Microsoft.Extensions.AI;
 using OpenAI;
-using Richasy.AgentKernel.ChatCompletion;
-using Richasy.AgentKernel.Connectors.TogetherAI.Models;
+using Richasy.AgentKernel.Chat;
+using Richasy.AgentKernel.Connectors.Perplexity.Models;
 using Richasy.AgentKernel.Models;
 
-namespace Richasy.AgentKernel.Connectors.TogetherAI;
+namespace Richasy.AgentKernel.Connectors.Perplexity;
 
 /// <summary>
-/// Together.AI Chat Completion Service.
+/// Perplexity Chat Completion Service.
 /// </summary>
-public sealed class TogetherAIChatCompletionService : IChatCompletionService
+public sealed class PerplexityChatService : IChatService
 {
-    private TogetherAIServiceConfig? _config;
+    private PerplexityServiceConfig? _config;
 
     /// <inheritdoc/>
     public IChatClient? Client { get; set; }
@@ -25,20 +25,20 @@ public sealed class TogetherAIChatCompletionService : IChatCompletionService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
-        if (config is not TogetherAIServiceConfig taiConfig)
+        if (config is not PerplexityServiceConfig plexConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }
 
-        if (_config != null && taiConfig.Equals(_config))
+        if (_config != null && plexConfig.Equals(_config))
         {
             return;
         }
 
-        _config = taiConfig;
+        _config = plexConfig;
         var coreClient = new OpenAIClient(new(_config.AccessKey), new OpenAIClientOptions
         {
-            Endpoint = new Uri("https://api.together.xyz/v1"),
+            Endpoint = new Uri("https://api.perplexity.ai"),
         });
 
         Client?.Dispose();

@@ -3,8 +3,9 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Richasy.AgentKernel.Audio;
-using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Azure;
+using Richasy.AgentKernel.Draw;
 using Richasy.AgentKernel.Translation;
 using RichasyKernel;
 
@@ -21,7 +22,7 @@ public static class KernelExtensions
     /// <returns><see cref="IKernelBuilder"/>.</returns>
     public static IKernelBuilder AddAzureOpenAIChatCompletion(this IKernelBuilder builder)
     {
-        builder.Services.AddKeyedSingleton<IChatCompletionService, AzureOpenAIChatCompletionService>("AzureOpenAI");
+        builder.Services.AddKeyedSingleton<IChatService, AzureOpenAIChatService>("AzureOpenAI");
         return builder;
     }
 
@@ -72,6 +73,16 @@ public static class KernelExtensions
     public static IKernelBuilder AddAzureOpenAIAudioService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IAudioService, AzureOpenAIAudioService>("AzureOpenAI");
+        return builder;
+    }
+
+    /// <summary>
+    /// Add Azure OpenAI draw service.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddAzureOpenAIDrawService(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IDrawService, AzureOpenAIDrawService>("AzureOpenAI");
         return builder;
     }
 }

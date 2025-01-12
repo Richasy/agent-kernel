@@ -3,18 +3,18 @@
 
 using Microsoft.Extensions.AI;
 using OpenAI;
-using Richasy.AgentKernel.ChatCompletion;
-using Richasy.AgentKernel.Connectors.IFlyTek.Models;
+using Richasy.AgentKernel.Chat;
+using Richasy.AgentKernel.Connectors.Groq.Models;
 using Richasy.AgentKernel.Models;
 
-namespace Richasy.AgentKernel.Connectors.IFlyTek;
+namespace Richasy.AgentKernel.Connectors.Groq;
 
 /// <summary>
-/// 讯飞星火 Chat Completion Service.
+/// Groq Chat Completion Service.
 /// </summary>
-public sealed class SparkChatCompletionService : IChatCompletionService
+public sealed class GroqChatService : IChatService
 {
-    private SparkServiceConfig? _config;
+    private GroqServiceConfig? _config;
 
     /// <inheritdoc/>
     public IChatClient? Client { get; set; }
@@ -25,20 +25,20 @@ public sealed class SparkChatCompletionService : IChatCompletionService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
-        if (config is not SparkServiceConfig hunyuanConfig)
+        if (config is not GroqServiceConfig groqConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }
 
-        if (_config != null && hunyuanConfig.Equals(_config))
+        if (_config != null && groqConfig.Equals(_config))
         {
             return;
         }
 
-        _config = hunyuanConfig;
+        _config = groqConfig;
         var coreClient = new OpenAIClient(new(_config.AccessKey), new OpenAIClientOptions
         {
-            Endpoint = new Uri("https://spark-api-open.xf-yun.com/v1"),
+            Endpoint = new Uri("https://api.groq.com/openai/v1"),
         });
 
         Client?.Dispose();
