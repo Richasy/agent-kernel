@@ -8,7 +8,7 @@ namespace Richasy.AgentKernel.Connectors.Baidu.Models;
 /// <summary>
 /// 文心一言服务配置.
 /// </summary>
-public sealed class ErnieServiceConfig(string key, string secret, string model) : AIServiceConfig(key, model)
+public sealed class ErnieServiceConfig(string key, string secret, string? model) : AIServiceConfig(key, model)
 {
     /// <summary>
     /// 获取或设置SecretKey.

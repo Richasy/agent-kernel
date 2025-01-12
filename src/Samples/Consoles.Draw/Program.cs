@@ -13,6 +13,7 @@ var builder = Host.CreateApplicationBuilder(args);
 builder.Environment.ContentRootPath = AppDomain.CurrentDomain.BaseDirectory;
 var kernel = Kernel.CreateBuilder()
     .AddAzureOpenAIDrawService()
+    .AddErnieDrawService()
     .Build();
 
 builder.Services.AddSingleton(kernel);

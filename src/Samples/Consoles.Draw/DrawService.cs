@@ -51,6 +51,7 @@ internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHost
         return provider switch
         {
             ProviderType.AzureOpenAI => "Azure OpenAI",
+            ProviderType.Ernie => "文心一言",
             _ => throw new NotSupportedException(),
         };
     }
@@ -121,6 +122,9 @@ internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHost
                 _model = config.AzureOpenAI!.Model;
                 DispatchSize(config.AzureOpenAI!.Size);
                 break;
+            case ProviderType.Ernie:
+                DispatchSize(config.Ernie!.Size);
+                break;
             default:
                 break;
         }
@@ -128,6 +132,7 @@ internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHost
         var serviceConfig = provider switch
         {
             ProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig(),
+            ProviderType.Ernie => config.Ernie.ToAIServiceConfig(),
             _ => throw new NotSupportedException(),
         };
 

@@ -313,6 +313,10 @@ dotnet_diagnostic.CA2242.severity = warning
 dotnet_diagnostic.IDE0005.severity = warning # Remove unnecessary using directives
 dotnet_diagnostic.IDE0044.severity = warning # Add readonly modifier
 dotnet_diagnostic.CA1812.severity = none
+
+# CA1863: 使用 "CompositeFormat"
+dotnet_diagnostic.CA1863.severity = none
+
 [*.{cs,vb}]
 dotnet_style_qualification_for_field = false:silent
 dotnet_style_qualification_for_property = false:silent

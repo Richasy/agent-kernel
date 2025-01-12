@@ -22,6 +22,23 @@ internal static class AuthorizeTool
         return JsonSerializer.Deserialize(content, JsonGenContext.Default.BearerToken);
     }
 
+    public static async Task<AccessToken?> GenerateAccessTokenAsync(string accessKey, string secretKey, CancellationToken cancellationToken = default)
+    {
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://aip.baidubce.com/oauth/2.0/token");
+        var body = new Dictionary<string, string>
+        {
+            { "grant_type", "client_credentials" },
+            { "client_id", accessKey },
+            { "client_secret", secretKey },
+        };
+
+        request.Content = new FormUrlEncodedContent(body);
+        using var client = new HttpClient();
+        var response = await client.SendAsync(request, cancellationToken).ConfigureAwait(false);
+        var content = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+        return JsonSerializer.Deserialize(content, JsonGenContext.Default.AccessToken);
+    }
+
     private static string GenerateAuthorizeString(string sk, string ak)
     {
         var timestamp = DateTimeOffset.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture);

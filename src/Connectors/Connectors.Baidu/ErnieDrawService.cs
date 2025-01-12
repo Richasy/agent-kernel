@@ -1,42 +1,42 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Extensions.AI;
-using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Baidu.Core;
 using Richasy.AgentKernel.Connectors.Baidu.Models;
+using Richasy.AgentKernel.Draw;
 using Richasy.AgentKernel.Models;
+using RichasyKernel;
 
 namespace Richasy.AgentKernel.Connectors.Baidu;
 
 /// <summary>
-/// 文心一言 Chat Completion Service.
+/// Represents an Draw service that uses Ernie.
 /// </summary>
-public sealed class ErnieChatService : IChatService
+public sealed class ErnieDrawService : IDrawService
 {
     private ErnieServiceConfig? _config;
 
     /// <inheritdoc/>
-    public IChatClient? Client { get; set; }
+    public IDrawClient? Client { get; set; }
 
     /// <inheritdoc/>
     public AIServiceConfig? Config => _config;
 
     /// <inheritdoc/>
-    public void Initialize(AIServiceConfig config)
+    public void Initialize(AIServiceConfig? config)
     {
-        if (config is not ErnieServiceConfig ernieConfig)
+        if (config is not ErnieServiceConfig aiConfig)
         {
-            throw new ArgumentException("The configuration is not valid.", nameof(config));
+            throw new KernelException("Configuration is invalid");
         }
 
-        if (_config != null && ernieConfig.Equals(_config))
+        if (_config != null && aiConfig.Equals(_config))
         {
             return;
         }
 
-        _config = ernieConfig;
+        _config = aiConfig;
         Client?.Dispose();
-        Client = new ErnieChatClient(ernieConfig);
+        Client = new ErnieDrawClient(aiConfig);
     }
 }

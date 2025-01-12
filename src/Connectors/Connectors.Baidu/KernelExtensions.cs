@@ -4,6 +4,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Baidu;
+using Richasy.AgentKernel.Draw;
 using Richasy.AgentKernel.Translation;
 using RichasyKernel;
 
@@ -41,6 +42,16 @@ public static class KernelExtensions
     public static IKernelBuilder AddBaiduTranslationService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<ITranslationService, BaiduTranslationService>("Baidu");
+        return builder;
+    }
+
+    /// <summary>
+    /// 添加文心一言绘图服务.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddErnieDrawService(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IDrawService, ErnieDrawService>("Ernie");
         return builder;
     }
 }

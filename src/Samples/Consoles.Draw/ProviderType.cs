@@ -6,4 +6,5 @@ namespace Consoles.Draw;
 internal enum ProviderType
 {
     AzureOpenAI,
+    Ernie,
 }

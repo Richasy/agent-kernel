@@ -18,22 +18,20 @@ public sealed class ErnieChatClient : IChatClient
     private const string _apiEndpoint = "https://qianfan.baidubce.com/v2/chat/completions";
     private static readonly JsonElement _defaultParameterSchema = JsonDocument.Parse("{}").RootElement;
     private readonly HttpClient _httpClient;
-    private readonly string _accessKey;
-    private readonly string _secretKey;
+    private readonly ErnieServiceConfig _config;
     private BearerToken? _token;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ErnieChatClient"/> class.
     /// </summary>
-    public ErnieChatClient(string accessKey, string secretKey, string? modelId)
+    public ErnieChatClient(ErnieServiceConfig config)
     {
-        ArgumentException.ThrowIfNullOrEmpty(accessKey, nameof(accessKey));
-        ArgumentException.ThrowIfNullOrEmpty(secretKey, nameof(secretKey));
+        ArgumentException.ThrowIfNullOrEmpty(config.AccessKey, nameof(config.AccessKey));
+        ArgumentException.ThrowIfNullOrEmpty(config.SecretKey, nameof(config.SecretKey));
 
-        _accessKey = accessKey;
-        _secretKey = secretKey;
+        _config = config;
         _httpClient = HttpExtensions.CreateHttpClient();
-        Metadata = new("ernie", new Uri(_apiEndpoint), modelId);
+        Metadata = new("ernie", new Uri(_apiEndpoint), config.Model);
     }
 
     /// <inheritdoc/>
@@ -163,7 +161,7 @@ public sealed class ErnieChatClient : IChatClient
             return;
         }
 
-        _token = await AuthorizeTool.GenerateBearerTokenAsync(_accessKey, _secretKey, cancellationToken).ConfigureAwait(false);
+        _token = await AuthorizeTool.GenerateBearerTokenAsync(_config.AccessKey, _config.SecretKey, cancellationToken).ConfigureAwait(false);
     }
 
     private ErnieChatRequest ToErnieChatRequest(IList<ChatMessage> chatMessages, ChatOptions? options, bool stream)
