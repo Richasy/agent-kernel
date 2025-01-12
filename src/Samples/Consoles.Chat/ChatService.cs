@@ -14,7 +14,6 @@ using Richasy.AgentKernel.Connectors.Google.Models;
 using Richasy.AgentKernel.Connectors.Groq.Models;
 using Richasy.AgentKernel.Connectors.IFlyTek.Models;
 using Richasy.AgentKernel.Connectors.LingYi.Models;
-using Richasy.AgentKernel.Connectors.Mistral.Models;
 using Richasy.AgentKernel.Connectors.Moonshot.Models;
 using Richasy.AgentKernel.Connectors.OpenRouter.Models;
 using Richasy.AgentKernel.Connectors.SiliconFlow.Models;
@@ -164,7 +163,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
                     AdditionalProperties = [],
                 };
 
-                if (model?.ToolSupport ?? false)
+                if (model?.ToolSupport ?? true)
                 {
                     options.Tools = [
                         AIFunctionFactory.Create(
@@ -219,7 +218,6 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.OpenRouter => config.OpenRouter.ToAIServiceConfig<OpenRouterServiceConfig>(),
             ProviderType.TogetherAI => config.TogetherAI.ToAIServiceConfig<TogetherAIServiceConfig>(),
             ProviderType.Groq => config.Groq.ToAIServiceConfig<GroqServiceConfig>(),
-            ProviderType.Mistral => config.Mistral.ToAIServiceConfig<MistralServiceConfig>(),
             ProviderType.Ollama => config.Ollama.ToAIServiceConfig(),
             _ => throw new NotSupportedException(),
         } ?? throw new InvalidOperationException("The configuration is not valid.");

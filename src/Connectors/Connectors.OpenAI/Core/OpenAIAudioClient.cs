@@ -30,7 +30,7 @@ public sealed class OpenAIAudioClient : IAudioClient
             options.Endpoint = _config.Endpoint;
         }
 
-        _client = new AudioClient(config.Model, new(config.AccessKey), options);
+        _client = new AudioClient(config.Model!, new(config.AccessKey), options);
     }
 
     /// <inheritdoc/>
