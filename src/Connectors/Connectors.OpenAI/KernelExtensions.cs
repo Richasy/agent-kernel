@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Richasy.AgentKernel.Audio;
 using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.OpenAI;
+using Richasy.AgentKernel.Draw;
 using RichasyKernel;
 
 namespace Richasy.AgentKernel;
@@ -38,9 +39,19 @@ public static class KernelExtensions
     /// Add OpenAI audio service.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddOpenAIAudioService(this IKernelBuilder builder, string key)
+    public static IKernelBuilder AddOpenAIAudioService(this IKernelBuilder builder)
     {
-        builder.Services.AddKeyedSingleton<IAudioService, OpenAIAudioService>(key);
+        builder.Services.AddKeyedSingleton<IAudioService, OpenAIAudioService>("OpenAI");
+        return builder;
+    }
+
+    /// <summary>
+    /// Add OpenAI draw service.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddOpenAIDrawService(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IDrawService, OpenAIDrawService>("OpenAI");
         return builder;
     }
 }
