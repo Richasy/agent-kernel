@@ -26,10 +26,12 @@
     <ProjectReference Include="..\..\Connectors\Connectors.Groq\Connectors.Groq.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.IFlyTek\Connectors.IFlyTek.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.LingYi\Connectors.LingYi.csproj" />
+    <ProjectReference Include="..\..\Connectors\Connectors.Mistral\Connectors.Mistral.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.Moonshot\Connectors.Moonshot.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.Ollama\Connectors.Ollama.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.OpenAI\Connectors.OpenAI.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.OpenRouter\Connectors.OpenRouter.csproj" />
+    <ProjectReference Include="..\..\Connectors\Connectors.Perplexity\Connectors.Perplexity.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.SiliconFlow\Connectors.SiliconFlow.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.Tencent\Connectors.Tencent.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.TogetherAI\Connectors.TogetherAI.csproj" />

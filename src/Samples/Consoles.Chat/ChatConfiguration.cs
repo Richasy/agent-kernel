@@ -62,7 +62,7 @@ internal sealed class ChatConfiguration
     public KeyConfiguration? Groq { get; set; }
 
     [JsonPropertyName("mistral")]
-    public KeyConfiguration? Mistral { get; set; }
+    public MistralConfiguration? Mistral { get; set; }
 
     [JsonPropertyName("ollama")]
     public OllamaConfiguration? Ollama { get; set; }
@@ -94,6 +94,12 @@ internal class EndpointConfiguration : KeyConfiguration
 {
     [JsonPropertyName("endpoint")]
     public string? Endpoint { get; set; }
+}
+
+internal sealed class MistralConfiguration : KeyConfiguration
+{
+    [JsonPropertyName("use_codestral")]
+    public bool UseCodestralApi { get; set; }
 }
 
 internal class KeyConfiguration

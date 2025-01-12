@@ -24,6 +24,7 @@
     <PackageVersion Include="Microsoft.Extensions.AI.OpenAI" Version="9.0.1-preview.1.24570.5" />
     <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
+    <PackageVersion Include="Mistral" Version="0.0.0-dev.9" />
     <PackageVersion Include="Mistral.SDK" Version="2.0.0" />
     <PackageVersion Include="OpenAI" Version="2.1.0" />
     <PackageVersion Include="RichasyKernel.Abstractions" Version="0.0.1" />

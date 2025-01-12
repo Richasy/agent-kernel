@@ -218,6 +218,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.OpenRouter => config.OpenRouter.ToAIServiceConfig<OpenRouterServiceConfig>(),
             ProviderType.TogetherAI => config.TogetherAI.ToAIServiceConfig<TogetherAIServiceConfig>(),
             ProviderType.Groq => config.Groq.ToAIServiceConfig<GroqServiceConfig>(),
+            ProviderType.Mistral => config.Mistral.ToAIServiceConfig(),
             ProviderType.Ollama => config.Ollama.ToAIServiceConfig(),
             _ => throw new NotSupportedException(),
         } ?? throw new InvalidOperationException("The configuration is not valid.");

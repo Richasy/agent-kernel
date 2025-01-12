@@ -31,6 +31,7 @@ var kernel = Kernel.CreateBuilder()
     .AddTogetherAIChatCompletion()
     .AddGroqChatCompletion()
     .AddOllamaChatCompletion()
+    .AddMistralChatCompletion()
 
     .AddQwenChatModelProvider()
     .AddAzureOpenAIChatModelProvider()
@@ -51,6 +52,7 @@ var kernel = Kernel.CreateBuilder()
     .AddDoubaoChatModelProvider()
     .AddXAIChatModelProvider()
     .AddDoubaoChatModelProvider()
+    .AddMistralChatModelProvider()
     .Build();
 
 builder.Services.AddSingleton(kernel);

@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.AI;
-using Mistral.SDK;
 using Richasy.AgentKernel.ChatCompletion;
+using Richasy.AgentKernel.Connectors.Mistral.Core;
 using Richasy.AgentKernel.Connectors.Mistral.Models;
 using Richasy.AgentKernel.Models;
 
@@ -36,13 +36,7 @@ public sealed class MistralChatCompletionService : IChatCompletionService
         }
 
         _config = mistralConfig;
-        var c = new MistralClient(new APIAuthentication(_config.AccessKey));
-        if (mistralConfig.UseCodestralApi)
-        {
-            c.ApiUrlFormat = "https://codestral.mistral.ai/{0}/{1}";
-        }
-
         Client?.Dispose();
-        Client = c.Completions;
+        Client = new MistralChatClient(_config.AccessKey, _config.UseCodestralApi, _config.Model);
     }
 }

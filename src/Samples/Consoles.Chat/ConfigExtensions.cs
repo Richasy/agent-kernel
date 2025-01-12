@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Richasy.AgentKernel.Connectors.Baidu.Models;
+using Richasy.AgentKernel.Connectors.Mistral.Models;
 using Richasy.AgentKernel.Connectors.Ollama.Models;
 using Richasy.AgentKernel.Connectors.OpenAI.Models;
 using Richasy.AgentKernel.Models;
@@ -47,5 +48,12 @@ internal static class ConfigExtensions
         return config is null || string.IsNullOrWhiteSpace(config.AccessKey)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
             : new ErnieServiceConfig(config.AccessKey, config.SecretKey, config.Model ?? string.Empty);
+    }
+
+    public static AIServiceConfig? ToAIServiceConfig(this MistralConfiguration? config)
+    {
+        return config is null || string.IsNullOrWhiteSpace(config.AccessKey)
+            ? throw new ArgumentException("The configuration is not valid.", nameof(config))
+            : new MistralServiceConfig(config.AccessKey, config.Model ?? string.Empty, config.UseCodestralApi);
     }
 }
