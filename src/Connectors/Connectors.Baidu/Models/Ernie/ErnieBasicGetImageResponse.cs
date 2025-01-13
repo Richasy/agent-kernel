@@ -5,14 +5,14 @@ using System.Text.Json.Serialization;
 
 namespace Richasy.AgentKernel.Connectors.Baidu.Models.Ernie;
 
-internal sealed class ErnieGetImageResponse
+internal sealed class ErnieBasicGetImageResponse
 {
-    public required ErnieGetImageData Data { get; set; }
+    public required ErnieBasicGetImageData Data { get; set; }
 
     public long LogId { get; set; }
 }
 
-internal sealed class ErnieGetImageData
+internal sealed class ErnieBasicGetImageData
 {
     public string? Style { get; set; }
 

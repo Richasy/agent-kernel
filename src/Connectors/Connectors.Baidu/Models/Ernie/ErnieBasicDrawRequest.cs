@@ -3,7 +3,7 @@
 
 namespace Richasy.AgentKernel.Connectors.Baidu.Models.Ernie;
 
-internal sealed class ErnieDrawRequest
+internal sealed class ErnieBasicDrawRequest
 {
     public required string Text { get; set; }
 

@@ -8,5 +8,8 @@ namespace Richasy.AgentKernel.Connectors.Baidu.Models.Ernie;
 internal sealed class ErnieGetImageRequest
 {
     [JsonPropertyName("taskId")]
-    public required string TaskId { get; set; }
+    public string? BasicTaskId { get; set; }
+
+    [JsonPropertyName("task_id")]
+    public string? AdvancedTaskId { get; set; }
 }
