@@ -18,7 +18,7 @@ public static class KernelExtensions
     /// 添加字节豆包对话服务.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddDoubaoChatCompletion(this IKernelBuilder builder)
+    public static IKernelBuilder AddDoubaoChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, DoubaoChatService>("Doubao");
         return builder;

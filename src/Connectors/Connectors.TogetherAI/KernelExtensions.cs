@@ -17,7 +17,7 @@ public static class KernelExtensions
     /// 添加 Together.AI 对话服务.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddTogetherAIChatCompletion(this IKernelBuilder builder)
+    public static IKernelBuilder AddTogetherAIChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, TogetherAIChatService>("TogetherAI");
         return builder;

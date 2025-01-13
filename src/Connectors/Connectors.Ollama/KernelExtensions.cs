@@ -17,7 +17,7 @@ public static class KernelExtensions
     /// Add Ollama chat completion service.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddOllamaChatCompletion(this IKernelBuilder builder)
+    public static IKernelBuilder AddOllamaChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, OllamaChatService>("Ollama");
         return builder;

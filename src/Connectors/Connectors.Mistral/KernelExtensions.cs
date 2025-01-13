@@ -17,7 +17,7 @@ public static class KernelExtensions
     /// 添加 Mistral 对话服务.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddMistralChatCompletion(this IKernelBuilder builder)
+    public static IKernelBuilder AddMistralChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, MistralChatService>("Mistral");
         return builder;

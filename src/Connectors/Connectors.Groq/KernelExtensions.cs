@@ -17,7 +17,7 @@ public static class KernelExtensions
     /// Add Groq chat completion service.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddGroqChatCompletion(this IKernelBuilder builder)
+    public static IKernelBuilder AddGroqChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, GroqChatService>("Groq");
         return builder;

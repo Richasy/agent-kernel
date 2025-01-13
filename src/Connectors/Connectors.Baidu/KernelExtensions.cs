@@ -19,7 +19,7 @@ public static class KernelExtensions
     /// 添加文心一言对话服务.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddErnieChatCompletion(this IKernelBuilder builder)
+    public static IKernelBuilder AddErnieChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, ErnieChatService>("Ernie");
         return builder;

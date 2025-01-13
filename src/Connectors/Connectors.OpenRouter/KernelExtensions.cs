@@ -17,7 +17,7 @@ public static class KernelExtensions
     /// 添加 OpenRouter 对话服务.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddOpenRouterChatCompletion(this IKernelBuilder builder)
+    public static IKernelBuilder AddOpenRouterChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, OpenRouterChatService>("OpenRouter");
         return builder;

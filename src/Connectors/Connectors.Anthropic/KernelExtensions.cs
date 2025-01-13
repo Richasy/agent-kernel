@@ -17,7 +17,7 @@ public static class KernelExtensions
     /// Add Anthropic chat completion service.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddAnthropicChatCompletion(this IKernelBuilder builder)
+    public static IKernelBuilder AddAnthropicChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, AnthropicChatService>("Anthropic");
         return builder;

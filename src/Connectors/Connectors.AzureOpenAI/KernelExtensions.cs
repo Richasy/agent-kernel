@@ -20,7 +20,7 @@ public static class KernelExtensions
     /// Add Azure OpenAI chat completion service.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddAzureOpenAIChatCompletion(this IKernelBuilder builder)
+    public static IKernelBuilder AddAzureOpenAIChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, AzureOpenAIChatService>("AzureOpenAI");
         return builder;

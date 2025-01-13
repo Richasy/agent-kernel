@@ -14,7 +14,7 @@ namespace Richasy.AgentKernel.Connectors.Tencent;
 /// </summary>
 public sealed class HunyuanChatService : IChatService
 {
-    private HunyuanServiceConfig? _config;
+    private HunyuanChatServiceConfig? _config;
 
     /// <inheritdoc/>
     public IChatClient? Client
@@ -29,7 +29,7 @@ public sealed class HunyuanChatService : IChatService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
-        if (config is not HunyuanServiceConfig hunyuanConfig)
+        if (config is not HunyuanChatServiceConfig hunyuanConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }

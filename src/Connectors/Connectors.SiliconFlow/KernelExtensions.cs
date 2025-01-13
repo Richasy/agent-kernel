@@ -17,7 +17,7 @@ public static class KernelExtensions
     /// 添加硅基流动对话服务.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddSiliconFlowChatCompletion(this IKernelBuilder builder)
+    public static IKernelBuilder AddSiliconFlowChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, SiliconFlowChatService>("SiliconFlow");
         return builder;

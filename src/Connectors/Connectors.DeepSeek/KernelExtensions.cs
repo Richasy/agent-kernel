@@ -17,7 +17,7 @@ public static class KernelExtensions
     /// Add DeepSeek chat completion service.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddDeepSeekChatCompletion(this IKernelBuilder builder)
+    public static IKernelBuilder AddDeepSeekChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, DeepSeekChatService>("DeepSeek");
         return builder;

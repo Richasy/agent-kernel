@@ -211,7 +211,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.DeepSeek => config.DeepSeek.ToAIServiceConfig<DeepSeekServiceConfig>(),
             ProviderType.Qwen => config.Qwen.ToAIServiceConfig<QwenServiceConfig>(),
             ProviderType.Ernie => config.Ernie.ToAIServiceConfig(),
-            ProviderType.Hunyuan => config.Hunyuan.ToAIServiceConfig<HunyuanServiceConfig>(),
+            ProviderType.Hunyuan => config.Hunyuan.ToAIServiceConfig<HunyuanChatServiceConfig>(),
             ProviderType.Spark => config.Spark.ToAIServiceConfig<SparkServiceConfig>(),
             ProviderType.Doubao => config.Doubao.ToAIServiceConfig<DoubaoServiceConfig>(),
             ProviderType.SiliconFlow => config.SiliconFlow.ToAIServiceConfig<SiliconFlowServiceConfig>(),

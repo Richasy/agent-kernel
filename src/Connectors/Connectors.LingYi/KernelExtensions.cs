@@ -17,7 +17,7 @@ public static class KernelExtensions
     /// Add LingYi chat completion service.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddLingYiChatCompletion(this IKernelBuilder builder)
+    public static IKernelBuilder AddLingYiChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, LingYiChatService>("LingYi");
         return builder;

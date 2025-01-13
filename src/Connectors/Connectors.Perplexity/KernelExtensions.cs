@@ -17,7 +17,7 @@ public static class KernelExtensions
     /// 添加 Perplexity 对话服务.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddPerplexityChatCompletion(this IKernelBuilder builder)
+    public static IKernelBuilder AddPerplexityChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, PerplexityChatService>("Perplexity");
         return builder;

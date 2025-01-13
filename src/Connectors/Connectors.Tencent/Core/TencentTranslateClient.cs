@@ -56,23 +56,17 @@ public sealed partial class TencentTranslateClient(TencentTranslationServiceConf
         }
 
         var responseObj = JsonSerializer.Deserialize(content, JsonGenContext.Default.TencentTranslateResponse);
-        if (responseObj?.Response is null)
-        {
-            throw new KernelException("Translation failed.");
-        }
-
-        if (responseObj.Response.Error != null)
-        {
-            throw new KernelException($"{responseObj.Response.Error.Code}: {responseObj.Response.Error.Message}");
-        }
-
-        return new TranslateCompletion
-        {
-            Result = responseObj.Response.TargetText!,
-            Id = responseObj.Response.RequestId,
-            SourceContent = text,
-            SourceLanguage = responseObj.Response.Source,
-            TargetLanguage = responseObj.Response.Target,
-        };
+        return responseObj?.Response is null
+            ? throw new KernelException("Translation failed.")
+            : responseObj.Response.Error != null
+            ? throw new KernelException($"{responseObj.Response.Error.Code}: {responseObj.Response.Error.Message}")
+            : new TranslateCompletion
+            {
+                Result = responseObj.Response.TargetText!,
+                Id = responseObj.Response.RequestId,
+                SourceContent = text,
+                SourceLanguage = responseObj.Response.Source,
+                TargetLanguage = responseObj.Response.Target,
+            };
     }
 }

@@ -8,6 +8,8 @@ using RichasyKernel;
 using Spectre.Console;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
+using Richasy.AgentKernel.Connectors.Baidu.Models;
+using Richasy.AgentKernel.Connectors.Tencent.Models;
 
 namespace Consoles.Draw;
 
@@ -52,6 +54,7 @@ internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHost
         {
             ProviderType.AzureOpenAI => "Azure OpenAI",
             ProviderType.Ernie => "文心一言",
+            ProviderType.Hunyuan => "混元",
             _ => throw new NotSupportedException(),
         };
     }
@@ -123,7 +126,11 @@ internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHost
                 DispatchSize(config.AzureOpenAI!.Size);
                 break;
             case ProviderType.Ernie:
+                _model = config.Ernie!.Model;
                 DispatchSize(config.Ernie!.Size);
+                break;
+            case ProviderType.Hunyuan:
+                DispatchSize(config.Hunyuan!.Size);
                 break;
             default:
                 break;
@@ -132,11 +139,12 @@ internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHost
         var serviceConfig = provider switch
         {
             ProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig(),
-            ProviderType.Ernie => config.Ernie.ToAIServiceConfig(),
+            ProviderType.Ernie => config.Ernie.ToAIServiceConfig<ErnieServiceConfig>(),
+            ProviderType.Hunyuan => config.Hunyuan.ToAIServiceConfig<HunyuanDrawServiceConfig>(),
             _ => throw new NotSupportedException(),
         };
 
-        service.Initialize(serviceConfig);
+        service.Initialize(serviceConfig!);
         return service;
     }
 

@@ -17,7 +17,7 @@ public static class KernelExtensions
     /// Add Moonshot chat completion service.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddMoonshotChatCompletion(this IKernelBuilder builder)
+    public static IKernelBuilder AddMoonshotChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, MoonshotChatService>("Moonshot");
         return builder;

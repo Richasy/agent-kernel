@@ -6,8 +6,8 @@ using Richasy.AgentKernel.Models;
 namespace Richasy.AgentKernel.Connectors.Tencent.Models;
 
 /// <summary>
-/// Hunyuan service configuration.
+/// Hunyuan chat service configuration.
 /// </summary>
-public sealed class HunyuanServiceConfig(string key, string model) : AIServiceConfig(key, model)
+public sealed class HunyuanChatServiceConfig(string key, string model) : AIServiceConfig(key, model)
 {
 }

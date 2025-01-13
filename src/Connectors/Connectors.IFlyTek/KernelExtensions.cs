@@ -17,7 +17,7 @@ public static class KernelExtensions
     /// 添加讯飞星火对话服务.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddSparkChatCompletion(this IKernelBuilder builder)
+    public static IKernelBuilder AddSparkChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, SparkChatService>("Spark");
         return builder;

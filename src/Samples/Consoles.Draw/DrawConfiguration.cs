@@ -11,7 +11,10 @@ internal sealed class DrawConfiguration
     public AzureOpenAIConfiguration? AzureOpenAI { get; set; }
 
     [JsonPropertyName("ernie")]
-    public ErnieConfiguration? Ernie { get; set; }
+    public SecretConfiguration? Ernie { get; set; }
+
+    [JsonPropertyName("hunyuan")]
+    public SecretConfiguration? Hunyuan { get; set; }
 }
 
 internal sealed class AzureOpenAIConfiguration : KeyConfiguration
@@ -20,17 +23,17 @@ internal sealed class AzureOpenAIConfiguration : KeyConfiguration
     public string? Endpoint { get; set; }
 }
 
-internal sealed class ErnieConfiguration : KeyConfiguration
+internal sealed class SecretConfiguration : KeyConfiguration
 {
     [JsonPropertyName("secret")]
-    public string? Secret { get; set; }
+    public required string Secret { get; set; }
 }
 
 internal class KeyConfiguration
 {
     [JsonPropertyName("key")]
     [JsonRequired]
-    public string? AccessKey { get; set; }
+    public required string AccessKey { get; set; }
 
     [JsonPropertyName("model")]
     public string? Model { get; set; }

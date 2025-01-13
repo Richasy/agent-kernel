@@ -17,7 +17,7 @@ public static class KernelExtensions
     /// Add ZhiPu chat completion service.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddZhiPuChatCompletion(this IKernelBuilder builder)
+    public static IKernelBuilder AddZhiPuChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, ZhiPuChatService>("ZhiPu");
         return builder;

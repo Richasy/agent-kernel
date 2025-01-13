@@ -18,7 +18,7 @@ public static class KernelExtensions
     /// Add Gemini chat completion service.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddGeminiChatCompletion(this IKernelBuilder builder)
+    public static IKernelBuilder AddGeminiChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, GeminiChatService>("Gemini");
         return builder;

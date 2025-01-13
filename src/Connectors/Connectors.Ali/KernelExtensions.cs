@@ -18,7 +18,7 @@ public static class KernelExtensions
     /// 添加通义千问对话服务.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddQwenChatCompletion(this IKernelBuilder builder)
+    public static IKernelBuilder AddQwenChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, QwenChatService>("Qwen");
         return builder;
