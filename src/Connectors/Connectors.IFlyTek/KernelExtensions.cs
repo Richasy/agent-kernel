@@ -4,6 +4,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.IFlyTek;
+using Richasy.AgentKernel.Draw;
 using RichasyKernel;
 
 namespace Richasy.AgentKernel;
@@ -30,6 +31,16 @@ public static class KernelExtensions
     public static IKernelBuilder AddSparkChatModelProvider(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatModelProvider, SparkChatModelProvider>("Spark");
+        return builder;
+    }
+
+    /// <summary>
+    /// 添加讯飞星火绘图服务.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddSparkDrawService(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IDrawService, SparkDrawService>("Spark");
         return builder;
     }
 }

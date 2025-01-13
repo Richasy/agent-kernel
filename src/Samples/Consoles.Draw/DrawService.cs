@@ -55,6 +55,7 @@ internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHost
             ProviderType.AzureOpenAI => "Azure OpenAI",
             ProviderType.Ernie => "文心一言",
             ProviderType.Hunyuan => "混元",
+            ProviderType.Spark => "星火",
             _ => throw new NotSupportedException(),
         };
     }
@@ -132,6 +133,10 @@ internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHost
             case ProviderType.Hunyuan:
                 DispatchSize(config.Hunyuan!.Size);
                 break;
+            case ProviderType.Spark:
+                _model = config.Spark!.Model;
+                DispatchSize(config.Spark!.Size);
+                break;
             default:
                 break;
         }
@@ -141,6 +146,7 @@ internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHost
             ProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig(),
             ProviderType.Ernie => config.Ernie.ToAIServiceConfig<ErnieServiceConfig>(),
             ProviderType.Hunyuan => config.Hunyuan.ToAIServiceConfig<HunyuanDrawServiceConfig>(),
+            ProviderType.Spark => config.Spark.ToAIServiceConfig(),
             _ => throw new NotSupportedException(),
         };
 

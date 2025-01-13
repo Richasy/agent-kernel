@@ -212,7 +212,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             ProviderType.Qwen => config.Qwen.ToAIServiceConfig<QwenServiceConfig>(),
             ProviderType.Ernie => config.Ernie.ToAIServiceConfig(),
             ProviderType.Hunyuan => config.Hunyuan.ToAIServiceConfig<HunyuanChatServiceConfig>(),
-            ProviderType.Spark => config.Spark.ToAIServiceConfig<SparkServiceConfig>(),
+            ProviderType.Spark => config.Spark.ToAIServiceConfig<SparkChatServiceConfig>(),
             ProviderType.Doubao => config.Doubao.ToAIServiceConfig<DoubaoServiceConfig>(),
             ProviderType.SiliconFlow => config.SiliconFlow.ToAIServiceConfig<SiliconFlowServiceConfig>(),
             ProviderType.OpenRouter => config.OpenRouter.ToAIServiceConfig<OpenRouterServiceConfig>(),

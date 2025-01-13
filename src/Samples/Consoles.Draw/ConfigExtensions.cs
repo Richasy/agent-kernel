@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Richasy.AgentKernel.Connectors.Azure.Models;
+using Richasy.AgentKernel.Connectors.IFlyTek.Models;
 using Richasy.AgentKernel.Models;
 using System.Diagnostics.CodeAnalysis;
 
@@ -22,5 +23,12 @@ internal static class ConfigExtensions
         return config is null || string.IsNullOrWhiteSpace(config.AccessKey) || string.IsNullOrEmpty(config.Secret) || string.IsNullOrEmpty(config.Model) || string.IsNullOrEmpty(config.Size)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
             : Activator.CreateInstance(typeof(T), config.AccessKey, config.Secret, config.Model) as T;
+    }
+
+    public static AIServiceConfig ToAIServiceConfig(this SparkConfiguration? config)
+    {
+        return config is null || string.IsNullOrWhiteSpace(config.AccessKey) || string.IsNullOrEmpty(config.AppId)
+            ? throw new ArgumentException("The configuration is not valid.", nameof(config))
+            : new SparkDrawServiceConfig(config.AccessKey, config.Secret, config.AppId, config.Model);
     }
 }

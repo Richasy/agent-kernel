@@ -14,7 +14,7 @@ namespace Richasy.AgentKernel.Connectors.IFlyTek;
 /// </summary>
 public sealed class SparkChatService : IChatService
 {
-    private SparkServiceConfig? _config;
+    private SparkChatServiceConfig? _config;
 
     /// <inheritdoc/>
     public IChatClient? Client { get; set; }
@@ -25,7 +25,7 @@ public sealed class SparkChatService : IChatService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
-        if (config is not SparkServiceConfig hunyuanConfig)
+        if (config is not SparkChatServiceConfig hunyuanConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }

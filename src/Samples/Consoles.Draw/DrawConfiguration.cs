@@ -15,6 +15,9 @@ internal sealed class DrawConfiguration
 
     [JsonPropertyName("hunyuan")]
     public SecretConfiguration? Hunyuan { get; set; }
+
+    [JsonPropertyName("spark")]
+    public SparkConfiguration? Spark { get; set; }
 }
 
 internal sealed class AzureOpenAIConfiguration : KeyConfiguration
@@ -23,7 +26,13 @@ internal sealed class AzureOpenAIConfiguration : KeyConfiguration
     public string? Endpoint { get; set; }
 }
 
-internal sealed class SecretConfiguration : KeyConfiguration
+internal sealed class SparkConfiguration : SecretConfiguration
+{
+    [JsonPropertyName("app_id")]
+    public required string AppId { get; set; }
+}
+
+internal class SecretConfiguration : KeyConfiguration
 {
     [JsonPropertyName("secret")]
     public required string Secret { get; set; }

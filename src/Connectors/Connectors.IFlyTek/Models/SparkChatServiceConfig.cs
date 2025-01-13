@@ -8,6 +8,6 @@ namespace Richasy.AgentKernel.Connectors.IFlyTek.Models;
 /// <summary>
 /// Spark service configuration.
 /// </summary>
-public sealed class SparkServiceConfig(string key, string model) : AIServiceConfig(key, model)
+public sealed class SparkChatServiceConfig(string key, string model) : AIServiceConfig(key, model)
 {
 }

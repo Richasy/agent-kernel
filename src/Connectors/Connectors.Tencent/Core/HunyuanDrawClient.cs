@@ -27,7 +27,7 @@ public sealed class HunyuanDrawClient : IDrawClient
         ArgumentException.ThrowIfNullOrWhiteSpace(config.AccessKey, nameof(config.AccessKey));
         ArgumentException.ThrowIfNullOrWhiteSpace(config.SecretId, nameof(config.SecretId));
         _config = config;
-        _httpClient = new HttpClient();
+        _httpClient = HttpExtensions.CreateHttpClient();
         Metadata = new("hunyuan", config.Model);
     }
 

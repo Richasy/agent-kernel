@@ -8,4 +8,5 @@ internal enum ProviderType
     AzureOpenAI,
     Ernie,
     Hunyuan,
+    Spark,
 }

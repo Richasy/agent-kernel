@@ -15,6 +15,7 @@ var kernel = Kernel.CreateBuilder()
     .AddAzureOpenAIDrawService()
     .AddErnieDrawService()
     .AddHunyuanDrawService()
+    .AddSparkDrawService()
     .Build();
 
 builder.Services.AddSingleton(kernel);
