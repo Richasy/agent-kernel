@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-using Richasy.AgentKernel.Connectors.Google.Models;
 using Richasy.AgentKernel.Models;
 using Richasy.AgentKernel.Translation;
 using RichasyKernel;
@@ -20,15 +19,12 @@ public sealed partial class GoogleTranslateClient : ITranslateClient
     private const string _apiEndpoint = "http://translate.google.com/m";
     private const string _userAgent = "Mozilla/4.0 (compatible;MSIE 6.0;Windows NT 5.1;SV1;.NET CLR 1.1.4322;.NET CLR 2.0.50727;.NET CLR 3.0.04506.30)";
     private readonly HttpClient _httpClient;
-    private readonly GoogleTranslationServiceConfig? _config;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GoogleTranslateClient"/> class.
     /// </summary>
-    /// <param name="config"></param>
-    public GoogleTranslateClient(GoogleTranslationServiceConfig config)
+    public GoogleTranslateClient()
     {
-        _config = config;
         var handler = new HttpClientHandler
         {
             AllowAutoRedirect = true,
@@ -46,7 +42,7 @@ public sealed partial class GoogleTranslateClient : ITranslateClient
 
     /// <inheritdoc/>
     public void Dispose() => _httpClient?.Dispose();
-    
+
     /// <inheritdoc/>
     public async Task<TranslateCompletion> TranslateTextAsync(string sourceContent, TranslateOptions? options, CancellationToken cancellationToken = default)
     {

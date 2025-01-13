@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  
   <PropertyGroup>
   	<AssemblyName>Richasy.AgentKernel.Connectors.Anthropic</AssemblyName>
   	<RootNamespace>$(AssemblyName)</RootNamespace>
@@ -8,14 +8,21 @@
   	<IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
   
+  <Import Project="$(RepoRoot)/src/nuget-package.props" />
+  
+  <PropertyGroup>
+  	<!-- NuGet Package Settings -->
+  	<Title>Agent Kernel - Anthropic connectors</Title>
+  	<Description>Agent Kernel connectors for Anthropic, include Chat service.</Description>
+  </PropertyGroup>
+  
   <ItemGroup>
   	<PackageReference Include="Anthropic" />
-	<PackageReference Include="RichasyKernel.Abstractions" />
+    <PackageReference Include="RichasyKernel.Abstractions" />
   </ItemGroup>
   
   <ItemGroup>
   	<ProjectReference Include="..\..\AgentKernel.Core\AgentKernel.Core.csproj" />
-  	<ProjectReference Include="..\..\Libs\OpenAI\OpenAI.csproj" />
   </ItemGroup>
-
+  
 </Project>

@@ -19,4 +19,8 @@
   <ItemGroup>
   	<AdditionalFiles Include="$(EditorConfigFilePath)" />
   </ItemGroup>
+
+  <PropertyGroup>
+  	<RepoRoot>$([System.IO.Path]::GetDirectoryName($([MSBuild]::GetPathOfFileAbove('.gitignore', '$(MSBuildThisFileDirectory)'))))</RepoRoot>
+  </PropertyGroup>
 </Project>

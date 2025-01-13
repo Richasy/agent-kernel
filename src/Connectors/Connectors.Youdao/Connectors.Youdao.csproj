@@ -8,6 +8,14 @@
   	<IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
 
+  <Import Project="$(RepoRoot)/src/nuget-package.props" />
+  
+  <PropertyGroup>
+  	<!-- NuGet Package Settings -->
+  	<Title>Agent Kernel - Youdao connectors</Title>
+  	<Description>Agent Kernel connectors for Youdao.</Description>
+  </PropertyGroup>
+  
   <ItemGroup>
   	<PackageReference Include="RichasyKernel.Abstractions" />
   	<PackageReference Include="RichasyKernel.Core" />

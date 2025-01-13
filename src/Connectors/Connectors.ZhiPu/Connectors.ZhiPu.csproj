@@ -7,6 +7,14 @@
   	<NoWarn>$(NoWarn)</NoWarn>
   	<IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
+
+  <Import Project="$(RepoRoot)/src/nuget-package.props" />
+  
+  <PropertyGroup>
+  	<!-- NuGet Package Settings -->
+  	<Title>Agent Kernel - ZhiPu connectors</Title>
+  	<Description>Agent Kernel connectors for ZhiPu AI.</Description>
+  </PropertyGroup>
   
   <ItemGroup>
 	<PackageReference Include="RichasyKernel.Abstractions" />

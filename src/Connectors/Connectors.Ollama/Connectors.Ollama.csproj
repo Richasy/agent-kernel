@@ -7,6 +7,14 @@
   	<NoWarn>$(NoWarn)</NoWarn>
   	<IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
+
+  <Import Project="$(RepoRoot)/src/nuget-package.props" />
+  
+  <PropertyGroup>
+  	<!-- NuGet Package Settings -->
+  	<Title>Agent Kernel - Ollama connectors</Title>
+  	<Description>Agent Kernel connectors for Ollama.</Description>
+  </PropertyGroup>
   
   <ItemGroup>
   	<PackageReference Include="Microsoft.Extensions.AI.Ollama" />

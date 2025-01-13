@@ -23,7 +23,7 @@ public sealed class AzureTranslationService : ITranslationService
     public ITranslateClient? Client { get; set; }
 
     /// <inheritdoc/>
-    public void Initialize(TranslationServiceConfig config)
+    public void Initialize(TranslationServiceConfig? config)
     {
         if (config is not AzureTranslationServiceConfig azureConfig)
         {

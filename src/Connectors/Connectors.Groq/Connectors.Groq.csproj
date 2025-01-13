@@ -7,6 +7,14 @@
   	<NoWarn>$(NoWarn)</NoWarn>
   	<IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
+
+  <Import Project="$(RepoRoot)/src/nuget-package.props" />
+  
+  <PropertyGroup>
+  	<!-- NuGet Package Settings -->
+  	<Title>Agent Kernel - Groq connectors</Title>
+  	<Description>Agent Kernel connectors for Groq, include Chat service.</Description>
+  </PropertyGroup>
   
   <ItemGroup>
 	<PackageReference Include="RichasyKernel.Abstractions" />
@@ -14,7 +22,9 @@
   
   <ItemGroup>
   	<ProjectReference Include="..\..\AgentKernel.Core\AgentKernel.Core.csproj" />
-	<ProjectReference Include="..\..\Libs\Microsoft.Extensions.AI.OpenAI\Microsoft.Extensions.AI.OpenAI.csproj" />
+	<ProjectReference Include="..\..\Libs\Microsoft.Extensions.AI.OpenAI\Microsoft.Extensions.AI.OpenAI.csproj">
+	  <PrivateAssets>all</PrivateAssets>
+	</ProjectReference>
   </ItemGroup>
   
 </Project>

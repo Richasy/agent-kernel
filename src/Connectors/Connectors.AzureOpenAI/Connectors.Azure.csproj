@@ -8,6 +8,14 @@
 	<IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
 
+  <Import Project="$(RepoRoot)/src/nuget-package.props" />
+  
+  <PropertyGroup>
+  	<!-- NuGet Package Settings -->
+  	<Title>Agent Kernel - Azure connectors</Title>
+  	<Description>Agent Kernel connectors for Azure Clound, include AzureOpenAI/TTS/Translate services</Description>
+  </PropertyGroup>
+  
   <ItemGroup>
 	<PackageReference Include="RichasyKernel.Abstractions" />
 	<PackageReference Include="RichasyKernel.Core" />
@@ -15,8 +23,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\AgentKernel.Core\AgentKernel.Core.csproj" />
-    <ProjectReference Include="..\..\Libs\Azure.AI.OpenAI\Azure.AI.OpenAI.csproj" />
-    <ProjectReference Include="..\..\Libs\Microsoft.Extensions.AI.OpenAI\Microsoft.Extensions.AI.OpenAI.csproj" />
+	<ProjectReference Include="..\..\Libs\Azure.AI.OpenAI\Azure.AI.OpenAI.csproj">
+	  <PrivateAssets>all</PrivateAssets>
+	</ProjectReference>
+	<ProjectReference Include="..\..\Libs\Microsoft.Extensions.AI.OpenAI\Microsoft.Extensions.AI.OpenAI.csproj">
+	  <PrivateAssets>all</PrivateAssets>
+	</ProjectReference>
   </ItemGroup>
 
 </Project>

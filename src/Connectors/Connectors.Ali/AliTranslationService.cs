@@ -23,7 +23,7 @@ public sealed class AliTranslationService : ITranslationService
     public ITranslateClient? Client { get; set; }
 
     /// <inheritdoc/>
-    public void Initialize(TranslationServiceConfig config)
+    public void Initialize(TranslationServiceConfig? config)
     {
         if (config is not AliTranslationServiceConfig aliConfig)
         {

@@ -8,6 +8,14 @@
   	<IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
 
+  <Import Project="$(RepoRoot)/src/nuget-package.props" />
+  
+  <PropertyGroup>
+  	<!-- NuGet Package Settings -->
+  	<Title>Agent Kernel - Google connectors</Title>
+  	<Description>Agent Kernel connectors for Google Clound, include Gemini and Translate services</Description>
+  </PropertyGroup>
+	
   <ItemGroup>
   	<PackageReference Include="RichasyKernel.Abstractions" />
   	<PackageReference Include="RichasyKernel.Core" />

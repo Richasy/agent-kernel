@@ -24,5 +24,5 @@ public interface ITranslationService
     /// Initialize the translation service.
     /// </summary>
     /// <param name="config">Configuration.</param>
-    void Initialize(TranslationServiceConfig config);
+    void Initialize(TranslationServiceConfig? config);
 }

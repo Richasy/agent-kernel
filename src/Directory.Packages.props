@@ -27,6 +27,7 @@
     <PackageVersion Include="Mistral" Version="0.0.0-dev.9" />
     <PackageVersion Include="Mistral.SDK" Version="2.0.0" />
     <PackageVersion Include="OpenAI" Version="2.1.0" />
+    <PackageVersion Include="Richasy.AgentKernel.Connectors.ZhiPu" Version="0.0.1-preview1" />
     <PackageVersion Include="RichasyKernel.Abstractions" Version="0.0.1" />
     <PackageVersion Include="RichasyKernel.Core" Version="0.0.1" />
     <PackageVersion Include="Spectre.Console" Version="0.49.2-preview.0.69" />

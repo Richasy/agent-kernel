@@ -114,10 +114,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             var model = AskModel(provider);
             var service = DispatchService(provider, model);
             var client = new ChatClientBuilder(service.Client!)
-                .UseFunctionInvocation(configure: client =>
-                {
-                    client.MaximumIterationsPerRequest = 2;
-                })
+                .UseFunctionInvocation(configure: client => client.MaximumIterationsPerRequest = 2)
                 .Build();
             List<ChatMessage> chatMessages = [];
 #if USE_SYSTEM_PROMPT

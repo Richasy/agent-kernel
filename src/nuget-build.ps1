@@ -1,0 +1,61 @@
+# 确保脚本抛出错误时停止执行
+$ErrorActionPreference = "Stop"
+
+# 获取脚本所在文件夹
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+
+# 确保 packages 文件夹存在
+$packagesDir = Join-Path -Path $scriptDir -ChildPath "packages"
+if (-not (Test-Path -Path $packagesDir)) {
+    New-Item -ItemType Directory -Path $packagesDir
+}
+
+# 获取当前文件夹中所有的 .csproj 文件
+$projectFiles = Get-ChildItem -Recurse -Filter *.csproj
+
+if (-not $projectFiles) {
+    Write-Error "未找到任何 .csproj 文件。"
+    exit 1
+}
+
+foreach ($projectFile in $projectFiles) {
+    # 排除 Samples 文件夹和 Libs 文件夹下的 .csproj 文件
+    if ($projectFile.FullName -notmatch "\\Samples\\" -and $projectFile.FullName -notmatch "\\Libs\\") {
+        Write-Host "正在处理项目：$($projectFile.FullName)"
+
+        # 恢复 NuGet 包
+        dotnet restore $projectFile.FullName
+
+        # 以 Release 配置构建项目
+        dotnet build $projectFile.FullName -c Release
+
+        # 打包 NuGet 包
+        dotnet pack $projectFile.FullName -c Release
+
+        # 获取打包后的 NuGet 包文件（包括 .nupkg 和 .snupkg 文件）
+        $nugetPackages = Get-ChildItem -Path "$($projectFile.DirectoryName)\bin\Release" | Where-Object { $_.Extension -eq ".nupkg" -or $_.Extension -eq ".snupkg" }
+
+        if (-not $nugetPackages) {
+            Write-Error "未找到任何 NuGet 包文件。"
+            continue
+        }
+
+        foreach ($nugetPackage in $nugetPackages) {
+            # 复制 NuGet 包到 packages 文件夹
+            $destinationPath = Join-Path -Path $packagesDir -ChildPath $nugetPackage.Name
+            Copy-Item -Path $nugetPackage.FullName -Destination $destinationPath -Force
+
+            # 请将 <YourNuGetApiKey> 替换为你的 NuGet API 密钥
+            #$nugetApiKey = "<YourNuGetApiKey>"
+
+            # 发布到 NuGet
+            #dotnet nuget push $destinationPath -k $nugetApiKey -s https://api.nuget.org/v3/index.json
+
+            #Write-Host "NuGet 包发布成功：$($destinationPath)"
+        }
+    } else {
+        Write-Host "跳过项目：$($projectFile.FullName)"
+    }
+}
+
+Write-Host "所有项目处理完毕。"
