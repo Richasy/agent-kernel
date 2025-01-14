@@ -1,6 +1,6 @@
 using System;
 
-namespace AgentKernel.Core.OpenAI.RealtimeConversation;
+namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation;
 internal static partial class ConversationUpdateKindExtensions
 {
     public static string ToSerialString(this ConversationUpdateKind value) => value switch

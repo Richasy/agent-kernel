@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Images;
+namespace Richasy.AgentKernel.Core.OpenAI.Images;
 
 /// <summary>
 /// Represents additional options available to control the behavior of an image generation operation.

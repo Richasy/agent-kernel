@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.OpenAI.FineTuning
+namespace Richasy.AgentKernel.Core.OpenAI.FineTuning
 {
     internal partial class WeightsAndBiasesIntegration : FineTuningIntegration
     {

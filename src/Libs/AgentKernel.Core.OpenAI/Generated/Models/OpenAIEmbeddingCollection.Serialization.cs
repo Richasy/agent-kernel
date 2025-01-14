@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.Embeddings
+namespace Richasy.AgentKernel.Core.OpenAI.Embeddings
 {
     public partial class OpenAIEmbeddingCollection : IJsonModel<OpenAIEmbeddingCollection>
     {

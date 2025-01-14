@@ -6,7 +6,7 @@
 using System.ClientModel;
 using System.ClientModel.Primitives;
 
-namespace AgentKernel.Core.AzureOpenAI.Utility;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Utility;
 
 /// <summary>
 /// Represents a collection of values returned from an Azure cloud service operation.

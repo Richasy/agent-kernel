@@ -3,7 +3,7 @@
 
 using System.ClientModel.Primitives;
 
-namespace AgentKernel.Core.AzureOpenAI.Images;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Images;
 
 /// <summary>
 /// The scenario client used for image operations with the Azure OpenAI service.

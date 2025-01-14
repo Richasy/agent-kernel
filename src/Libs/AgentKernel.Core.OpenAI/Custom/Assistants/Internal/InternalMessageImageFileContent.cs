@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AgentKernel.Core.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 /// <summary>
 /// Represents an item of image file content within an Assistants API message.

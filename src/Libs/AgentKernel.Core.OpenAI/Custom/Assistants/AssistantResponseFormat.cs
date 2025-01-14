@@ -1,10 +1,10 @@
-using AgentKernel.Core.OpenAI.Internal;
+using Richasy.AgentKernel.Core.OpenAI.Internal;
 using System;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
-namespace AgentKernel.Core.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 [Experimental("OPENAI001")]
 [CodeGenModel("AssistantResponseFormat")]

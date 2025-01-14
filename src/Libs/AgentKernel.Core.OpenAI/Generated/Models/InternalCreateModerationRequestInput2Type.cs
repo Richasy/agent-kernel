@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.OpenAI.Moderations
+namespace Richasy.AgentKernel.Core.OpenAI.Moderations
 {
     internal readonly partial struct InternalCreateModerationRequestInput2Type : IEquatable<InternalCreateModerationRequestInput2Type>
     {

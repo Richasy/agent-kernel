@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace AgentKernel.Core.OpenAI.Embeddings;
+namespace Richasy.AgentKernel.Core.OpenAI.Embeddings;
 
 /// <summary> Model factory for models. </summary>
 public static partial class OpenAIEmbeddingsModelFactory

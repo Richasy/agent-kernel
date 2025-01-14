@@ -4,7 +4,7 @@
 
 using System;
 
-namespace AgentKernel.Core.OpenAI.Files
+namespace Richasy.AgentKernel.Core.OpenAI.Files
 {
     internal static partial class FilePurposeExtensions
     {

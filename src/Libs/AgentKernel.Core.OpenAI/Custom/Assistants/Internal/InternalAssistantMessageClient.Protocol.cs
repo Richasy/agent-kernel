@@ -3,7 +3,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 internal partial class InternalAssistantMessageClient
 {

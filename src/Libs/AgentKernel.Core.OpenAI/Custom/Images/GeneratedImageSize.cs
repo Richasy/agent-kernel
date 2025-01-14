@@ -1,6 +1,6 @@
 using System;
 
-namespace AgentKernel.Core.OpenAI.Images;
+namespace Richasy.AgentKernel.Core.OpenAI.Images;
 
 // CUSTOM: Added custom struct in favor of the generated extensible enum.
 /// <summary> The size of the image that will be generated. </summary>

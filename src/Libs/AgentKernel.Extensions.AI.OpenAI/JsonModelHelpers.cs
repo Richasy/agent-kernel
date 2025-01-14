@@ -4,7 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 
-namespace AgentKernel.Extensions.AI;
+namespace Richasy.AgentKernel.Extensions.AI;
 
 /// <summary>
 /// Defines a set of helper methods for working with <see cref="IJsonModel{T}"/> types.

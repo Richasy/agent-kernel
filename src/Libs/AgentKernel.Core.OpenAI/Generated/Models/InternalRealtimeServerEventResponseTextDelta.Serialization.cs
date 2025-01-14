@@ -8,7 +8,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.RealtimeConversation
+namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation
 {
     internal partial class InternalRealtimeServerEventResponseTextDelta : IJsonModel<InternalRealtimeServerEventResponseTextDelta>
     {

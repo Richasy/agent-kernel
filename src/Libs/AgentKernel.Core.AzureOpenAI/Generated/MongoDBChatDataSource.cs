@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.AzureOpenAI.Chat
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
 {
     /// <summary> The MongoDBChatDataSource. </summary>
     public partial class MongoDBChatDataSource : ChatDataSource

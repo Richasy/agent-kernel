@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace AgentKernel.Core.OpenAI.Moderations;
+namespace Richasy.AgentKernel.Core.OpenAI.Moderations;
 
 [CodeGenModel("CreateModerationResponse")]
 [CodeGenSuppress("Results")]

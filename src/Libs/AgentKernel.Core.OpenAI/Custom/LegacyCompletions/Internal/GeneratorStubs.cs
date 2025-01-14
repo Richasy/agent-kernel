@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.LegacyCompletions;
+namespace Richasy.AgentKernel.Core.OpenAI.LegacyCompletions;
 
 // CUSTOM: Made internal.
 

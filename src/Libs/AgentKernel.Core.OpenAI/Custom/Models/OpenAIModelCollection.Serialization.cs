@@ -1,4 +1,4 @@
-using AgentKernel.Core.OpenAI.Models;
+using Richasy.AgentKernel.Core.OpenAI.Models;
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.Models;
+namespace Richasy.AgentKernel.Core.OpenAI.Models;
 
 [CodeGenSuppress("global::System.ClientModel.Primitives.IJsonModel<OpenAI.Models.OpenAIModelCollection>.Write", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
 public partial class OpenAIModelCollection : IJsonModel<OpenAIModelCollection>

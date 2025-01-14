@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.RealtimeConversation;
+namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation;
 
 [Experimental("OPENAI002")]
 public partial class RealtimeConversationSession : IDisposable

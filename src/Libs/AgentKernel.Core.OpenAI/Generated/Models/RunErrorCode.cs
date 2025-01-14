@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.OpenAI.Assistants
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants
 {
     public readonly partial struct RunErrorCode : IEquatable<RunErrorCode>
     {

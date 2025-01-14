@@ -3,7 +3,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.Images;
+namespace Richasy.AgentKernel.Core.OpenAI.Images;
 
 [CodeGenSuppress("global::System.ClientModel.Primitives.IJsonModel<OpenAI.Images.GeneratedImageCollection>.Write", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
 public partial class GeneratedImageCollection : IJsonModel<GeneratedImageCollection>

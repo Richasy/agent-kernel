@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace AgentKernel.Core.OpenAI.Moderations;
+namespace Richasy.AgentKernel.Core.OpenAI.Moderations;
 
 // CUSTOM: 
 // - Removes the redundant classes `ModerationCategories` and `ModerationCategoryScores` and moves their properties into this type.

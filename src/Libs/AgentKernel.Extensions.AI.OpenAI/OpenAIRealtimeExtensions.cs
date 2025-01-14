@@ -9,10 +9,10 @@ using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Shared.Diagnostics;
-using AgentKernel.Core.OpenAI.RealtimeConversation;
+using Richasy.AgentKernel.Core.OpenAI.RealtimeConversation;
 using Microsoft.Extensions.AI;
 
-namespace AgentKernel.Extensions.AI;
+namespace Richasy.AgentKernel.Extensions.AI;
 
 /// <summary>
 /// Provides extension methods for working with <see cref="RealtimeConversationSession"/> and related types.

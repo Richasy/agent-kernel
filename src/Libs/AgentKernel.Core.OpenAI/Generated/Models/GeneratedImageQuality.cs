@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.OpenAI.Images
+namespace Richasy.AgentKernel.Core.OpenAI.Images
 {
     public readonly partial struct GeneratedImageQuality : IEquatable<GeneratedImageQuality>
     {

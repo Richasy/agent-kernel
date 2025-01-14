@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.OpenAI.Batch
+namespace Richasy.AgentKernel.Core.OpenAI.Batch
 {
     internal partial class InternalBatchJob
     {

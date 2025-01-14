@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.AzureOpenAI
+namespace Richasy.AgentKernel.Core.AzureOpenAI
 {
     /// <summary> The structured representation of an error from an Azure OpenAI image generation request. </summary>
     internal partial class AzureOpenAIDalleError

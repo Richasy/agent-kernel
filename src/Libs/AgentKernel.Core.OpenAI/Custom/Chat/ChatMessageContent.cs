@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace AgentKernel.Core.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.OpenAI.Chat;
 
 [CodeGenModel("ChatMessageContent")]
 public partial class ChatMessageContent : Collection<ChatMessageContentPart>

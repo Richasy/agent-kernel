@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace AgentKernel.Core.AzureOpenAI.Chat
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
 {
     [PersistableModelProxy(typeof(InternalUnknownAzureChatDataSource))]
     public partial class ChatDataSource : IJsonModel<ChatDataSource>

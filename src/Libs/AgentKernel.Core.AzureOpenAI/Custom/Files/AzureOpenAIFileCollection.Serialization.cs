@@ -4,7 +4,7 @@
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace AgentKernel.Core.AzureOpenAI.Files;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Files;
 
 internal partial class AzureOpenAIFileCollection : IJsonModel<AzureOpenAIFileCollection>
 {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace AgentKernel.Core.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 [Experimental("OPENAI001")]
 [CodeGenModel("AssistantToolsFunction")]

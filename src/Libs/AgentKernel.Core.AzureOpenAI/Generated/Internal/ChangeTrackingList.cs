@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AgentKernel.Core.AzureOpenAI
+namespace Richasy.AgentKernel.Core.AzureOpenAI
 {
     internal class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
     {

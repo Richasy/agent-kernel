@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AgentKernel.Core.AzureOpenAI.Chat
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
 {
     /// <summary> The AzureChatMessageContextAllRetrievedDocuments. </summary>
     public partial class ChatRetrievedDocument

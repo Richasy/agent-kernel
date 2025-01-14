@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.OpenAI;
+namespace Richasy.AgentKernel.Core.OpenAI;
 
 internal interface IInternalListResponse<T>
 {

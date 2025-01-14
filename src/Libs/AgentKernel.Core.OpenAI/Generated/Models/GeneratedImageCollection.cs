@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace AgentKernel.Core.OpenAI.Images
+namespace Richasy.AgentKernel.Core.OpenAI.Images
 {
     public partial class GeneratedImageCollection : ReadOnlyCollection<GeneratedImage>
     {

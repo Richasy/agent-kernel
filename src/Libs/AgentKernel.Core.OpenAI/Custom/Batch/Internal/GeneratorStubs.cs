@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Batch;
+namespace Richasy.AgentKernel.Core.OpenAI.Batch;
 
 // CUSTOM: Made internal.
 

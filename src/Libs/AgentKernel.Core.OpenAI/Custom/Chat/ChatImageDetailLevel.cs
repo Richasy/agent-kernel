@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.OpenAI.Chat;
 
 /// <summary>
 ///     The level of detail with which the model should process the image and generate its textual understanding of

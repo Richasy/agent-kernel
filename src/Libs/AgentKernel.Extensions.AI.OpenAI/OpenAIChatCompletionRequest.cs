@@ -4,7 +4,7 @@
 using Microsoft.Extensions.AI;
 using System.Collections.Generic;
 
-namespace AgentKernel.Extensions.AI;
+namespace Richasy.AgentKernel.Extensions.AI;
 
 /// <summary>
 /// Represents an OpenAI chat completion request deserialized as Microsoft.Extension.AI models.

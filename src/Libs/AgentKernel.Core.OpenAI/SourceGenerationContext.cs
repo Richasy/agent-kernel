@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace AgentKernel.Core.OpenAI;
+namespace Richasy.AgentKernel.Core.OpenAI;
 
 [JsonSourceGenerationOptions]
 [JsonSerializable(typeof(string))]

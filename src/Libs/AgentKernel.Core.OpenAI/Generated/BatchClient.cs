@@ -8,7 +8,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.Batch
+namespace Richasy.AgentKernel.Core.OpenAI.Batch
 {
     // Data plane generated sub-client.
     public partial class BatchClient

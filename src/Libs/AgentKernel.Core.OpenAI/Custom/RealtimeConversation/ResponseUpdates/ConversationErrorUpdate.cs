@@ -4,7 +4,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Diagnostics.CodeAnalysis;
 
-namespace AgentKernel.Core.OpenAI.RealtimeConversation;
+namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation;
 
 /// <summary>
 /// The update (response command) of type <c>error</c>, which is received when a problem is encountered while

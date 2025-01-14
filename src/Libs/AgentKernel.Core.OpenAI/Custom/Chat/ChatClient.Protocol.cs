@@ -4,7 +4,7 @@ using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.OpenAI.Chat;
 
 /// <summary> The service client for the OpenAI Chat Completions endpoint. </summary>
 [CodeGenSuppress("CreateChatCompletionAsync", typeof(BinaryContent), typeof(RequestOptions))]

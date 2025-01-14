@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net.ServerSentEvents;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 /// <summary>
 /// Represents a single item of streamed Assistants API data.

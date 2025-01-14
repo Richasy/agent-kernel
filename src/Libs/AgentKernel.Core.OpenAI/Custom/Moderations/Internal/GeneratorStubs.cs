@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Moderations;
+namespace Richasy.AgentKernel.Core.OpenAI.Moderations;
 
 [CodeGenModel("CreateModerationRequestModel")]
 internal readonly partial struct InternalCreateModerationRequestModel { }

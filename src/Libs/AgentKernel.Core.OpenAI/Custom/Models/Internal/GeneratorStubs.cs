@@ -1,5 +1,5 @@
 
-namespace AgentKernel.Core.OpenAI.Models;
+namespace Richasy.AgentKernel.Core.OpenAI.Models;
 
 [CodeGenModel("DeleteModelResponseObject")]
 internal readonly partial struct InternalDeleteModelResponseObject { }

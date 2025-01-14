@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.OpenAI.Chat;
 
 [CodeGenSuppress("global::System.ClientModel.Primitives.IJsonModel<OpenAI.Chat.ChatResponseFormat>.Write", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
 public partial class ChatResponseFormat : IJsonModel<ChatResponseFormat>

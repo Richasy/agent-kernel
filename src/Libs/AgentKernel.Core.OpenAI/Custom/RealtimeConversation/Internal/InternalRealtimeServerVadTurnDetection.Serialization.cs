@@ -1,10 +1,10 @@
-using AgentKernel.Core.OpenAI.VectorStores;
+using Richasy.AgentKernel.Core.OpenAI.VectorStores;
 using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.RealtimeConversation;
+namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation;
 
 [Experimental("OPENAI002")]
 [CodeGenModel("RealtimeServerVadTurnDetection")]

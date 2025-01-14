@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.OpenAI.RealtimeConversation
+namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation
 {
     internal readonly partial struct InternalRealtimeResponseObject : IEquatable<InternalRealtimeResponseObject>
     {

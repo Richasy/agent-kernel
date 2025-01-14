@@ -1,7 +1,7 @@
 using System.ClientModel.Primitives;
 using System.Threading;
 
-namespace AgentKernel.Core.OpenAI;
+namespace Richasy.AgentKernel.Core.OpenAI;
 
 internal static class CancellationTokenExtensions
 {

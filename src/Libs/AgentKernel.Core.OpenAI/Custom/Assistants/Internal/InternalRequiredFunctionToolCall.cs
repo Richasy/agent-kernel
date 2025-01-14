@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 /// <summary>
 /// A requested invocation of a defined function tool, needed by an Assistants API run to continue.

@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace AgentKernel.Core.OpenAI.RealtimeConversation;
+namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation;
 
 [Experimental("OPENAI002")]
 [CodeGenModel("RealtimeClientEventResponseCreateResponse")]

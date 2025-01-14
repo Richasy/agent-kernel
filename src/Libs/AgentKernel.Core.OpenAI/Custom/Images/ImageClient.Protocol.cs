@@ -4,7 +4,7 @@ using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.Images;
+namespace Richasy.AgentKernel.Core.OpenAI.Images;
 
 [CodeGenSuppress("CreateImageAsync", typeof(BinaryContent), typeof(RequestOptions))]
 [CodeGenSuppress("CreateImage", typeof(BinaryContent), typeof(RequestOptions))]

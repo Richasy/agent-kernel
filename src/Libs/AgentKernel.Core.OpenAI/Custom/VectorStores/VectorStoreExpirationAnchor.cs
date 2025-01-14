@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
-namespace AgentKernel.Core.OpenAI.VectorStores;
+namespace Richasy.AgentKernel.Core.OpenAI.VectorStores;
 
 /// <summary>
 /// Represents the available timestamps to which the duration in a <see cref="VectorStoreExpirationPolicy"/> will apply.

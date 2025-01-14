@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.OpenAI.Files
+namespace Richasy.AgentKernel.Core.OpenAI.Files
 {
     internal readonly partial struct InternalUploadPartObject : IEquatable<InternalUploadPartObject>
     {

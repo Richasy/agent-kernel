@@ -6,7 +6,7 @@
 using System.ClientModel;
 using System.ClientModel.Primitives;
 
-namespace AgentKernel.Core.AzureOpenAI.FineTuning;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.FineTuning;
 
 /// <summary>
 /// The scenario client used for fine-tuning operations with the Azure OpenAI service.

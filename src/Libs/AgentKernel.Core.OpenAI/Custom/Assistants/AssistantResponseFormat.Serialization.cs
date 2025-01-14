@@ -3,7 +3,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 [CodeGenSuppress("global::System.ClientModel.Primitives.IJsonModel<OpenAI.Assistants.AssistantResponseFormat>.Write", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
 [CodeGenSuppress("global::System.ClientModel.Primitives.IJsonModel<OpenAI.Assistants.AssistantResponseFormat>.Create", typeof(Utf8JsonReader), typeof(ModelReaderWriterOptions))]

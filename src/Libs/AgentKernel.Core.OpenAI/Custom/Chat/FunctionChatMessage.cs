@@ -1,6 +1,6 @@
 using System;
 
-namespace AgentKernel.Core.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.OpenAI.Chat;
 
 /// <summary>
 /// Represents a chat message of the <c>function</c> role as provided to a chat completion request. A function message

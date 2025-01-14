@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.Moderations
+namespace Richasy.AgentKernel.Core.OpenAI.Moderations
 {
     public partial class ModerationResultCollection : IJsonModel<ModerationResultCollection>
     {

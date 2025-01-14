@@ -4,7 +4,7 @@ using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.Moderations;
+namespace Richasy.AgentKernel.Core.OpenAI.Moderations;
 
 [CodeGenSuppress("CreateModerationAsync", typeof(BinaryContent), typeof(RequestOptions))]
 [CodeGenSuppress("CreateModeration", typeof(BinaryContent), typeof(RequestOptions))]

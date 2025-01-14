@@ -4,9 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using AgentKernel.Core.OpenAI.Chat;
+using Richasy.AgentKernel.Core.OpenAI.Chat;
 
-namespace AgentKernel.Core.OpenAI.FineTuning
+namespace Richasy.AgentKernel.Core.OpenAI.FineTuning
 {
     internal partial class InternalFinetuneChatRequestInput
     {

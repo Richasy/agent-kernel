@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 #nullable enable
 
-namespace AgentKernel.Core.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 // Internal subclient that handles paginated requests
 internal class AsyncMessageCollectionResult : AsyncCollectionResult<ThreadMessage>

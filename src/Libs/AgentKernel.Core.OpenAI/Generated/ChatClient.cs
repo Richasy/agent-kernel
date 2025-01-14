@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.Chat
+namespace Richasy.AgentKernel.Core.OpenAI.Chat
 {
     // Data plane generated sub-client.
     public partial class ChatClient

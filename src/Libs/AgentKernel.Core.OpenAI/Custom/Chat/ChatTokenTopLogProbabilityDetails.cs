@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.OpenAI.Chat;
 
 /// <summary>
 /// Represents a single item of log probability information as requested via

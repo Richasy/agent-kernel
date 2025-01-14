@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.OpenAI.Chat;
 
 /// <summary>
 /// Represents computed token consumption statistics for a chat completion request.

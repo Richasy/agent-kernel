@@ -2,11 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Microsoft.Extensions.AI;
-using AgentKernel.Core.OpenAI;
-using AgentKernel.Core.OpenAI.Chat;
-using AgentKernel.Core.OpenAI.Embeddings;
+using Richasy.AgentKernel.Core.OpenAI;
+using Richasy.AgentKernel.Core.OpenAI.Chat;
+using Richasy.AgentKernel.Core.OpenAI.Embeddings;
 
-namespace AgentKernel.Extensions.AI;
+namespace Richasy.AgentKernel.Extensions.AI;
 
 /// <summary>Provides extension methods for working with <see cref="OpenAIClient"/>s.</summary>
 public static class OpenAIClientExtensions

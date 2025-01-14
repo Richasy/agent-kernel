@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Moderations;
+namespace Richasy.AgentKernel.Core.OpenAI.Moderations;
 
 /// <summary> A category of potentially harmful content as classified by the model. </summary>
 public partial class ModerationCategory

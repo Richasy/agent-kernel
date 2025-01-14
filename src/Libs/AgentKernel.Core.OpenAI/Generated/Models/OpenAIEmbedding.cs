@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.OpenAI.Embeddings
+namespace Richasy.AgentKernel.Core.OpenAI.Embeddings
 {
     public partial class OpenAIEmbedding
     {

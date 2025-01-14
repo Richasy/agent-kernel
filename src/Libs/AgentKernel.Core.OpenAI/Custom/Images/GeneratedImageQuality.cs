@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Images;
+namespace Richasy.AgentKernel.Core.OpenAI.Images;
 
 // CUSTOM: Renamed.
 /// <summary> 

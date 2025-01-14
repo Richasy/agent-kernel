@@ -6,7 +6,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI
+namespace Richasy.AgentKernel.Core.OpenAI
 {
     internal static partial class ClientPipelineExtensions
     {

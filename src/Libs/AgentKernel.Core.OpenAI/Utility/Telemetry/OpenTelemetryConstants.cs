@@ -1,4 +1,4 @@
-﻿namespace AgentKernel.Core.OpenAI.Telemetry;
+﻿namespace Richasy.AgentKernel.Core.OpenAI.Telemetry;
 
 internal class OpenTelemetryConstants
 {

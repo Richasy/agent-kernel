@@ -2,7 +2,7 @@
 
 using System;
 
-namespace AgentKernel.Core.OpenAI;
+namespace Richasy.AgentKernel.Core.OpenAI;
 
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
 internal sealed class CodeGenMemberAttribute : CodeGenTypeAttribute

@@ -11,14 +11,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.AI;
 using Microsoft.Shared.Diagnostics;
-using AgentKernel.Core.OpenAI.Chat;
+using Richasy.AgentKernel.Core.OpenAI.Chat;
 
 #pragma warning disable SA1204 // Static elements should appear before instance elements
 #pragma warning disable S103 // Lines should not be too long
 #pragma warning disable CA1859 // Use concrete types when possible for improved performance
 #pragma warning disable S1067 // Expressions should not be too complex
 
-namespace AgentKernel.Extensions.AI;
+namespace Richasy.AgentKernel.Extensions.AI;
 
 internal static partial class OpenAIModelMappers
 {

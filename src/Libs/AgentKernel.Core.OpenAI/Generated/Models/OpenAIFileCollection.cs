@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace AgentKernel.Core.OpenAI.Files
+namespace Richasy.AgentKernel.Core.OpenAI.Files
 {
     public partial class OpenAIFileCollection : ReadOnlyCollection<OpenAIFile>
     {

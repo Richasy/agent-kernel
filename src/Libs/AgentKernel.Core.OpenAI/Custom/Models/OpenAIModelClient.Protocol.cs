@@ -4,7 +4,7 @@ using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.Models;
+namespace Richasy.AgentKernel.Core.OpenAI.Models;
 
 [CodeGenSuppress("GetModelsAsync", typeof(RequestOptions))]
 [CodeGenSuppress("GetModels", typeof(RequestOptions))]

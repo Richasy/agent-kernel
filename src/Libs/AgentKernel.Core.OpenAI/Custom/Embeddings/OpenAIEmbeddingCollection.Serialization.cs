@@ -3,7 +3,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.Embeddings;
+namespace Richasy.AgentKernel.Core.OpenAI.Embeddings;
 
 [CodeGenSuppress("global::System.ClientModel.Primitives.IJsonModel<OpenAI.Embeddings.OpenAIEmbeddingCollection>.Write", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
 public partial class OpenAIEmbeddingCollection : IJsonModel<OpenAIEmbeddingCollection>

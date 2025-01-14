@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AgentKernel.Core.OpenAI.Files
+namespace Richasy.AgentKernel.Core.OpenAI.Files
 {
     internal partial class InternalCompleteUploadRequest
     {

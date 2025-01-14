@@ -2,7 +2,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.ClientModel;
 
-namespace AgentKernel.Core.OpenAI.LegacyCompletions;
+namespace Richasy.AgentKernel.Core.OpenAI.LegacyCompletions;
 
 // CUSTOM:
 // - Renamed.

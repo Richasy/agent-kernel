@@ -4,7 +4,7 @@
 using System.ClientModel;
 using System.ClientModel.Primitives;
 
-namespace AgentKernel.Core.AzureOpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 /// <summary>
 /// A helper class to standardize custom protocol message creation across various Azure OpenAI scenario clients.

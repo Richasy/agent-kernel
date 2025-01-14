@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.OpenAI.Chat;
 
 /// <summary>
 /// A common, base representation of a message provided as input into a chat completion request.

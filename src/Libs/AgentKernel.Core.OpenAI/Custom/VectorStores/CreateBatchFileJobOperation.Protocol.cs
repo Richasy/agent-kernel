@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 #nullable enable
 
-namespace AgentKernel.Core.OpenAI.VectorStores;
+namespace Richasy.AgentKernel.Core.OpenAI.VectorStores;
 
 /// <summary>
 /// Long-running operation for creating a vector store file batch.

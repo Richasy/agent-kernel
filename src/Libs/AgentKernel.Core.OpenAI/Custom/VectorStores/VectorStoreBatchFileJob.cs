@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace AgentKernel.Core.OpenAI.VectorStores;
+namespace Richasy.AgentKernel.Core.OpenAI.VectorStores;
 
 /// <summary>
 /// Represents information about a bulk ingestion job of files into a vector store.

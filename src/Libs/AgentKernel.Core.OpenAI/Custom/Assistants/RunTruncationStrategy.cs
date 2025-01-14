@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace AgentKernel.Core.OpenAI.Assistants
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants
 {
     /// <summary> Controls for how a thread will be truncated prior to the run. Use this to control the intial context window of the run. </summary>
     [Experimental("OPENAI001")]

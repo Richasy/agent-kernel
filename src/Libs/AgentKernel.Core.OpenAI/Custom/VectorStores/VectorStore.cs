@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace AgentKernel.Core.OpenAI.VectorStores;
+namespace Richasy.AgentKernel.Core.OpenAI.VectorStores;
 
 /// <summary>
 /// A representation of a file storage and indexing container used by the <c>file_search</c> tool for assistants.

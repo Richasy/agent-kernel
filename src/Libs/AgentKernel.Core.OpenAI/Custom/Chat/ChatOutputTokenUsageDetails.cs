@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.OpenAI.Chat;
 
 /// <summary> A breakdown of the number of tokens used to generate the output as reported in <see cref="ChatTokenUsage.OutputTokenCount"/>. </summary>
 [CodeGenModel("CompletionUsageCompletionTokensDetails")]

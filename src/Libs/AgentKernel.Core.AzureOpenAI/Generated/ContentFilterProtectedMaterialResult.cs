@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.AzureOpenAI
+namespace Richasy.AgentKernel.Core.AzureOpenAI
 {
     /// <summary> The AzureContentFilterResultForChoiceProtectedMaterialCode. </summary>
     public partial class ContentFilterProtectedMaterialResult

@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Embeddings;
+namespace Richasy.AgentKernel.Core.OpenAI.Embeddings;
 
 // CUSTOM: Made internal.
 

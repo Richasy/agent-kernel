@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 #nullable enable
 
-namespace AgentKernel.Core.OpenAI.FineTuning;
+namespace Richasy.AgentKernel.Core.OpenAI.FineTuning;
 
 internal class AsyncFineTuningJobCollectionResult : AsyncCollectionResult
 {

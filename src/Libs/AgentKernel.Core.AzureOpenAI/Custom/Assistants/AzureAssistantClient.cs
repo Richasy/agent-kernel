@@ -3,11 +3,11 @@
 
 #if !AZURE_OPENAI_GA
 
-using AgentKernel.Core.OpenAI;
-using AgentKernel.Core.OpenAI.Assistants;
+using Richasy.AgentKernel.Core.OpenAI;
+using Richasy.AgentKernel.Core.OpenAI.Assistants;
 using System.ClientModel.Primitives;
 
-namespace AgentKernel.Core.AzureOpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Assistants;
 
 /// <summary>
 /// The scenario client used for assistant operations with the Azure OpenAI service.

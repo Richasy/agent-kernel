@@ -1,6 +1,6 @@
 using System;
 
-namespace AgentKernel.Core.OpenAI;
+namespace Richasy.AgentKernel.Core.OpenAI;
 
 internal static class AppContextSwitchHelper
 {

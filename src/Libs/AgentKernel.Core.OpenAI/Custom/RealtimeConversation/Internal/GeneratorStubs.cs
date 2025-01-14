@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace AgentKernel.Core.OpenAI.RealtimeConversation;
+namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation;
 
 [Experimental("OPENAI002")][CodeGenModel("RealtimeClientEvent")] internal partial class InternalRealtimeClientEvent { }
 [Experimental("OPENAI002")][CodeGenModel("RealtimeClientEventConversationItemCreate")] internal partial class InternalRealtimeClientEventConversationItemCreate { }

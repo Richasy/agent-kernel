@@ -1,6 +1,6 @@
 using System;
 
-namespace AgentKernel.Core.OpenAI.Audio;
+namespace Richasy.AgentKernel.Core.OpenAI.Audio;
 
 /// <summary>
 /// Specifies the timestamp granularities to populate for a transcription.

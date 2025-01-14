@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.OpenAI.Internal
+namespace Richasy.AgentKernel.Core.OpenAI.Internal
 {
     internal abstract partial class InternalOmniTypedResponseFormat
     {

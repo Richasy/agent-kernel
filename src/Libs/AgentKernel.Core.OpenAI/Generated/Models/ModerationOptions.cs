@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.OpenAI.Moderations
+namespace Richasy.AgentKernel.Core.OpenAI.Moderations
 {
     internal partial class ModerationOptions
     {

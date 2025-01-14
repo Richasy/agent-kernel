@@ -10,7 +10,7 @@ using System.Globalization;
 using System.Text.Json;
 using System.Xml;
 
-namespace AgentKernel.Core.AzureOpenAI
+namespace Richasy.AgentKernel.Core.AzureOpenAI
 {
     internal static class ModelSerializationExtensions
     {

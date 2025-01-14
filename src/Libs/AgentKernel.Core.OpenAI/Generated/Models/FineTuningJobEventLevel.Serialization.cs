@@ -4,7 +4,7 @@
 
 using System;
 
-namespace AgentKernel.Core.OpenAI.FineTuning
+namespace Richasy.AgentKernel.Core.OpenAI.FineTuning
 {
     internal static partial class FineTuningJobEventLevelExtensions
     {

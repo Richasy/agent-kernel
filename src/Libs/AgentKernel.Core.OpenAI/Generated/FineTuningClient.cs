@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.FineTuning
+namespace Richasy.AgentKernel.Core.OpenAI.FineTuning
 {
     // Data plane generated sub-client.
     public partial class FineTuningClient

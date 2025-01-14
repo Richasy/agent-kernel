@@ -3,7 +3,7 @@ using System.Data;
 using System.Text.Json;
 using System;
 
-namespace AgentKernel.Core.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.OpenAI.Chat;
 
 [CodeGenModel("ChatResponseFormatJsonSchema")]
 internal partial class InternalChatResponseFormatJsonSchema

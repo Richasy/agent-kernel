@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.OpenAI.VectorStores
+namespace Richasy.AgentKernel.Core.OpenAI.VectorStores
 {
     internal partial class InternalStaticChunkingStrategyRequestParam : InternalFileChunkingStrategyRequestParam
     {

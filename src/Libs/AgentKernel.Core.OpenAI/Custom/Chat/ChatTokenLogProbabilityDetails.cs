@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.OpenAI.Chat;
 
 using System;
 using System.Collections.Generic;

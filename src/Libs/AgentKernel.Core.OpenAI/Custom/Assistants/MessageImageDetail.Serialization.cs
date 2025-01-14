@@ -1,6 +1,6 @@
 using System;
 
-namespace AgentKernel.Core.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 internal static partial class MessageImageDetailExtensions
 {

@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.AzureOpenAI
+namespace Richasy.AgentKernel.Core.AzureOpenAI
 {
     /// <summary> The AzureContentFilterSeverityResultSeverity. </summary>
     public readonly partial struct ContentFilterSeverity : IEquatable<ContentFilterSeverity>

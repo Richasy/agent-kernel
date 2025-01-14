@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.AzureOpenAI.Chat
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
 {
     /// <summary> Represents a data source configuration that will use an Azure CosmosDB resource. </summary>
     public partial class CosmosChatDataSource : ChatDataSource

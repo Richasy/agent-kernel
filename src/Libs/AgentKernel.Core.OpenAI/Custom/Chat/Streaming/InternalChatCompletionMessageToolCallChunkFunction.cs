@@ -1,6 +1,6 @@
 using System;
 
-namespace AgentKernel.Core.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.OpenAI.Chat;
 
 // CUSTOM: Renamed.
 [CodeGenModel("ChatCompletionMessageToolCallChunkFunction")]

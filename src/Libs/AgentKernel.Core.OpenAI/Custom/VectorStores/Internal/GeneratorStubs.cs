@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.VectorStores;
+namespace Richasy.AgentKernel.Core.OpenAI.VectorStores;
 
 // CUSTOM: Made internal.
 

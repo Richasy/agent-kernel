@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>AgentKernel.Extensions.AI</RootNamespace>
+	<AssemblyName>Richasy.AgentKernel.Extensions.OpenAI</AssemblyName>
+	<RootNamespace>Richasy.AgentKernel.Extensions.AI</RootNamespace>
     <Description>Implementation of generative AI abstractions for OpenAI-compatible endpoints.</Description>
   </PropertyGroup>
 

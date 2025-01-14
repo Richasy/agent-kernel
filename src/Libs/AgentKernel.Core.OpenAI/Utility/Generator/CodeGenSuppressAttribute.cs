@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AgentKernel.Core.OpenAI;
+namespace Richasy.AgentKernel.Core.OpenAI;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct, AllowMultiple = true)]
 internal sealed class CodeGenSuppressAttribute : Attribute

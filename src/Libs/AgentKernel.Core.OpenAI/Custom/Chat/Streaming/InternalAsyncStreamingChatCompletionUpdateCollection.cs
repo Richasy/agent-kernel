@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 #nullable enable
 
-namespace AgentKernel.Core.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.OpenAI.Chat;
 
 /// <summary>
 /// Implementation of collection abstraction over streaming chat updates.

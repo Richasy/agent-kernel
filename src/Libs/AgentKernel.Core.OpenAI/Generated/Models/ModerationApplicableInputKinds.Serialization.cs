@@ -4,7 +4,7 @@
 
 using System;
 
-namespace AgentKernel.Core.OpenAI.Moderations
+namespace Richasy.AgentKernel.Core.OpenAI.Moderations
 {
     internal static partial class ModerationApplicableInputKindsExtensions
     {

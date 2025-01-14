@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Images;
+namespace Richasy.AgentKernel.Core.OpenAI.Images;
 
 // CUSTOM: Renamed.
 /// <summary> The format in which the generated images are returned by the service. </summary>

@@ -1,10 +1,10 @@
-using AgentKernel.Core.OpenAI.Files;
-using AgentKernel.Core.OpenAI.VectorStores;
+using Richasy.AgentKernel.Core.OpenAI.Files;
+using Richasy.AgentKernel.Core.OpenAI.VectorStores;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace AgentKernel.Core.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 [Experimental("OPENAI001")]
 [CodeGenModel("ToolResourcesFileSearchVectorStore")]

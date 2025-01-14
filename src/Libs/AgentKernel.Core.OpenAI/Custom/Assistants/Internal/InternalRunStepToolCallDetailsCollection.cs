@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 [CodeGenModel("RunStepDetailsToolCallsObject")]
 internal partial class InternalRunStepDetailsToolCallsObject : IReadOnlyList<RunStepToolCall>

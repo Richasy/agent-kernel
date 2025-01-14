@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.VectorStores
+namespace Richasy.AgentKernel.Core.OpenAI.VectorStores
 {
     [PersistableModelProxy(typeof(InternalUnknownFileChunkingStrategyResponseParamProxy))]
     public partial class FileChunkingStrategy : IJsonModel<FileChunkingStrategy>

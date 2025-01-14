@@ -4,7 +4,7 @@ using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.Models;
+namespace Richasy.AgentKernel.Core.OpenAI.Models;
 
 // CUSTOM:
 // - Renamed.

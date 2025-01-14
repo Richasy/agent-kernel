@@ -7,7 +7,7 @@ using System.Text.Json;
 
 #nullable enable
 
-namespace AgentKernel.Core.OpenAI.FineTuning;
+namespace Richasy.AgentKernel.Core.OpenAI.FineTuning;
 
 internal class FineTuningJobCheckpointCollectionPageToken : ContinuationToken
 {

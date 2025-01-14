@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AgentKernel.Core.OpenAI.Models;
+namespace Richasy.AgentKernel.Core.OpenAI.Models;
 
 /// <summary> Model factory for models. </summary>
 public static partial class OpenAIModelsModelFactory

@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 [CodeGenModel("AssistantToolsFileSearchFileSearch")]
 internal partial class InternalAssistantToolsFileSearchFileSearch

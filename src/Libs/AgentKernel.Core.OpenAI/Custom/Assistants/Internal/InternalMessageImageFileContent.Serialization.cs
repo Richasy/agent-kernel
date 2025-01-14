@@ -1,7 +1,7 @@
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 [CodeGenSuppress("global::System.ClientModel.Primitives.IJsonModel<OpenAI.Assistants.InternalMessageImageFileContent>.Write", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
 internal partial class InternalMessageImageFileContent : IJsonModel<InternalMessageImageFileContent>

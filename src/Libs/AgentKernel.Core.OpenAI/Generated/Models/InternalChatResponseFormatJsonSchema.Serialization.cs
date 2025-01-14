@@ -7,9 +7,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using AgentKernel.Core.OpenAI.Internal;
+using Richasy.AgentKernel.Core.OpenAI.Internal;
 
-namespace AgentKernel.Core.OpenAI.Chat
+namespace Richasy.AgentKernel.Core.OpenAI.Chat
 {
     internal partial class InternalChatResponseFormatJsonSchema : IJsonModel<InternalChatResponseFormatJsonSchema>
     {

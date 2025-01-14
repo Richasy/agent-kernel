@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Assistants
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants
 {
     /// <summary> Text output from the Code Interpreter tool call as part of a run step. </summary>
     [CodeGenModel("RunStepDetailsToolCallsCodeOutputLogsObject")]

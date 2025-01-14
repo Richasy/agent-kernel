@@ -8,7 +8,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.Assistants
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants
 {
     public partial class ThreadRun : IJsonModel<ThreadRun>
     {

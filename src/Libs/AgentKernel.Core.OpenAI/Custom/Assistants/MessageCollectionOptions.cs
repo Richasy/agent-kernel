@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace AgentKernel.Core.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 /// <summary> The options to configure how <see cref="ThreadMessage"/> objects are retrieved and paginated. </summary>
 [Experimental("OPENAI001")]

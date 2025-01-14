@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.OpenAI.Audio;
+namespace Richasy.AgentKernel.Core.OpenAI.Audio;
 
 /// <summary> The format of the transcription. </summary>
 [CodeGenModel("TranscriptionAudioResponseFormat")]

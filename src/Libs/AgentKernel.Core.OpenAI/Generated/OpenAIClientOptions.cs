@@ -4,7 +4,7 @@
 
 using System.ClientModel.Primitives;
 
-namespace AgentKernel.Core.OpenAI
+namespace Richasy.AgentKernel.Core.OpenAI
 {
     public partial class OpenAIClientOptions : ClientPipelineOptions
     {

@@ -4,7 +4,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Diagnostics.CodeAnalysis;
 
-namespace AgentKernel.Core.OpenAI.RealtimeConversation;
+namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation;
 
 /// <summary>
 /// The update (response command) of type <c>response.function_call_arguments.done</c>, which is received after all

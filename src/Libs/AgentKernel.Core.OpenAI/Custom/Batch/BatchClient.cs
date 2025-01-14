@@ -4,7 +4,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace AgentKernel.Core.OpenAI.Batch;
+namespace Richasy.AgentKernel.Core.OpenAI.Batch;
 
 // CUSTOM:
 // - Renamed.

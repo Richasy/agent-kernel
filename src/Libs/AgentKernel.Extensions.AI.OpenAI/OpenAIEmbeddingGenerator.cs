@@ -8,14 +8,14 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Shared.Diagnostics;
-using AgentKernel.Core.OpenAI;
-using AgentKernel.Core.OpenAI.Embeddings;
+using Richasy.AgentKernel.Core.OpenAI;
+using Richasy.AgentKernel.Core.OpenAI.Embeddings;
 using Microsoft.Extensions.AI;
 
 #pragma warning disable S1067 // Expressions should not be too complex
 #pragma warning disable S3011 // Reflection should not be used to increase accessibility of classes, methods, or fields
 
-namespace AgentKernel.Extensions.AI;
+namespace Richasy.AgentKernel.Extensions.AI;
 
 /// <summary>An <see cref="IEmbeddingGenerator{String, Embedding}"/> for an OpenAI <see cref="EmbeddingClient"/>.</summary>
 public sealed class OpenAIEmbeddingGenerator : IEmbeddingGenerator<string, Embedding<float>>
@@ -26,7 +26,7 @@ public sealed class OpenAIEmbeddingGenerator : IEmbeddingGenerator<string, Embed
     /// <summary>The underlying <see cref="OpenAIClient" />.</summary>
     private readonly OpenAIClient? _openAIClient;
 
-    /// <summary>The underlying <see cref="OpenAI.Chat.ChatClient" />.</summary>
+    /// <summary>The underlying <see cref="Core.OpenAI.Chat.ChatClient" />.</summary>
     private readonly EmbeddingClient _embeddingClient;
 
     /// <summary>The number of dimensions produced by the generator.</summary>
@@ -112,7 +112,7 @@ public sealed class OpenAIEmbeddingGenerator : IEmbeddingGenerator<string, Embed
     /// <inheritdoc />
     public async Task<GeneratedEmbeddings<Embedding<float>>> GenerateAsync(IEnumerable<string> values, Microsoft.Extensions.AI.EmbeddingGenerationOptions? options = null, CancellationToken cancellationToken = default)
     {
-        AgentKernel.Core.OpenAI.Embeddings.EmbeddingGenerationOptions? openAIOptions = ToOpenAIOptions(options);
+        Richasy.AgentKernel.Core.OpenAI.Embeddings.EmbeddingGenerationOptions? openAIOptions = ToOpenAIOptions(options);
 
         var embeddings = (await _embeddingClient.GenerateEmbeddingsAsync(values, openAIOptions, cancellationToken).ConfigureAwait(false)).Value;
 
@@ -138,9 +138,9 @@ public sealed class OpenAIEmbeddingGenerator : IEmbeddingGenerator<string, Embed
     }
 
     /// <summary>Converts an extensions options instance to an OpenAI options instance.</summary>
-    private AgentKernel.Core.OpenAI.Embeddings.EmbeddingGenerationOptions? ToOpenAIOptions(Microsoft.Extensions.AI.EmbeddingGenerationOptions? options)
+    private Richasy.AgentKernel.Core.OpenAI.Embeddings.EmbeddingGenerationOptions? ToOpenAIOptions(Microsoft.Extensions.AI.EmbeddingGenerationOptions? options)
     {
-        AgentKernel.Core.OpenAI.Embeddings.EmbeddingGenerationOptions openAIOptions = new()
+        Richasy.AgentKernel.Core.OpenAI.Embeddings.EmbeddingGenerationOptions openAIOptions = new()
         {
             Dimensions = options?.Dimensions ?? _dimensions,
         };

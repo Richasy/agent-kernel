@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.AzureOpenAI
+namespace Richasy.AgentKernel.Core.AzureOpenAI
 {
     /// <summary> The AzureOpenAIChatErrorInnerError_code. </summary>
     internal readonly partial struct InternalAzureOpenAIChatErrorInnerErrorCode : IEquatable<InternalAzureOpenAIChatErrorInnerErrorCode>

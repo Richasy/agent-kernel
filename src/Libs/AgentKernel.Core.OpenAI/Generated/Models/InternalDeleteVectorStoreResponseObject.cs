@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.OpenAI.VectorStores
+namespace Richasy.AgentKernel.Core.OpenAI.VectorStores
 {
     internal readonly partial struct InternalDeleteVectorStoreResponseObject : IEquatable<InternalDeleteVectorStoreResponseObject>
     {

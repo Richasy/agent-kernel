@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.OpenAI.Chat;
 
 /// <summary>
 /// Represents a chat message of the <c>system</c> role as supplied to a chat completion request. A system message is

@@ -5,16 +5,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AgentKernel.Core.OpenAI.Assistants;
-using AgentKernel.Core.OpenAI.Audio;
-using AgentKernel.Core.OpenAI.Chat;
-using AgentKernel.Core.OpenAI.Embeddings;
-using AgentKernel.Core.OpenAI.Images;
-using AgentKernel.Core.OpenAI.Moderations;
-using AgentKernel.Core.OpenAI.RealtimeConversation;
-using AgentKernel.Core.OpenAI.VectorStores;
+using Richasy.AgentKernel.Core.OpenAI.Assistants;
+using Richasy.AgentKernel.Core.OpenAI.Audio;
+using Richasy.AgentKernel.Core.OpenAI.Chat;
+using Richasy.AgentKernel.Core.OpenAI.Embeddings;
+using Richasy.AgentKernel.Core.OpenAI.Images;
+using Richasy.AgentKernel.Core.OpenAI.Moderations;
+using Richasy.AgentKernel.Core.OpenAI.RealtimeConversation;
+using Richasy.AgentKernel.Core.OpenAI.VectorStores;
 
-namespace AgentKernel.Core.OpenAI
+namespace Richasy.AgentKernel.Core.OpenAI
 {
     internal static partial class OpenAIModelFactory
     {

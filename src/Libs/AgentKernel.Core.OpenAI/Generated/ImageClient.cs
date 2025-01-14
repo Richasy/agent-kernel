@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.Images
+namespace Richasy.AgentKernel.Core.OpenAI.Images
 {
     // Data plane generated sub-client.
     public partial class ImageClient

@@ -3,7 +3,7 @@
 
 using System.ClientModel.Primitives;
 
-namespace AgentKernel.Core.AzureOpenAI.VectorStores;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.VectorStores;
 internal partial class AzureAddFileToVectorStoreOperation : AddFileToVectorStoreOperation
 {
     internal override PipelineMessage CreateGetVectorStoreFileRequest(string vectorStoreId, string fileId, RequestOptions options)

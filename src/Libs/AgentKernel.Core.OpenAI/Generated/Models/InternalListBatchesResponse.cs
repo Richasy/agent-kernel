@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AgentKernel.Core.OpenAI.Batch
+namespace Richasy.AgentKernel.Core.OpenAI.Batch
 {
     internal partial class InternalListBatchesResponse
     {

@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.OpenAI.Audio
+namespace Richasy.AgentKernel.Core.OpenAI.Audio
 {
     internal readonly partial struct InternalCreateTranscriptionRequestTimestampGranularities : IEquatable<InternalCreateTranscriptionRequestTimestampGranularities>
     {

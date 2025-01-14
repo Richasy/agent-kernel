@@ -4,7 +4,7 @@ using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.Audio;
+namespace Richasy.AgentKernel.Core.OpenAI.Audio;
 
 [CodeGenSuppress("CreateSpeechAsync", typeof(BinaryContent), typeof(RequestOptions))]
 [CodeGenSuppress("CreateSpeech", typeof(BinaryContent), typeof(RequestOptions))]

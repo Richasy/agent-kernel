@@ -10,7 +10,7 @@ using System.Net;
 using System.Net.WebSockets;
 using Azure.Core;
 
-namespace AgentKernel.Core.AzureOpenAI.RealtimeConversation;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.RealtimeConversation;
 
 [Experimental("OPENAI002")]
 internal partial class AzureRealtimeConversationSession : RealtimeConversationSession

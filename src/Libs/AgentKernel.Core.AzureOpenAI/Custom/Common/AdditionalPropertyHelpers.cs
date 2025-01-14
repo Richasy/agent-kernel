@@ -5,7 +5,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 
-namespace AgentKernel.Core.AzureOpenAI.Internal;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Internal;
 
 internal static class AdditionalPropertyHelpers
 {

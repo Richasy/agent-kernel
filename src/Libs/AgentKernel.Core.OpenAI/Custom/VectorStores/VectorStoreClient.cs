@@ -1,4 +1,4 @@
-using AgentKernel.Core.OpenAI.Files;
+using Richasy.AgentKernel.Core.OpenAI.Files;
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.VectorStores;
+namespace Richasy.AgentKernel.Core.OpenAI.VectorStores;
 
 /// <summary>
 /// The service client for OpenAI vector store operations.

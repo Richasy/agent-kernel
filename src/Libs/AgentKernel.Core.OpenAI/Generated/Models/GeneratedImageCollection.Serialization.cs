@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.Images
+namespace Richasy.AgentKernel.Core.OpenAI.Images
 {
     public partial class GeneratedImageCollection : IJsonModel<GeneratedImageCollection>
     {

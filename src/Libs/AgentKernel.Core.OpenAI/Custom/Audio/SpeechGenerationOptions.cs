@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Audio;
+namespace Richasy.AgentKernel.Core.OpenAI.Audio;
 
 /// <summary> The options to configure text-to-speech audio generation. </summary>
 [CodeGenModel("CreateSpeechRequest")]

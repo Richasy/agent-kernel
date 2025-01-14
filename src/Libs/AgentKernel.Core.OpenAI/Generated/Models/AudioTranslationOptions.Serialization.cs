@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.Audio
+namespace Richasy.AgentKernel.Core.OpenAI.Audio
 {
     public partial class AudioTranslationOptions : IJsonModel<AudioTranslationOptions>
     {

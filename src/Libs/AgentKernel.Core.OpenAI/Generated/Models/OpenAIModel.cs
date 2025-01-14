@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.OpenAI.Models
+namespace Richasy.AgentKernel.Core.OpenAI.Models
 {
     public partial class OpenAIModel
     {

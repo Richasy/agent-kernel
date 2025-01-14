@@ -1,12 +1,12 @@
-﻿using AgentKernel.Core.OpenAI.Chat;
+﻿using Richasy.AgentKernel.Core.OpenAI.Chat;
 using System;
 using System.ClientModel;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 
-using static AgentKernel.Core.OpenAI.Telemetry.OpenTelemetryConstants;
+using static Richasy.AgentKernel.Core.OpenAI.Telemetry.OpenTelemetryConstants;
 
-namespace AgentKernel.Core.OpenAI.Telemetry;
+namespace Richasy.AgentKernel.Core.OpenAI.Telemetry;
 
 internal class OpenTelemetryScope : IDisposable
 {

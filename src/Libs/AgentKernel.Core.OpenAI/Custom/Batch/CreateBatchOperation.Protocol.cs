@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 #nullable enable
 
-namespace AgentKernel.Core.OpenAI.Batch;
+namespace Richasy.AgentKernel.Core.OpenAI.Batch;
 
 /// <summary>
 /// A long-running operation for executing a batch from an uploaded file of 

@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.OpenAI.LegacyCompletions
+namespace Richasy.AgentKernel.Core.OpenAI.LegacyCompletions
 {
     internal readonly partial struct InternalCreateCompletionResponseChoiceFinishReason : IEquatable<InternalCreateCompletionResponseChoiceFinishReason>
     {

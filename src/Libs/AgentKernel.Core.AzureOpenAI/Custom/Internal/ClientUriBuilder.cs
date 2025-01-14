@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace AgentKernel.Core.AzureOpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 internal partial class ClientUriBuilder
 {

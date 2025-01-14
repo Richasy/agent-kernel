@@ -5,7 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.Files;
+namespace Richasy.AgentKernel.Core.OpenAI.Files;
 
 // CUSTOM:
 // - Renamed.

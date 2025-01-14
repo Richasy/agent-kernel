@@ -8,7 +8,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.FineTuning
+namespace Richasy.AgentKernel.Core.OpenAI.FineTuning
 {
     internal partial class HyperparameterOptions : IJsonModel<HyperparameterOptions>
     {

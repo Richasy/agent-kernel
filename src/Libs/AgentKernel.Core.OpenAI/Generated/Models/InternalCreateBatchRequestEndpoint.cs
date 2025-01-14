@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.OpenAI.Batch
+namespace Richasy.AgentKernel.Core.OpenAI.Batch
 {
     internal readonly partial struct InternalCreateBatchRequestEndpoint : IEquatable<InternalCreateBatchRequestEndpoint>
     {

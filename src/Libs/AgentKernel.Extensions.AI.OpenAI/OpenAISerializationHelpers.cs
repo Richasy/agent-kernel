@@ -11,12 +11,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.AI;
 using Microsoft.Shared.Diagnostics;
-using AgentKernel.Core.OpenAI.Chat;
+using Richasy.AgentKernel.Core.OpenAI.Chat;
 
-namespace AgentKernel.Extensions.AI;
+namespace Richasy.AgentKernel.Extensions.AI;
 
 /// <summary>
-/// Defines a set of helpers used to serialize AgentKernel.Extensions.AI content using the OpenAI wire format.
+/// Defines a set of helpers used to serialize Richasy.AgentKernel.Extensions.AI content using the OpenAI wire format.
 /// </summary>
 public static class OpenAISerializationHelpers
 {
@@ -37,7 +37,7 @@ public static class OpenAISerializationHelpers
     }
 
     /// <summary>
-    /// Serializes a AgentKernel.Extensions.AI completion using the OpenAI wire format.
+    /// Serializes a Richasy.AgentKernel.Extensions.AI completion using the OpenAI wire format.
     /// </summary>
     /// <param name="stream">The stream to write the value.</param>
     /// <param name="chatCompletion">The chat completion to serialize.</param>
@@ -60,7 +60,7 @@ public static class OpenAISerializationHelpers
     }
 
     /// <summary>
-    /// Serializes a AgentKernel.Extensions.AI streaming completion using the OpenAI wire format.
+    /// Serializes a Richasy.AgentKernel.Extensions.AI streaming completion using the OpenAI wire format.
     /// </summary>
     /// <param name="stream">The stream to write the value.</param>
     /// <param name="streamingChatCompletionUpdates">The streaming chat completions to serialize.</param>

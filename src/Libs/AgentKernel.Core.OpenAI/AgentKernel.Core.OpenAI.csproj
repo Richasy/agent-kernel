@@ -2,6 +2,8 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <LangVersion>latest</LangVersion>
+	<AssemblyName>Richasy.AgentKernel.Core.OpenAI</AssemblyName>
+	<RootNamespace>$(AssemblyName)</RootNamespace>
     <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
     <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
 
@@ -40,7 +42,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="AgentKernel.Core.AzureOpenAI" />
+    <InternalsVisibleTo Include="Richasy.AgentKernel.Core.AzureOpenAI" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">

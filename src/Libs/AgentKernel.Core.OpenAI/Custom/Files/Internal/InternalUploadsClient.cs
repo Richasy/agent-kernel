@@ -2,7 +2,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 
-namespace AgentKernel.Core.OpenAI.Files;
+namespace Richasy.AgentKernel.Core.OpenAI.Files;
 
 [CodeGenClient("Uploads")]
 [CodeGenSuppress("InternalUploadsClient", typeof(ClientPipeline), typeof(ApiKeyCredential), typeof(Uri))]

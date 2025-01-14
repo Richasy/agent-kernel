@@ -7,7 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.Moderations;
+namespace Richasy.AgentKernel.Core.OpenAI.Moderations;
 
 [CodeGenSuppress("global::System.ClientModel.Primitives.IJsonModel<OpenAI.Moderations.ModerationResultCollection>.Write", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
 public partial class ModerationResultCollection : IJsonModel<ModerationResultCollection>

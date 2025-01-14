@@ -8,7 +8,7 @@ using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Net.WebSockets;
 
-namespace AgentKernel.Core.AzureOpenAI.RealtimeConversation;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.RealtimeConversation;
 
 internal partial class AzureRealtimeConversationSession : RealtimeConversationSession
 {

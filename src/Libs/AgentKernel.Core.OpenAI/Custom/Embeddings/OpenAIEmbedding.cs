@@ -5,7 +5,7 @@ using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace AgentKernel.Core.OpenAI.Embeddings;
+namespace Richasy.AgentKernel.Core.OpenAI.Embeddings;
 
 /// <summary>
 /// Represents an embedding vector returned by embedding endpoint.

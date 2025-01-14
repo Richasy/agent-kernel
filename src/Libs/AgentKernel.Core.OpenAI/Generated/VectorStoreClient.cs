@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.VectorStores
+namespace Richasy.AgentKernel.Core.OpenAI.VectorStores
 {
     // Data plane generated sub-client.
     public partial class VectorStoreClient

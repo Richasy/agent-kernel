@@ -1,39 +1,39 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-global using AgentKernel.Core.OpenAI;
-global using AgentKernel.Core.OpenAI.Assistants;
-global using AgentKernel.Core.OpenAI.Audio;
-global using AgentKernel.Core.OpenAI.Batch;
-global using AgentKernel.Core.OpenAI.Chat;
-global using AgentKernel.Core.OpenAI.Embeddings;
-global using AgentKernel.Core.OpenAI.Files;
-global using AgentKernel.Core.OpenAI.FineTuning;
-global using AgentKernel.Core.OpenAI.Images;
-global using AgentKernel.Core.OpenAI.Models;
-global using AgentKernel.Core.OpenAI.Moderations;
-global using AgentKernel.Core.OpenAI.VectorStores;
-global using AgentKernel.Core.OpenAI.RealtimeConversation;
+global using Richasy.AgentKernel.Core.OpenAI;
+global using Richasy.AgentKernel.Core.OpenAI.Assistants;
+global using Richasy.AgentKernel.Core.OpenAI.Audio;
+global using Richasy.AgentKernel.Core.OpenAI.Batch;
+global using Richasy.AgentKernel.Core.OpenAI.Chat;
+global using Richasy.AgentKernel.Core.OpenAI.Embeddings;
+global using Richasy.AgentKernel.Core.OpenAI.Files;
+global using Richasy.AgentKernel.Core.OpenAI.FineTuning;
+global using Richasy.AgentKernel.Core.OpenAI.Images;
+global using Richasy.AgentKernel.Core.OpenAI.Models;
+global using Richasy.AgentKernel.Core.OpenAI.Moderations;
+global using Richasy.AgentKernel.Core.OpenAI.VectorStores;
+global using Richasy.AgentKernel.Core.OpenAI.RealtimeConversation;
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using AgentKernel.Core.AzureOpenAI.Audio;
-using AgentKernel.Core.AzureOpenAI.Batch;
-using AgentKernel.Core.AzureOpenAI.Chat;
-using AgentKernel.Core.AzureOpenAI.Embeddings;
-using AgentKernel.Core.AzureOpenAI.Files;
-using AgentKernel.Core.AzureOpenAI.Images;
+using Richasy.AgentKernel.Core.AzureOpenAI.Audio;
+using Richasy.AgentKernel.Core.AzureOpenAI.Batch;
+using Richasy.AgentKernel.Core.AzureOpenAI.Chat;
+using Richasy.AgentKernel.Core.AzureOpenAI.Embeddings;
+using Richasy.AgentKernel.Core.AzureOpenAI.Files;
+using Richasy.AgentKernel.Core.AzureOpenAI.Images;
 using Azure.Core;
-using AgentKernel.Core.AzureOpenAI.Assistants;
-using AgentKernel.Core.AzureOpenAI.FineTuning;
-using AgentKernel.Core.AzureOpenAI.RealtimeConversation;
-using AgentKernel.Core.AzureOpenAI.VectorStores;
+using Richasy.AgentKernel.Core.AzureOpenAI.Assistants;
+using Richasy.AgentKernel.Core.AzureOpenAI.FineTuning;
+using Richasy.AgentKernel.Core.AzureOpenAI.RealtimeConversation;
+using Richasy.AgentKernel.Core.AzureOpenAI.VectorStores;
 
 #pragma warning disable AZC0007
 
-namespace AgentKernel.Core.AzureOpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 /// <summary>
 /// The top-level client for the Azure OpenAI service.

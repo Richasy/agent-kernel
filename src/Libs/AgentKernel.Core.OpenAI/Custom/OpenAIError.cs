@@ -3,7 +3,7 @@ using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.Internal;
+namespace Richasy.AgentKernel.Core.OpenAI.Internal;
 
 // Custom:
 // - Renamed

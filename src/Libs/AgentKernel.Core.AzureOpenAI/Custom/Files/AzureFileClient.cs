@@ -6,7 +6,7 @@ using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-namespace AgentKernel.Core.AzureOpenAI.Files;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Files;
 
 /// <summary>
 /// The scenario client used for Files operations with the Azure OpenAI service.

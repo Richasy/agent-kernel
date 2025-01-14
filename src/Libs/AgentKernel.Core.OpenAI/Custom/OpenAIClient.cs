@@ -1,21 +1,21 @@
-using AgentKernel.Core.OpenAI.Assistants;
-using AgentKernel.Core.OpenAI.Audio;
-using AgentKernel.Core.OpenAI.Batch;
-using AgentKernel.Core.OpenAI.Chat;
-using AgentKernel.Core.OpenAI.Embeddings;
-using AgentKernel.Core.OpenAI.Files;
-using AgentKernel.Core.OpenAI.FineTuning;
-using AgentKernel.Core.OpenAI.Images;
-using AgentKernel.Core.OpenAI.Models;
-using AgentKernel.Core.OpenAI.Moderations;
-using AgentKernel.Core.OpenAI.RealtimeConversation;
-using AgentKernel.Core.OpenAI.VectorStores;
+using Richasy.AgentKernel.Core.OpenAI.Assistants;
+using Richasy.AgentKernel.Core.OpenAI.Audio;
+using Richasy.AgentKernel.Core.OpenAI.Batch;
+using Richasy.AgentKernel.Core.OpenAI.Chat;
+using Richasy.AgentKernel.Core.OpenAI.Embeddings;
+using Richasy.AgentKernel.Core.OpenAI.Files;
+using Richasy.AgentKernel.Core.OpenAI.FineTuning;
+using Richasy.AgentKernel.Core.OpenAI.Images;
+using Richasy.AgentKernel.Core.OpenAI.Models;
+using Richasy.AgentKernel.Core.OpenAI.Moderations;
+using Richasy.AgentKernel.Core.OpenAI.RealtimeConversation;
+using Richasy.AgentKernel.Core.OpenAI.VectorStores;
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 
-namespace AgentKernel.Core.OpenAI;
+namespace Richasy.AgentKernel.Core.OpenAI;
 
 // CUSTOM:
 // - Suppressed constructor that takes endpoint parameter; endpoint is now a property in the options class.

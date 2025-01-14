@@ -5,7 +5,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace AgentKernel.Core.AzureOpenAI.Batch;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Batch;
 
 internal partial class AzureBatchClient : BatchClient
 {

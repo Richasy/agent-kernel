@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.AzureOpenAI.Chat
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
 {
     /// <summary> The AzureChatMessageContextAllRetrievedDocumentsFilterReason. </summary>
     public readonly partial struct ChatDocumentFilterReason : IEquatable<ChatDocumentFilterReason>

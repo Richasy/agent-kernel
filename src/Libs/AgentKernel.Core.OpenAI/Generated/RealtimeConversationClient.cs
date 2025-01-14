@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.RealtimeConversation
+namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation
 {
     // Data plane generated sub-client.
     public partial class RealtimeConversationClient

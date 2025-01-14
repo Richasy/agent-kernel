@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.AzureOpenAI
+namespace Richasy.AgentKernel.Core.AzureOpenAI
 {
     /// <summary> A content filter result for an image generation operation's input request content. </summary>
     public partial class RequestImageContentFilterResult : ResponseImageContentFilterResult

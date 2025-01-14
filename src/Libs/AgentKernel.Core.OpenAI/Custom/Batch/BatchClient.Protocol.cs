@@ -4,7 +4,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.Batch;
+namespace Richasy.AgentKernel.Core.OpenAI.Batch;
 
 [CodeGenSuppress("RetrieveBatch", typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("RetrieveBatchAsync", typeof(string), typeof(RequestOptions))]

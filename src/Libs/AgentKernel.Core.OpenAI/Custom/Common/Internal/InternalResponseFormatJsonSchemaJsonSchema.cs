@@ -1,6 +1,6 @@
 using System;
 
-namespace AgentKernel.Core.OpenAI.Internal;
+namespace Richasy.AgentKernel.Core.OpenAI.Internal;
 
 [CodeGenModel("ResponseFormatJsonSchemaJsonSchema")]
 internal partial class InternalResponseFormatJsonSchemaJsonSchema

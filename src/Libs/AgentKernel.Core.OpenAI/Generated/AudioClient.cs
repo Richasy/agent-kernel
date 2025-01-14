@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.Audio
+namespace Richasy.AgentKernel.Core.OpenAI.Audio
 {
     // Data plane generated sub-client.
     public partial class AudioClient

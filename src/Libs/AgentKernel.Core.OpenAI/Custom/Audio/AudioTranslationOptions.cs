@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace AgentKernel.Core.OpenAI.Audio;
+namespace Richasy.AgentKernel.Core.OpenAI.Audio;
 
 [CodeGenModel("CreateTranslationRequest")]
 [CodeGenSuppress("AudioTranslationOptions", typeof(BinaryData), typeof(InternalCreateTranslationRequestModel))]

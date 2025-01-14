@@ -1,6 +1,6 @@
 using System;
 
-namespace AgentKernel.Core.OpenAI;
+namespace Richasy.AgentKernel.Core.OpenAI;
 
 [CodeGenModel("FunctionObject")]
 internal partial class InternalFunctionDefinition

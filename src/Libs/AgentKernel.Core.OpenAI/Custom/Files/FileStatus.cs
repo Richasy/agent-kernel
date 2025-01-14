@@ -1,6 +1,6 @@
 using System;
 
-namespace AgentKernel.Core.OpenAI.Files;
+namespace Richasy.AgentKernel.Core.OpenAI.Files;
 
 // CUSTOM: Added the Obsolete attribute.
 [Obsolete($"This struct is obsolete. If this is a fine-tuning training file, it may take some time to process"

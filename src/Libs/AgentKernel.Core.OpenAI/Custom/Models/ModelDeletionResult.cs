@@ -1,4 +1,4 @@
-﻿namespace AgentKernel.Core.OpenAI.Models;
+﻿namespace Richasy.AgentKernel.Core.OpenAI.Models;
 
 [CodeGenModel("DeleteModelResponse")]
 public partial class ModelDeletionResult

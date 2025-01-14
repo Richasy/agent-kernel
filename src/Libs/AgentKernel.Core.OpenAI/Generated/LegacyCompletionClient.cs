@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.LegacyCompletions
+namespace Richasy.AgentKernel.Core.OpenAI.LegacyCompletions
 {
     // Data plane generated sub-client.
     internal partial class LegacyCompletionClient

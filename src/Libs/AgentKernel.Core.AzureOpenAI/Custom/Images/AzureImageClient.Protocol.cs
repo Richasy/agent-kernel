@@ -5,7 +5,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.AzureOpenAI.Images;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Images;
 
 internal partial class AzureImageClient : ImageClient
 {

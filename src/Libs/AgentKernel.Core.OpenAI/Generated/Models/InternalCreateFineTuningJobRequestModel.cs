@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.OpenAI.FineTuning
+namespace Richasy.AgentKernel.Core.OpenAI.FineTuning
 {
     internal readonly partial struct InternalCreateFineTuningJobRequestModel : IEquatable<InternalCreateFineTuningJobRequestModel>
     {

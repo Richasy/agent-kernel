@@ -2,7 +2,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 internal partial class InternalAssistantResponseFormatPlainTextNoObject : IJsonModel<InternalAssistantResponseFormatPlainTextNoObject>
 {

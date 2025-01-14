@@ -4,7 +4,7 @@ using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.Embeddings;
+namespace Richasy.AgentKernel.Core.OpenAI.Embeddings;
 
 [CodeGenSuppress("CreateEmbeddingAsync", typeof(BinaryContent), typeof(RequestOptions))]
 [CodeGenSuppress("CreateEmbedding", typeof(BinaryContent), typeof(RequestOptions))]

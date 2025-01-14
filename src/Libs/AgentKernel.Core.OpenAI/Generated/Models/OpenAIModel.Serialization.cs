@@ -8,7 +8,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.Models
+namespace Richasy.AgentKernel.Core.OpenAI.Models
 {
     public partial class OpenAIModel : IJsonModel<OpenAIModel>
     {

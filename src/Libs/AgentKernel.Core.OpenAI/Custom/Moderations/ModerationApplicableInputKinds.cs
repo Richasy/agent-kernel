@@ -1,6 +1,6 @@
 using System;
 
-namespace AgentKernel.Core.OpenAI.Moderations;
+namespace Richasy.AgentKernel.Core.OpenAI.Moderations;
 
 /// <summary> The kinds of inputs that <see cref="ModerationCategory.Score"/> is applicable to. </summary>
 [Flags]

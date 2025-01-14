@@ -3,7 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace AgentKernel.Core.AzureOpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 [Experimental("AOAI001")][CodeGenModel("AzureContentFilterImagePromptResults")] public partial class RequestImageContentFilterResult { }
 [Experimental("AOAI001")][CodeGenModel("AzureContentFilterImageResponseResults")] public partial class ResponseImageContentFilterResult { }

@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <TargetFramework>net9.0</TargetFramework>
-    <PackageTags>Microsoft Azure OpenAI</PackageTags>
+	<TargetFramework>net9.0</TargetFramework>
+	<AssemblyName>Richasy.AgentKernel.Core.AzureOpenAI</AssemblyName>
+	<RootNamespace>$(AssemblyName)</RootNamespace>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <GenerateAPIListing>true</GenerateAPIListing>
     <NoWarn>$(NoWarn);CS1591;AZC0012;AZC0102;CS8002;CS0436;AZC0112;OPENAI001;OPENAI002</NoWarn>
@@ -22,7 +23,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
-	
+
   <ItemGroup>
     <ProjectReference Include="..\AgentKernel.Core.OpenAI\AgentKernel.Core.OpenAI.csproj" />
   </ItemGroup>

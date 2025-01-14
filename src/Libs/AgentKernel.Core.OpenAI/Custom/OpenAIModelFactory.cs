@@ -1,9 +1,9 @@
-using AgentKernel.Core.OpenAI.Embeddings;
+using Richasy.AgentKernel.Core.OpenAI.Embeddings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AgentKernel.Core.OpenAI;
+namespace Richasy.AgentKernel.Core.OpenAI;
 
 [CodeGenModel("OpenAIModelFactory")]
 internal static partial class OpenAIModelFactory

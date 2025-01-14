@@ -3,13 +3,13 @@
 
 #if !AZURE_OPENAI_GA
 
-using AgentKernel.Core.OpenAI;
-using AgentKernel.Core.OpenAI.VectorStores;
+using Richasy.AgentKernel.Core.OpenAI;
+using Richasy.AgentKernel.Core.OpenAI.VectorStores;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 
-namespace AgentKernel.Core.AzureOpenAI.VectorStores;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.VectorStores;
 
 /// <summary>
 /// The scenario client used for vector store operations with the Azure OpenAI service.

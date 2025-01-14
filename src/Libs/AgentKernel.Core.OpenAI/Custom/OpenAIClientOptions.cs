@@ -1,7 +1,7 @@
 using System;
 using System.ClientModel.Primitives;
 
-namespace AgentKernel.Core.OpenAI;
+namespace Richasy.AgentKernel.Core.OpenAI;
 
 /// <summary> The options to configure the client. </summary>
 [CodeGenModel("OpenAIClientOptions")]

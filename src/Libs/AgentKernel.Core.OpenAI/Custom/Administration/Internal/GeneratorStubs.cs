@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Administration;
+namespace Richasy.AgentKernel.Core.OpenAI.Administration;
 
 [CodeGenModel("AuditLogActorServiceAccount")] internal partial class InternalAuditLogActorServiceAccount { }
 [CodeGenModel("AuditLogActorUser")] internal partial class InternalAuditLogActorUser { }

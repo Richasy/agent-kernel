@@ -4,7 +4,7 @@
 
 using System.Collections.ObjectModel;
 
-namespace AgentKernel.Core.OpenAI.Chat
+namespace Richasy.AgentKernel.Core.OpenAI.Chat
 {
     public partial class ChatMessageContent : Collection<ChatMessageContentPart>
     {

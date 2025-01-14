@@ -8,7 +8,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace AgentKernel.Core.AzureOpenAI.Chat
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
 {
     internal partial class InternalElasticsearchChatDataSourceParameters : IJsonModel<InternalElasticsearchChatDataSourceParameters>
     {

@@ -6,7 +6,7 @@ using System.Text;
 
 #nullable enable
 
-namespace AgentKernel.Core.OpenAI;
+namespace Richasy.AgentKernel.Core.OpenAI;
 
 /// <summary>
 /// Details about the package to be included in UserAgent telemetry

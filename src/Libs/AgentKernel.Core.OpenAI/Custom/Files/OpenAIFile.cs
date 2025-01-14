@@ -1,6 +1,6 @@
 using System;
 
-namespace AgentKernel.Core.OpenAI.Files;
+namespace Richasy.AgentKernel.Core.OpenAI.Files;
 
 [CodeGenModel("OpenAIFile")]
 public partial class OpenAIFile

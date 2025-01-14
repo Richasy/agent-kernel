@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.OpenAI.Embeddings
+namespace Richasy.AgentKernel.Core.OpenAI.Embeddings
 {
     internal readonly partial struct InternalEmbeddingObject : IEquatable<InternalEmbeddingObject>
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.OpenAI.FineTuning;
+namespace Richasy.AgentKernel.Core.OpenAI.FineTuning;
 
 // CUSTOM: Made internal.
 

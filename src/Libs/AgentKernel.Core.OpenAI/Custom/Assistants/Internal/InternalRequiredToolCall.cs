@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 /// <summary>
 /// An abstract, base representation for a tool call that an Assistants API run requires outputs

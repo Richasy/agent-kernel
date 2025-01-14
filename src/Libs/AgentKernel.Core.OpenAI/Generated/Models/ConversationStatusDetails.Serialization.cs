@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.RealtimeConversation
+namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation
 {
     [PersistableModelProxy(typeof(UnknownRealtimeResponseStatusDetails))]
     public partial class ConversationStatusDetails : IJsonModel<ConversationStatusDetails>

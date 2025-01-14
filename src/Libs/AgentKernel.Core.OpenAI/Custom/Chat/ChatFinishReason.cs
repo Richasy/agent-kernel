@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.OpenAI.Chat;
 
 /// <summary>
 /// The reason the model stopped generating tokens. This will be:

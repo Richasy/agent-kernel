@@ -1,6 +1,6 @@
 using System;
 
-namespace AgentKernel.Core.OpenAI.Audio;
+namespace Richasy.AgentKernel.Core.OpenAI.Audio;
 
 [CodeGenModel("CreateTranscriptionResponseVerboseJson")]
 public partial class AudioTranscription

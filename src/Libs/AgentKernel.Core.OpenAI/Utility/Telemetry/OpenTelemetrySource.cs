@@ -1,7 +1,7 @@
-﻿using AgentKernel.Core.OpenAI.Chat;
+﻿using Richasy.AgentKernel.Core.OpenAI.Chat;
 using System;
 
-namespace AgentKernel.Core.OpenAI.Telemetry;
+namespace Richasy.AgentKernel.Core.OpenAI.Telemetry;
 
 internal class OpenTelemetrySource
 {

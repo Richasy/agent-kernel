@@ -7,9 +7,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using AgentKernel.Core.OpenAI.Internal;
+using Richasy.AgentKernel.Core.OpenAI.Internal;
 
-namespace AgentKernel.Core.OpenAI.Assistants
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants
 {
     internal partial class InternalAssistantResponseFormatJsonSchema : IJsonModel<InternalAssistantResponseFormatJsonSchema>
     {

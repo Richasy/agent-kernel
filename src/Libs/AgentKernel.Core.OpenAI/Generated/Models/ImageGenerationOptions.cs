@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.OpenAI.Images
+namespace Richasy.AgentKernel.Core.OpenAI.Images
 {
     public partial class ImageGenerationOptions
     {

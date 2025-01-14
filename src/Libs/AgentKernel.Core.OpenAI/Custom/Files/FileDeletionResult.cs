@@ -1,4 +1,4 @@
-﻿namespace AgentKernel.Core.OpenAI.Files;
+﻿namespace Richasy.AgentKernel.Core.OpenAI.Files;
 
 [CodeGenModel("DeleteFileResponse")]
 public partial class FileDeletionResult

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.RealtimeConversation;
+namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation;
 
 public partial class ConversationItemStreamingPartFinishedUpdate : IJsonModel<ConversationItemStreamingPartFinishedUpdate>
 {

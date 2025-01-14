@@ -8,8 +8,8 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Shared.Diagnostics;
-using AgentKernel.Core.OpenAI;
-using AgentKernel.Core.OpenAI.Chat;
+using Richasy.AgentKernel.Core.OpenAI;
+using Richasy.AgentKernel.Core.OpenAI.Chat;
 using Microsoft.Extensions.AI;
 
 #pragma warning disable S1067 // Expressions should not be too complex
@@ -17,9 +17,9 @@ using Microsoft.Extensions.AI;
 #pragma warning disable SA1204 // Static elements should appear before instance elements
 #pragma warning disable SA1108 // Block statements should not contain embedded comments
 
-namespace AgentKernel.Extensions.AI;
+namespace Richasy.AgentKernel.Extensions.AI;
 
-/// <summary>Represents an <see cref="IChatClient"/> for an OpenAI <see cref="OpenAIClient"/> or <see cref="OpenAI.Chat.ChatClient"/>.</summary>
+/// <summary>Represents an <see cref="IChatClient"/> for an OpenAI <see cref="OpenAIClient"/> or <see cref="Core.OpenAI.Chat.ChatClient"/>.</summary>
 public sealed class OpenAIChatClient : IChatClient
 {
     /// <summary>Default OpenAI endpoint.</summary>

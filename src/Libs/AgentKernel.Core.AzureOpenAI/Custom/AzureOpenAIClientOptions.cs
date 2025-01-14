@@ -3,7 +3,7 @@
 
 using System.ClientModel.Primitives;
 
-namespace AgentKernel.Core.AzureOpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 /// <summary>
 /// Defines the scenario-independent, client-level options for the Azure-specific OpenAI client.

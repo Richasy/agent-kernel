@@ -8,7 +8,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.Chat
+namespace Richasy.AgentKernel.Core.OpenAI.Chat
 {
     internal partial class InternalChatCompletionResponseMessageFunctionCall : IJsonModel<InternalChatCompletionResponseMessageFunctionCall>
     {

@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.OpenAI.Chat
+namespace Richasy.AgentKernel.Core.OpenAI.Chat
 {
     internal readonly partial struct InternalCreateChatCompletionStreamResponseObject : IEquatable<InternalCreateChatCompletionStreamResponseObject>
     {

@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.FineTuning
+namespace Richasy.AgentKernel.Core.OpenAI.FineTuning
 {
     [PersistableModelProxy(typeof(UnknownFineTuningIntegration))]
     internal partial class InternalFineTuningIntegration : IJsonModel<InternalFineTuningIntegration>

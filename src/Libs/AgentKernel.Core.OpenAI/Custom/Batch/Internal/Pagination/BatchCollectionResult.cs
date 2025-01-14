@@ -5,7 +5,7 @@ using System.Text.Json;
 
 #nullable enable
 
-namespace AgentKernel.Core.OpenAI.Batch;
+namespace Richasy.AgentKernel.Core.OpenAI.Batch;
 
 internal class BatchCollectionResult : CollectionResult
 {

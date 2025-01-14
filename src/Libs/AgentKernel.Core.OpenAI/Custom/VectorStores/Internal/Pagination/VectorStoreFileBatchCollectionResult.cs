@@ -5,7 +5,7 @@ using System.Text.Json;
 
 #nullable enable
 
-namespace AgentKernel.Core.OpenAI.VectorStores;
+namespace Richasy.AgentKernel.Core.OpenAI.VectorStores;
 
 internal class VectorStoreFileBatchCollectionResult : CollectionResult<VectorStoreFileAssociation>
 {

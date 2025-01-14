@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace AgentKernel.Core.OpenAI.VectorStores;
+namespace Richasy.AgentKernel.Core.OpenAI.VectorStores;
 
 /// <summary> The options to configure how <see cref="VectorStoreFileAssociation"/> objects are retrieved and paginated. </summary>
 [Experimental("OPENAI001")]

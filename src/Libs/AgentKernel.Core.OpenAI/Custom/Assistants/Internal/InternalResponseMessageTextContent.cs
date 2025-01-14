@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AgentKernel.Core.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 /// <summary>
 /// Represents an item of annotated text content within an Assistants API response message.

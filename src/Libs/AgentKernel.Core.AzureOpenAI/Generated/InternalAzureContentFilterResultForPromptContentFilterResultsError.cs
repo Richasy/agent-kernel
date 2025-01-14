@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.AzureOpenAI
+namespace Richasy.AgentKernel.Core.AzureOpenAI
 {
     /// <summary> The AzureContentFilterResultForPromptContentFilterResultsError. </summary>
     internal partial class InternalAzureContentFilterResultForPromptContentFilterResultsError

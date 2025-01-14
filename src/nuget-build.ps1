@@ -23,6 +23,23 @@ foreach ($projectFile in $projectFiles) {
     if ($projectFile.FullName -notmatch "\\Samples\\") {
         Write-Host "正在处理项目：$($projectFile.FullName)"
 
+        # 清理项目
+        dotnet clean $projectFile.FullName -c Release
+
+        # 删除 bin 和 obj 文件夹
+        $binDir = Join-Path -Path $projectFile.DirectoryName -ChildPath "bin"
+        $objDir = Join-Path -Path $projectFile.DirectoryName -ChildPath "obj"
+
+        if (Test-Path -Path $binDir) {
+            Remove-Item -Recurse -Force -Path $binDir
+            Write-Host "已删除文件夹：$binDir"
+        }
+
+        if (Test-Path -Path $objDir) {
+            Remove-Item -Recurse -Force -Path $objDir
+            Write-Host "已删除文件夹：$objDir"
+        }
+
         # 恢复 NuGet 包
         dotnet restore $projectFile.FullName
 

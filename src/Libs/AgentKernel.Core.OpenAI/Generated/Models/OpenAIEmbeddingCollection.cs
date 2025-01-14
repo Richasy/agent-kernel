@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace AgentKernel.Core.OpenAI.Embeddings
+namespace Richasy.AgentKernel.Core.OpenAI.Embeddings
 {
     public partial class OpenAIEmbeddingCollection : ReadOnlyCollection<OpenAIEmbedding>
     {

@@ -4,9 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using AgentKernel.Core.OpenAI.VectorStores;
+using Richasy.AgentKernel.Core.OpenAI.VectorStores;
 
-namespace AgentKernel.Core.OpenAI.Assistants
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants
 {
     public partial class VectorStoreCreationHelper
     {

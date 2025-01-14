@@ -6,7 +6,7 @@
 using Azure.Core;
 using System.ClientModel;
 
-namespace AgentKernel.Core.AzureOpenAI.RealtimeConversation;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.RealtimeConversation;
 
 /// <summary>
 /// The scenario client used for Files operations with the Azure OpenAI service.

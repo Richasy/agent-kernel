@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.OpenAI.Models
+namespace Richasy.AgentKernel.Core.OpenAI.Models
 {
     internal readonly partial struct InternalListModelsResponseObject : IEquatable<InternalListModelsResponseObject>
     {

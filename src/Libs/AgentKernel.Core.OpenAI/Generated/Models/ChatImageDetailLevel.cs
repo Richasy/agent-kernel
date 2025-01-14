@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AgentKernel.Core.OpenAI.Chat
+namespace Richasy.AgentKernel.Core.OpenAI.Chat
 {
     public readonly partial struct ChatImageDetailLevel : IEquatable<ChatImageDetailLevel>
     {

@@ -4,7 +4,7 @@
 
 using System;
 
-namespace AgentKernel.Core.OpenAI.VectorStores
+namespace Richasy.AgentKernel.Core.OpenAI.VectorStores
 {
     internal static partial class VectorStoreStatusExtensions
     {

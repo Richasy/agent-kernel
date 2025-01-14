@@ -1,4 +1,4 @@
-# AgentKernel.Extensions.AI.OpenAI
+# Richasy.AgentKernel.Extensions.AI.OpenAI
 
 Provides an implementation of the `IChatClient` interface for the `OpenAI` package and OpenAI-compatible endpoints.
 
@@ -7,14 +7,14 @@ Provides an implementation of the `IChatClient` interface for the `OpenAI` packa
 From the command-line:
 
 ```console
-dotnet add package AgentKernel.Extensions.AI.OpenAI
+dotnet add package Richasy.AgentKernel.Extensions.AI.OpenAI
 ```
 
 Or directly in the C# project file:
 
 ```xml
 <ItemGroup>
-  <PackageReference Include="AgentKernel.Extensions.AI.OpenAI" Version="[CURRENTVERSION]" />
+  <PackageReference Include="Richasy.AgentKernel.Extensions.AI.OpenAI" Version="[CURRENTVERSION]" />
 </ItemGroup>
 ```
 
@@ -23,7 +23,7 @@ Or directly in the C# project file:
 ### Chat
 
 ```csharp
-using AgentKernel.Extensions.AI;
+using Richasy.AgentKernel.Extensions.AI;
 using OpenAI;
 
 IChatClient client =
@@ -36,7 +36,7 @@ Console.WriteLine(await client.CompleteAsync("What is AI?"));
 ### Chat + Conversation History
 
 ```csharp
-using AgentKernel.Extensions.AI;
+using Richasy.AgentKernel.Extensions.AI;
 using OpenAI;
 
 IChatClient client =
@@ -53,7 +53,7 @@ Console.WriteLine(await client.CompleteAsync(
 ### Chat streaming
 
 ```csharp
-using AgentKernel.Extensions.AI;
+using Richasy.AgentKernel.Extensions.AI;
 using OpenAI;
 
 IChatClient client =
@@ -70,7 +70,7 @@ await foreach (var update in client.CompleteStreamingAsync("What is AI?"))
 
 ```csharp
 using System.ComponentModel;
-using AgentKernel.Extensions.AI;
+using Richasy.AgentKernel.Extensions.AI;
 using OpenAI;
 
 IChatClient openaiClient =
@@ -98,7 +98,7 @@ static string GetWeather() => Random.Shared.NextDouble() > 0.5 ? "It's sunny" : 
 ### Caching
 
 ```csharp
-using AgentKernel.Extensions.AI;
+using Richasy.AgentKernel.Extensions.AI;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
@@ -129,7 +129,7 @@ for (int i = 0; i < 3; i++)
 ### Telemetry
 
 ```csharp
-using AgentKernel.Extensions.AI;
+using Richasy.AgentKernel.Extensions.AI;
 using OpenAI;
 using OpenTelemetry.Trace;
 
@@ -155,7 +155,7 @@ Console.WriteLine(await client.CompleteAsync("What is AI?"));
 
 ```csharp
 using System.ComponentModel;
-using AgentKernel.Extensions.AI;
+using Richasy.AgentKernel.Extensions.AI;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
@@ -206,7 +206,7 @@ static int GetPersonAge(string personName) =>
 ### Text embedding generation
 
 ```csharp
-using AgentKernel.Extensions.AI;
+using Richasy.AgentKernel.Extensions.AI;
 using OpenAI;
 
 IEmbeddingGenerator<string, Embedding<float>> generator =
@@ -221,7 +221,7 @@ Console.WriteLine(string.Join(", ", embeddings[0].Vector.ToArray()));
 ### Text embedding generation with caching
 
 ```csharp
-using AgentKernel.Extensions.AI;
+using Richasy.AgentKernel.Extensions.AI;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
@@ -248,7 +248,7 @@ foreach (var prompt in new[] { "What is AI?", "What is .NET?", "What is AI?" })
 ### Dependency Injection
 
 ```csharp
-using AgentKernel.Extensions.AI;
+using Richasy.AgentKernel.Extensions.AI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -274,7 +274,7 @@ Console.WriteLine(await chatClient.CompleteAsync("What is AI?"));
 ### Minimal Web API
 
 ```csharp
-using AgentKernel.Extensions.AI;
+using Richasy.AgentKernel.Extensions.AI;
 using OpenAI;
 
 var builder = WebApplication.CreateBuilder(args);

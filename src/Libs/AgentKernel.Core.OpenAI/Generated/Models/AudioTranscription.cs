@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.OpenAI.Audio
+namespace Richasy.AgentKernel.Core.OpenAI.Audio
 {
     public partial class AudioTranscription
     {

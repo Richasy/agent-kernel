@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace AgentKernel.Core.OpenAI.Files;
+namespace Richasy.AgentKernel.Core.OpenAI.Files;
 
 [CodeGenModel("CreateFileRequest")]
 [CodeGenSuppress("InternalFileUploadOptions", typeof(Stream), typeof(FileUploadPurpose))]

@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AgentKernel.Core.AzureOpenAI.Chat
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
 {
     /// <summary> Represents a vectorization source that makes public service calls against an Azure OpenAI embedding model deployment. </summary>
     internal partial class InternalAzureChatDataSourceEndpointVectorizationSource : DataSourceVectorizer

@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace AgentKernel.Core.OpenAI.Internal
+namespace Richasy.AgentKernel.Core.OpenAI.Internal
 {
     [PersistableModelProxy(typeof(InternalUnknownOmniTypedResponseFormat))]
     internal partial class InternalOmniTypedResponseFormat : IJsonModel<InternalOmniTypedResponseFormat>

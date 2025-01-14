@@ -1,4 +1,4 @@
-using AgentKernel.Core.OpenAI.Telemetry;
+using Richasy.AgentKernel.Core.OpenAI.Telemetry;
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AgentKernel.Core.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.OpenAI.Chat;
 
 // CUSTOM:
 // - Renamed.

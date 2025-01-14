@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using AgentKernel.Core.OpenAI;
-using AgentKernel.Core.OpenAI.Audio;
+using Richasy.AgentKernel.Core.OpenAI;
+using Richasy.AgentKernel.Core.OpenAI.Audio;
 using System.ClientModel.Primitives;
 
-namespace AgentKernel.Core.AzureOpenAI.Audio;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Audio;
 
 /// <summary>
 /// The scenario client used for audio operations with the Azure OpenAI service.

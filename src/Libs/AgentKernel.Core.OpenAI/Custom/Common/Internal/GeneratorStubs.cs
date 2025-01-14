@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Internal;
+namespace Richasy.AgentKernel.Core.OpenAI.Internal;
 
 [CodeGenModel("OmniTypedResponseFormat")]
 internal partial class InternalOmniTypedResponseFormat { }

@@ -4,8 +4,8 @@
 using Richasy.AgentKernel.Connectors.OpenAI.Models;
 using Richasy.AgentKernel.Draw;
 using Richasy.AgentKernel.Models;
-using AgentKernel.Core.OpenAI.Images;
-using AgentKernel.Core.OpenAI;
+using Richasy.AgentKernel.Core.OpenAI.Images;
+using Richasy.AgentKernel.Core.OpenAI;
 
 namespace Richasy.AgentKernel.Connectors.OpenAI.Core;
 

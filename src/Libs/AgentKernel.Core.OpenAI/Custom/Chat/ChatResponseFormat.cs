@@ -1,7 +1,7 @@
-using AgentKernel.Core.OpenAI.Internal;
+using Richasy.AgentKernel.Core.OpenAI.Internal;
 using System;
 
-namespace AgentKernel.Core.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.OpenAI.Chat;
 
 /// <summary>
 ///     The format that the model should output.

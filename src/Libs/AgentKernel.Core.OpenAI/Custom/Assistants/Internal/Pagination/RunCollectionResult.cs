@@ -5,7 +5,7 @@ using System.Text.Json;
 
 #nullable enable
 
-namespace AgentKernel.Core.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 internal class RunCollectionResult : CollectionResult<ThreadRun>
 {

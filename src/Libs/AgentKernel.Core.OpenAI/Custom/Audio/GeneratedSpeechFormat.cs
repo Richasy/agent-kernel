@@ -1,4 +1,4 @@
-namespace AgentKernel.Core.OpenAI.Audio;
+namespace Richasy.AgentKernel.Core.OpenAI.Audio;
 
 /// <summary> The audio format in which to generate the speech. </summary>
 [CodeGenModel("CreateSpeechRequestResponseFormat")]
