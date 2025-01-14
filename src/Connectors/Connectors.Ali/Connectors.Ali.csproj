@@ -23,9 +23,7 @@
   
   <ItemGroup>
   	<ProjectReference Include="..\..\AgentKernel.Core\AgentKernel.Core.csproj" />
-	<ProjectReference Include="..\..\Libs\Microsoft.Extensions.AI.OpenAI\Microsoft.Extensions.AI.OpenAI.csproj">
-	  <PrivateAssets>all</PrivateAssets>
-	</ProjectReference>
+	<ProjectReference Include="..\..\Libs\AgentKernel.Extensions.AI.OpenAI\AgentKernel.Extensions.AI.OpenAI.csproj"/>
   </ItemGroup>
   
 </Project>

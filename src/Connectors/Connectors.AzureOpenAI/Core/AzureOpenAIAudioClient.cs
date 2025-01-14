@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.OpenAI;
-using OpenAI.Audio;
+using AgentKernel.Core.AzureOpenAI;
+using AgentKernel.Core.OpenAI.Audio;
 using Richasy.AgentKernel.Audio;
 using Richasy.AgentKernel.Connectors.Azure.Models;
 using Richasy.AgentKernel.Models;

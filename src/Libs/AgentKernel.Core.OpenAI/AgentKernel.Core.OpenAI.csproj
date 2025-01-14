@@ -1,0 +1,69 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+
+	  <!-- Generate an XML documentation file for the project. -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <!-- Create a .snupkg file in addition to the .nupkg file. -->
+    <IncludeSymbols>true</IncludeSymbols>
+
+    <!-- Embed source files that are not tracked by the source control manager in the PDB -->
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+    <!-- Disable missing XML documentation warnings -->
+    <NoWarn>$(WarningsNotAsErrors),1570,1573,1574,1591</NoWarn>
+
+    <!-- Disable obsolete warnings -->
+    <NoWarn>$(NoWarn),0618</NoWarn>
+
+    <!-- Disable unused fields warnings -->
+    <NoWarn>$(NoWarn),0169</NoWarn>
+
+    <!-- Disable warnings for experimental APIs -->
+    <NoWarn>$(NoWarn),OPENAI001;OPENAI002</NoWarn>
+
+    <Configurations>Debug;Release</Configurations>
+  </PropertyGroup>
+
+  <Import Project="$(RepoRoot)/src/nuget-package.props" />
+
+  <PropertyGroup>
+  	<!-- NuGet Package Settings -->
+  	<Title>Agent Kernel - Core - OpenAI</Title>
+  	<Description>Version after AOT based on openai-dotnet</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="AgentKernel.Core.AzureOpenAI" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <!-- Allow use of unsafe code, for System.Net.ServerSentEvents polyfill on netstandard2.0
+         TODO https://github.com/openai/openai-dotnet/issues/41: Remove once polyfill for
+         System.Net.ServerSentEvents is removed in favor of referencing the package -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ClientModel" />
+    <PackageReference Include="System.Memory.Data" />
+  </ItemGroup>
+
+  <ItemGroup>
+  	<Analyzer Remove="@(Analyzer)" />
+  </ItemGroup>
+
+  <PropertyGroup Label="Trimmable" Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
+  	<IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
+  	<EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+  	<IsTrimmable>true</IsTrimmable>
+  	<SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
+  	<TrimmerSingleWarn>false</TrimmerSingleWarn>
+  </PropertyGroup>
+</Project>

@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenAI;
-using OpenAI.Audio;
+using AgentKernel.Core.OpenAI;
+using AgentKernel.Core.OpenAI.Audio;
 using Richasy.AgentKernel.Audio;
 using Richasy.AgentKernel.Connectors.OpenAI.Models;
 using Richasy.AgentKernel.Models;

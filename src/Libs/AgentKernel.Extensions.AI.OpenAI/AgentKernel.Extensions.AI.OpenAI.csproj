@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>AgentKernel.Extensions.AI</RootNamespace>
+    <Description>Implementation of generative AI abstractions for OpenAI-compatible endpoints.</Description>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>net9.0</TargetFrameworks>
+    <NoWarn>$(NoWarn);CA1063;CA1508;CA2227;SA1316;S1121;S3358;EA0002;OPENAI002</NoWarn>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DisableNETStandardCompatErrors>true</DisableNETStandardCompatErrors>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  
+  <Import Project="$(RepoRoot)/src/nuget-package.props" />
+
+  <PropertyGroup>
+  	<!-- NuGet Package Settings -->
+  	<Title>Agent Kernel - Extensions - OpenAI</Title>
+  	<Description>From microsoft.extensions.ai</Description>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <InjectSharedEmptyCollections>true</InjectSharedEmptyCollections>
+    <InjectStringHashOnLegacy>true</InjectStringHashOnLegacy>
+    <InjectSharedServerSentEvents>true</InjectSharedServerSentEvents>
+    <InjectRequiredMemberOnLegacy>true</InjectRequiredMemberOnLegacy>
+    <InjectCompilerFeatureRequiredOnLegacy>true</InjectCompilerFeatureRequiredOnLegacy>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.AI.Abstractions" />
+    <PackageReference Include="System.Memory.Data" />
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AgentKernel.Core.OpenAI\AgentKernel.Core.OpenAI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ServerSentEvents\" />
+  </ItemGroup>
+  
+</Project>

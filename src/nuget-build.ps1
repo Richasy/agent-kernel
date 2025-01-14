@@ -20,14 +20,11 @@ if (-not $projectFiles) {
 
 foreach ($projectFile in $projectFiles) {
     # 排除 Samples 文件夹和 Libs 文件夹下的 .csproj 文件
-    if ($projectFile.FullName -notmatch "\\Samples\\" -and $projectFile.FullName -notmatch "\\Libs\\") {
+    if ($projectFile.FullName -notmatch "\\Samples\\") {
         Write-Host "正在处理项目：$($projectFile.FullName)"
 
         # 恢复 NuGet 包
         dotnet restore $projectFile.FullName
-
-        # 以 Release 配置构建项目
-        dotnet build $projectFile.FullName -c Release
 
         # 打包 NuGet 包
         dotnet pack $projectFile.FullName -c Release

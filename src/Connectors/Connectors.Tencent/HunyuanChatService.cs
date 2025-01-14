@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
+using AgentKernel.Core.OpenAI;
+using AgentKernel.Extensions.AI;
 using Microsoft.Extensions.AI;
-using OpenAI;
 using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Tencent.Models;
 using Richasy.AgentKernel.Models;

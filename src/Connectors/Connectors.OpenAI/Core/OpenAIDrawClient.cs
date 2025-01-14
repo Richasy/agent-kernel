@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-using OpenAI;
 using Richasy.AgentKernel.Connectors.OpenAI.Models;
 using Richasy.AgentKernel.Draw;
 using Richasy.AgentKernel.Models;
-using OpenAI.Images;
+using AgentKernel.Core.OpenAI.Images;
+using AgentKernel.Core.OpenAI;
 
 namespace Richasy.AgentKernel.Connectors.OpenAI.Core;
 

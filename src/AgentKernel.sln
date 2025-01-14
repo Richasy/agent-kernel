@@ -61,11 +61,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.Youdao", "Connec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consoles.Audio", "Samples\Consoles.Audio\Consoles.Audio.csproj", "{F165DDCC-FB27-4CE8-BC0A-DBA67F38A826}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenAI", "Libs\OpenAI\OpenAI.csproj", "{7543AC71-537B-68C4-7C33-E00395F91868}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentKernel.Core.OpenAI", "Libs\AgentKernel.Core.OpenAI\AgentKernel.Core.OpenAI.csproj", "{7543AC71-537B-68C4-7C33-E00395F91868}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.OpenAI", "Libs\Azure.AI.OpenAI\Azure.AI.OpenAI.csproj", "{BC13E940-2A84-F5A0-5DE6-AA9C5DA90CD0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentKernel.Core.AzureOpenAI", "Libs\AgentKernel.Core.AzureOpenAI\AgentKernel.Core.AzureOpenAI.csproj", "{BC13E940-2A84-F5A0-5DE6-AA9C5DA90CD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Extensions.AI.OpenAI", "Libs\Microsoft.Extensions.AI.OpenAI\Microsoft.Extensions.AI.OpenAI.csproj", "{EEE8FB62-926F-3CBB-3A15-2F3A9611D52C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentKernel.Extensions.AI.OpenAI", "Libs\AgentKernel.Extensions.AI.OpenAI\AgentKernel.Extensions.AI.OpenAI.csproj", "{EEE8FB62-926F-3CBB-3A15-2F3A9611D52C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consoles.Draw", "Samples\Consoles.Draw\Consoles.Draw.csproj", "{827C90E6-C159-42CE-8E9F-EDD302110D02}"
 EndProject

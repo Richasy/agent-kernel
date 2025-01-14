@@ -53,6 +53,7 @@ var kernel = Kernel.CreateBuilder()
     .AddXAIChatModelProvider()
     .AddDoubaoChatModelProvider()
     .AddMistralChatModelProvider()
+    .AddZhiPuChatModelProvider()
     .Build();
 
 builder.Services.AddSingleton(kernel);

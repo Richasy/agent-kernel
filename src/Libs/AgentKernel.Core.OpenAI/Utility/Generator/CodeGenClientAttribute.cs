@@ -1,0 +1,15 @@
+﻿#nullable enable
+
+using System;
+
+namespace AgentKernel.Core.OpenAI;
+
+[AttributeUsage(AttributeTargets.Class)]
+internal sealed class CodeGenClientAttribute : CodeGenTypeAttribute
+{
+    public Type? ParentClient { get; set; }
+
+    public CodeGenClientAttribute(string originalName) : base(originalName)
+    {
+    }
+}

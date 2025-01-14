@@ -3,7 +3,7 @@
   <PropertyGroup>
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
-	<NoWarn>$(NoWarn);</NoWarn>
+	  <NoWarn>$(NoWarn);</NoWarn>
     <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
@@ -11,10 +11,14 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-	<EditorConfigFilePath>$(MSBuildThisFileDirectory).editorconfig</EditorConfigFilePath>
+	  <EditorConfigFilePath>$(MSBuildThisFileDirectory).editorconfig</EditorConfigFilePath>
   </PropertyGroup>
 
   <ItemGroup>
   	<AdditionalFiles Include="$(EditorConfigFilePath)" />
   </ItemGroup>
+
+  <PropertyGroup>
+	  <RepoRoot>$([System.IO.Path]::GetDirectoryName($([MSBuild]::GetPathOfFileAbove('.gitignore', '$(MSBuildThisFileDirectory)'))))</RepoRoot>
+  </PropertyGroup>
 </Project>

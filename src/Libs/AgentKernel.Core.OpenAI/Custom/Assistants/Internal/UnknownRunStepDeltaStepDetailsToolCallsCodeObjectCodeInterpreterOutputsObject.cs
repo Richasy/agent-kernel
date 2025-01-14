@@ -1,0 +1,6 @@
+﻿namespace AgentKernel.Core.OpenAI.Assistants;
+
+[CodeGenModel("UnknownRunStepDeltaStepDetailsToolCallsCodeObjectCodeInterpreterOutputsObject")]
+internal partial class UnknownRunStepDeltaStepDetailsToolCallsCodeObjectCodeInterpreterOutputsObject
+{
+}
