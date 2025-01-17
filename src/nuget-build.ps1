@@ -58,14 +58,6 @@ foreach ($projectFile in $projectFiles) {
             # 复制 NuGet 包到 packages 文件夹
             $destinationPath = Join-Path -Path $packagesDir -ChildPath $nugetPackage.Name
             Copy-Item -Path $nugetPackage.FullName -Destination $destinationPath -Force
-
-            # 请将 <YourNuGetApiKey> 替换为你的 NuGet API 密钥
-            #$nugetApiKey = "<YourNuGetApiKey>"
-
-            # 发布到 NuGet
-            #dotnet nuget push $destinationPath -k $nugetApiKey -s https://api.nuget.org/v3/index.json
-
-            #Write-Host "NuGet 包发布成功：$($destinationPath)"
         }
     } else {
         Write-Host "跳过项目：$($projectFile.FullName)"
