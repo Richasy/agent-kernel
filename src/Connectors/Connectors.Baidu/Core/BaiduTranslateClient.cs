@@ -33,6 +33,7 @@ public sealed partial class BaiduTranslateClient(BaiduTranslationServiceConfig c
     public async Task<TranslateCompletion> TranslateTextAsync(string sourceContent, TranslateOptions? options, CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrEmpty(sourceContent, nameof(sourceContent));
+        sourceContent = sourceContent.Replace('\r', '\n').Replace("\n\n", "\n", StringComparison.OrdinalIgnoreCase).Trim();
         var queryList = new Dictionary<string, string>
         {
             { "q", sourceContent },
@@ -60,11 +61,11 @@ public sealed partial class BaiduTranslateClient(BaiduTranslationServiceConfig c
             throw new KernelException("Translation result is invalid.");
         }
 
-        var result = responseObj.Result.FirstOrDefault();
+        var results = responseObj.Result.Select(p => p.Result).ToList();
         return new TranslateCompletion
         {
             SourceContent = sourceContent,
-            Result = result!.Result!,
+            Result = string.Join("\n", results),
             SourceLanguage = responseObj.From,
             TargetLanguage = responseObj.To,
         };
