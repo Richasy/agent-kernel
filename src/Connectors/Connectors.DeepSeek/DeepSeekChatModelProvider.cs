@@ -15,6 +15,7 @@ public sealed class DeepSeekChatModelProvider : IChatModelProvider
     public IReadOnlyList<ChatModel> GetModels() =>
     [
         new("deepseek-chat", "DeepSeek Chat"),
-        new("deepseek-coder", "DeepSeek Coder")
+        new("deepseek-coder", "DeepSeek Coder"),
+        new("deepseek-reasoner", "DeepSeek Reasoner"),
     ];
 }

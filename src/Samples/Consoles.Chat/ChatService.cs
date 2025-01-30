@@ -173,14 +173,14 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
 
                 // options.AdditionalProperties!.Add("visual", true);
 
-                await foreach (var message in client.CompleteStreamingAsync(chatMessages, options, cancellationToken: cancellationToken))
-                {
-                    System.Diagnostics.Debug.WriteLine(message.Text);
-                    responseMessage += message.Text;
-                }
+                //await foreach (var message in client.CompleteStreamingAsync(chatMessages, options, cancellationToken: cancellationToken))
+                //{
+                //    System.Diagnostics.Debug.WriteLine(message.Text);
+                //    responseMessage += message.Text;
+                //}
 
-                //var response = await client.CompleteAsync(chatMessages, options, cancellationToken: cancellationToken);
-                //responseMessage = response.Message.Text;
+                var response = await client.CompleteAsync(chatMessages, options, cancellationToken: cancellationToken);
+                responseMessage = response.Message.Text;
                 chatMessages.Add(new ChatMessage(ChatRole.Assistant, responseMessage?.Trim()));
                 PrintAssistantMessage(chatMessages.Last());
             }
