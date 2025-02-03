@@ -82,6 +82,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
         {
             ProviderType.OpenAI => "OpenAI",
             ProviderType.AzureOpenAI => "Azure OpenAI",
+            ProviderType.AzureAI => "Azure AI",
             ProviderType.XAI => "xAI",
             ProviderType.ZhiPu => "智谱",
             ProviderType.LingYi => "零一万物",
@@ -160,7 +161,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
                     AdditionalProperties = [],
                 };
 
-                if (model?.ToolSupport ?? true)
+                if (model?.ToolSupport ?? false)
                 {
                     options.Tools = [
                         AIFunctionFactory.Create(
@@ -199,6 +200,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
         {
             ProviderType.OpenAI => config.OpenAI.ToAIServiceConfig(),
             ProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig<AzureOpenAIServiceConfig>(),
+            ProviderType.AzureAI => config.AzureAI.ToAIServiceConfig<AzureOpenAIServiceConfig>(),
             ProviderType.XAI => config.XAI.ToAIServiceConfig<XAIServiceConfig>(),
             ProviderType.ZhiPu => config.ZhiPu.ToAIServiceConfig<ZhiPuServiceConfig>(),
             ProviderType.LingYi => config.LingYi.ToAIServiceConfig<LingYiServiceConfig>(),

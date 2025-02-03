@@ -10,6 +10,9 @@ internal sealed class ChatConfiguration
     [JsonPropertyName("azure_openai")]
     public EndpointConfiguration? AzureOpenAI { get; set; }
 
+    [JsonPropertyName("azure_ai")]
+    public EndpointConfiguration? AzureAI { get; set; }
+
     [JsonPropertyName("xai")]
     public KeyConfiguration? XAI { get; set; }
 

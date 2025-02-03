@@ -23,8 +23,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\AgentKernel.Core\AgentKernel.Core.csproj" />
-	<ProjectReference Include="..\..\Libs\AgentKernel.Core.AzureOpenAI\AgentKernel.Core.AzureOpenAI.csproj"/>
-	<ProjectReference Include="..\..\Libs\AgentKernel.Extensions.AI.OpenAI\AgentKernel.Extensions.AI.OpenAI.csproj"/>
+    <ProjectReference Include="..\..\Libs\AgentKernel.Core.AzureInference\AgentKernel.Core.AzureInference.csproj" />
+	<ProjectReference Include="..\..\Libs\AgentKernel.Core.AzureOpenAI\AgentKernel.Core.AzureOpenAI.csproj" />
+	<ProjectReference Include="..\..\Libs\AgentKernel.Extensions.AI.AzureAIInference\AgentKernel.Extensions.AI.AzureAIInference.csproj" />
+	<ProjectReference Include="..\..\Libs\AgentKernel.Extensions.AI.OpenAI\AgentKernel.Extensions.AI.OpenAI.csproj" />
   </ItemGroup>
 
 </Project>

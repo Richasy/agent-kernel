@@ -19,6 +19,11 @@ internal enum ProviderType
     AzureOpenAI,
 
     /// <summary>
+    /// Azure AI.
+    /// </summary>
+    AzureAI,
+
+    /// <summary>
     /// xAI.
     /// </summary>
     XAI,
