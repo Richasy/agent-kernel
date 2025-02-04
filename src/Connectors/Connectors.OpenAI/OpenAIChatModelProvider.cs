@@ -16,6 +16,7 @@ public sealed class OpenAIChatModelProvider : IChatModelProvider
     [
         new("gpt-4o", "GPT-4o", toolSupport: true, visionSupport: true),
         new("gpt-4o-mini", "GPT-4o Mini", toolSupport: true, visionSupport: true),
+        new("o3-mini", "O3 Mini", toolSupport: true),
         new("o1", "O1", toolSupport: true, visionSupport: true),
         new("o1-mini", "O1 Mini", toolSupport: true, visionSupport: true),
         new("o1-preview", "O1 Preview", toolSupport: true, visionSupport: true),
