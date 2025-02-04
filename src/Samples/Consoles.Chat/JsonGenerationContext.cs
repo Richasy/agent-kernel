@@ -7,6 +7,7 @@ namespace Consoles.Chat;
 
 [JsonSourceGenerationOptions(DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 [JsonSerializable(typeof(ChatConfiguration))]
+[JsonSerializable(typeof(string))]
 internal sealed partial class JsonGenerationContext : JsonSerializerContext
 {
 }

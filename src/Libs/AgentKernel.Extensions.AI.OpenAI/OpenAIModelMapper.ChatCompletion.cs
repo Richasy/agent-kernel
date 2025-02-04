@@ -80,6 +80,15 @@ internal static partial class OpenAIModelMappers
             Role = FromOpenAIChatRole(openAICompletion.Role),
         };
 
+        if (openAICompletion.ContentAdditionalRawData is { Count: > 0 } contentAdditionalRawData)
+        {
+            returnMessage.AdditionalProperties ??= new();
+            foreach (var kv in contentAdditionalRawData)
+            {
+                returnMessage.AdditionalProperties.Add(kv.Key, kv.Value);
+            }
+        }
+
         // Populate its content from those in the OpenAI response content.
         foreach (ChatMessageContentPart contentPart in openAICompletion.Content)
         {

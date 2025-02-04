@@ -116,7 +116,6 @@ public partial class ChatClient
         try
         {
             using BinaryContent content = options.ToBinaryContent();
-
             ClientResult result = await CompleteChatAsync(content, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             ChatCompletion chatCompletion = ChatCompletion.FromResponse(result.GetRawResponse());
             scope?.RecordChatCompletion(chatCompletion);

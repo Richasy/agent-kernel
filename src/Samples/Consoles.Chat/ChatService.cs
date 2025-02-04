@@ -27,6 +27,7 @@ using RichasyKernel;
 using Spectre.Console;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 namespace Consoles.Chat;
 
@@ -181,6 +182,20 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
                 //}
 
                 var response = await client.CompleteAsync(chatMessages, options, cancellationToken: cancellationToken);
+                if (response.Message.AdditionalProperties?.ContainsKey("reasoning_content") ?? false)
+                {
+                    var reasoningContent = response.Message.AdditionalProperties["reasoning_content"];
+                    if (reasoningContent is BinaryData binaryData)
+                    {
+                        var content = binaryData.ToString();
+                        content = JsonSerializer.Deserialize(content, JsonGenerationContext.Default.String);
+                        if (content != null)
+                        {
+                            PrintReasoningMessage(content);
+                        }
+                    }
+                }
+
                 responseMessage = response.Message.Text;
                 chatMessages.Add(new ChatMessage(ChatRole.Assistant, responseMessage?.Trim()));
                 PrintAssistantMessage(chatMessages.Last());
@@ -228,6 +243,25 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
 
         service.Initialize(serviceConfig);
         return service;
+    }
+
+    private void PrintReasoningMessage(string text)
+    {
+        _ = this;
+        if (string.IsNullOrEmpty(text))
+        {
+            return;
+        }
+
+        var panel = new Panel(text.EscapeMarkup())
+        {
+            Border = BoxBorder.Rounded,
+            Expand = true,
+            Padding = new Padding(2, 2, 2, 2),
+        };
+
+        panel.Header = new PanelHeader("Thinking...");
+        AnsiConsole.Write(panel);
     }
 
     private void PrintAssistantMessage(ChatMessage response)
