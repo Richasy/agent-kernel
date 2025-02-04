@@ -15,7 +15,7 @@ internal sealed class BearerToken
 
     public required string Token { get; set; }
 
-    public required string Status { get; set; }
+    public string? Status { get; set; }
 
     [JsonPropertyName("createTime")]
     public required DateTimeOffset CreateTime { get; set; }
