@@ -73,6 +73,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentKernel.Core.AzureInfer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentKernel.Extensions.AI.AzureAIInference", "Libs\AgentKernel.Extensions.AI.AzureAIInference\AgentKernel.Extensions.AI.AzureAIInference.csproj", "{F1AFC394-0835-4F42-9EDE-D1A71313BBAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentKernel.Definitions", "AgentKernel.Definitions\AgentKernel.Definitions.csproj", "{F73550DF-1733-42DD-A642-DA5241A5DDD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.Windows", "Connectors\Connectors.Windows\Connectors.Windows.csproj", "{B98BB8B5-3E3F-469D-9D7A-1B24CBE7F569}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -207,6 +211,14 @@ Global
 		{F1AFC394-0835-4F42-9EDE-D1A71313BBAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1AFC394-0835-4F42-9EDE-D1A71313BBAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1AFC394-0835-4F42-9EDE-D1A71313BBAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F73550DF-1733-42DD-A642-DA5241A5DDD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F73550DF-1733-42DD-A642-DA5241A5DDD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F73550DF-1733-42DD-A642-DA5241A5DDD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F73550DF-1733-42DD-A642-DA5241A5DDD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B98BB8B5-3E3F-469D-9D7A-1B24CBE7F569}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B98BB8B5-3E3F-469D-9D7A-1B24CBE7F569}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B98BB8B5-3E3F-469D-9D7A-1B24CBE7F569}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B98BB8B5-3E3F-469D-9D7A-1B24CBE7F569}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -243,6 +255,7 @@ Global
 		{827C90E6-C159-42CE-8E9F-EDD302110D02} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{FFEE4A93-C60C-4BF1-AD43-EE4C69864D4C} = {11B7F1A3-1179-44DD-B461-1C3449081BF1}
 		{F1AFC394-0835-4F42-9EDE-D1A71313BBAD} = {11B7F1A3-1179-44DD-B461-1C3449081BF1}
+		{B98BB8B5-3E3F-469D-9D7A-1B24CBE7F569} = {BE6BB6A9-68C9-489A-8EDB-59BDCA239D6D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {75EFBD6D-9C6C-4E70-9AEA-80654AA48D1A}
