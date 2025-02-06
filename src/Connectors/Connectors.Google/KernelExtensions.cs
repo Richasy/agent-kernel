@@ -25,16 +25,6 @@ public static class KernelExtensions
     }
 
     /// <summary>
-    /// Add Gemini chat model provider.
-    /// </summary>
-    /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddGeminiChatModelProvider(this IKernelBuilder builder)
-    {
-        builder.Services.AddKeyedSingleton<IChatModelProvider, GeminiChatModelProvider>("Gemini");
-        return builder;
-    }
-
-    /// <summary>
     /// Add Google translation service.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>

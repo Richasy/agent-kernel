@@ -39,4 +39,15 @@ public sealed class MistralChatService : IChatService
         Client?.Dispose();
         Client = new MistralChatClient(_config.AccessKey, _config.UseCodestralApi, _config.Model);
     }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<ChatModel> GetPredefinedModels() =>
+    [
+        new("mistral-large-latest", "Mistral Large", toolSupport: true),
+        new("pixtral-large-latest", "Pixtral Large", toolSupport: true, visionSupport: true),
+        new("ministral-3b-latest", "Ministral 3B"),
+        new("ministral-8b-latest", "Ministral 8B"),
+        new("ministral-small-latest", "Ministral Small"),
+        new("codestral-latest", "Codestral"),
+    ];
 }

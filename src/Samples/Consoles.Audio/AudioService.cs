@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.Hosting;
+using Richasy.AgentKernel;
 using Richasy.AgentKernel.Audio;
 using Richasy.AgentKernel.Models;
 using RichasyKernel;
@@ -18,7 +19,6 @@ internal sealed class AudioService(Kernel kernel, AudioConfiguration config, IHo
     private readonly CancellationTokenSource _stopCts = new();
     private Task? _chatTask;
     private string? _languageCode;
-    private string? _voiceId;
     private string? _model;
 
     public Task StartAsync(CancellationToken cancellationToken)
@@ -35,10 +35,14 @@ internal sealed class AudioService(Kernel kernel, AudioConfiguration config, IHo
         }
     }
 
-    private ProviderType AskProvider()
+    private AudioProviderType AskProvider()
     {
-        var providers = Enum.GetValues<ProviderType>();
-        return AnsiConsole.Prompt(new SelectionPrompt<ProviderType>()
+        List<AudioProviderType> providers = [
+            AudioProviderType.Azure,
+            AudioProviderType.Edge,
+            AudioProviderType.AzureOpenAI,
+        ];
+        return AnsiConsole.Prompt(new SelectionPrompt<AudioProviderType>()
             .Title("Select a provider")
             .PageSize(20)
             .MoreChoicesText("More")
@@ -46,13 +50,40 @@ internal sealed class AudioService(Kernel kernel, AudioConfiguration config, IHo
             .AddChoices(providers));
     }
 
-    private string ProviderToName(ProviderType provider)
+    private AudioModel? AskModel(AudioProviderType providerType)
+    {
+        var provider = kernel.GetRequiredService<IAudioService>(providerType.ToString());
+        var models = provider.GetPredefinedModels();
+        return models?.Count > 1
+            ? AnsiConsole.Prompt(new SelectionPrompt<AudioModel>()
+            .Title("Select a model")
+            .PageSize(20)
+            .MoreChoicesText("More")
+            .UseConverter(x => x.DisplayName ?? x.Id)
+            .AddChoices(models))
+            : models?.FirstOrDefault();
+    }
+
+    private AudioVoice? AskVoice(AudioModel model)
+    {
+        var voices = model.Voices.Where(p=>p.Languages.Contains(_languageCode ?? "zh-CN"));
+        return voices?.Count() > 1
+            ? AnsiConsole.Prompt(new SelectionPrompt<AudioVoice>()
+            .Title("Select a voice")
+            .PageSize(20)
+            .MoreChoicesText("More")
+            .UseConverter(x => x.DisplayName + (x.Gender == VoiceGender.Male ? "♂️" : "♀️"))
+            .AddChoices(voices))
+            : voices?.FirstOrDefault();
+    }
+
+    private string ProviderToName(AudioProviderType provider)
     {
         return provider switch
         {
-            ProviderType.Azure => "Azure",
-            ProviderType.Edge => "Edge",
-            ProviderType.AzureOpenAI => "Azure OpenAI",
+            AudioProviderType.Azure => "Azure",
+            AudioProviderType.Edge => "Edge",
+            AudioProviderType.AzureOpenAI => "Azure OpenAI",
             _ => throw new NotSupportedException(),
         };
     }
@@ -64,7 +95,9 @@ internal sealed class AudioService(Kernel kernel, AudioConfiguration config, IHo
         {
             AnsiConsole.Clear();
             var provider = AskProvider();
+            var model = AskModel(provider);
             var service = DispatchService(provider);
+            var voice = AskVoice(model!);
             while (!cancellationToken.IsCancellationRequested)
             {
                 var input = AnsiConsole.Prompt(
@@ -85,7 +118,7 @@ internal sealed class AudioService(Kernel kernel, AudioConfiguration config, IHo
                 {
                     Speed = 1.0,
                     LanguageCode = _languageCode,
-                    VoiceId = _voiceId,
+                    VoiceId = voice!.Id,
                 };
 
                 if (!string.IsNullOrWhiteSpace(_model))
@@ -107,27 +140,24 @@ internal sealed class AudioService(Kernel kernel, AudioConfiguration config, IHo
     private async Task ReadResultAsync(BinaryData result)
     {
         _ = this;
-        var tempAudioPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temp.wav");
+        var tempAudioPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temp2.wav");
         await File.WriteAllBytesAsync(tempAudioPath, result.ToArray()).ConfigureAwait(true);
         Process.Start(new ProcessStartInfo(tempAudioPath) { UseShellExecute = true });
     }
 
-    private IAudioService DispatchService(ProviderType provider)
+    private IAudioService DispatchService(AudioProviderType provider)
     {
         var service = kernel.GetRequiredService<IAudioService>(provider.ToString());
         switch (provider)
         {
-            case ProviderType.Azure:
-                _voiceId = config.Azure!.Voice;
-                _languageCode = config.Azure.Language;
+            case AudioProviderType.Azure:
+                _languageCode = config.Azure!.Language;
                 break;
-            case ProviderType.Edge:
-                _voiceId = config.Edge!.Voice;
-                _languageCode = config.Edge.Language;
+            case AudioProviderType.Edge:
+                _languageCode = config.Edge!.Language;
                 break;
-            case ProviderType.AzureOpenAI:
-                _voiceId = config.AzureOpenAI!.Voice;
-                _languageCode = config.AzureOpenAI.Language;
+            case AudioProviderType.AzureOpenAI:
+                _languageCode = config.AzureOpenAI!.Language;
                 _model = config.AzureOpenAI.Model;
                 break;
             default:
@@ -136,9 +166,9 @@ internal sealed class AudioService(Kernel kernel, AudioConfiguration config, IHo
 
         var serviceConfig = provider switch
         {
-            ProviderType.Azure => config.Azure.ToAIServiceConfig(),
-            ProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig(),
-            ProviderType.Edge => null,
+            AudioProviderType.Azure => config.Azure.ToAIServiceConfig(),
+            AudioProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig(),
+            AudioProviderType.Edge => null,
             _ => throw new NotSupportedException(),
         };
 

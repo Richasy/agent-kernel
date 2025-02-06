@@ -39,4 +39,44 @@ public sealed class OpenAIAudioService : IAudioService
         Client?.Dispose();
         Client = new OpenAIAudioClient(aiConfig);
     }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<AudioModel> GetPredefinedModels() =>
+    [
+        new AudioModel
+        {
+            Id = "tts-1",
+            DisplayName = "TTS",
+            Voices = GetOpenAIAudioVoices(),
+        },
+        new AudioModel
+        {
+            Id = "tts-1-hd",
+            DisplayName = "TTS HD",
+            Voices = GetOpenAIAudioVoices(),
+        },
+    ];
+
+    private static string[] GetOpenAIAudioLanguages()
+    {
+        return
+        [
+            "af", "ar", "hy", "az", "be", "bs", "bg", "ca", "zh",
+            "hr", "cs", "da", "nl", "en", "et", "fi", "fr", "gl",
+            "de", "el", "he", "hi", "hu", "is", "id", "it"
+        ];
+    }
+
+    private static List<AudioVoice> GetOpenAIAudioVoices()
+    {
+        return
+        [
+            new("alloy", "Alloy", VoiceGender.Male, GetOpenAIAudioLanguages()),
+            new("echo", "Echo", VoiceGender.Male, GetOpenAIAudioLanguages()),
+            new("fable", "Fable", VoiceGender.Male, GetOpenAIAudioLanguages()),
+            new("onyx", "Onyx", VoiceGender.Male, GetOpenAIAudioLanguages()),
+            new("nova", "Nova", VoiceGender.Female, GetOpenAIAudioLanguages()),
+            new("shimmer", "Shimmer", VoiceGender.Female, GetOpenAIAudioLanguages()),
+        ];
+    }
 }

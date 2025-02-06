@@ -25,4 +25,10 @@ public interface ITranslationService
     /// </summary>
     /// <param name="config">Configuration.</param>
     void Initialize(TranslationServiceConfig? config);
+
+    /// <summary>
+    /// Gets the supported languages for translation.
+    /// </summary>
+    /// <returns><see cref="TranslationLanguages"/>.</returns>
+    TranslationLanguages GetSupportedLanguages();
 }

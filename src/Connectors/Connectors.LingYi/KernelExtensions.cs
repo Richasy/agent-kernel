@@ -22,14 +22,4 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IChatService, LingYiChatService>("LingYi");
         return builder;
     }
-
-    /// <summary>
-    /// Add LingYi chat model provider.
-    /// </summary>
-    /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddLingYiChatModelProvider(this IKernelBuilder builder)
-    {
-        builder.Services.AddKeyedSingleton<IChatModelProvider, LingYiChatModelProvider>("LingYi");
-        return builder;
-    }
 }

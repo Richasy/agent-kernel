@@ -26,16 +26,6 @@ public static class KernelExtensions
     }
 
     /// <summary>
-    /// Add OpenAI chat model provider.
-    /// </summary>
-    /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddOpenAIChatModelProvider(this IKernelBuilder builder)
-    {
-        builder.Services.AddKeyedSingleton<IChatModelProvider, OpenAIChatModelProvider>("OpenAI");
-        return builder;
-    }
-
-    /// <summary>
     /// Add OpenAI audio service.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>

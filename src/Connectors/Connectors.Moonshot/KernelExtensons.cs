@@ -22,14 +22,4 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IChatService, MoonshotChatService>("Moonshot");
         return builder;
     }
-
-    /// <summary>
-    /// Add Moonshot chat model provider.
-    /// </summary>
-    /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddMoonshotChatModelProvider(this IKernelBuilder builder)
-    {
-        builder.Services.AddKeyedSingleton<IChatModelProvider, MoonshotChatModelProvider>("Moonshot");
-        return builder;
-    }
 }

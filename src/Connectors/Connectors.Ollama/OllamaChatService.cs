@@ -38,4 +38,7 @@ public sealed class OllamaChatService : IChatService
         Client?.Dispose();
         Client = new OllamaChatClient(_config.Endpoint!, _config.Model);
     }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<ChatModel> GetPredefinedModels() => [];
 }

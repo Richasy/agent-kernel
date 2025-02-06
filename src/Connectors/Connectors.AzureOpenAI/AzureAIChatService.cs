@@ -41,4 +41,7 @@ public sealed class AzureAIChatService : IChatService
         Client?.Dispose();
         Client = client.AsChatClient(config.Model);
     }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<ChatModel> GetPredefinedModels() => [];
 }

@@ -45,4 +45,11 @@ public sealed class TogetherAIChatService : IChatService
         Client?.Dispose();
         Client = coreClient.AsChatClient(_config.Model!);
     }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<ChatModel> GetPredefinedModels() =>
+    [
+        new("meta-llama/Llama-3.3-70B-Instruct-Turbo", "Llama 3.3 70B Instruct Turbo"),
+        new("Qwen/QwQ-32B-Preview", "Qwen QwQ 32B Preview"),
+    ];
 }

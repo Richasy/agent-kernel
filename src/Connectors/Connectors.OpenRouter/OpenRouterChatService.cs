@@ -45,4 +45,14 @@ public sealed class OpenRouterChatService : IChatService
         Client?.Dispose();
         Client = coreClient.AsChatClient(_config.Model!);
     }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<ChatModel> GetPredefinedModels() =>
+    [
+        new("deepseek/deepseek-chat", "DeepSeek V3"),
+        new("qwen/qvq-72b-preview", "Qwen: QVQ 72B Preview"),
+        new("google/gemini-2.0-flash-thinking-exp:free", "Google: Gemini 2.0 Flash Thinking Experimental"),
+        new("sao10k/l3.3-euryale-70b", "Sao10K: Llama 3.3 Euryale 70B"),
+        new("openai/o1", "OpenAI: o1"),
+    ];
 }

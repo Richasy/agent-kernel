@@ -45,4 +45,12 @@ public sealed class DeepSeekChatService : IChatService
         Client?.Dispose();
         Client = coreClient.AsChatClient(_config.Model!);
     }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<ChatModel> GetPredefinedModels() =>
+    [
+        new("deepseek-chat", "DeepSeek Chat"),
+        new("deepseek-coder", "DeepSeek Coder"),
+        new("deepseek-reasoner", "DeepSeek Reasoner"),
+    ];
 }

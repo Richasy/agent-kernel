@@ -22,14 +22,4 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IChatService, PerplexityChatService>("Perplexity");
         return builder;
     }
-
-    /// <summary>
-    /// 添加 Perplexity 对话模型提供程序.
-    /// </summary>
-    /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddPerplexityChatModelProvider(this IKernelBuilder builder)
-    {
-        builder.Services.AddKeyedSingleton<IChatModelProvider, PerplexityChatModelProvider>("Perplexity");
-        return builder;
-    }
 }

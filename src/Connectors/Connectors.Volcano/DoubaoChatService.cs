@@ -28,6 +28,9 @@ public sealed class DoubaoChatService : IChatService
     public AIServiceConfig? Config => _config;
 
     /// <inheritdoc/>
+    public IReadOnlyList<ChatModel> GetPredefinedModels() => [];
+
+    /// <inheritdoc/>
     public void Initialize(AIServiceConfig config)
     {
         if (config is not DoubaoServiceConfig doubaoConfig)

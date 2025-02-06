@@ -38,4 +38,13 @@ public sealed class GeminiChatService : IChatService
         Client?.Dispose();
         Client = new GeminiChatClient(_config.AccessKey, _config.Model, _config.Endpoint);
     }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<ChatModel> GetPredefinedModels() =>
+    [
+        new("gemini-2.0-flash-exp", "Gemini 2.0 Flash", toolSupport: true, visionSupport: true),
+        new("gemini-1.5-flash", "Gemini 1.5 Flash", toolSupport: true, visionSupport: true),
+        new("gemini-1.5-flash-8b", "Gemini 1.5 Flash-8B", toolSupport: true, visionSupport: true),
+        new("gemini-1.5-pro", "Gemini 1.5 Pro", toolSupport: true, visionSupport: true),
+    ];
 }

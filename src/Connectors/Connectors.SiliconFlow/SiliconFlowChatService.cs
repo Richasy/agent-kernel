@@ -45,4 +45,12 @@ public sealed class SiliconFlowChatService : IChatService
         Client?.Dispose();
         Client = coreClient.AsChatClient(_config.Model!);
     }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<ChatModel> GetPredefinedModels() =>
+    [
+        new("Qwen/QVQ-72B-Preview", "Qwen/QVQ-72B-Preview", toolSupport: true, visionSupport: true),
+        new("deepseek-ai/DeepSeek-R1", "DeepSeek-R1"),
+        new("deepseek-ai/DeepSeek-V2.5", "DeepSeek-V2.5"),
+    ];
 }

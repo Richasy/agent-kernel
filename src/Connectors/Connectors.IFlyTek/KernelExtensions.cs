@@ -25,16 +25,6 @@ public static class KernelExtensions
     }
 
     /// <summary>
-    /// 添加讯飞星火模型提供程序.
-    /// </summary>
-    /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddSparkChatModelProvider(this IKernelBuilder builder)
-    {
-        builder.Services.AddKeyedSingleton<IChatModelProvider, SparkChatModelProvider>("Spark");
-        return builder;
-    }
-
-    /// <summary>
     /// 添加讯飞星火绘图服务.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>

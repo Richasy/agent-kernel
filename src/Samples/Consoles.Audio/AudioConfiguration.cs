@@ -40,7 +40,4 @@ internal class KeyConfiguration
 
     [JsonPropertyName("language")]
     public string? Language { get; set; }
-
-    [JsonPropertyName("voice")]
-    public string? Voice { get; set; }
 }

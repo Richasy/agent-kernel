@@ -45,4 +45,11 @@ public sealed class XAIChatService : IChatService
         Client?.Dispose();
         Client = coreClient.AsChatClient(_config.Model!);
     }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<ChatModel> GetPredefinedModels() =>
+    [
+        new("grok-2-latest", "Grok 2", toolSupport: true),
+        new("grok-beta", "Grok Beta", toolSupport: true),
+    ];
 }

@@ -48,4 +48,16 @@ public sealed class HunyuanChatService : IChatService
 
         Client = coreClient.AsChatClient(_config.Model!);
     }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<ChatModel> GetPredefinedModels() =>
+    [
+        new("hunyuan-turbo-latest", "Hunyuan Turbo Latest", toolSupport: true),
+        new("hunyuan-large", "Hunyuan Large"),
+        new("hunyuan-large-longcontext", "Hunyuan Large Long Context"),
+        new("hunyuan-standard-256k", "Hunyuan Standard 256K"),
+        new("hunyuan-standard", "Hunyuan Standard"),
+        new("hunyuan-lite", "Hunyuan Lite"),
+        new("hunyuan-functioncall", "Hunyuan Function Call"),
+    ];
 }

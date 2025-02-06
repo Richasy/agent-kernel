@@ -24,4 +24,10 @@ public interface IAudioService
     /// Initialize the audio service.
     /// </summary>
     void Initialize(AIServiceConfig? config);
+
+    /// <summary>
+    /// Gets the supported voices for audio generation.
+    /// </summary>
+    /// <returns>Voice list.</returns>
+    IReadOnlyList<AudioModel> GetPredefinedModels();
 }

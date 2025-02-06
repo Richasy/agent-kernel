@@ -22,14 +22,4 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IChatService, OllamaChatService>("Ollama");
         return builder;
     }
-
-    /// <summary>
-    /// Add Ollama chat model provider.
-    /// </summary>
-    /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddOllamaChatModelProvider(this IKernelBuilder builder)
-    {
-        builder.Services.AddKeyedSingleton<IChatModelProvider, OllamaChatModelProvider>("Ollama");
-        return builder;
-    }
 }

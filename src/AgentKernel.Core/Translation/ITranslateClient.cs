@@ -38,10 +38,4 @@ public interface ITranslateClient : IDisposable
         string sourceContent,
         TranslateOptions? options,
         CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Gets the supported languages for translation.
-    /// </summary>
-    /// <returns><see cref="TranslationLanguages"/>.</returns>
-    TranslationLanguages GetSupportedLanguages();
 }

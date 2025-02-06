@@ -6,6 +6,7 @@
 using Connectors.DeepSeek.Models;
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Hosting;
+using Richasy.AgentKernel;
 using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Ali.Models;
 using Richasy.AgentKernel.Connectors.Anthropic.Models;
@@ -52,10 +53,10 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
         }
     }
 
-    private ProviderType AskProvider()
+    private ChatProviderType AskProvider()
     {
-        var providers = Enum.GetValues<ProviderType>();
-        return AnsiConsole.Prompt(new SelectionPrompt<ProviderType>()
+        var providers = Enum.GetValues<ChatProviderType>();
+        return AnsiConsole.Prompt(new SelectionPrompt<ChatProviderType>()
             .Title("Select a provider")
             .PageSize(20)
             .MoreChoicesText("More")
@@ -63,10 +64,10 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             .AddChoices(providers));
     }
 
-    private ChatModel? AskModel(ProviderType providerType)
+    private ChatModel? AskModel(ChatProviderType providerType)
     {
-        var provider = kernel.GetRequiredService<IChatModelProvider>(providerType.ToString());
-        var models = provider.GetModels();
+        var provider = kernel.GetRequiredService<IChatService>(providerType.ToString());
+        var models = provider.GetPredefinedModels();
         return models?.Count > 0
             ? AnsiConsole.Prompt(new SelectionPrompt<ChatModel>()
             .Title("Select a model")
@@ -77,31 +78,32 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             : default;
     }
 
-    private string ProviderToName(ProviderType provider)
+    private string ProviderToName(ChatProviderType provider)
     {
         return provider switch
         {
-            ProviderType.OpenAI => "OpenAI",
-            ProviderType.AzureOpenAI => "Azure OpenAI",
-            ProviderType.AzureAI => "Azure AI",
-            ProviderType.XAI => "xAI",
-            ProviderType.ZhiPu => "智谱",
-            ProviderType.LingYi => "零一万物",
-            ProviderType.Anthropic => "Anthropic",
-            ProviderType.Moonshot => "月之暗面",
-            ProviderType.Gemini => "Gemini",
-            ProviderType.DeepSeek => "DeepSeek",
-            ProviderType.Qwen => "通义千问",
-            ProviderType.Ernie => "文心一言",
-            ProviderType.Hunyuan => "混元",
-            ProviderType.Spark => "讯飞星火",
-            ProviderType.Doubao => "豆包",
-            ProviderType.SiliconFlow => "硅基流动",
-            ProviderType.OpenRouter => "OpenRouter",
-            ProviderType.TogetherAI => "Together.AI",
-            ProviderType.Groq => "Groq",
-            ProviderType.Mistral => "Mistral",
-            ProviderType.Ollama => "Ollama",
+            ChatProviderType.OpenAI => "OpenAI",
+            ChatProviderType.AzureOpenAI => "Azure OpenAI",
+            ChatProviderType.AzureAI => "Azure AI",
+            ChatProviderType.XAI => "xAI",
+            ChatProviderType.ZhiPu => "智谱",
+            ChatProviderType.LingYi => "零一万物",
+            ChatProviderType.Anthropic => "Anthropic",
+            ChatProviderType.Moonshot => "月之暗面",
+            ChatProviderType.Gemini => "Gemini",
+            ChatProviderType.DeepSeek => "DeepSeek",
+            ChatProviderType.Qwen => "通义千问",
+            ChatProviderType.Ernie => "文心一言",
+            ChatProviderType.Hunyuan => "混元",
+            ChatProviderType.Spark => "讯飞星火",
+            ChatProviderType.Doubao => "豆包",
+            ChatProviderType.SiliconFlow => "硅基流动",
+            ChatProviderType.OpenRouter => "OpenRouter",
+            ChatProviderType.TogetherAI => "Together.AI",
+            ChatProviderType.Groq => "Groq",
+            ChatProviderType.Mistral => "Mistral",
+            ChatProviderType.Ollama => "Ollama",
+            ChatProviderType.Perplexity => "Perplexity",
             _ => throw new NotSupportedException(),
         };
     }
@@ -208,32 +210,32 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
         }
     }
 
-    private IChatService DispatchService(ProviderType provider, ChatModel? model)
+    private IChatService DispatchService(ChatProviderType provider, ChatModel? model)
     {
         var service = kernel.GetRequiredService<IChatService>(provider.ToString());
         var serviceConfig = provider switch
         {
-            ProviderType.OpenAI => config.OpenAI.ToAIServiceConfig(),
-            ProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig<AzureOpenAIServiceConfig>(),
-            ProviderType.AzureAI => config.AzureAI.ToAIServiceConfig<AzureOpenAIServiceConfig>(),
-            ProviderType.XAI => config.XAI.ToAIServiceConfig<XAIServiceConfig>(),
-            ProviderType.ZhiPu => config.ZhiPu.ToAIServiceConfig<ZhiPuServiceConfig>(),
-            ProviderType.LingYi => config.LingYi.ToAIServiceConfig<LingYiServiceConfig>(),
-            ProviderType.Anthropic => config.Anthropic.ToAIServiceConfig<AnthropicServiceConfig>(),
-            ProviderType.Moonshot => config.Moonshot.ToAIServiceConfig<MoonshotServiceConfig>(),
-            ProviderType.Gemini => config.Gemini.ToAIServiceConfig<GeminiServiceConfig>(),
-            ProviderType.DeepSeek => config.DeepSeek.ToAIServiceConfig<DeepSeekServiceConfig>(),
-            ProviderType.Qwen => config.Qwen.ToAIServiceConfig<QwenServiceConfig>(),
-            ProviderType.Ernie => config.Ernie.ToAIServiceConfig(),
-            ProviderType.Hunyuan => config.Hunyuan.ToAIServiceConfig<HunyuanChatServiceConfig>(),
-            ProviderType.Spark => config.Spark.ToAIServiceConfig<SparkChatServiceConfig>(),
-            ProviderType.Doubao => config.Doubao.ToAIServiceConfig<DoubaoServiceConfig>(),
-            ProviderType.SiliconFlow => config.SiliconFlow.ToAIServiceConfig<SiliconFlowServiceConfig>(),
-            ProviderType.OpenRouter => config.OpenRouter.ToAIServiceConfig<OpenRouterServiceConfig>(),
-            ProviderType.TogetherAI => config.TogetherAI.ToAIServiceConfig<TogetherAIServiceConfig>(),
-            ProviderType.Groq => config.Groq.ToAIServiceConfig<GroqServiceConfig>(),
-            ProviderType.Mistral => config.Mistral.ToAIServiceConfig(),
-            ProviderType.Ollama => config.Ollama.ToAIServiceConfig(),
+            ChatProviderType.OpenAI => config.OpenAI.ToAIServiceConfig(),
+            ChatProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig<AzureOpenAIServiceConfig>(),
+            ChatProviderType.AzureAI => config.AzureAI.ToAIServiceConfig<AzureOpenAIServiceConfig>(),
+            ChatProviderType.XAI => config.XAI.ToAIServiceConfig<XAIServiceConfig>(),
+            ChatProviderType.ZhiPu => config.ZhiPu.ToAIServiceConfig<ZhiPuServiceConfig>(),
+            ChatProviderType.LingYi => config.LingYi.ToAIServiceConfig<LingYiServiceConfig>(),
+            ChatProviderType.Anthropic => config.Anthropic.ToAIServiceConfig<AnthropicServiceConfig>(),
+            ChatProviderType.Moonshot => config.Moonshot.ToAIServiceConfig<MoonshotServiceConfig>(),
+            ChatProviderType.Gemini => config.Gemini.ToAIServiceConfig<GeminiServiceConfig>(),
+            ChatProviderType.DeepSeek => config.DeepSeek.ToAIServiceConfig<DeepSeekServiceConfig>(),
+            ChatProviderType.Qwen => config.Qwen.ToAIServiceConfig<QwenServiceConfig>(),
+            ChatProviderType.Ernie => config.Ernie.ToAIServiceConfig(),
+            ChatProviderType.Hunyuan => config.Hunyuan.ToAIServiceConfig<HunyuanChatServiceConfig>(),
+            ChatProviderType.Spark => config.Spark.ToAIServiceConfig<SparkChatServiceConfig>(),
+            ChatProviderType.Doubao => config.Doubao.ToAIServiceConfig<DoubaoServiceConfig>(),
+            ChatProviderType.SiliconFlow => config.SiliconFlow.ToAIServiceConfig<SiliconFlowServiceConfig>(),
+            ChatProviderType.OpenRouter => config.OpenRouter.ToAIServiceConfig<OpenRouterServiceConfig>(),
+            ChatProviderType.TogetherAI => config.TogetherAI.ToAIServiceConfig<TogetherAIServiceConfig>(),
+            ChatProviderType.Groq => config.Groq.ToAIServiceConfig<GroqServiceConfig>(),
+            ChatProviderType.Mistral => config.Mistral.ToAIServiceConfig(),
+            ChatProviderType.Ollama => config.Ollama.ToAIServiceConfig(),
             _ => throw new NotSupportedException(),
         } ?? throw new InvalidOperationException("The configuration is not valid.");
         if (model != null)

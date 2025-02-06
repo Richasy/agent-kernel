@@ -45,4 +45,14 @@ public sealed class LingYiChatService : IChatService
         Client?.Dispose();
         Client = coreClient.AsChatClient(_config.Model!);
     }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<ChatModel> GetPredefinedModels() =>
+    [
+        new("yi-lightning", "Yi Lightning"),
+        new("yi-medium-200k", "Yi Medium 200K"),
+        new("yi-large", "Yi Large"),
+        new("yi-vision", "Yi Vision", visionSupport: true),
+        new("yi-vision-v2", "Yi Vision V2", visionSupport: true),
+    ];
 }

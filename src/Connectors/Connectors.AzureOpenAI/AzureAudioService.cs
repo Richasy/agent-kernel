@@ -6,6 +6,7 @@ using Richasy.AgentKernel.Connectors.Azure.Core;
 using Richasy.AgentKernel.Connectors.Azure.Models;
 using Richasy.AgentKernel.Models;
 using RichasyKernel;
+using System.Text.Json;
 
 namespace Richasy.AgentKernel.Connectors.Azure;
 
@@ -15,6 +16,7 @@ namespace Richasy.AgentKernel.Connectors.Azure;
 public sealed class AzureAudioService : IAudioService
 {
     private AzureAudioServiceConfig? _config;
+    private AudioModel? _defaultModel;
 
     /// <inheritdoc/>
     public IAudioClient? Client { get; set; }
@@ -38,5 +40,38 @@ public sealed class AzureAudioService : IAudioService
         _config = azureConfig;
         Client?.Dispose();
         Client = new AzureAudioClient(azureConfig);
+    }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<AudioModel> GetPredefinedModels()
+    {
+        if (_defaultModel == null)
+        {
+            var localJson = File.ReadAllText("AzureVoiceList.json");
+            var localVoices = JsonSerializer.Deserialize(localJson, JsonGenContext.Default.ListAzureVoice);
+            var voices = localVoices!.ConvertAll(x =>
+            {
+                var gender = x.Gender switch
+                {
+                    "Male" => VoiceGender.Male,
+                    "Female" => VoiceGender.Female,
+                    _ => VoiceGender.Neutral,
+                };
+                return new AudioVoice(
+                    x.ShortName!,
+                    x.LocaleName!,
+                    gender,
+                    x.Locale!);
+            });
+
+            _defaultModel = new AudioModel
+            {
+                Id = "Azure",
+                DisplayName = "Azure",
+                Voices = voices
+            };
+        }
+
+        return [_defaultModel];
     }
 }

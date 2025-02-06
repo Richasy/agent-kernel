@@ -22,14 +22,4 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IChatService, OpenRouterChatService>("OpenRouter");
         return builder;
     }
-
-    /// <summary>
-    /// 添加 OpenRouter 模型提供程序.
-    /// </summary>
-    /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddOpenRouterChatModelProvider(this IKernelBuilder builder)
-    {
-        builder.Services.AddKeyedSingleton<IChatModelProvider, OpenRouterChatModelProvider>("OpenRouter");
-        return builder;
-    }
 }

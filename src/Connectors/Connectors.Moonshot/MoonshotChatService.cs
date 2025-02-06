@@ -45,4 +45,13 @@ public sealed class MoonshotChatService : IChatService
         Client?.Dispose();
         Client = coreClient.AsChatClient(_config.Model!);
     }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<ChatModel> GetPredefinedModels() =>
+    [
+        new("moonshot-v1-8k", "Moonshot V1 8K"),
+        new("moonshot-v1-128k", "Moonshot V1 128K"),
+        new("moonshot-v1-32k", "Moonshot V1 32K"),
+        new("moonshot-v1-auto", "Moonshot V1 Auto"),
+    ];
 }

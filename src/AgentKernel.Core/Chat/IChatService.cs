@@ -26,4 +26,10 @@ public interface IChatService
     /// </summary>
     /// <param name="config">Service configuration.</param>
     void Initialize(AIServiceConfig config);
+
+    /// <summary>
+    /// Get the predefined models.
+    /// </summary>
+    /// <returns>Model list.</returns>
+    public IReadOnlyList<ChatModel> GetPredefinedModels();
 }

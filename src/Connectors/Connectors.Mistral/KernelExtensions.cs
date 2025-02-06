@@ -22,14 +22,4 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IChatService, MistralChatService>("Mistral");
         return builder;
     }
-
-    /// <summary>
-    /// 添加 Mistral 模型提供程序.
-    /// </summary>
-    /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddMistralChatModelProvider(this IKernelBuilder builder)
-    {
-        builder.Services.AddKeyedSingleton<IChatModelProvider, MistralChatModelProvider>("Mistral");
-        return builder;
-    }
 }

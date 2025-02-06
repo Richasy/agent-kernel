@@ -22,14 +22,4 @@ public static class KernelExtensions
         builder.Services.AddKeyedSingleton<IChatService, SiliconFlowChatService>("SiliconFlow");
         return builder;
     }
-
-    /// <summary>
-    /// 添加硅基流动模型提供程序.
-    /// </summary>
-    /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddSiliconFlowChatModelProvider(this IKernelBuilder builder)
-    {
-        builder.Services.AddKeyedSingleton<IChatModelProvider, SiliconFlowChatModelProvider>("SiliconFlow");
-        return builder;
-    }
 }

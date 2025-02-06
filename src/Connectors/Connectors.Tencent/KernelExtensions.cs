@@ -26,16 +26,6 @@ public static class KernelExtensions
     }
 
     /// <summary>
-    /// 添加腾讯混元模型提供程序.
-    /// </summary>
-    /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddHunyuanChatModelProvider(this IKernelBuilder builder)
-    {
-        builder.Services.AddKeyedSingleton<IChatModelProvider, HunyuanChatModelProvider>("Hunyuan");
-        return builder;
-    }
-
-    /// <summary>
     /// 添加腾讯翻译服务.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
