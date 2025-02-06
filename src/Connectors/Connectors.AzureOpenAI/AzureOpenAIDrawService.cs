@@ -39,4 +39,11 @@ public sealed class AzureOpenAIDrawService : IDrawService
         Client?.Dispose();
         Client = new AzureOpenAIDrawClient(aiConfig);
     }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<DrawModel> GetPredefinedModels() =>
+    [
+        new("dall-e-3", "DALL-E 3", negativeSupport: false, [new(1024,1024),new(1792,1024),new(1024,1792)]),
+        new("dall-e-2", "DALL-E 2", negativeSupport: false, [new(256,256),new(512,512),new(1024,1024)]),
+    ];
 }

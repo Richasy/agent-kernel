@@ -25,4 +25,10 @@ public interface IDrawService
     /// </summary>
     /// <param name="config">Configuration.</param>
     void Initialize(AIServiceConfig config);
+
+    /// <summary>
+    /// Get the predefined models.
+    /// </summary>
+    /// <returns>Model list.</returns>
+    IReadOnlyList<DrawModel> GetPredefinedModels();
 }

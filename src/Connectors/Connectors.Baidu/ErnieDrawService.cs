@@ -39,4 +39,12 @@ public sealed class ErnieDrawService : IDrawService
         Client?.Dispose();
         Client = new ErnieDrawClient(aiConfig);
     }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<DrawModel> GetPredefinedModels() =>
+    [
+        new("basic", "基础版", false, [new(512,512), new(640,360), new(360,640), new(1024,1024), new(720,1280), new(1280,720)]),
+        new("ernievilg", "高级版", false, [new(512,512), new(640,360), new(360,640), new(1024,1024), new(720,1280), new(1280,720), new(2048,2048), new(2560,1440), new(1440,2560), new(3840,2160), new(2160,3840)]),
+        new("extreme", "极速版", false, [new(512,512), new(640,360), new(360,640), new(1024,1024), new(720,1280), new(1280,720)])
+    ];
 }

@@ -39,4 +39,11 @@ public sealed class HunyuanDrawService : IDrawService
         Client?.Dispose();
         Client = new HunyuanDrawClient(aiConfig);
     }
+
+    /// <inheritdoc/>
+    public IReadOnlyList<DrawModel> GetPredefinedModels() =>
+    [
+        new("lite", "轻量版", true, [new(768,768), new(768,1024), new(1024,768), new(1024,1024), new(720,1280), new(1280,720), new(768,1280),new(1280,768),new(1080,1920),new(1920,1080)]),
+        new("standard", "标准版", true, [new(768,768), new(768,1024), new(1024,768), new(1024,1024), new(720,1280), new(1280,720), new(768,1280),new(1280,768)]),
+    ];
 }

@@ -10,6 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
 using Richasy.AgentKernel.Connectors.Baidu.Models;
 using Richasy.AgentKernel.Connectors.Tencent.Models;
+using Richasy.AgentKernel;
 
 namespace Consoles.Draw;
 
@@ -19,9 +20,6 @@ internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHost
 {
     private readonly CancellationTokenSource _stopCts = new();
     private Task? _chatTask;
-    private string? _model;
-    private int _width;
-    private int _height;
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
@@ -37,10 +35,10 @@ internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHost
         }
     }
 
-    private ProviderType AskProvider()
+    private DrawProviderType AskProvider()
     {
-        var providers = Enum.GetValues<ProviderType>();
-        return AnsiConsole.Prompt(new SelectionPrompt<ProviderType>()
+        var providers = Enum.GetValues<DrawProviderType>();
+        return AnsiConsole.Prompt(new SelectionPrompt<DrawProviderType>()
             .Title("Select a provider")
             .PageSize(20)
             .MoreChoicesText("More")
@@ -48,14 +46,42 @@ internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHost
             .AddChoices(providers));
     }
 
-    private string ProviderToName(ProviderType provider)
+    private DrawModel? AskModel(DrawProviderType providerType)
+    {
+        var provider = kernel.GetRequiredService<IDrawService>(providerType.ToString());
+        var models = provider.GetPredefinedModels();
+        return models?.Count > 1
+            ? AnsiConsole.Prompt(new SelectionPrompt<DrawModel>()
+            .Title("Select a model")
+            .PageSize(20)
+            .MoreChoicesText("More")
+            .UseConverter(x => x.DisplayName ?? x.Id)
+            .AddChoices(models))
+            : models?.FirstOrDefault();
+    }
+
+    private static DrawSize? AskSize(DrawModel model)
+    {
+        var sizes = model.SupportSizes;
+        return sizes?.Count > 1
+            ? AnsiConsole.Prompt(new SelectionPrompt<DrawSize>()
+            .Title("Select a size")
+            .PageSize(20)
+            .MoreChoicesText("More")
+            .UseConverter(x => $"{x.Width}x{x.Height}")
+            .AddChoices(sizes))
+            : sizes?.FirstOrDefault();
+    }
+
+    private string ProviderToName(DrawProviderType provider)
     {
         return provider switch
         {
-            ProviderType.AzureOpenAI => "Azure OpenAI",
-            ProviderType.Ernie => "文心一言",
-            ProviderType.Hunyuan => "混元",
-            ProviderType.Spark => "星火",
+            DrawProviderType.OpenAI  => "OpenAI",
+            DrawProviderType.AzureOpenAI => "Azure OpenAI",
+            DrawProviderType.Ernie => "文心一言",
+            DrawProviderType.Hunyuan => "混元",
+            DrawProviderType.Spark => "星火",
             _ => throw new NotSupportedException(),
         };
     }
@@ -67,6 +93,8 @@ internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHost
         {
             AnsiConsole.Clear();
             var provider = AskProvider();
+            var model = AskModel(provider);
+            var size = AskSize(model!);
             var service = DispatchService(provider);
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -86,9 +114,9 @@ internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHost
 
                 var options = new DrawOptions()
                 {
-                    ModelId = _model,
-                    Width = _width,
-                    Height = _height,
+                    ModelId = model!.Id,
+                    Width = size!.Value.Width,
+                    Height = size!.Value.Height,
                 };
 
                 var result = await service.Client!.DrawAsync(input, options, cancellationToken).ConfigureAwait(true);
@@ -117,57 +145,19 @@ internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHost
         Process.Start(new ProcessStartInfo(tempDrawPath) { UseShellExecute = true });
     }
 
-    private IDrawService DispatchService(ProviderType provider)
+    private IDrawService DispatchService(DrawProviderType provider)
     {
         var service = kernel.GetRequiredService<IDrawService>(provider.ToString());
-        switch (provider)
-        {
-            case ProviderType.AzureOpenAI:
-                _model = config.AzureOpenAI!.Model;
-                DispatchSize(config.AzureOpenAI!.Size);
-                break;
-            case ProviderType.Ernie:
-                _model = config.Ernie!.Model;
-                DispatchSize(config.Ernie!.Size);
-                break;
-            case ProviderType.Hunyuan:
-                DispatchSize(config.Hunyuan!.Size);
-                break;
-            case ProviderType.Spark:
-                _model = config.Spark!.Model;
-                DispatchSize(config.Spark!.Size);
-                break;
-            default:
-                break;
-        }
-
         var serviceConfig = provider switch
         {
-            ProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig(),
-            ProviderType.Ernie => config.Ernie.ToAIServiceConfig<ErnieServiceConfig>(),
-            ProviderType.Hunyuan => config.Hunyuan.ToAIServiceConfig<HunyuanDrawServiceConfig>(),
-            ProviderType.Spark => config.Spark.ToAIServiceConfig(),
+            DrawProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig(),
+            DrawProviderType.Ernie => config.Ernie.ToAIServiceConfig<ErnieServiceConfig>(),
+            DrawProviderType.Hunyuan => config.Hunyuan.ToAIServiceConfig<HunyuanDrawServiceConfig>(),
+            DrawProviderType.Spark => config.Spark.ToAIServiceConfig(),
             _ => throw new NotSupportedException(),
         };
 
         service.Initialize(serviceConfig!);
         return service;
-    }
-
-    private void DispatchSize(string? size)
-    {
-        if (string.IsNullOrWhiteSpace(size))
-        {
-            _width = 1024;
-            _height = 1024;
-            return;
-        }
-
-        var parts = size.Split('x');
-        if (parts.Length == 2)
-        {
-            _width = int.Parse(parts[0]);
-            _height = int.Parse(parts[1]);
-        }
     }
 }

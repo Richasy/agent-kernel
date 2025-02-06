@@ -17,6 +17,7 @@
   </ItemGroup>
   
   <ItemGroup>
+  	<ProjectReference Include="..\..\AgentKernel.Definitions\AgentKernel.Definitions.csproj" />
   	<ProjectReference Include="..\..\Connectors\Connectors.AzureOpenAI\Connectors.Azure.csproj" />
   	<ProjectReference Include="..\..\Connectors\Connectors.Baidu\Connectors.Baidu.csproj" />
   	<ProjectReference Include="..\..\Connectors\Connectors.IFlyTek\Connectors.IFlyTek.csproj" />

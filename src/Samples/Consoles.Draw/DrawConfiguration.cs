@@ -43,10 +43,4 @@ internal class KeyConfiguration
     [JsonPropertyName("key")]
     [JsonRequired]
     public required string AccessKey { get; set; }
-
-    [JsonPropertyName("model")]
-    public string? Model { get; set; }
-
-    [JsonPropertyName("size")]
-    public string? Size { get; set; }
 }
