@@ -30,7 +30,7 @@ public static class KernelExtensions
     /// <returns><see cref="IKernelBuilder"/>.</returns>
     public static IKernelBuilder AddAliTranslationService(this IKernelBuilder builder)
     {
-        builder.Services.AddKeyedSingleton<ITranslationService, AliTranslationService>("Ali");
+        builder.Services.AddKeyedSingleton<ITranslateService, AliTranslationService>("Ali");
         return builder;
     }
 }

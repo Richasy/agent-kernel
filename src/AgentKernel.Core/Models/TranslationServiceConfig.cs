@@ -5,10 +5,10 @@
 namespace Richasy.AgentKernel.Models;
 
 /// <summary>
-/// Configuration for a translation service.
+/// Configuration for a translate service.
 /// </summary>
 /// <param name="accessKey"></param>
-public abstract class TranslationServiceConfig(string accessKey)
+public abstract class TranslateServiceConfig(string accessKey)
 {
     /// <summary>
     /// The access key for the translation service.
@@ -16,7 +16,7 @@ public abstract class TranslationServiceConfig(string accessKey)
     public string AccessKey { get; set; } = accessKey;
 
     /// <inheritdoc/>
-    public override bool Equals(object? obj) => obj is TranslationServiceConfig config && AccessKey == config.AccessKey;
+    public override bool Equals(object? obj) => obj is TranslateServiceConfig config && AccessKey == config.AccessKey;
 
     /// <inheritdoc/>
     public override int GetHashCode() => HashCode.Combine(AccessKey);

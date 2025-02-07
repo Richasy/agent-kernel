@@ -8,7 +8,7 @@ namespace Richasy.AgentKernel.Connectors.Azure.Models;
 /// <summary>
 /// Azure translation service configuration.
 /// </summary>
-public sealed class AzureTranslationServiceConfig(string key, string? region) : TranslationServiceConfig(key)
+public sealed class AzureTranslationServiceConfig(string key, string? region) : TranslateServiceConfig(key)
 {
     /// <summary>
     /// The region of the translation service.

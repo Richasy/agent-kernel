@@ -13,18 +13,18 @@ namespace Richasy.AgentKernel.Connectors.Baidu;
 /// <summary>
 /// Baidu translation service.
 /// </summary>
-public sealed class BaiduTranslationService : ITranslationService
+public sealed class BaiduTranslationService : ITranslateService
 {
     private BaiduTranslationServiceConfig? _config;
 
     /// <inheritdoc/>
-    public TranslationServiceConfig? Config => _config;
+    public TranslateServiceConfig? Config => _config;
 
     /// <inheritdoc/>
     public ITranslateClient? Client { get; set; }
 
     /// <inheritdoc/>
-    public void Initialize(TranslationServiceConfig? config)
+    public void Initialize(TranslateServiceConfig? config)
     {
         if (config is not BaiduTranslationServiceConfig baiduConfig)
         {

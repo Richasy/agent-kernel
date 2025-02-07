@@ -14,7 +14,11 @@
   	<Title>Agent Kernel - Definitions</Title>
   	<Description>The core of the AI library, which contains constants definitions and config definitions.</Description>
   </PropertyGroup>
-	
+
+  <ItemGroup>
+  	<PackageReference Include="RichasyKernel.Abstractions" />
+  </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\AgentKernel.Core\AgentKernel.Core.csproj" />
   </ItemGroup>

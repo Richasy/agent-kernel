@@ -13,18 +13,18 @@ namespace Richasy.AgentKernel.Connectors.Tencent;
 /// <summary>
 /// Tencent Translation Service.
 /// </summary>
-public sealed class TencentTranslationService : ITranslationService
+public sealed class TencentTranslationService : ITranslateService
 {
     private TencentTranslationServiceConfig? _config;
 
     /// <inheritdoc/>
-    public TranslationServiceConfig? Config => _config;
+    public TranslateServiceConfig? Config => _config;
 
     /// <inheritdoc/>
     public ITranslateClient? Client { get; set; }
 
     /// <inheritdoc/>
-    public void Initialize(TranslationServiceConfig? config)
+    public void Initialize(TranslateServiceConfig? config)
     {
         if (config is not TencentTranslationServiceConfig tencentConfig)
         {

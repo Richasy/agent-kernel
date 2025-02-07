@@ -8,6 +8,6 @@ namespace Richasy.AgentKernel.Connectors.Google.Models;
 /// <summary>
 /// Configuration for Google translation service.
 /// </summary>
-public sealed class GoogleTranslationServiceConfig(string apiKey) : TranslationServiceConfig(apiKey)
+public sealed class GoogleTranslationServiceConfig(string apiKey) : TranslateServiceConfig(apiKey)
 {
 }

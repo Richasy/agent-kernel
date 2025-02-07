@@ -13,18 +13,18 @@ namespace Richasy.AgentKernel.Connectors.Youdao;
 /// <summary>
 /// Youdao translation service.
 /// </summary>
-public sealed class YoudaoTranslationService : ITranslationService
+public sealed class YoudaoTranslationService : ITranslateService
 {
     private YoudaoTranslationServiceConfig? _config;
 
     /// <inheritdoc/>
-    public TranslationServiceConfig? Config => _config;
+    public TranslateServiceConfig? Config => _config;
 
     /// <inheritdoc/>
     public ITranslateClient? Client { get; set; }
 
     /// <inheritdoc/>
-    public void Initialize(TranslationServiceConfig? config)
+    public void Initialize(TranslateServiceConfig? config)
     {
         if (config is not YoudaoTranslationServiceConfig youdaoConfig)
         {

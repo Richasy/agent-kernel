@@ -30,7 +30,7 @@ public static class KernelExtensions
     /// <returns><see cref="IKernelBuilder"/>.</returns>
     public static IKernelBuilder AddGoogleTranslationService(this IKernelBuilder builder)
     {
-        builder.Services.AddKeyedSingleton<ITranslationService, GoogleTranslationService>("Google");
+        builder.Services.AddKeyedSingleton<ITranslateService, GoogleTranslationService>("Google");
         return builder;
     }
 }

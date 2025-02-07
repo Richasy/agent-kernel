@@ -19,7 +19,7 @@ public static class KernelExtensions
     /// <returns><see cref="IKernelBuilder"/>.</returns>
     public static IKernelBuilder AddYoudaoTranslationService(this IKernelBuilder builder)
     {
-        builder.Services.AddKeyedSingleton<ITranslationService, YoudaoTranslationService>("Youdao");
+        builder.Services.AddKeyedSingleton<ITranslateService, YoudaoTranslationService>("Youdao");
         return builder;
     }
 }

@@ -8,18 +8,17 @@ using RichasyKernel;
 using Spectre.Console;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
-using Richasy.AgentKernel.Connectors.Baidu.Models;
-using Richasy.AgentKernel.Connectors.Tencent.Models;
 using Richasy.AgentKernel;
 
 namespace Consoles.Draw;
 
 #pragma warning disable CA1001 // 具有可释放字段的类型应该是可释放的
-internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHostApplicationLifetime lifetime) : IHostedService
+internal sealed class DrawService(Kernel kernel, IDrawConfigManager configManager, IHostApplicationLifetime lifetime) : IHostedService
 #pragma warning restore CA1001 // 具有可释放字段的类型应该是可释放的
 {
     private readonly CancellationTokenSource _stopCts = new();
     private Task? _chatTask;
+    private DrawModel? _model;
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
@@ -93,9 +92,9 @@ internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHost
         {
             AnsiConsole.Clear();
             var provider = AskProvider();
-            var model = AskModel(provider);
-            var size = AskSize(model!);
-            var service = DispatchService(provider);
+            _model = AskModel(provider);
+            var size = AskSize(_model!);
+            var service = await DispatchServiceAsync(provider).ConfigureAwait(true);
             while (!cancellationToken.IsCancellationRequested)
             {
                 var input = AnsiConsole.Prompt(
@@ -114,7 +113,7 @@ internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHost
 
                 var options = new DrawOptions()
                 {
-                    ModelId = model!.Id,
+                    ModelId = _model!.Id,
                     Width = size!.Value.Width,
                     Height = size!.Value.Height,
                 };
@@ -145,19 +144,11 @@ internal sealed class DrawService(Kernel kernel, DrawConfiguration config, IHost
         Process.Start(new ProcessStartInfo(tempDrawPath) { UseShellExecute = true });
     }
 
-    private IDrawService DispatchService(DrawProviderType provider)
+    private async Task<IDrawService> DispatchServiceAsync(DrawProviderType provider)
     {
+        var config = await configManager.GetServiceConfigAsync(provider, _model!).ConfigureAwait(true);
         var service = kernel.GetRequiredService<IDrawService>(provider.ToString());
-        var serviceConfig = provider switch
-        {
-            DrawProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig(),
-            DrawProviderType.Ernie => config.Ernie.ToAIServiceConfig<ErnieServiceConfig>(),
-            DrawProviderType.Hunyuan => config.Hunyuan.ToAIServiceConfig<HunyuanDrawServiceConfig>(),
-            DrawProviderType.Spark => config.Spark.ToAIServiceConfig(),
-            _ => throw new NotSupportedException(),
-        };
-
-        service.Initialize(serviceConfig!);
+        service.Initialize(config!);
         return service;
     }
 }

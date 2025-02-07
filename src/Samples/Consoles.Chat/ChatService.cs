@@ -3,26 +3,10 @@
 
 #define USE_SYSTEM_PROMPT
 
-using Connectors.DeepSeek.Models;
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Hosting;
 using Richasy.AgentKernel;
 using Richasy.AgentKernel.Chat;
-using Richasy.AgentKernel.Connectors.Ali.Models;
-using Richasy.AgentKernel.Connectors.Anthropic.Models;
-using Richasy.AgentKernel.Connectors.Azure.Models;
-using Richasy.AgentKernel.Connectors.Google.Models;
-using Richasy.AgentKernel.Connectors.Groq.Models;
-using Richasy.AgentKernel.Connectors.IFlyTek.Models;
-using Richasy.AgentKernel.Connectors.LingYi.Models;
-using Richasy.AgentKernel.Connectors.Moonshot.Models;
-using Richasy.AgentKernel.Connectors.OpenRouter.Models;
-using Richasy.AgentKernel.Connectors.SiliconFlow.Models;
-using Richasy.AgentKernel.Connectors.Tencent.Models;
-using Richasy.AgentKernel.Connectors.TogetherAI.Models;
-using Richasy.AgentKernel.Connectors.Volcano.Models;
-using Richasy.AgentKernel.Connectors.XAI.Models;
-using Richasy.AgentKernel.Connectors.ZhiPu.Models;
 using Richasy.AgentKernel.Models;
 using RichasyKernel;
 using Spectre.Console;
@@ -34,10 +18,11 @@ namespace Consoles.Chat;
 
 #pragma warning disable CA1001 // 具有可释放字段的类型应该是可释放的
 #pragma warning disable VSTHRD003 // Avoid awaiting foreign Tasks
-internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHostApplicationLifetime lifetime) : IHostedService
+internal sealed class ChatService(Kernel kernel, IChatConfigManager configManager, IHostApplicationLifetime lifetime) : IHostedService
 {
     private readonly CancellationTokenSource _stopCts = new();
     private Task? _chatTask;
+    private ChatModel? _model;
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
@@ -64,10 +49,15 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
             .AddChoices(providers));
     }
 
-    private ChatModel? AskModel(ChatProviderType providerType)
+    private async Task<ChatModel?> AskModelAsync(ChatProviderType providerType)
     {
-        var provider = kernel.GetRequiredService<IChatService>(providerType.ToString());
-        var models = provider.GetPredefinedModels();
+        var config = await configManager.GetChatConfigAsync(providerType);
+        var models = kernel.GetRequiredService<IChatService>(providerType.ToString()).GetPredefinedModels().ToList();
+        if (config?.IsCustomModelNotEmpty() ?? false)
+        {
+            models.AddRange(config.CustomModels!);
+        }
+
         return models?.Count > 0
             ? AnsiConsole.Prompt(new SelectionPrompt<ChatModel>()
             .Title("Select a model")
@@ -115,8 +105,8 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
         {
             AnsiConsole.Clear();
             var provider = AskProvider();
-            var model = AskModel(provider);
-            var service = DispatchService(provider, model);
+            _model = await AskModelAsync(provider);
+            var service = await DispatchServiceAsync(provider);
             var client = new ChatClientBuilder(service.Client!)
                 .UseFunctionInvocation(configure: client => client.MaximumIterationsPerRequest = 2)
                 .Build();
@@ -164,7 +154,7 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
                     AdditionalProperties = [],
                 };
 
-                if (model?.ToolSupport ?? false)
+                if (_model?.ToolSupport ?? false)
                 {
                     options.Tools = [
                         AIFunctionFactory.Create(
@@ -210,40 +200,11 @@ internal sealed class ChatService(Kernel kernel, ChatConfiguration config, IHost
         }
     }
 
-    private IChatService DispatchService(ChatProviderType provider, ChatModel? model)
+    private async Task<IChatService> DispatchServiceAsync(ChatProviderType provider)
     {
+        var config = await configManager.GetServiceConfigAsync(provider, _model!);
         var service = kernel.GetRequiredService<IChatService>(provider.ToString());
-        var serviceConfig = provider switch
-        {
-            ChatProviderType.OpenAI => config.OpenAI.ToAIServiceConfig(),
-            ChatProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig<AzureOpenAIServiceConfig>(),
-            ChatProviderType.AzureAI => config.AzureAI.ToAIServiceConfig<AzureOpenAIServiceConfig>(),
-            ChatProviderType.XAI => config.XAI.ToAIServiceConfig<XAIServiceConfig>(),
-            ChatProviderType.ZhiPu => config.ZhiPu.ToAIServiceConfig<ZhiPuServiceConfig>(),
-            ChatProviderType.LingYi => config.LingYi.ToAIServiceConfig<LingYiServiceConfig>(),
-            ChatProviderType.Anthropic => config.Anthropic.ToAIServiceConfig<AnthropicServiceConfig>(),
-            ChatProviderType.Moonshot => config.Moonshot.ToAIServiceConfig<MoonshotServiceConfig>(),
-            ChatProviderType.Gemini => config.Gemini.ToAIServiceConfig<GeminiServiceConfig>(),
-            ChatProviderType.DeepSeek => config.DeepSeek.ToAIServiceConfig<DeepSeekServiceConfig>(),
-            ChatProviderType.Qwen => config.Qwen.ToAIServiceConfig<QwenServiceConfig>(),
-            ChatProviderType.Ernie => config.Ernie.ToAIServiceConfig(),
-            ChatProviderType.Hunyuan => config.Hunyuan.ToAIServiceConfig<HunyuanChatServiceConfig>(),
-            ChatProviderType.Spark => config.Spark.ToAIServiceConfig<SparkChatServiceConfig>(),
-            ChatProviderType.Doubao => config.Doubao.ToAIServiceConfig<DoubaoServiceConfig>(),
-            ChatProviderType.SiliconFlow => config.SiliconFlow.ToAIServiceConfig<SiliconFlowServiceConfig>(),
-            ChatProviderType.OpenRouter => config.OpenRouter.ToAIServiceConfig<OpenRouterServiceConfig>(),
-            ChatProviderType.TogetherAI => config.TogetherAI.ToAIServiceConfig<TogetherAIServiceConfig>(),
-            ChatProviderType.Groq => config.Groq.ToAIServiceConfig<GroqServiceConfig>(),
-            ChatProviderType.Mistral => config.Mistral.ToAIServiceConfig(),
-            ChatProviderType.Ollama => config.Ollama.ToAIServiceConfig(),
-            _ => throw new NotSupportedException(),
-        } ?? throw new InvalidOperationException("The configuration is not valid.");
-        if (model != null)
-        {
-            serviceConfig.Model = model.Id;
-        }
-
-        service.Initialize(serviceConfig);
+        service.Initialize(config!);
         return service;
     }
 

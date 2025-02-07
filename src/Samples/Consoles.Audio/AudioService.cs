@@ -13,13 +13,12 @@ using System.Diagnostics.CodeAnalysis;
 namespace Consoles.Audio;
 
 #pragma warning disable CA1001 // 具有可释放字段的类型应该是可释放的
-internal sealed class AudioService(Kernel kernel, AudioConfiguration config, IHostApplicationLifetime lifetime) : IHostedService
+internal sealed class AudioService(Kernel kernel, IAudioConfigManager configManager, IHostApplicationLifetime lifetime) : IHostedService
 #pragma warning restore CA1001 // 具有可释放字段的类型应该是可释放的
 {
     private readonly CancellationTokenSource _stopCts = new();
     private Task? _chatTask;
-    private string? _languageCode;
-    private string? _model;
+    private AudioModel? _model;
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
@@ -50,10 +49,16 @@ internal sealed class AudioService(Kernel kernel, AudioConfiguration config, IHo
             .AddChoices(providers));
     }
 
-    private AudioModel? AskModel(AudioProviderType providerType)
+    private async Task<AudioModel?> AskModelAsync(AudioProviderType providerType)
     {
         var provider = kernel.GetRequiredService<IAudioService>(providerType.ToString());
-        var models = provider.GetPredefinedModels();
+        var models = provider.GetPredefinedModels().ToList();
+        var config = await configManager.GetAudioConfigAsync(providerType).ConfigureAwait(true);
+        if (config?.IsCustomModelNotEmpty() == true)
+        {
+            models.AddRange(config.CustomModels!);
+        }
+
         return models?.Count > 1
             ? AnsiConsole.Prompt(new SelectionPrompt<AudioModel>()
             .Title("Select a model")
@@ -64,9 +69,11 @@ internal sealed class AudioService(Kernel kernel, AudioConfiguration config, IHo
             : models?.FirstOrDefault();
     }
 
+#pragma warning disable CA1822 // Mark members as static
     private AudioVoice? AskVoice(AudioModel model)
+#pragma warning restore CA1822 // Mark members as static
     {
-        var voices = model.Voices.Where(p=>p.Languages.Contains(_languageCode ?? "zh-CN"));
+        var voices = model.Voices.Where(p => p.Languages.Contains("zh") || p.Languages.Contains("zh-CN"));
         return voices?.Count() > 1
             ? AnsiConsole.Prompt(new SelectionPrompt<AudioVoice>()
             .Title("Select a voice")
@@ -95,9 +102,9 @@ internal sealed class AudioService(Kernel kernel, AudioConfiguration config, IHo
         {
             AnsiConsole.Clear();
             var provider = AskProvider();
-            var model = AskModel(provider);
-            var service = DispatchService(provider);
-            var voice = AskVoice(model!);
+            _model = await AskModelAsync(provider).ConfigureAwait(true);
+            var service = await DispatchServiceAsync(provider).ConfigureAwait(true);
+            var voice = AskVoice(_model!);
             while (!cancellationToken.IsCancellationRequested)
             {
                 var input = AnsiConsole.Prompt(
@@ -117,15 +124,11 @@ internal sealed class AudioService(Kernel kernel, AudioConfiguration config, IHo
                 var options = new AudioOptions()
                 {
                     Speed = 1.0,
-                    LanguageCode = _languageCode,
+                    LanguageCode = "zh-CN",
                     VoiceId = voice!.Id,
                 };
 
-                if (!string.IsNullOrWhiteSpace(_model))
-                {
-                    options.ModelId = _model;
-                }
-
+                options.ModelId = _model!.Id;
                 var result = await service.Client!.TextToSpeechAsync(input, options, cancellationToken).ConfigureAwait(true);
                 await ReadResultAsync(result).ConfigureAwait(true);
             }
@@ -145,34 +148,11 @@ internal sealed class AudioService(Kernel kernel, AudioConfiguration config, IHo
         Process.Start(new ProcessStartInfo(tempAudioPath) { UseShellExecute = true });
     }
 
-    private IAudioService DispatchService(AudioProviderType provider)
+    private async Task<IAudioService> DispatchServiceAsync(AudioProviderType provider)
     {
+        var config = await configManager.GetServiceConfigAsync(provider, _model!).ConfigureAwait(true);
         var service = kernel.GetRequiredService<IAudioService>(provider.ToString());
-        switch (provider)
-        {
-            case AudioProviderType.Azure:
-                _languageCode = config.Azure!.Language;
-                break;
-            case AudioProviderType.Edge:
-                _languageCode = config.Edge!.Language;
-                break;
-            case AudioProviderType.AzureOpenAI:
-                _languageCode = config.AzureOpenAI!.Language;
-                _model = config.AzureOpenAI.Model;
-                break;
-            default:
-                break;
-        }
-
-        var serviceConfig = provider switch
-        {
-            AudioProviderType.Azure => config.Azure.ToAIServiceConfig(),
-            AudioProviderType.AzureOpenAI => config.AzureOpenAI.ToAIServiceConfig(),
-            AudioProviderType.Edge => null,
-            _ => throw new NotSupportedException(),
-        };
-
-        service.Initialize(serviceConfig);
+        service.Initialize(config);
         return service;
     }
 }

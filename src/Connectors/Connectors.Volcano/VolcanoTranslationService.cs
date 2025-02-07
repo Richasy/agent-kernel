@@ -13,18 +13,18 @@ namespace Richasy.AgentKernel.Connectors.Volcano;
 /// <summary>
 /// Translation service that uses the Volcano translation service.
 /// </summary>
-public sealed class VolcanoTranslationService : ITranslationService
+public sealed class VolcanoTranslationService : ITranslateService
 {
     private VolcanoTranslationServiceConfig? _config;
 
     /// <inheritdoc/>
-    public TranslationServiceConfig? Config => _config;
+    public TranslateServiceConfig? Config => _config;
 
     /// <inheritdoc/>
     public ITranslateClient? Client { get; set; }
 
     /// <inheritdoc/>
-    public void Initialize(TranslationServiceConfig? config)
+    public void Initialize(TranslateServiceConfig? config)
     {
         if (config is not VolcanoTranslationServiceConfig volcanoConfig)
         {

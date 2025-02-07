@@ -9,34 +9,34 @@ namespace Consoles.Translation;
 
 internal static class ConfigExtensions
 {
-    public static TranslationServiceConfig ToTranslationServiceConfig(this AzureConfiguration? config)
+    public static TranslateServiceConfig ToTranslationServiceConfig(this AzureConfiguration? config)
     {
         return config is null || string.IsNullOrWhiteSpace(config.AccessKey)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
             : new AzureTranslationServiceConfig(config.AccessKey, config.Region ?? string.Empty);
     }
 
-    public static TranslationServiceConfig? ToTranslationServiceConfig<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TConfig>(this KeyConfiguration? config)
-        where TConfig : TranslationServiceConfig
+    public static TranslateServiceConfig? ToTranslationServiceConfig<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TConfig>(this KeyConfiguration? config)
+        where TConfig : TranslateServiceConfig
     {
         return config is null || string.IsNullOrWhiteSpace(config.AccessKey)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
-            : Activator.CreateInstance(typeof(TConfig), config.AccessKey) as TranslationServiceConfig;
+            : Activator.CreateInstance(typeof(TConfig), config.AccessKey) as TranslateServiceConfig;
     }
 
-    public static TranslationServiceConfig? ToTranslationServiceConfig<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TConfig>(this SecretConfiguration? config)
-        where TConfig : TranslationServiceConfig
+    public static TranslateServiceConfig? ToTranslationServiceConfig<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TConfig>(this SecretConfiguration? config)
+        where TConfig : TranslateServiceConfig
     {
         return config is null || string.IsNullOrWhiteSpace(config.AccessKey) || string.IsNullOrWhiteSpace(config.Secret)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
-            : Activator.CreateInstance(typeof(TConfig), config.AccessKey, config.Secret) as TranslationServiceConfig;
+            : Activator.CreateInstance(typeof(TConfig), config.AccessKey, config.Secret) as TranslateServiceConfig;
     }
 
-    public static TranslationServiceConfig? ToTranslationServiceConfig<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TConfig>(this IdConfiguration? config)
-        where TConfig : TranslationServiceConfig
+    public static TranslateServiceConfig? ToTranslationServiceConfig<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TConfig>(this IdConfiguration? config)
+        where TConfig : TranslateServiceConfig
     {
         return config is null || string.IsNullOrWhiteSpace(config.AccessKey) || string.IsNullOrWhiteSpace(config.SecretId)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
-            : Activator.CreateInstance(typeof(TConfig), config.SecretId, config.AccessKey) as TranslationServiceConfig;
+            : Activator.CreateInstance(typeof(TConfig), config.SecretId, config.AccessKey) as TranslateServiceConfig;
     }
 }

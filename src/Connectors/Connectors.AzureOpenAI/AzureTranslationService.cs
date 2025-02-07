@@ -13,18 +13,18 @@ namespace Richasy.AgentKernel.Connectors.Azure;
 /// <summary>
 /// Azure 翻译服务.
 /// </summary>
-public sealed class AzureTranslationService : ITranslationService
+public sealed class AzureTranslationService : ITranslateService
 {
     private AzureTranslationServiceConfig? _config;
 
     /// <inheritdoc/>
-    public TranslationServiceConfig? Config => _config;
+    public TranslateServiceConfig? Config => _config;
 
     /// <inheritdoc/>
     public ITranslateClient? Client { get; set; }
 
     /// <inheritdoc/>
-    public void Initialize(TranslationServiceConfig? config)
+    public void Initialize(TranslateServiceConfig? config)
     {
         if (config is not AzureTranslationServiceConfig azureConfig)
         {

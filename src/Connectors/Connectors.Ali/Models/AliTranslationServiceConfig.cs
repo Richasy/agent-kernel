@@ -8,7 +8,7 @@ namespace Richasy.AgentKernel.Connectors.Ali.Models;
 /// <summary>
 /// Configuration of the Ali translation service.
 /// </summary>
-public sealed class AliTranslationServiceConfig(string key, string secret) : TranslationServiceConfig(key)
+public sealed class AliTranslationServiceConfig(string key, string secret) : TranslateServiceConfig(key)
 {
     /// <summary>
     /// The secret of the translation service.

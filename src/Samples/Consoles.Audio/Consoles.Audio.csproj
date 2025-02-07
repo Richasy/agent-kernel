@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\AgentKernel.Definitions\AgentKernel.Definitions.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.AzureOpenAI\Connectors.Azure.csproj" />
+    <ProjectReference Include="..\..\Connectors\Connectors.OpenAI\Connectors.OpenAI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

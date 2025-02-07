@@ -8,7 +8,7 @@ namespace Richasy.AgentKernel.Translation;
 /// <summary>
 /// Provides methods to translate text.
 /// </summary>
-public interface ITranslationService
+public interface ITranslateService
 {
     /// <summary>
     /// Gets the client that is used to translate content.
@@ -18,13 +18,13 @@ public interface ITranslationService
     /// <summary>
     /// Gets the configuration of the translation service.
     /// </summary>
-    TranslationServiceConfig? Config { get; }
+    TranslateServiceConfig? Config { get; }
 
     /// <summary>
     /// Initialize the translation service.
     /// </summary>
     /// <param name="config">Configuration.</param>
-    void Initialize(TranslationServiceConfig? config);
+    void Initialize(TranslateServiceConfig? config);
 
     /// <summary>
     /// Gets the supported languages for translation.

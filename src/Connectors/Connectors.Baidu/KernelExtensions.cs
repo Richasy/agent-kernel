@@ -31,7 +31,7 @@ public static class KernelExtensions
     /// <returns><see cref="IKernelBuilder"/>.</returns>
     public static IKernelBuilder AddBaiduTranslationService(this IKernelBuilder builder)
     {
-        builder.Services.AddKeyedSingleton<ITranslationService, BaiduTranslationService>("Baidu");
+        builder.Services.AddKeyedSingleton<ITranslateService, BaiduTranslationService>("Baidu");
         return builder;
     }
 

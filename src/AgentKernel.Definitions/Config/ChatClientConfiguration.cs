@@ -30,7 +30,7 @@ public sealed class ChatClientConfiguration
     /// </summary>
     [JsonPropertyName("azure_ai")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public AzureOpenAIChatConfig? AzureAI { get; set; }
+    public AzureAIChatConfig? AzureAI { get; set; }
 
     /// <summary>
     /// 智谱客户端配置.
@@ -63,7 +63,7 @@ public sealed class ChatClientConfiguration
     /// <summary>
     /// DeepSeek 客户端配置.
     /// </summary>
-    [JsonPropertyName("deep_seek")]
+    [JsonPropertyName("deepseek")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public DeepSeekChatConfig? DeepSeek { get; set; }
 
@@ -142,12 +142,12 @@ public sealed class ChatClientConfiguration
     /// </summary>
     [JsonPropertyName("hunyuan")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public HunyuanChatConfig? HunYuan { get; set; }
+    public HunyuanChatConfig? Hunyuan { get; set; }
 
     /// <summary>
     /// 硅动客户端配置.
     /// </summary>
-    [JsonPropertyName("silicon_flow")]
+    [JsonPropertyName("siliconflow")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public SiliconFlowChatConfig? SiliconFlow { get; set; }
 
@@ -156,7 +156,7 @@ public sealed class ChatClientConfiguration
     /// </summary>
     [JsonPropertyName("doubao")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public DouBaoChatConfig? DouBao { get; set; }
+    public DoubaoChatConfig? Doubao { get; set; }
 
     /// <summary>
     /// XAI 客户端配置.
@@ -193,6 +193,19 @@ public class AzureOpenAIChatConfig : ChatEndpointConfigBase
 }
 
 /// <summary>
+/// Azure AI 客户端配置.
+/// </summary>
+public class AzureAIChatConfig : ChatEndpointConfigBase
+{
+    /// <inheritdoc/>
+    public override bool IsValid()
+    {
+        return base.IsValid()
+            && !string.IsNullOrEmpty(Endpoint);
+    }
+}
+
+/// <summary>
 /// 千帆客户端配置.
 /// </summary>
 public class ErnieChatConfig : ChatClientConfigBase
@@ -221,7 +234,7 @@ public sealed class HunyuanChatConfig : ChatClientConfigBase;
 /// <summary>
 /// 豆包大模型配置.
 /// </summary>
-public sealed class DouBaoChatConfig : ChatClientConfigBase
+public sealed class DoubaoChatConfig : ChatClientConfigBase
 {
     /// <inheritdoc/>
     public override bool IsValid()
@@ -271,11 +284,13 @@ public sealed class MistralChatConfig : ChatClientConfigBase
     /// <summary>
     /// Codestral 密钥.
     /// </summary>
+    [JsonPropertyName("codestral_key")]
     public string? CodestralKey { get; set; }
 
     /// <summary>
     /// 是否使用 Codestral.
     /// </summary>
+    [JsonPropertyName("use_codestral")]
     public bool UseCodestral { get; set; }
 }
 

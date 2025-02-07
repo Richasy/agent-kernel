@@ -11,16 +11,16 @@ namespace Richasy.AgentKernel.Connectors.Google;
 /// <summary>
 /// Google translate service.
 /// </summary>
-public sealed class GoogleTranslationService : ITranslationService
+public sealed class GoogleTranslationService : ITranslateService
 {
     /// <inheritdoc/>
-    public TranslationServiceConfig? Config => null;
+    public TranslateServiceConfig? Config => null;
 
     /// <inheritdoc/>
     public ITranslateClient? Client { get; set; }
 
     /// <inheritdoc/>
-    public void Initialize(TranslationServiceConfig? config)
+    public void Initialize(TranslateServiceConfig? config)
     {
         if (Client is not null)
         {

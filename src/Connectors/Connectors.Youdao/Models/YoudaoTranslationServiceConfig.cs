@@ -8,7 +8,7 @@ namespace Richasy.AgentKernel.Connectors.Youdao.Models;
 /// <summary>
 /// Youdao translation service configuration.
 /// </summary>
-public sealed class YoudaoTranslationServiceConfig(string appId, string secret) : TranslationServiceConfig(secret)
+public sealed class YoudaoTranslationServiceConfig(string appId, string secret) : TranslateServiceConfig(secret)
 {
     /// <summary>
     /// The app id of the translation service.

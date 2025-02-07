@@ -13,18 +13,18 @@ namespace Richasy.AgentKernel.Connectors.Ali;
 /// <summary>
 /// Ali Translation Service.
 /// </summary>
-public sealed class AliTranslationService : ITranslationService
+public sealed class AliTranslationService : ITranslateService
 {
     private AliTranslationServiceConfig? _config;
 
     /// <inheritdoc/>
-    public TranslationServiceConfig? Config => _config;
+    public TranslateServiceConfig? Config => _config;
 
     /// <inheritdoc/>
     public ITranslateClient? Client { get; set; }
 
     /// <inheritdoc/>
-    public void Initialize(TranslationServiceConfig? config)
+    public void Initialize(TranslateServiceConfig? config)
     {
         if (config is not AliTranslationServiceConfig aliConfig)
         {
