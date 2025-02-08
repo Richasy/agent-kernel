@@ -73,7 +73,7 @@ public sealed class ErnieDrawConfig : DrawClientConfigBase
     /// 密钥.
     /// </summary>
     [JsonPropertyName("secret")]
-    public required string Secret { get; set; }
+    public string? Secret { get; set; }
 
     /// <inheritdoc/>
     public override bool IsValid()
@@ -89,7 +89,7 @@ public sealed class HunyuanDrawConfig : DrawClientConfigBase
     /// 密钥.
     /// </summary>
     [JsonPropertyName("secret")]
-    public required string Secret { get; set; }
+    public string? Secret { get; set; }
 
     /// <inheritdoc/>
     public override bool IsValid()
@@ -105,13 +105,13 @@ public sealed class SparkDrawConfig : DrawClientConfigBase
     /// 密钥.
     /// </summary>
     [JsonPropertyName("secret")]
-    public required string Secret { get; set; }
+    public string? Secret { get; set; }
 
     /// <summary>
     /// 应用标识.
     /// </summary>
     [JsonPropertyName("app_id")]
-    public required string AppId { get; set; }
+    public string? AppId { get; set; }
 
     /// <inheritdoc/>
     public override bool IsValid()

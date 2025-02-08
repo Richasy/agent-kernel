@@ -46,6 +46,6 @@ internal static class ConfigExtensions
     {
         return config is null || string.IsNullOrWhiteSpace(config.Key) || string.IsNullOrEmpty(config.AppId)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
-            : new SparkDrawServiceConfig(config.Key, config.Secret, config.AppId, string.Empty);
+            : new SparkDrawServiceConfig(config.Key, config.Secret!, config.AppId, string.Empty);
     }
 }

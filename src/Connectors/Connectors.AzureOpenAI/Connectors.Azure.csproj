@@ -28,14 +28,4 @@
 	<ProjectReference Include="..\..\Libs\AgentKernel.Extensions.AI.AzureAIInference\AgentKernel.Extensions.AI.AzureAIInference.csproj" />
 	<ProjectReference Include="..\..\Libs\AgentKernel.Extensions.AI.OpenAI\AgentKernel.Extensions.AI.OpenAI.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Update="AzureVoiceList.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="EdgeVoiceList.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

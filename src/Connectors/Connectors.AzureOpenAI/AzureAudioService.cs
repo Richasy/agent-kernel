@@ -47,7 +47,7 @@ public sealed class AzureAudioService : IAudioService
     {
         if (_defaultModel == null)
         {
-            var localJson = File.ReadAllText("AzureVoiceList.json");
+            var localJson = VoiceConstants.AzureVoices;
             var localVoices = JsonSerializer.Deserialize(localJson, JsonGenContext.Default.ListAzureVoice);
             var voices = localVoices!.ConvertAll(x =>
             {

@@ -37,7 +37,7 @@ public sealed class EdgeAudioService : IAudioService
     {
         if (_defaultModel == null)
         {
-            var localJson = File.ReadAllText("EdgeVoiceList.json");
+            var localJson = VoiceConstants.EdgeVoices;
             var localVoices = JsonSerializer.Deserialize(localJson, JsonGenContext.Default.ListEdgeVoice);
             var voices = localVoices!.ConvertAll(x =>
             {
