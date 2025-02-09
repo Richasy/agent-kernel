@@ -166,24 +166,21 @@ public sealed class ZhiPuChatClient : IChatClient
 
     private ZhiPuChatRequest ToZhiPuChatRequest(IList<ChatMessage> chatMessages, ChatOptions? options, bool stream)
     {
-        var isVisionModel = false;
-        if (options is ZhiPuChatOptions zhipuOptions)
-        {
-            isVisionModel = zhipuOptions.VisionSupport;
-        }
+        var model = options?.ModelId ?? Metadata.ModelId ?? string.Empty;
+        var isVisionModel = model.Contains("4v", StringComparison.OrdinalIgnoreCase);
 
         ZhiPuChatRequest request = isVisionModel
             ? new ZhiPuContentChatRequest()
             {
                 Messages = chatMessages.Select(x => ToZhiPuChatRequestMessage(x, useContentMessage: true)).OfType<ZhiPuChatRequestContentMessage>().ToList() ?? [],
-                Model = options?.ModelId ?? Metadata.ModelId ?? string.Empty,
+                Model = model,
                 Stream = stream,
             }
             : new ZhiPuBasicChatRequest()
             {
                 ResponseFormat = options?.ResponseFormat is ChatResponseFormatJson ? ZhiPuResponseFormat.JsonFormat : default,
                 Messages = chatMessages.Select(x => ToZhiPuChatRequestMessage(x, useContentMessage: false)).ToList() ?? [],
-                Model = options?.ModelId ?? Metadata.ModelId ?? string.Empty,
+                Model = model,
                 Stream = stream,
                 Tools = options?.Tools is { Count: > 0 } tools ? [.. tools.Select(ToZhiPuTool)] : null,
             };

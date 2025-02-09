@@ -292,6 +292,13 @@ public sealed class MistralChatConfig : ChatClientConfigBase
     /// </summary>
     [JsonPropertyName("use_codestral")]
     public bool UseCodestral { get; set; }
+
+    /// <inheritdoc/>
+    public override bool IsValid()
+    {
+        return UseCodestral ? !string.IsNullOrEmpty(CodestralKey)
+            : base.IsValid();
+    }
 }
 
 /// <summary>

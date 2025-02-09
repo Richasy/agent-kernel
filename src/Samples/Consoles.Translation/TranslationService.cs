@@ -4,7 +4,6 @@
 using Microsoft.Extensions.Hosting;
 using Richasy.AgentKernel.Connectors.Ali.Models;
 using Richasy.AgentKernel.Connectors.Baidu.Models;
-using Richasy.AgentKernel.Connectors.Google.Models;
 using Richasy.AgentKernel.Connectors.Tencent.Models;
 using Richasy.AgentKernel.Connectors.Volcano.Models;
 using Richasy.AgentKernel.Connectors.Youdao.Models;
@@ -153,13 +152,12 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
             ProviderType.Tencent => config.Tencent.ToTranslationServiceConfig<TencentTranslateServiceConfig>(),
             ProviderType.Volcano => config.Volcano.ToTranslationServiceConfig<VolcanoTranslateServiceConfig>(),
             ProviderType.Youdao => config.Youdao.ToTranslationServiceConfig<YoudaoTranslateServiceConfig>(),
-            ProviderType.Google => new GoogleTranslationServiceConfig(string.Empty),
-            _ => throw new NotSupportedException(),
+            _ => default,
         };
 
         _sourceLanguage = originConfig!.SourceLanguage;
         _targetLanguage = originConfig!.TargetLanguage;
-        service.Initialize(serviceConfig!);
+        service.Initialize(serviceConfig);
         return service;
     }
 }
