@@ -167,6 +167,7 @@ public sealed class ZhiPuChatClient : IChatClient
     private ZhiPuChatRequest ToZhiPuChatRequest(IList<ChatMessage> chatMessages, ChatOptions? options, bool stream)
     {
         var model = options?.ModelId ?? Metadata.ModelId ?? string.Empty;
+        // TODO: 进行更严谨的判断.
         var isVisionModel = model.Contains("4v", StringComparison.OrdinalIgnoreCase);
 
         ZhiPuChatRequest request = isVisionModel
