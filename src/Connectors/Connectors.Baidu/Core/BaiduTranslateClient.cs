@@ -14,14 +14,14 @@ namespace Richasy.AgentKernel.Connectors.Baidu.Core;
 /// <summary>
 /// Baidu translation client.
 /// </summary>
-public sealed partial class BaiduTranslateClient(BaiduTranslationServiceConfig config) : ITranslateClient
+public sealed partial class BaiduTranslateClient(BaiduTranslateServiceConfig config) : ITranslateClient
 {
     private const string _apiEndpoint = "https://fanyi-api.baidu.com/api/trans/vip/translate";
     private readonly HttpClient _httpClient = HttpExtensions.CreateHttpClient();
 #pragma warning disable CA5394 // 请勿使用不安全的随机性
     private readonly string _salt = new Random().Next(100000).ToString(CultureInfo.InvariantCulture);
 #pragma warning restore CA5394 // 请勿使用不安全的随机性
-    private readonly BaiduTranslationServiceConfig? _config = config;
+    private readonly BaiduTranslateServiceConfig? _config = config;
 
     /// <inheritdoc/>
     public TranslateClientMetadata Metadata { get; } = new("baidu", isTextSupported: true, isHtmlSupported: false);

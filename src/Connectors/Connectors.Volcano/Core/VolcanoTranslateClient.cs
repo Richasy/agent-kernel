@@ -17,13 +17,13 @@ namespace Richasy.AgentKernel.Connectors.Volcano.Core;
 /// <summary>
 /// Volcano translation client.
 /// </summary>
-public sealed partial class VolcanoTranslateClient(VolcanoTranslationServiceConfig config) : ITranslateClient
+public sealed partial class VolcanoTranslateClient(VolcanoTranslateServiceConfig config) : ITranslateClient
 {
     private const string _apiEndpoint = "https://translate.volcengineapi.com";
     private const string _version = "2020-06-01";
     private const string _action = "TranslateText";
     private readonly HttpClient _httpClient = HttpExtensions.CreateHttpClient();
-    private readonly VolcanoTranslationServiceConfig? _config = config;
+    private readonly VolcanoTranslateServiceConfig? _config = config;
 
     /// <inheritdoc/>
     public TranslateClientMetadata Metadata { get; } = new("volcano", isTextSupported: true, isHtmlSupported: false);

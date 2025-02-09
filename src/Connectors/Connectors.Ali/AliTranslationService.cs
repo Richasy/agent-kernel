@@ -15,7 +15,7 @@ namespace Richasy.AgentKernel.Connectors.Ali;
 /// </summary>
 public sealed class AliTranslationService : ITranslateService
 {
-    private AliTranslationServiceConfig? _config;
+    private AliTranslateServiceConfig? _config;
 
     /// <inheritdoc/>
     public TranslateServiceConfig? Config => _config;
@@ -26,7 +26,7 @@ public sealed class AliTranslationService : ITranslateService
     /// <inheritdoc/>
     public void Initialize(TranslateServiceConfig? config)
     {
-        if (config is not AliTranslationServiceConfig aliConfig)
+        if (config is not AliTranslateServiceConfig aliConfig)
         {
             throw new KernelException("Configuration is invalid");
         }

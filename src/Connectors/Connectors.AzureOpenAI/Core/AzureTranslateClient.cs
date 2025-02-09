@@ -14,13 +14,13 @@ namespace Richasy.AgentKernel.Connectors.Azure.Core;
 /// <summary>
 /// Azure Translation Client.
 /// </summary>
-public sealed partial class AzureTranslateClient(AzureTranslationServiceConfig config) : ITranslateClient
+public sealed partial class AzureTranslateClient(AzureTranslateServiceConfig config) : ITranslateClient
 {
     private const string _apiEndpoint = "https://api.cognitive.microsofttranslator.com/translate";
     private const string _version = "3.0";
 
     private readonly HttpClient _httpClient = HttpExtensions.CreateHttpClient();
-    private readonly AzureTranslationServiceConfig? _config = config;
+    private readonly AzureTranslateServiceConfig? _config = config;
 
     /// <inheritdoc/>
     public TranslateClientMetadata Metadata { get; } = new TranslateClientMetadata("azure", isTextSupported: true, isHtmlSupported: true);

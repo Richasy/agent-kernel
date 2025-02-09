@@ -15,7 +15,7 @@ namespace Richasy.AgentKernel.Connectors.Volcano;
 /// </summary>
 public sealed class VolcanoTranslationService : ITranslateService
 {
-    private VolcanoTranslationServiceConfig? _config;
+    private VolcanoTranslateServiceConfig? _config;
 
     /// <inheritdoc/>
     public TranslateServiceConfig? Config => _config;
@@ -26,7 +26,7 @@ public sealed class VolcanoTranslationService : ITranslateService
     /// <inheritdoc/>
     public void Initialize(TranslateServiceConfig? config)
     {
-        if (config is not VolcanoTranslationServiceConfig volcanoConfig)
+        if (config is not VolcanoTranslateServiceConfig volcanoConfig)
         {
             throw new KernelException("Configuration is invalid");
         }

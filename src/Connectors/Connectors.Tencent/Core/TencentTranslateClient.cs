@@ -13,12 +13,12 @@ namespace Richasy.AgentKernel.Connectors.Tencent.Core;
 /// <summary>
 /// Tencent translation client.
 /// </summary>
-public sealed partial class TencentTranslateClient(TencentTranslationServiceConfig config) : ITranslateClient
+public sealed partial class TencentTranslateClient(TencentTranslateServiceConfig config) : ITranslateClient
 {
     private const string _apiEndpoint = "https://tmt.tencentcloudapi.com";
     private const string _action = "TextTranslate";
     private readonly HttpClient _httpClient = HttpExtensions.CreateHttpClient();
-    private readonly TencentTranslationServiceConfig? _config = config;
+    private readonly TencentTranslateServiceConfig? _config = config;
 
     /// <inheritdoc/>
     public TranslateClientMetadata Metadata { get; } = new("tencent", isTextSupported: true, isHtmlSupported: false);

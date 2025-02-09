@@ -15,7 +15,7 @@ namespace Richasy.AgentKernel.Connectors.Baidu;
 /// </summary>
 public sealed class BaiduTranslationService : ITranslateService
 {
-    private BaiduTranslationServiceConfig? _config;
+    private BaiduTranslateServiceConfig? _config;
 
     /// <inheritdoc/>
     public TranslateServiceConfig? Config => _config;
@@ -26,7 +26,7 @@ public sealed class BaiduTranslationService : ITranslateService
     /// <inheritdoc/>
     public void Initialize(TranslateServiceConfig? config)
     {
-        if (config is not BaiduTranslationServiceConfig baiduConfig)
+        if (config is not BaiduTranslateServiceConfig baiduConfig)
         {
             throw new KernelException("Configuration is invalid");
         }

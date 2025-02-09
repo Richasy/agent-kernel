@@ -8,7 +8,7 @@ namespace Richasy.AgentKernel.Connectors.Volcano.Models;
 /// <summary>
 /// Configuration for the Volcano translation service.
 /// </summary>
-public sealed class VolcanoTranslationServiceConfig(string secretId, string secretKey) : TranslateServiceConfig(secretKey)
+public sealed class VolcanoTranslateServiceConfig(string secretId, string secretKey) : TranslateServiceConfig(secretKey)
 {
     /// <summary>
     /// The secret id for the Volcano translation service.
@@ -16,7 +16,7 @@ public sealed class VolcanoTranslationServiceConfig(string secretId, string secr
     public string SecretId { get; set; } = secretId;
 
     /// <inheritdoc/>
-    public override bool Equals(object? obj) => obj is VolcanoTranslationServiceConfig config && base.Equals(obj) && AccessKey == config.AccessKey && SecretId == config.SecretId;
+    public override bool Equals(object? obj) => obj is VolcanoTranslateServiceConfig config && base.Equals(obj) && AccessKey == config.AccessKey && SecretId == config.SecretId;
 
     /// <inheritdoc/>
     public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), AccessKey, SecretId);

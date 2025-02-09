@@ -15,7 +15,7 @@ namespace Richasy.AgentKernel.Connectors.Youdao;
 /// </summary>
 public sealed class YoudaoTranslationService : ITranslateService
 {
-    private YoudaoTranslationServiceConfig? _config;
+    private YoudaoTranslateServiceConfig? _config;
 
     /// <inheritdoc/>
     public TranslateServiceConfig? Config => _config;
@@ -26,7 +26,7 @@ public sealed class YoudaoTranslationService : ITranslateService
     /// <inheritdoc/>
     public void Initialize(TranslateServiceConfig? config)
     {
-        if (config is not YoudaoTranslationServiceConfig youdaoConfig)
+        if (config is not YoudaoTranslateServiceConfig youdaoConfig)
         {
             throw new KernelException("Configuration is invalid");
         }

@@ -8,7 +8,7 @@ namespace Richasy.AgentKernel.Connectors.Youdao.Models;
 /// <summary>
 /// Youdao translation service configuration.
 /// </summary>
-public sealed class YoudaoTranslationServiceConfig(string appId, string secret) : TranslateServiceConfig(secret)
+public sealed class YoudaoTranslateServiceConfig(string appId, string secret) : TranslateServiceConfig(secret)
 {
     /// <summary>
     /// The app id of the translation service.
@@ -16,7 +16,7 @@ public sealed class YoudaoTranslationServiceConfig(string appId, string secret) 
     public string AppId { get; set; } = appId;
 
     /// <inheritdoc/>
-    public override bool Equals(object? obj) => obj is YoudaoTranslationServiceConfig config && base.Equals(obj) && AccessKey == config.AccessKey && AppId == config.AppId;
+    public override bool Equals(object? obj) => obj is YoudaoTranslateServiceConfig config && base.Equals(obj) && AccessKey == config.AccessKey && AppId == config.AppId;
 
     /// <inheritdoc/>
     public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), AccessKey, AppId);

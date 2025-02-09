@@ -15,7 +15,7 @@ namespace Richasy.AgentKernel.Connectors.Tencent;
 /// </summary>
 public sealed class TencentTranslationService : ITranslateService
 {
-    private TencentTranslationServiceConfig? _config;
+    private TencentTranslateServiceConfig? _config;
 
     /// <inheritdoc/>
     public TranslateServiceConfig? Config => _config;
@@ -26,7 +26,7 @@ public sealed class TencentTranslationService : ITranslateService
     /// <inheritdoc/>
     public void Initialize(TranslateServiceConfig? config)
     {
-        if (config is not TencentTranslationServiceConfig tencentConfig)
+        if (config is not TencentTranslateServiceConfig tencentConfig)
         {
             throw new KernelException("Configuration is invalid");
         }

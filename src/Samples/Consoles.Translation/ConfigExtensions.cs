@@ -13,7 +13,7 @@ internal static class ConfigExtensions
     {
         return config is null || string.IsNullOrWhiteSpace(config.AccessKey)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
-            : new AzureTranslationServiceConfig(config.AccessKey, config.Region ?? string.Empty);
+            : new AzureTranslateServiceConfig(config.AccessKey, config.Region ?? string.Empty);
     }
 
     public static TranslateServiceConfig? ToTranslationServiceConfig<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TConfig>(this KeyConfiguration? config)

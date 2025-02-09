@@ -15,7 +15,7 @@ namespace Richasy.AgentKernel.Connectors.Azure;
 /// </summary>
 public sealed class AzureTranslationService : ITranslateService
 {
-    private AzureTranslationServiceConfig? _config;
+    private AzureTranslateServiceConfig? _config;
 
     /// <inheritdoc/>
     public TranslateServiceConfig? Config => _config;
@@ -26,7 +26,7 @@ public sealed class AzureTranslationService : ITranslateService
     /// <inheritdoc/>
     public void Initialize(TranslateServiceConfig? config)
     {
-        if (config is not AzureTranslationServiceConfig azureConfig)
+        if (config is not AzureTranslateServiceConfig azureConfig)
         {
             throw new KernelException("Configuration is invalid");
         }

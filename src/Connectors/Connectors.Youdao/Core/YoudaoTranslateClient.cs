@@ -14,12 +14,12 @@ namespace Richasy.AgentKernel.Connectors.Youdao.Core;
 /// <summary>
 /// Youdao translation client.
 /// </summary>
-public sealed partial class YoudaoTranslateClient(YoudaoTranslationServiceConfig config) : ITranslateClient
+public sealed partial class YoudaoTranslateClient(YoudaoTranslateServiceConfig config) : ITranslateClient
 {
     private const string _apiEndpoint = "https://openapi.youdao.com/api";
     private readonly string _salt = Guid.NewGuid().ToString("N");
     private readonly HttpClient _httpClient = HttpExtensions.CreateHttpClient();
-    private readonly YoudaoTranslationServiceConfig? _config = config;
+    private readonly YoudaoTranslateServiceConfig? _config = config;
 
     /// <inheritdoc/>
     public TranslateClientMetadata Metadata { get; } = new("youdao", isTextSupported: true, isHtmlSupported: false);

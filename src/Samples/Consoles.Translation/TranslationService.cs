@@ -148,11 +148,11 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
         var serviceConfig = provider switch
         {
             ProviderType.Azure => config.Azure.ToTranslationServiceConfig(),
-            ProviderType.Ali => config.Ali.ToTranslationServiceConfig<AliTranslationServiceConfig>(),
-            ProviderType.Baidu => config.Baidu.ToTranslationServiceConfig<BaiduTranslationServiceConfig>(),
-            ProviderType.Tencent => config.Tencent.ToTranslationServiceConfig<TencentTranslationServiceConfig>(),
-            ProviderType.Volcano => config.Volcano.ToTranslationServiceConfig<VolcanoTranslationServiceConfig>(),
-            ProviderType.Youdao => config.Youdao.ToTranslationServiceConfig<YoudaoTranslationServiceConfig>(),
+            ProviderType.Ali => config.Ali.ToTranslationServiceConfig<AliTranslateServiceConfig>(),
+            ProviderType.Baidu => config.Baidu.ToTranslationServiceConfig<BaiduTranslateServiceConfig>(),
+            ProviderType.Tencent => config.Tencent.ToTranslationServiceConfig<TencentTranslateServiceConfig>(),
+            ProviderType.Volcano => config.Volcano.ToTranslationServiceConfig<VolcanoTranslateServiceConfig>(),
+            ProviderType.Youdao => config.Youdao.ToTranslationServiceConfig<YoudaoTranslateServiceConfig>(),
             ProviderType.Google => new GoogleTranslationServiceConfig(string.Empty),
             _ => throw new NotSupportedException(),
         };
