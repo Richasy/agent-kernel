@@ -9,6 +9,7 @@ namespace Richasy.AgentKernel.Connectors.Ali;
 [JsonSourceGenerationOptions(WriteIndented = true)]
 [JsonSerializable(typeof(AliTranslateRequest))]
 [JsonSerializable(typeof(AliTranslateResponse))]
+[JsonSerializable(typeof(bool))]
 internal sealed partial class JsonGenContext : JsonSerializerContext
 {
 }

@@ -43,6 +43,8 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="Richasy.AgentKernel.Core.AzureOpenAI" />
+	<InternalsVisibleTo Include="Richasy.AgentKernel.Extensions.AI" />
+	<InternalsVisibleTo Include="Richasy.AgentKernel.Extensions.OpenAI" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">

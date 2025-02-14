@@ -267,45 +267,48 @@ internal static partial class OpenAIModelMappers
 
             if (options.AdditionalProperties is { Count: > 0 } additionalProperties)
             {
-                if (additionalProperties.TryGetValue(nameof(result.EndUserId), out string? endUserId))
+                foreach (var kv in additionalProperties)
                 {
-                    result.EndUserId = endUserId;
-                }
-
-                if (additionalProperties.TryGetValue(nameof(result.IncludeLogProbabilities), out bool includeLogProbabilities))
-                {
-                    result.IncludeLogProbabilities = includeLogProbabilities;
-                }
-
-                if (additionalProperties.TryGetValue(nameof(result.LogitBiases), out IDictionary<int, int>? logitBiases))
-                {
-                    foreach (KeyValuePair<int, int> kvp in logitBiases!)
+                    if (kv.Key == nameof(result.EndUserId))
                     {
-                        result.LogitBiases[kvp.Key] = kvp.Value;
+                        result.EndUserId = kv.Value as string;
                     }
-                }
-
-                if (additionalProperties.TryGetValue(nameof(result.AllowParallelToolCalls), out bool allowParallelToolCalls))
-                {
-                    result.AllowParallelToolCalls = allowParallelToolCalls;
-                }
-
-                if (additionalProperties.TryGetValue(nameof(result.TopLogProbabilityCount), out int topLogProbabilityCountInt))
-                {
-                    result.TopLogProbabilityCount = topLogProbabilityCountInt;
-                }
-
-                if (additionalProperties.TryGetValue(nameof(result.Metadata), out IDictionary<string, string>? metadata))
-                {
-                    foreach (KeyValuePair<string, string> kvp in metadata)
+                    else if (kv.Key == nameof(result.IncludeLogProbabilities))
                     {
-                        result.Metadata[kvp.Key] = kvp.Value;
+                        result.IncludeLogProbabilities = kv.Value as bool?;
                     }
-                }
-
-                if (additionalProperties.TryGetValue(nameof(result.StoredOutputEnabled), out bool storeOutputEnabled))
-                {
-                    result.StoredOutputEnabled = storeOutputEnabled;
+                    else if (kv.Key == nameof(result.LogitBiases))
+                    {
+                        foreach (KeyValuePair<int, int> kvp in (IDictionary<int, int>)kv.Value)
+                        {
+                            result.LogitBiases[kvp.Key] = kvp.Value;
+                        }
+                    }
+                    else if (kv.Key == nameof(result.AllowParallelToolCalls))
+                    {
+                        result.AllowParallelToolCalls = kv.Value as bool?;
+                    }
+                    else if (kv.Key == nameof(result.TopLogProbabilityCount))
+                    {
+                        result.TopLogProbabilityCount = kv.Value as int?;
+                    }
+                    else if (kv.Key == nameof(result.Metadata))
+                    {
+                        foreach (KeyValuePair<string, string> kvp in (IDictionary<string, string>)kv.Value)
+                        {
+                            result.Metadata[kvp.Key] = kvp.Value;
+                        }
+                    }
+                    else if (kv.Key == nameof(result.StoredOutputEnabled))
+                    {
+                        result.StoredOutputEnabled = kv.Value as bool?;
+                    }
+                    else if(kv.Value is BinaryData data)
+                    {
+                        // Add any other properties as additional raw data.
+                        result.SerializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
+                        result.SerializedAdditionalRawData.Add(kv.Key, data);
+                    }
                 }
             }
 
