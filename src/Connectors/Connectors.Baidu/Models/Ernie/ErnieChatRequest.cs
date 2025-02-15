@@ -33,7 +33,7 @@ internal sealed class ErnieChatRequest
 
     public bool? ParallelToolCalls { get; set; }
 
-    public ErnieWebSearchTool? WebSearch { get; set; }
+    public ErnieWebSearchParameters? WebSearch { get; set; }
 
     public IList<ErnieTool>? Tools { get; set; }
 

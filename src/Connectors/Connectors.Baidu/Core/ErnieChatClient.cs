@@ -187,16 +187,29 @@ public sealed class ErnieChatClient : IChatClient
                 : null;
         }
 
+        if (options is ErnieChatOptions chatOptions)
+        {
+            request.ParallelToolCalls = chatOptions.ParallelToolCalls;
+            request.WebSearch = chatOptions.WebSearch;
+        }
+        else if (options?.AdditionalProperties is { Count: > 0 } additionalProperties)
+        {
+            foreach (var prop in additionalProperties)
+            {
+                if (prop.Key == "parallel_tool_calls" && prop.Value is bool ptc)
+                {
+                    request.ParallelToolCalls = ptc;
+                }
+                else if (prop.Key == "web_search" && prop.Value is ErnieWebSearchParameters webParam)
+                {
+                    request.WebSearch = webParam;
+                }
+            }
+        }
+
         if (options?.Tools is { Count: > 0 } tools)
         {
-            var webSearchTool = tools.FirstOrDefault(p => p is ErnieWebSearchTool) as ErnieWebSearchTool;
-            if (webSearchTool is not null)
-            {
-                request.WebSearch = webSearchTool;
-            }
-
-            var otherTools = tools.Where(p => p is not ErnieWebSearchTool).Select(ToErnieTool).Where(p => p != null).Select(p => p!);
-            request.Tools = otherTools?.Count() > 0 ? [.. otherTools] : null;
+            request.Tools = [.. tools.Select(ToErnieTool).Where(p => p != null).Select(p => p!)];
         }
 
         return request;

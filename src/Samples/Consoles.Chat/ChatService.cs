@@ -7,6 +7,8 @@ using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Hosting;
 using Richasy.AgentKernel;
 using Richasy.AgentKernel.Chat;
+using Richasy.AgentKernel.Connectors.Ali.Models;
+using Richasy.AgentKernel.Connectors.Baidu.Models;
 using Richasy.AgentKernel.Models;
 using RichasyKernel;
 using Spectre.Console;
@@ -148,11 +150,8 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
                 // var response = await service.Client!.CompleteAsync(chatMessages, cancellationToken: cancellationToken);
                 // var responseMessage = response.Message.Text;
                 var responseMessage = string.Empty;
-                var options = new ChatOptions()
-                {
-                    ModelId = service.Config?.Model,
-                    AdditionalProperties = [],
-                };
+                var options = GetChatOptions(provider);
+                options.ModelId = service.Config?.Model;
 
                 if (_model?.ToolSupport ?? false)
                 {
@@ -206,6 +205,16 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
         var service = kernel.GetRequiredService<IChatService>(provider.ToString());
         service.Initialize(config!);
         return service;
+    }
+
+    private static ChatOptions GetChatOptions(ChatProviderType provider)
+    {
+        return provider switch
+        {
+            ChatProviderType.Qwen => new QwenChatOptions { EnableSearch = true },
+            ChatProviderType.Ernie => new ErnieChatOptions {  WebSearch = new ErnieWebSearchParameters { Enable = true, EnableTrace = true } },
+            _ => new ChatOptions(),
+        };
     }
 
     private void PrintReasoningMessage(string text)
