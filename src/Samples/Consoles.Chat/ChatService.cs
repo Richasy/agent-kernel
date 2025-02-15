@@ -9,6 +9,8 @@ using Richasy.AgentKernel;
 using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Ali.Models;
 using Richasy.AgentKernel.Connectors.Baidu.Models;
+using Richasy.AgentKernel.Connectors.Tencent.Models;
+using Richasy.AgentKernel.Connectors.ZhiPu.Models;
 using Richasy.AgentKernel.Models;
 using RichasyKernel;
 using Spectre.Console;
@@ -212,7 +214,9 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
         return provider switch
         {
             ChatProviderType.Qwen => new QwenChatOptions { EnableSearch = true },
-            ChatProviderType.Ernie => new ErnieChatOptions {  WebSearch = new ErnieWebSearchParameters { Enable = true, EnableTrace = true } },
+            ChatProviderType.Ernie => new ErnieChatOptions { WebSearch = new ErnieWebSearchParameters { Enable = true, EnableTrace = true } },
+            ChatProviderType.Hunyuan => new HunyuanChatOptions { EnableEnhancement = true, ForceSearchEnhancement = true },
+            ChatProviderType.ZhiPu => new ZhiPuChatOptions { Search = new() { Enable = true } },
             _ => new ChatOptions(),
         };
     }

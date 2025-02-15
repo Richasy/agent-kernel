@@ -1,14 +1,12 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Extensions.AI;
-
 namespace Richasy.AgentKernel.Connectors.ZhiPu.Models;
 
 /// <summary>
 /// 智谱检索工具.
 /// </summary>
-public sealed class ZhiPuRetrievalTool : AITool
+public sealed class ZhiPuRetrievalParameters
 {
     /// <summary>
     /// 知识库Id.

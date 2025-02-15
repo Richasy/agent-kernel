@@ -17,7 +17,7 @@ public sealed class DrawModel(string id, string name, bool negativeSupport, para
     /// 获取或设置模型的显示名称.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? DisplayName { get; set; } = name;
+    public string? Name { get; set; } = name;
 
     /// <summary>
     /// 获取或设置该模型是否支持负提示词.
@@ -38,5 +38,5 @@ public sealed class DrawModel(string id, string name, bool negativeSupport, para
     public override int GetHashCode() => HashCode.Combine(Id);
 
     /// <inheritdoc/>
-    public override string ToString() => DisplayName ?? Id;
+    public override string ToString() => Name ?? Id;
 }

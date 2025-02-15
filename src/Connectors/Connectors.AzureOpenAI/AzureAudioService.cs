@@ -67,7 +67,7 @@ public sealed class AzureAudioService : IAudioService
             _defaultModel = new AudioModel
             {
                 Id = "Azure",
-                DisplayName = "Azure",
+                Name = "Azure",
                 Voices = voices
             };
         }

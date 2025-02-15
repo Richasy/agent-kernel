@@ -60,7 +60,7 @@ public sealed class EdgeAudioService : IAudioService
             _defaultModel = new AudioModel
             {
                 Id = "Edge",
-                DisplayName = "Edge",
+                Name = "Edge",
                 Voices = voices
             };
         }

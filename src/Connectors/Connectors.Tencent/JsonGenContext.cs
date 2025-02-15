@@ -15,6 +15,7 @@ namespace Richasy.AgentKernel.Connectors.Tencent;
 [JsonSerializable(typeof(HunyuanDrawCreateResponse))]
 [JsonSerializable(typeof(HunyuanDrawQueryResponse))]
 [JsonSerializable(typeof(HunyuanDrawLiteResponse))]
+[JsonSerializable(typeof(bool?))]
 internal sealed partial class JsonGenContext : JsonSerializerContext
 {
 }

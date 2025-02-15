@@ -47,12 +47,12 @@ public sealed class AzureOpenAIAudioService : IAudioService
         [
             new() {
                 Id = "tts",
-                DisplayName = "TTS",
+                Name = "TTS",
                 Voices = GetOpenAIAudioVoices(),
             },
             new() {
                 Id = "tts-hd",
-                DisplayName = "TTS HD",
+                Name = "TTS HD",
                 Voices = GetOpenAIAudioVoices(),
             },
         ];

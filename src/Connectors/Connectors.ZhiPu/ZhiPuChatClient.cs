@@ -170,21 +170,42 @@ public sealed class ZhiPuChatClient : IChatClient
         // TODO: 进行更严谨的判断.
         var isVisionModel = model.Contains("4v", StringComparison.OrdinalIgnoreCase);
 
-        ZhiPuChatRequest request = isVisionModel
-            ? new ZhiPuContentChatRequest()
+        ZhiPuChatRequest request;
+        if (isVisionModel)
+        {
+            request = new ZhiPuContentChatRequest()
             {
                 Messages = chatMessages.Select(x => ToZhiPuChatRequestMessage(x, useContentMessage: true)).OfType<ZhiPuChatRequestContentMessage>().ToList() ?? [],
                 Model = model,
                 Stream = stream,
+            };
+        }
+        else
+        {
+            List<ZhiPuTool>? theTools = options?.Tools is { Count: > 0 } tools ? [.. tools.Select(ToZhiPuTool)] : null;
+            if (options is ZhiPuChatOptions chatOptions)
+            {
+                if (chatOptions.Search is ZhiPuWebSearchParameters searchParam)
+                {
+                    theTools ??= [];
+                    theTools.Add(new ZhiPuTool { Type = "web_search", WebSearch = searchParam });
+                }
+
+                if (chatOptions.Retrieval is ZhiPuRetrievalParameters retrievalParam)
+                {
+                    theTools ??= [];
+                    theTools.Add(new ZhiPuTool { Type = "retrieval", Retrieval = retrievalParam });
+                }
             }
-            : new ZhiPuBasicChatRequest()
+            request = new ZhiPuBasicChatRequest()
             {
                 ResponseFormat = options?.ResponseFormat is ChatResponseFormatJson ? ZhiPuResponseFormat.JsonFormat : default,
                 Messages = chatMessages.Select(x => ToZhiPuChatRequestMessage(x, useContentMessage: false)).ToList() ?? [],
                 Model = model,
                 Stream = stream,
-                Tools = options?.Tools is { Count: > 0 } tools ? [.. tools.Select(ToZhiPuTool)] : null,
+                Tools = theTools,
             };
+        }
 
         if (options is not null)
         {
@@ -318,22 +339,6 @@ public sealed class ZhiPuChatClient : IChatClient
                         Required = [.. function.Metadata.Parameters.Where(p => p.IsRequired).Select(p => p.Name)],
                     }
                 }
-            };
-        }
-        else if (tool is ZhiPuWebSearchTool webSearchTool)
-        {
-            return new()
-            {
-                Type = "web_search",
-                WebSearch = webSearchTool,
-            };
-        }
-        else if (tool is ZhiPuRetrievalTool retrievalTool)
-        {
-            return new()
-            {
-                Type = "retrieval",
-                Retrieval = retrievalTool,
             };
         }
 

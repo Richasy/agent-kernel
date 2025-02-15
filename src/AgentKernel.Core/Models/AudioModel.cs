@@ -20,7 +20,7 @@ public sealed class AudioModel
     /// 显示名称.
     /// </summary>
     [JsonPropertyName("name")]
-    public string? DisplayName { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// 声音列表.
@@ -35,5 +35,5 @@ public sealed class AudioModel
     public override int GetHashCode() => HashCode.Combine(Id);
 
     /// <inheritdoc/>
-    public override string ToString() => DisplayName ?? Id;
+    public override string ToString() => Name ?? Id;
 }

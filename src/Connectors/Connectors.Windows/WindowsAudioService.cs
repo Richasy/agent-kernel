@@ -50,7 +50,7 @@ public sealed class WindowsAudioService : IAudioService
                 return new AudioVoice(x.Id, x.DisplayName, gender, x.Language);
             }).ToList();
 
-            _defaultModel = new AudioModel { Id = "Local", DisplayName = "Windows", Voices = voices };
+            _defaultModel = new AudioModel { Id = "Local", Name = "Windows", Voices = voices };
         }
 
         return [_defaultModel];

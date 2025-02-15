@@ -64,7 +64,7 @@ internal sealed class AudioService(Kernel kernel, IAudioConfigManager configMana
             .Title("Select a model")
             .PageSize(20)
             .MoreChoicesText("More")
-            .UseConverter(x => x.DisplayName ?? x.Id)
+            .UseConverter(x => x.Name ?? x.Id)
             .AddChoices(models))
             : models?.FirstOrDefault();
     }

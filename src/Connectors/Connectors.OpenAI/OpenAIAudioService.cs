@@ -46,13 +46,13 @@ public sealed class OpenAIAudioService : IAudioService
         new AudioModel
         {
             Id = "tts-1",
-            DisplayName = "TTS",
+            Name = "TTS",
             Voices = GetOpenAIAudioVoices(),
         },
         new AudioModel
         {
             Id = "tts-1-hd",
-            DisplayName = "TTS HD",
+            Name = "TTS HD",
             Voices = GetOpenAIAudioVoices(),
         },
     ];
