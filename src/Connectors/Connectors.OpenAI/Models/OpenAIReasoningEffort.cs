@@ -28,8 +28,12 @@ public enum OpenAIReasoningEffort
     High,
 }
 
-internal sealed class OpenAIReasoningEffortConverter : JsonConverter<OpenAIReasoningEffort>
+/// <summary>
+/// OpenAI reasoning effort converter.
+/// </summary>
+public sealed class OpenAIReasoningEffortConverter : JsonConverter<OpenAIReasoningEffort>
 {
+    /// <inheritdoc/>
     public override OpenAIReasoningEffort Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         var value = reader.GetString();
@@ -41,6 +45,7 @@ internal sealed class OpenAIReasoningEffortConverter : JsonConverter<OpenAIReaso
             _ => throw new JsonException(),
         };
     }
+    /// <inheritdoc/>
     public override void Write(Utf8JsonWriter writer, OpenAIReasoningEffort value, JsonSerializerOptions options)
     {
         var text = value switch
