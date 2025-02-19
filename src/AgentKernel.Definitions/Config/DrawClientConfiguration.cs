@@ -133,7 +133,7 @@ public abstract class DrawClientConfigBase : ConfigBase
     /// 自定义模型列表.
     /// </summary>
     [JsonPropertyName("models")]
-    public IList<AudioModel>? CustomModels { get; set; }
+    public IList<DrawModel>? CustomModels { get; set; }
 
     /// <summary>
     /// 是否有效.
