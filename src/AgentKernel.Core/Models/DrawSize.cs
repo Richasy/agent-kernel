@@ -1,20 +1,40 @@
 ﻿
+using System.Text.Json.Serialization;
+
 namespace Richasy.AgentKernel.Models;
 
 /// <summary>
 /// 绘制尺寸.
 /// </summary>
-public struct DrawSize(int width, int height) : IEquatable<DrawSize>
+public struct DrawSize : IEquatable<DrawSize>
 {
+    /// <summary>
+    /// 初始化 <see cref="DrawSize"/> 类的新实例.
+    /// </summary>
+    public DrawSize()
+    {
+    }
+
+    /// <summary>
+    /// 初始化 <see cref="DrawSize"/> 类的新实例.
+    /// </summary>
+    public DrawSize(int width, int height)
+    {
+        Width = width;
+        Height = height;
+    }
+
     /// <summary>
     /// 宽度.
     /// </summary>
-    public int Width { get; set; } = width;
+    [JsonPropertyName("width")]
+    public int Width { get; set; }
 
     /// <summary>
     /// 高度.
     /// </summary>
-    public int Height { get; set; } = height;
+    [JsonPropertyName("height")]
+    public int Height { get; set; }
 
     /// <inheritdoc/>
     public override bool Equals(object? obj) => obj is DrawSize size && Width == size.Width && Height == size.Height;

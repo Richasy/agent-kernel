@@ -26,6 +26,16 @@ public sealed class AudioVoice
     }
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="AudioVoice"/> class.
+    /// </summary>
+    public AudioVoice()
+    {
+        Id = string.Empty;
+        DisplayName = string.Empty;
+        Languages = [];
+    }
+
+    /// <summary>
     /// 标识符.
     /// </summary>
     [JsonPropertyName("id")]
