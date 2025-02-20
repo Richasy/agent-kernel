@@ -120,7 +120,6 @@ public sealed class YoudaoTranslationService : ITranslateService
             { "my", new("my") },
             { "ne", new("ne") },
             { "no", new("no") },
-            { "nl", new("nl") },
             { "ny", new("ny") },
             { "pa", new("pa") },
             { "pl", new("pl") },

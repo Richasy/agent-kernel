@@ -72,6 +72,7 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
             AnsiConsole.Clear();
             var provider = AskProvider();
             var service = DispatchService(provider);
+            service.GetSupportedLanguages();
             while (!cancellationToken.IsCancellationRequested)
             {
                 var input = AnsiConsole.Prompt(
@@ -155,8 +156,8 @@ internal sealed class TranslationService(Kernel kernel, TranslationConfiguration
             _ => default,
         };
 
-        _sourceLanguage = originConfig!.SourceLanguage;
-        _targetLanguage = originConfig!.TargetLanguage;
+        _sourceLanguage = originConfig?.SourceLanguage ?? "auto";
+        _targetLanguage = originConfig?.TargetLanguage ?? "en-US";
         service.Initialize(serviceConfig);
         return service;
     }
