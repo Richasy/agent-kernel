@@ -71,7 +71,6 @@ public sealed class GoogleTranslationService : ITranslateService
             { "ceb", new("ceb") },
             { "ny", new("ny") },
             { "zh-CN", new("zh-CN") },
-            { "zh", new("zh") },
             { "zh-TW", new("zh-TW") },
             { "cv", new("cv") },
             { "co", new("co") },
@@ -91,7 +90,6 @@ public sealed class GoogleTranslationService : ITranslateService
             { "ee", new("ee") },
             { "fj", new("fj") },
             { "fil", new("fil") },
-            { "tl", new("tl") },
             { "fi", new("fi") },
             { "fr", new("fr") },
             { "fr-FR", new("fr-FR") },
@@ -111,7 +109,6 @@ public sealed class GoogleTranslationService : ITranslateService
             { "ha", new("ha") },
             { "haw", new("haw") },
             { "iw", new("iw") },
-            { "he", new("he") },
             { "hil", new("hil") },
             { "hi", new("hi") },
             { "hmn", new("hmn") },
@@ -125,7 +122,6 @@ public sealed class GoogleTranslationService : ITranslateService
             { "it", new("it") },
             { "ja", new("ja") },
             { "jw", new("jw") },
-            { "jv", new("jv") },
             { "kn", new("kn") },
             { "pam", new("pam") },
             { "kk", new("kk") },
@@ -234,7 +230,6 @@ public sealed class GoogleTranslationService : ITranslateService
             { "yo", new("yo") },
             { "yua", new("yua") },
             { "zu", new("zu") },
-            { "zh-HK", new("zh-HK") },
         };
 
         return new TranslationLanguages(languages, languages.Skip(1).ToDictionary());
