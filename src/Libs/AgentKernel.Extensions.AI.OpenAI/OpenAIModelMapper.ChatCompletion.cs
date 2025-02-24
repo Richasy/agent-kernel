@@ -242,7 +242,7 @@ internal static partial class OpenAIModelMappers
     }
 
     /// <summary>Converts an extensions options instance to an OpenAI options instance.</summary>
-    public static Core.OpenAI.Chat.ChatCompletionOptions ToOpenAIOptions(ChatOptions? options)
+    public static Core.OpenAI.Chat.ChatCompletionOptions ToOpenAIOptions(ChatOptions? options, string? defaultModelId)
     {
         ChatCompletionOptions result = new();
 
@@ -256,6 +256,8 @@ internal static partial class OpenAIModelMappers
 #pragma warning disable OPENAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
             result.Seed = options.Seed;
 #pragma warning restore OPENAI001
+
+            result.Model = options.ModelId ?? defaultModelId;
 
             if (options.StopSequences is { Count: > 0 } stopSequences)
             {
@@ -303,7 +305,7 @@ internal static partial class OpenAIModelMappers
                     {
                         result.StoredOutputEnabled = kv.Value as bool?;
                     }
-                    else if(kv.Value is BinaryData data)
+                    else if (kv.Value is BinaryData data)
                     {
                         // Add any other properties as additional raw data.
                         result.SerializedAdditionalRawData ??= new Dictionary<string, BinaryData>();

@@ -105,7 +105,7 @@ public sealed class OpenAIChatClient : IChatClient
         _ = Throw.IfNull(chatMessages);
 
         var openAIChatMessages = OpenAIModelMappers.ToOpenAIChatMessages(chatMessages, ToolCallJsonSerializerOptions);
-        var openAIOptions = OpenAIModelMappers.ToOpenAIOptions(options);
+        var openAIOptions = OpenAIModelMappers.ToOpenAIOptions(options, Metadata.ModelId);
 
         // Make the call to OpenAI.
         var response = await _chatClient.CompleteChatAsync(openAIChatMessages, openAIOptions, cancellationToken).ConfigureAwait(false);
@@ -120,7 +120,7 @@ public sealed class OpenAIChatClient : IChatClient
         _ = Throw.IfNull(chatMessages);
 
         var openAIChatMessages = OpenAIModelMappers.ToOpenAIChatMessages(chatMessages, ToolCallJsonSerializerOptions);
-        var openAIOptions = OpenAIModelMappers.ToOpenAIOptions(options);
+        var openAIOptions = OpenAIModelMappers.ToOpenAIOptions(options, Metadata.ModelId);
 
         // Make the call to OpenAI.
         var chatCompletionUpdates = _chatClient.CompleteChatStreamingAsync(openAIChatMessages, openAIOptions, cancellationToken);

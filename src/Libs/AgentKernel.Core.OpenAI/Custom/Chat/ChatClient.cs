@@ -255,7 +255,6 @@ public partial class ChatClient
     private void CreateChatCompletionOptions(IEnumerable<ChatMessage> messages, ref ChatCompletionOptions options, bool stream = false)
     {
         options.Messages = messages.ToList();
-        options.Model = _model;
         options.Stream = stream
             ? true
             : null;
