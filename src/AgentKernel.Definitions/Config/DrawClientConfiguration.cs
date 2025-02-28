@@ -42,7 +42,7 @@ public sealed class DrawClientConfiguration
 /// <summary>
 /// Open AI 客户端配置.
 /// </summary>
-public sealed class OpenAIDrawConfig : DrawClientEndpointConfigBase
+public class OpenAIDrawConfig : DrawClientEndpointConfigBase
 {
     /// <summary>
     /// 组织 ID.
@@ -54,7 +54,7 @@ public sealed class OpenAIDrawConfig : DrawClientEndpointConfigBase
 /// <summary>
 /// Azure Open AI 客户端配置.
 /// </summary>
-public sealed class AzureOpenAIDrawConfig : DrawClientEndpointConfigBase
+public class AzureOpenAIDrawConfig : DrawClientEndpointConfigBase
 {
     /// <inheritdoc/>
     public override bool IsValid()
@@ -67,7 +67,7 @@ public sealed class AzureOpenAIDrawConfig : DrawClientEndpointConfigBase
 /// <summary>
 /// 文心一言客户端配置.
 /// </summary>
-public sealed class ErnieDrawConfig : DrawClientConfigBase
+public class ErnieDrawConfig : DrawClientConfigBase
 {
     /// <summary>
     /// 密钥.
@@ -83,7 +83,7 @@ public sealed class ErnieDrawConfig : DrawClientConfigBase
 /// <summary>
 /// 混元客户端配置.
 /// </summary>
-public sealed class HunyuanDrawConfig : DrawClientConfigBase
+public class HunyuanDrawConfig : DrawClientConfigBase
 {
     /// <summary>
     /// 密钥.
@@ -99,7 +99,7 @@ public sealed class HunyuanDrawConfig : DrawClientConfigBase
 /// <summary>
 /// 星火客户端配置.
 /// </summary>
-public sealed class SparkDrawConfig : DrawClientConfigBase
+public class SparkDrawConfig : DrawClientConfigBase
 {
     /// <summary>
     /// 密钥.

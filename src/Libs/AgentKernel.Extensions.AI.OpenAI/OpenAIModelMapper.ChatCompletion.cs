@@ -257,7 +257,11 @@ internal static partial class OpenAIModelMappers
             result.Seed = options.Seed;
 #pragma warning restore OPENAI001
 
-            result.Model = options.ModelId ?? defaultModelId;
+            var model = options.ModelId ?? defaultModelId;
+            if (!string.IsNullOrEmpty(model))
+            {
+                result.Model = model;
+            }
 
             if (options.StopSequences is { Count: > 0 } stopSequences)
             {

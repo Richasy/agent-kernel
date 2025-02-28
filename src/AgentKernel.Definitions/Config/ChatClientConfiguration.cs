@@ -224,17 +224,17 @@ public class ErnieChatConfig : ChatClientConfigBase
 /// <summary>
 /// 讯飞星火服务配置.
 /// </summary>
-public sealed class SparkChatConfig : ChatClientConfigBase;
+public class SparkChatConfig : ChatClientConfigBase;
 
 /// <summary>
 /// 混元客户端配置.
 /// </summary>
-public sealed class HunyuanChatConfig : ChatClientConfigBase;
+public class HunyuanChatConfig : ChatClientConfigBase;
 
 /// <summary>
 /// 豆包大模型配置.
 /// </summary>
-public sealed class DoubaoChatConfig : ChatClientConfigBase
+public class DoubaoChatConfig : ChatClientConfigBase
 {
     /// <inheritdoc/>
     public override bool IsValid()
@@ -244,42 +244,42 @@ public sealed class DoubaoChatConfig : ChatClientConfigBase
 /// <summary>
 /// xAI大模型配置.
 /// </summary>
-public sealed class XAIChatConfig : ChatClientConfigBase;
+public class XAIChatConfig : ChatClientConfigBase;
 
 /// <summary>
 /// 智谱客户端配置.
 /// </summary>
-public sealed class ZhiPuChatConfig : ChatClientConfigBase;
+public class ZhiPuChatConfig : ChatClientConfigBase;
 
 /// <summary>
 /// 零一万物客户端配置.
 /// </summary>
-public sealed class LingYiChatConfig : ChatClientConfigBase;
+public class LingYiChatConfig : ChatClientConfigBase;
 
 /// <summary>
 /// 月之暗面客户端配置.
 /// </summary>
-public sealed class MoonshotChatConfig : ChatClientConfigBase;
+public class MoonshotChatConfig : ChatClientConfigBase;
 
 /// <summary>
 /// 通义千问客户端配置.
 /// </summary>
-public sealed class QwenChatConfig : ChatClientConfigBase;
+public class QwenChatConfig : ChatClientConfigBase;
 
 /// <summary>
 /// Gemini 客户端配置.
 /// </summary>
-public sealed class GeminiChatConfig : ChatEndpointConfigBase;
+public class GeminiChatConfig : ChatEndpointConfigBase;
 
 /// <summary>
 /// Groq 客户端配置.
 /// </summary>
-public sealed class GroqChatConfig : ChatClientConfigBase;
+public class GroqChatConfig : ChatClientConfigBase;
 
 /// <summary>
 /// Mistral AI 客户端配置.
 /// </summary>
-public sealed class MistralChatConfig : ChatClientConfigBase
+public class MistralChatConfig : ChatClientConfigBase
 {
     /// <summary>
     /// Codestral 密钥.
@@ -304,37 +304,37 @@ public sealed class MistralChatConfig : ChatClientConfigBase
 /// <summary>
 /// Perplexity 客户端配置.
 /// </summary>
-public sealed class PerplexityChatConfig : ChatClientConfigBase;
+public class PerplexityChatConfig : ChatClientConfigBase;
 
 /// <summary>
 /// Together AI 客户端配置.
 /// </summary>
-public sealed class TogetherAIChatConfig : ChatClientConfigBase;
+public class TogetherAIChatConfig : ChatClientConfigBase;
 
 /// <summary>
 /// Open Router 客户端配置.
 /// </summary>
-public sealed class OpenRouterChatConfig : ChatClientConfigBase;
+public class OpenRouterChatConfig : ChatClientConfigBase;
 
 /// <summary>
 /// DeepSeek 客户端配置.
 /// </summary>
-public sealed class DeepSeekChatConfig : ChatClientConfigBase;
+public class DeepSeekChatConfig : ChatClientConfigBase;
 
 /// <summary>
 /// Anthropic 客户端配置.
 /// </summary>
-public sealed class AnthropicChatConfig : ChatEndpointConfigBase;
+public class AnthropicChatConfig : ChatEndpointConfigBase;
 
 /// <summary>
 /// 硅动客户端配置.
 /// </summary>
-public sealed class SiliconFlowChatConfig : ChatClientConfigBase;
+public class SiliconFlowChatConfig : ChatClientConfigBase;
 
 /// <summary>
 /// Ollama 客户端配置.
 /// </summary>
-public sealed class OllamaChatConfig : ChatEndpointConfigBase
+public class OllamaChatConfig : ChatEndpointConfigBase
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="OllamaChatConfig"/> class.
