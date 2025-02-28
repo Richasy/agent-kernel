@@ -33,6 +33,7 @@ var kernel = Kernel.CreateBuilder()
     .AddGroqChatService()
     .AddOllamaChatService()
     .AddMistralChatService()
+    .AddOnnxChatService()
     .Build();
 
 builder.Services.AddSingleton(kernel);

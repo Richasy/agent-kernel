@@ -164,6 +164,13 @@ public sealed class ChatClientConfiguration
     [JsonPropertyName("xai")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public XAIChatConfig? XAI { get; set; }
+
+    /// <summary>
+    /// ONNX 客户端配置.
+    /// </summary>
+    [JsonPropertyName("onnx")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public OnnxChatConfig? Onnx { get; set; }
 }
 
 /// <summary>
@@ -344,6 +351,21 @@ public class OllamaChatConfig : ChatEndpointConfigBase
     /// <inheritdoc/>
     public override bool IsValid()
         => IsCustomModelNotEmpty() && !string.IsNullOrEmpty(Endpoint);
+}
+
+/// <summary>
+/// ONNX 客户端配置.
+/// </summary>
+public sealed class OnnxChatConfig : ChatClientConfigBase
+{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="OnnxChatConfig"/> class.
+    /// </summary>
+    public OnnxChatConfig() => Key = "onnx";
+
+    /// <inheritdoc/>
+    public override bool IsValid()
+        => IsCustomModelNotEmpty();
 }
 
 /// <summary>

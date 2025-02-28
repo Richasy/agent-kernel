@@ -41,6 +41,7 @@ public abstract class ChatConfigManagerBase : IChatConfigManager
             ChatProviderType.SiliconFlow => Configuration?.SiliconFlow,
             ChatProviderType.Doubao => Configuration?.Doubao,
             ChatProviderType.XAI => Configuration?.XAI,
+            ChatProviderType.Onnx => Configuration?.Onnx,
             _ => throw new NotImplementedException(),
         };
     }
@@ -136,6 +137,9 @@ public abstract class ChatConfigManagerBase : IChatConfigManager
                     break;
                 case ChatProviderType.XAI:
                     Configuration.XAI = item.Value as XAIChatConfig;
+                    break;
+                case ChatProviderType.Onnx:
+                    Configuration.Onnx = item.Value as OnnxChatConfig;
                     break;
                 default:
                     throw new NotImplementedException();

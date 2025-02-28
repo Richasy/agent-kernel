@@ -69,6 +69,7 @@ internal sealed class ChatConfigManager : ChatConfigManagerBase
             GroqChatConfig groqConfig => groqConfig.ToAIServiceConfig<GroqServiceConfig>(),
             MistralChatConfig mistralConfig => mistralConfig.ToAIServiceConfig(),
             OllamaChatConfig ollamaConfig => ollamaConfig.ToAIServiceConfig(),
+            OnnxChatConfig onnxConfig => onnxConfig.ToAIServiceConfig(),
             _ => default,
         };
     }
