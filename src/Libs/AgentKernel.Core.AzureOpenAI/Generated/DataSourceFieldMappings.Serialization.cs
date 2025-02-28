@@ -8,11 +8,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
+namespace Azure.AI.OpenAI.Chat
 {
     public partial class DataSourceFieldMappings : IJsonModel<DataSourceFieldMappings>
     {
         void IJsonModel<DataSourceFieldMappings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataSourceFieldMappings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -20,7 +29,6 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
                 throw new FormatException($"The model {nameof(DataSourceFieldMappings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (SerializedAdditionalRawData?.ContainsKey("title_field") != true && Optional.IsDefined(TitleFieldName))
             {
                 writer.WritePropertyName("title_field"u8);
@@ -90,7 +98,6 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataSourceFieldMappings IJsonModel<DataSourceFieldMappings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

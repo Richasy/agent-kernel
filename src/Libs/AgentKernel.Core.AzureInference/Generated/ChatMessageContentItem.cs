@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary>
     /// An abstract representation of a structured content item within a chat message.

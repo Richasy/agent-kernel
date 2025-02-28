@@ -4,7 +4,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI;
+namespace Azure.AI.OpenAI;
 
 [Experimental("AOAI001")]
 [CodeGenModel("AzureContentFilterResultForChoiceProtectedMaterialCodeCitation")]

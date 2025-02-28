@@ -8,8 +8,9 @@
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
+using Richasy.AgentKernel.Core.OpenAI.FineTuning;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.FineTuning;
+namespace Azure.AI.OpenAI.FineTuning;
 
 /// <summary>
 /// Extension methods for Azure fine tuning clients.

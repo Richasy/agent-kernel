@@ -7,11 +7,10 @@
 
 using System;
 using Azure.Core;
-using Richasy.AgentKernel.Core.AzureInference;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
-    /// <summary> Client options for Richasy.AgentKernel.Core.AzureInference library clients. </summary>
+    /// <summary> Client options for Azure.AI.Inference library clients. </summary>
     public partial class AzureAIInferenceClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_05_01_Preview;

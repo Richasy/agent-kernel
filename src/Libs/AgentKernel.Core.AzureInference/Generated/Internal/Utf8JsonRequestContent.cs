@@ -10,9 +10,8 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Richasy.AgentKernel.Core.AzureInference;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     internal class Utf8JsonRequestContent : RequestContent
     {

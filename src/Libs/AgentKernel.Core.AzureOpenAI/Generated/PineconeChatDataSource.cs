@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
+namespace Azure.AI.OpenAI.Chat
 {
     /// <summary> The PineconeChatDataSource. </summary>
     public partial class PineconeChatDataSource : ChatDataSource

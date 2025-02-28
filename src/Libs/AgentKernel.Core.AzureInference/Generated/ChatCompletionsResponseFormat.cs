@@ -8,14 +8,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary>
     /// Represents the format that the model must output. Use this to enable JSON mode instead of the default text mode.
     /// Note that to enable JSON mode, some AI models may also require you to instruct the model to produce JSON
     /// via a system or user message.
     /// Please note <see cref="ChatCompletionsResponseFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ChatCompletionsResponseFormatJSON"/> and <see cref="ChatCompletionsResponseFormatText"/>.
+    /// The available derived classes include <see cref="ChatCompletionsResponseFormatJsonObject"/> and <see cref="ChatCompletionsResponseFormatText"/>.
     /// </summary>
     public abstract partial class ChatCompletionsResponseFormat
     {

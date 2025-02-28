@@ -10,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     internal class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
     {

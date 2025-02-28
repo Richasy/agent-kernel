@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using Richasy.AgentKernel.Core.AzureInference;
+using Azure.Core;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
-    [CodeGenSuppress("global::Richasy.AgentKernel.Core.AzureInference.IUtf8JsonSerializable.Write", typeof(Utf8JsonWriter))]
+    [CodeGenSuppress("global::Azure.Core.IUtf8JsonSerializable.Write", typeof(Utf8JsonWriter))]
     public partial class ChatCompletionsToolChoice : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)

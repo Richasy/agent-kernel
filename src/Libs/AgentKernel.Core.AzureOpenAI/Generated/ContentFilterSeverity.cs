@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI
+namespace Azure.AI.OpenAI
 {
     /// <summary> The AzureContentFilterSeverityResultSeverity. </summary>
     public readonly partial struct ContentFilterSeverity : IEquatable<ContentFilterSeverity>
@@ -36,7 +36,7 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI
         public static bool operator ==(ContentFilterSeverity left, ContentFilterSeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentFilterSeverity"/> values are not the same. </summary>
         public static bool operator !=(ContentFilterSeverity left, ContentFilterSeverity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContentFilterSeverity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContentFilterSeverity"/>. </summary>
         public static implicit operator ContentFilterSeverity(string value) => new ContentFilterSeverity(value);
 
         /// <inheritdoc />

@@ -3,7 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI;
+namespace Azure.AI.OpenAI;
 
 [Experimental("AOAI001")][CodeGenModel("AzureOpenAIChatErrorResponse")] internal partial class AzureOpenAIChatErrorResponse { }
 [Experimental("AOAI001")][CodeGenModel("AzureOpenAIDalleErrorResponse")] internal partial class AzureOpenAIDalleErrorResponse { }

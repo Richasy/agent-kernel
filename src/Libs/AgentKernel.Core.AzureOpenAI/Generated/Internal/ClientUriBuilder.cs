@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI
+namespace Azure.AI.OpenAI
 {
     internal partial class ClientUriBuilder
     {

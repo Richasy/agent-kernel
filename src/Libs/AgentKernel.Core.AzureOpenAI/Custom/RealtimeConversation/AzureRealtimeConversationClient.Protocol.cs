@@ -7,8 +7,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using Richasy.AgentKernel.Core.OpenAI.RealtimeConversation;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.RealtimeConversation;
+namespace Azure.AI.OpenAI.RealtimeConversation;
 
 [Experimental("OPENAI002")]
 internal partial class AzureRealtimeConversationClient : RealtimeConversationClient

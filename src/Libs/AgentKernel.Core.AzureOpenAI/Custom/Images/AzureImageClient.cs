@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Richasy.AgentKernel.Core.OpenAI.Images;
 using System.ClientModel.Primitives;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Images;
+namespace Azure.AI.OpenAI.Images;
 
 /// <summary>
 /// The scenario client used for image operations with the Azure OpenAI service.
@@ -27,7 +28,7 @@ internal partial class AzureImageClient : ImageClient
 
         _deploymentName = deploymentName;
         _endpoint = endpoint;
-        _apiVersion = options.Version;
+        _apiVersion = options.GetRawServiceApiValueForClient(this);
     }
 
     protected AzureImageClient()

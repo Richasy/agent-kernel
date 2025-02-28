@@ -3,14 +3,14 @@
 
 #if !AZURE_OPENAI_GA
 
-using Richasy.AgentKernel.Core.AzureOpenAI;
+using Azure.AI.OpenAI;
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.VectorStores;
+namespace Azure.AI.OpenAI.VectorStores;
 
 internal partial class AzureCreateVectorStoreOperation
 {

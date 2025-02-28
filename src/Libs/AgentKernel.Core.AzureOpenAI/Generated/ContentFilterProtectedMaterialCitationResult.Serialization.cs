@@ -8,11 +8,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI
+namespace Azure.AI.OpenAI
 {
     public partial class ContentFilterProtectedMaterialCitationResult : IJsonModel<ContentFilterProtectedMaterialCitationResult>
     {
         void IJsonModel<ContentFilterProtectedMaterialCitationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContentFilterProtectedMaterialCitationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -20,7 +29,6 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI
                 throw new FormatException($"The model {nameof(ContentFilterProtectedMaterialCitationResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (SerializedAdditionalRawData?.ContainsKey("license") != true && Optional.IsDefined(License))
             {
                 writer.WritePropertyName("license"u8);
@@ -50,7 +58,6 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContentFilterProtectedMaterialCitationResult IJsonModel<ContentFilterProtectedMaterialCitationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

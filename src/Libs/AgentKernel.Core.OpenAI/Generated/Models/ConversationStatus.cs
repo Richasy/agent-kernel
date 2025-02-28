@@ -4,39 +4,47 @@
 
 using System;
 using System.ComponentModel;
+using Richasy.AgentKernel.Core.OpenAI;
 
 namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation
 {
     public readonly partial struct ConversationStatus : IEquatable<ConversationStatus>
     {
         private readonly string _value;
+        private const string CompletedValue = "completed";
+        private const string CancelledValue = "cancelled";
+        private const string FailedValue = "failed";
+        private const string IncompleteValue = "incomplete";
 
         public ConversationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string InProgressValue = "in_progress";
-        private const string CompletedValue = "completed";
-        private const string CancelledValue = "cancelled";
-        private const string IncompleteValue = "incomplete";
-        private const string FailedValue = "failed";
-
-        public static ConversationStatus InProgress { get; } = new ConversationStatus(InProgressValue);
         public static ConversationStatus Completed { get; } = new ConversationStatus(CompletedValue);
+
         public static ConversationStatus Cancelled { get; } = new ConversationStatus(CancelledValue);
-        public static ConversationStatus Incomplete { get; } = new ConversationStatus(IncompleteValue);
+
         public static ConversationStatus Failed { get; } = new ConversationStatus(FailedValue);
+
+        public static ConversationStatus Incomplete { get; } = new ConversationStatus(IncompleteValue);
+
         public static bool operator ==(ConversationStatus left, ConversationStatus right) => left.Equals(right);
+
         public static bool operator !=(ConversationStatus left, ConversationStatus right) => !left.Equals(right);
+
         public static implicit operator ConversationStatus(string value) => new ConversationStatus(value);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConversationStatus other && Equals(other);
+
         public bool Equals(ConversationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
         public override string ToString() => _value;
     }
 }

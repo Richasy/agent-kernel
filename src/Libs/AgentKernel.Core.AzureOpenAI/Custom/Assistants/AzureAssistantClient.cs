@@ -7,7 +7,7 @@ using Richasy.AgentKernel.Core.OpenAI;
 using Richasy.AgentKernel.Core.OpenAI.Assistants;
 using System.ClientModel.Primitives;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Assistants;
+namespace Azure.AI.OpenAI.Assistants;
 
 /// <summary>
 /// The scenario client used for assistant operations with the Azure OpenAI service.
@@ -28,7 +28,7 @@ internal partial class AzureAssistantClient : AssistantClient
         options ??= new();
 
         _endpoint = endpoint;
-        _apiVersion = options.Version;
+        _apiVersion = options.GetRawServiceApiValueForClient(this);
     }
 
     protected AzureAssistantClient()

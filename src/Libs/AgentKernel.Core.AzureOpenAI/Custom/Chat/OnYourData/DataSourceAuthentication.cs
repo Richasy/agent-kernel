@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 
 using Azure.Core;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat;
+namespace Azure.AI.OpenAI.Chat;
 
 [CodeGenModel("AzureChatDataSourceAuthenticationOptions")]
 [Experimental("AOAI001")]

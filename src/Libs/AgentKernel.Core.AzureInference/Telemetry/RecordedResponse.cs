@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 
-namespace Richasy.AgentKernel.Core.AzureInference.Telemetry
+namespace Azure.AI.Inference.Telemetry
 {
 #nullable enable
     internal class RecordedResponse

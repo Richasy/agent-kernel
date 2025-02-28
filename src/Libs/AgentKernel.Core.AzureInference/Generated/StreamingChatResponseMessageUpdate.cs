@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary> A representation of a chat message update as received in a streaming response. </summary>
     public partial class StreamingChatResponseMessageUpdate

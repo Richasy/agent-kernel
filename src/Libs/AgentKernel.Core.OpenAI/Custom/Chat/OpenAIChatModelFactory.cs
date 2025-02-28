@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Richasy.AgentKernel.Core.OpenAI.Chat;
@@ -9,6 +10,39 @@ public static partial class OpenAIChatModelFactory
 {
     /// <summary> Initializes a new instance of <see cref="OpenAI.Chat.ChatCompletion"/>. </summary>
     /// <returns> A new <see cref="OpenAI.Chat.ChatCompletion"/> instance for mocking. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static ChatCompletion ChatCompletion(
+        string id,
+        ChatFinishReason finishReason,
+        ChatMessageContent content,
+        string refusal,
+        IEnumerable<ChatToolCall> toolCalls,
+        ChatMessageRole role,
+        ChatFunctionCall functionCall,
+        IEnumerable<ChatTokenLogProbabilityDetails> contentTokenLogProbabilities,
+        IEnumerable<ChatTokenLogProbabilityDetails> refusalTokenLogProbabilities,
+        DateTimeOffset createdAt,
+        string model,
+        string systemFingerprint,
+        ChatTokenUsage usage) =>
+        ChatCompletion(
+            id: id,
+            finishReason: finishReason,
+            content:content,
+            refusal: refusal,
+            toolCalls: toolCalls,
+            role: role,
+            functionCall: functionCall,
+            contentTokenLogProbabilities: contentTokenLogProbabilities,
+            refusalTokenLogProbabilities: refusalTokenLogProbabilities,
+            createdAt: createdAt,
+            model: model,
+            systemFingerprint: systemFingerprint,
+            usage: usage,
+            outputAudio: default);
+
+    /// <summary> Initializes a new instance of <see cref="OpenAI.Chat.ChatCompletion"/>. </summary>
+    /// <returns> A new <see cref="OpenAI.Chat.ChatCompletion"/> instance for mocking. </returns>
     public static ChatCompletion ChatCompletion(
         string id = null,
         ChatFinishReason finishReason = default,
@@ -16,13 +50,14 @@ public static partial class OpenAIChatModelFactory
         string refusal = null,
         IEnumerable<ChatToolCall> toolCalls = null,
         ChatMessageRole role = default,
-        ChatFunctionCall functionCall = null,
+        ChatFunctionCall functionCall = default,
         IEnumerable<ChatTokenLogProbabilityDetails> contentTokenLogProbabilities = null,
         IEnumerable<ChatTokenLogProbabilityDetails> refusalTokenLogProbabilities = null,
         DateTimeOffset createdAt = default,
         string model = null,
         string systemFingerprint = null,
-        ChatTokenUsage usage = null)
+        ChatTokenUsage usage = default,
+        ChatOutputAudio outputAudio = default)
     {
         content ??= new ChatMessageContent();
         toolCalls ??= new List<ChatToolCall>();
@@ -30,17 +65,18 @@ public static partial class OpenAIChatModelFactory
         refusalTokenLogProbabilities ??= new List<ChatTokenLogProbabilityDetails>();
 
         InternalChatCompletionResponseMessage message = new InternalChatCompletionResponseMessage(
-            content,
             refusal,
             toolCalls.ToList(),
+            outputAudio,
             role,
+            content,
             functionCall,
-            serializedAdditionalRawData: null);
+            additionalBinaryDataProperties: null);
 
         InternalCreateChatCompletionResponseChoiceLogprobs logprobs = new InternalCreateChatCompletionResponseChoiceLogprobs(
             contentTokenLogProbabilities.ToList(),
             refusalTokenLogProbabilities.ToList(),
-            serializedAdditionalRawData: null);
+            additionalBinaryDataProperties: null);
 
         IReadOnlyList<InternalCreateChatCompletionResponseChoice> choices = [
             new InternalCreateChatCompletionResponseChoice(
@@ -48,20 +84,21 @@ public static partial class OpenAIChatModelFactory
                 index: 0,
                 message,
                 logprobs,
-                serializedAdditionalRawData: null)
+                additionalBinaryDataProperties: null)
         ];
 
         return new ChatCompletion(
             id,
+            model,
+            systemFingerprint,
+            usage,
+            InternalCreateChatCompletionResponseObject.ChatCompletion,
+            serviceTier: null,
             choices,
             createdAt,
-            model,
-            serviceTier: null,
-            systemFingerprint,
-            InternalCreateChatCompletionResponseObject.ChatCompletion,
-            usage,
-            serializedAdditionalRawData: null);
+            additionalBinaryDataProperties: null);
     }
+
 
     /// <summary> Initializes a new instance of <see cref="OpenAI.Chat.ChatTokenLogProbabilityDetails"/>. </summary>
     /// <returns> A new <see cref="OpenAI.Chat.ChatTokenLogProbabilityDetails"/> instance for mocking. </returns>
@@ -74,7 +111,7 @@ public static partial class OpenAIChatModelFactory
             logProbability,
             utf8Bytes,
             topLogProbabilities.ToList(),
-            serializedAdditionalRawData: null);
+            additionalBinaryDataProperties: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="OpenAI.Chat.ChatTokenTopLogProbabilityDetails"/>. </summary>
@@ -85,20 +122,31 @@ public static partial class OpenAIChatModelFactory
             token,
             logProbability,
             utf8Bytes,
-            serializedAdditionalRawData: null);
+            additionalBinaryDataProperties: null);
     }
+
+    /// <summary> Initializes a new instance of <see cref="OpenAI.Chat.ChatTokenUsage"/>. </summary>
+    /// <returns> A new <see cref="OpenAI.Chat.ChatTokenUsage"/> instance for mocking. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static ChatTokenUsage ChatTokenUsage(int outputTokenCount, int inputTokenCount, int totalTokenCount, ChatOutputTokenUsageDetails outputTokenDetails) =>
+        ChatTokenUsage(
+            outputTokenCount: outputTokenCount,
+            inputTokenCount: inputTokenCount,
+            totalTokenCount: totalTokenCount,
+            outputTokenDetails: outputTokenDetails,
+            inputTokenDetails: default);
 
     /// <summary> Initializes a new instance of <see cref="OpenAI.Chat.ChatTokenUsage"/>. </summary>
     /// <returns> A new <see cref="OpenAI.Chat.ChatTokenUsage"/> instance for mocking. </returns>
     public static ChatTokenUsage ChatTokenUsage(int outputTokenCount = default, int inputTokenCount = default, int totalTokenCount = default, ChatOutputTokenUsageDetails outputTokenDetails = null, ChatInputTokenUsageDetails inputTokenDetails = null)
     {
         return new ChatTokenUsage(
-            outputTokenCount,
-            inputTokenCount,
-            totalTokenCount,
-            outputTokenDetails,
-            inputTokenDetails,
-            serializedAdditionalRawData: null);
+            outputTokenCount: outputTokenCount,
+            inputTokenCount: inputTokenCount,
+            totalTokenCount: totalTokenCount,
+            outputTokenDetails: outputTokenDetails,
+            inputTokenDetails: inputTokenDetails,
+            additionalBinaryDataProperties: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="OpenAI.Chat.ChatInputTokenUsageDetails"/>. </summary>
@@ -108,18 +156,81 @@ public static partial class OpenAIChatModelFactory
         return new ChatInputTokenUsageDetails(
             audioTokenCount: audioTokenCount,
             cachedTokenCount: cachedTokenCount,
-            serializedAdditionalRawData: null);
+            additionalBinaryDataProperties: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="OpenAI.Chat.ChatOutputTokenUsageDetails"/>. </summary>
     /// <returns> A new <see cref="OpenAI.Chat.ChatOutputTokenusageDetails"/> instance for mocking. </returns>
-    public static ChatOutputTokenUsageDetails ChatOutputTokenUsageDetails(int reasoningTokenCount = default, int audioTokenCount = default)
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static ChatOutputTokenUsageDetails ChatOutputTokenUsageDetails(int reasoningTokenCount) =>
+        ChatOutputTokenUsageDetails(
+            reasoningTokenCount: reasoningTokenCount,
+            audioTokenCount: default);
+
+    /// <summary> Initializes a new instance of <see cref="OpenAI.Chat.ChatOutputTokenUsageDetails"/>. </summary>
+    /// <returns> A new <see cref="OpenAI.Chat.ChatOutputTokenusageDetails"/> instance for mocking. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static ChatOutputTokenUsageDetails ChatOutputTokenUsageDetails(int reasoningTokenCount, int audioTokenCount) =>
+        ChatOutputTokenUsageDetails(
+            reasoningTokenCount: reasoningTokenCount,
+            audioTokenCount: audioTokenCount,
+            acceptedPredictionTokenCount: default,
+            rejectedPredictionTokenCount: default);
+
+    /// <summary> Initializes a new instance of <see cref="OpenAI.Chat.ChatOutputTokenUsageDetails"/>. </summary>
+    /// <returns> A new <see cref="OpenAI.Chat.ChatOutputTokenusageDetails"/> instance for mocking. </returns>
+    public static ChatOutputTokenUsageDetails ChatOutputTokenUsageDetails(int reasoningTokenCount = default, int audioTokenCount = default, int acceptedPredictionTokenCount = default, int rejectedPredictionTokenCount = default)
     {
         return new ChatOutputTokenUsageDetails(
             audioTokenCount: audioTokenCount,
             reasoningTokenCount: reasoningTokenCount,
-            serializedAdditionalRawData: null);
+            acceptedPredictionTokenCount: acceptedPredictionTokenCount,
+            rejectedPredictionTokenCount: rejectedPredictionTokenCount,
+            additionalBinaryDataProperties: null);
     }
+
+    public static ChatOutputAudio ChatOutputAudio(BinaryData audioBytes, string id = null, string transcript = null, DateTimeOffset expiresAt = default)
+    {
+        return new ChatOutputAudio(
+            id,
+            expiresAt,
+            transcript,
+            audioBytes,
+            additionalBinaryDataProperties: null);
+    }
+
+    /// <summary> Initializes a new instance of <see cref="OpenAI.Chat.StreamingChatCompletionUpdate"/>. </summary>
+    /// <returns> A new <see cref="OpenAI.Chat.StreamingChatCompletionUpdate"/> instance for mocking. </returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static StreamingChatCompletionUpdate StreamingChatCompletionUpdate(
+        string completionId,
+        ChatMessageContent contentUpdate,
+        StreamingChatFunctionCallUpdate functionCallUpdate,
+        IEnumerable<StreamingChatToolCallUpdate> toolCallUpdates,
+        ChatMessageRole? role,
+        string refusalUpdate,
+        IEnumerable<ChatTokenLogProbabilityDetails> contentTokenLogProbabilities,
+        IEnumerable<ChatTokenLogProbabilityDetails> refusalTokenLogProbabilities,
+        ChatFinishReason? finishReason,
+        DateTimeOffset createdAt,
+        string model,
+        string systemFingerprint,
+        ChatTokenUsage usage) =>
+        StreamingChatCompletionUpdate(
+            completionId: completionId,
+            contentUpdate: contentUpdate,
+            functionCallUpdate: functionCallUpdate,
+            toolCallUpdates: toolCallUpdates,
+            role: role,
+            refusalUpdate: refusalUpdate,
+            contentTokenLogProbabilities: contentTokenLogProbabilities,
+            refusalTokenLogProbabilities: refusalTokenLogProbabilities,
+            finishReason: finishReason,
+            createdAt: createdAt,
+            model: model,
+            systemFingerprint: systemFingerprint,
+            usage: usage,
+            outputAudioUpdate: default);
 
     /// <summary> Initializes a new instance of <see cref="OpenAI.Chat.StreamingChatCompletionUpdate"/>. </summary>
     /// <returns> A new <see cref="OpenAI.Chat.StreamingChatCompletionUpdate"/> instance for mocking. </returns>
@@ -128,15 +239,16 @@ public static partial class OpenAIChatModelFactory
         ChatMessageContent contentUpdate = null,
         StreamingChatFunctionCallUpdate functionCallUpdate = null,
         IEnumerable<StreamingChatToolCallUpdate> toolCallUpdates = null,
-        ChatMessageRole? role = null,
+        ChatMessageRole? role = default,
         string refusalUpdate = null,
         IEnumerable<ChatTokenLogProbabilityDetails> contentTokenLogProbabilities = null,
         IEnumerable<ChatTokenLogProbabilityDetails> refusalTokenLogProbabilities = null,
-        ChatFinishReason? finishReason = null,
+        ChatFinishReason? finishReason = default,
         DateTimeOffset createdAt = default,
         string model = null,
         string systemFingerprint = null,
-        ChatTokenUsage usage = null)
+        ChatTokenUsage usage = default,
+        StreamingChatOutputAudioUpdate outputAudioUpdate = default)
     {
         contentUpdate ??= new ChatMessageContent();
         toolCallUpdates ??= new List<StreamingChatToolCallUpdate>();
@@ -144,37 +256,38 @@ public static partial class OpenAIChatModelFactory
         refusalTokenLogProbabilities ??= new List<ChatTokenLogProbabilityDetails>();
 
         InternalChatCompletionStreamResponseDelta delta = new InternalChatCompletionStreamResponseDelta(
-            contentUpdate,
+            outputAudioUpdate,
             functionCallUpdate,
             toolCallUpdates.ToList(),
-            role,
             refusalUpdate,
-            serializedAdditionalRawData: null);
+            role,
+            contentUpdate,
+            additionalBinaryDataProperties: null);
 
         InternalCreateChatCompletionStreamResponseChoiceLogprobs logprobs = new InternalCreateChatCompletionStreamResponseChoiceLogprobs(
             contentTokenLogProbabilities.ToList(),
             refusalTokenLogProbabilities.ToList(),
-            serializedAdditionalRawData: null);
+            additionalBinaryDataProperties: null);
 
         IReadOnlyList<InternalCreateChatCompletionStreamResponseChoice> choices = [
             new InternalCreateChatCompletionStreamResponseChoice(
                 delta,
                 logprobs,
-                finishReason,
                 index: 0,
-                serializedAdditionalRawData: null)
+                finishReason,
+                additionalBinaryDataProperties: null)
         ];
 
         return new StreamingChatCompletionUpdate(
-            completionId,
-            choices,
-            createdAt,
             model,
-            serviceTier: null,
             systemFingerprint,
             InternalCreateChatCompletionStreamResponseObject.ChatCompletionChunk,
+            completionId,
+            serviceTier: null,
+            choices,
+            createdAt,
             usage,
-            serializedAdditionalRawData: null);
+            additionalBinaryDataProperties: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="OpenAI.Chat.StreamingChatFunctionCallUpdate"/>. </summary>
@@ -183,9 +296,31 @@ public static partial class OpenAIChatModelFactory
     public static StreamingChatFunctionCallUpdate StreamingChatFunctionCallUpdate(string functionName = null, BinaryData functionArgumentsUpdate = null)
     {
         return new StreamingChatFunctionCallUpdate(
-            functionName: functionName,
-            functionArgumentsUpdate: functionArgumentsUpdate,
-            serializedAdditionalRawData: null);
+            functionName,
+            functionArgumentsUpdate,
+            additionalBinaryDataProperties: null);
+    }
+
+    /// <summary>
+    /// Initializes a new instance of <see cref="OpenAI.Chat.StreamingChatOutputAudioUpdate"/>.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="expiresAt"></param>
+    /// <param name="transcriptUpdate"></param>
+    /// <param name="audioBytesUpdate"></param>
+    /// <returns></returns>
+    public static StreamingChatOutputAudioUpdate StreamingChatOutputAudioUpdate(
+        string id = null,
+        DateTimeOffset? expiresAt = null,
+        string transcriptUpdate = null,
+        BinaryData audioBytesUpdate = null)
+    {
+        return new StreamingChatOutputAudioUpdate(
+            id,
+            expiresAt,
+            transcriptUpdate,
+            audioBytesUpdate,
+            additionalBinaryDataProperties: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="OpenAI.Chat.StreamingChatToolCallUpdate"/>. </summary>
@@ -195,13 +330,13 @@ public static partial class OpenAIChatModelFactory
         InternalChatCompletionMessageToolCallChunkFunction function = new InternalChatCompletionMessageToolCallChunkFunction(
             functionName,
             functionArgumentsUpdate,
-            serializedAdditionalRawData: null);
+            additionalBinaryDataProperties: null);
 
         return new StreamingChatToolCallUpdate(
             index,
-            toolCallId,
-            kind,
             function,
-            serializedAdditionalRawData: null);
+            kind,
+            toolCallId,
+            additionalBinaryDataProperties: null);
     }
 }

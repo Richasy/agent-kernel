@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat;
+namespace Azure.AI.OpenAI.Chat;
 
 [CodeGenModel("PineconeChatDataSource")]
 [Experimental("AOAI001")]

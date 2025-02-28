@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if !AZURE_OPENAI_GA
+
 using System.ClientModel.Primitives;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.VectorStores;
+namespace Azure.AI.OpenAI.VectorStores;
 internal partial class AzureAddFileToVectorStoreOperation : AddFileToVectorStoreOperation
 {
     internal override PipelineMessage CreateGetVectorStoreFileRequest(string vectorStoreId, string fileId, RequestOptions options)
@@ -14,3 +16,5 @@ internal partial class AzureAddFileToVectorStoreOperation : AddFileToVectorStore
             .WithOptions(options)
             .Build();
 }
+
+#endif

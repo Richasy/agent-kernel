@@ -7,48 +7,75 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Richasy.AgentKernel.Core.OpenAI;
 
 namespace Richasy.AgentKernel.Core.OpenAI.FineTuning
 {
     internal partial class FineTuningJobEvent : IJsonModel<FineTuningJobEvent>
     {
+        internal FineTuningJobEvent()
+        {
+        }
+
         void IJsonModel<FineTuningJobEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FineTuningJobEvent>)this).GetFormatFromOptions(options) : options.Format;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FineTuningJobEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FineTuningJobEvent)} does not support writing '{format}' format.");
             }
-
-            writer.WriteStartObject();
-            if (SerializedAdditionalRawData?.ContainsKey("id") != true)
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (SerializedAdditionalRawData?.ContainsKey("created_at") != true)
-            {
-                writer.WritePropertyName("created_at"u8);
-                writer.WriteNumberValue(CreatedAt, "U");
-            }
-            if (SerializedAdditionalRawData?.ContainsKey("level") != true)
-            {
-                writer.WritePropertyName("level"u8);
-                writer.WriteStringValue(Level.ToSerialString());
-            }
-            if (SerializedAdditionalRawData?.ContainsKey("message") != true)
-            {
-                writer.WritePropertyName("message"u8);
-                writer.WriteStringValue(Message);
-            }
-            if (SerializedAdditionalRawData?.ContainsKey("object") != true)
+            if (_additionalBinaryDataProperties?.ContainsKey("object") != true)
             {
                 writer.WritePropertyName("object"u8);
                 writer.WriteStringValue(Object.ToString());
             }
-            if (SerializedAdditionalRawData != null)
+            if (_additionalBinaryDataProperties?.ContainsKey("id") != true)
             {
-                foreach (var item in SerializedAdditionalRawData)
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (_additionalBinaryDataProperties?.ContainsKey("created_at") != true)
+            {
+                writer.WritePropertyName("created_at"u8);
+                writer.WriteNumberValue(CreatedAt, "U");
+            }
+            if (_additionalBinaryDataProperties?.ContainsKey("level") != true)
+            {
+                writer.WritePropertyName("level"u8);
+                writer.WriteStringValue(Level.ToSerialString());
+            }
+            if (_additionalBinaryDataProperties?.ContainsKey("message") != true)
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (Optional.IsDefined(Type) && _additionalBinaryDataProperties?.ContainsKey("type") != true)
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type.Value.ToString());
+            }
+            if (Optional.IsDefined(Data) && _additionalBinaryDataProperties?.ContainsKey("data") != true)
+            {
+                writer.WritePropertyName("data"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(Data);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (true && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     if (ModelSerializationExtensions.IsSentinelValue(item.Value))
                     {
@@ -56,7 +83,7 @@ namespace Richasy.AgentKernel.Core.OpenAI.FineTuning
                     }
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
@@ -65,83 +92,101 @@ namespace Richasy.AgentKernel.Core.OpenAI.FineTuning
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
-        FineTuningJobEvent IJsonModel<FineTuningJobEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FineTuningJobEvent IJsonModel<FineTuningJobEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        protected virtual FineTuningJobEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FineTuningJobEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FineTuningJobEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FineTuningJobEvent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFineTuningJobEvent(document.RootElement, options);
         }
 
-        internal static FineTuningJobEvent DeserializeFineTuningJobEvent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static FineTuningJobEvent DeserializeFineTuningJobEvent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            InternalFineTuningJobEventObject @object = default;
             string id = default;
             DateTimeOffset createdAt = default;
-            FineTuningJobEventLevel level = default;
+            FineTuning.FineTuningJobEventLevel level = default;
             string message = default;
-            InternalFineTuningJobEventObject @object = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            InternalFineTuningJobEventType? @type = default;
+            BinaryData data = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("object"u8))
                 {
-                    id = property.Value.GetString();
+                    @object = new InternalFineTuningJobEventObject(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("created_at"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("level"u8))
+                if (prop.NameEquals("created_at"u8))
                 {
-                    level = property.Value.GetString().ToFineTuningJobEventLevel();
+                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
-                if (property.NameEquals("message"u8))
+                if (prop.NameEquals("level"u8))
                 {
-                    message = property.Value.GetString();
+                    level = prop.Value.GetString().ToFineTuningJobEventLevel();
                     continue;
                 }
-                if (property.NameEquals("object"u8))
+                if (prop.NameEquals("message"u8))
                 {
-                    @object = new InternalFineTuningJobEventObject(property.Value.GetString());
+                    message = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @type = new InternalFineTuningJobEventType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("data"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    data = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (true)
                 {
-                    rawDataDictionary ??= new Dictionary<string, BinaryData>();
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new FineTuningJobEvent(
+                @object,
                 id,
                 createdAt,
                 level,
                 message,
-                @object,
-                serializedAdditionalRawData);
+                @type,
+                data,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<FineTuningJobEvent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FineTuningJobEvent>)this).GetFormatFromOptions(options) : options.Format;
+        BinaryData IPersistableModel<FineTuningJobEvent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FineTuningJobEvent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -151,15 +196,16 @@ namespace Richasy.AgentKernel.Core.OpenAI.FineTuning
             }
         }
 
-        FineTuningJobEvent IPersistableModel<FineTuningJobEvent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FineTuningJobEvent>)this).GetFormatFromOptions(options) : options.Format;
+        FineTuningJobEvent IPersistableModel<FineTuningJobEvent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        protected virtual FineTuningJobEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FineTuningJobEvent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFineTuningJobEvent(document.RootElement, options);
                     }
                 default:
@@ -169,15 +215,20 @@ namespace Richasy.AgentKernel.Core.OpenAI.FineTuning
 
         string IPersistableModel<FineTuningJobEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal static FineTuningJobEvent FromResponse(PipelineResponse response)
+        public static implicit operator BinaryContent(FineTuningJobEvent fineTuningJobEvent)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeFineTuningJobEvent(document.RootElement);
+            if (fineTuningJobEvent == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(fineTuningJobEvent, ModelSerializationExtensions.WireOptions);
         }
 
-        internal virtual BinaryContent ToBinaryContent()
+        public static explicit operator FineTuningJobEvent(ClientResult result)
         {
-            return BinaryContent.Create(this, ModelSerializationExtensions.WireOptions);
+            using PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeFineTuningJobEvent(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

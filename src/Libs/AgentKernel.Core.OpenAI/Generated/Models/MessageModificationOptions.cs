@@ -4,23 +4,31 @@
 
 using System;
 using System.Collections.Generic;
+using Richasy.AgentKernel.Core.OpenAI;
 
 namespace Richasy.AgentKernel.Core.OpenAI.Assistants
 {
     public partial class MessageModificationOptions
     {
-        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
+        private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         public MessageModificationOptions()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        internal MessageModificationOptions(IDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MessageModificationOptions(IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
-            SerializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        public IDictionary<string, string> Metadata { get; set; }
+        public IDictionary<string, string> Metadata { get; }
+
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData
+        {
+            get => _additionalBinaryDataProperties;
+            set => _additionalBinaryDataProperties = value;
+        }
     }
 }

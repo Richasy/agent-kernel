@@ -4,46 +4,61 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Richasy.AgentKernel.Core.OpenAI;
 
 namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation
 {
     internal partial class InternalRealtimeResponse
     {
-        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
-        internal InternalRealtimeResponse(string id, ConversationStatus status, ConversationStatusDetails statusDetails, IEnumerable<ConversationItem> output, ConversationTokenUsage usage)
-        {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(output, nameof(output));
-            Argument.AssertNotNull(usage, nameof(usage));
+        private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-            Id = id;
-            Status = status;
-            StatusDetails = statusDetails;
-            Output = output.ToList();
-            Usage = usage;
+        internal InternalRealtimeResponse(IDictionary<string, string> metadata)
+        {
+            Metadata = metadata;
+            Output = new ChangeTrackingList<ConversationItem>();
+            Modalities = new ChangeTrackingList<InternalRealtimeResponseModality>();
         }
 
-        internal InternalRealtimeResponse(InternalRealtimeResponseObject @object, string id, ConversationStatus status, ConversationStatusDetails statusDetails, IReadOnlyList<ConversationItem> output, ConversationTokenUsage usage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalRealtimeResponse(string id, InternalRealtimeResponseObject? @object, ConversationStatus? status, ConversationStatusDetails statusDetails, IDictionary<string, string> metadata, ConversationTokenUsage usage, string conversationId, float? temperature, BinaryData maxOutputTokens, IReadOnlyList<ConversationItem> output, IReadOnlyList<InternalRealtimeResponseModality> modalities, ConversationVoice? voice, ConversationAudioFormat? outputAudioFormat, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Id = id;
             Object = @object;
-            Id = id;
             Status = status;
             StatusDetails = statusDetails;
-            Output = output;
+            Metadata = metadata;
             Usage = usage;
-            SerializedAdditionalRawData = serializedAdditionalRawData;
+            ConversationId = conversationId;
+            Temperature = temperature;
+            MaxOutputTokens = maxOutputTokens;
+            Output = output;
+            Modalities = modalities;
+            Voice = voice;
+            OutputAudioFormat = outputAudioFormat;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        internal InternalRealtimeResponse()
-        {
-        }
-
-        public InternalRealtimeResponseObject Object { get; } = InternalRealtimeResponseObject.RealtimeResponse;
 
         public string Id { get; }
-        public ConversationStatus Status { get; }
+
+        public InternalRealtimeResponseObject? Object { get; }
+
+        public ConversationStatus? Status { get; }
+
         public ConversationStatusDetails StatusDetails { get; }
+
+        public IDictionary<string, string> Metadata { get; }
+
         public ConversationTokenUsage Usage { get; }
+
+        public string ConversationId { get; }
+
+        public float? Temperature { get; }
+
+        public BinaryData MaxOutputTokens { get; }
+
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData
+        {
+            get => _additionalBinaryDataProperties;
+            set => _additionalBinaryDataProperties = value;
+        }
     }
 }

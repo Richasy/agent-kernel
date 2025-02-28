@@ -6,7 +6,7 @@
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI;
+namespace Azure.AI.OpenAI;
 
 internal static partial class CustomSerializationHelpers
 {

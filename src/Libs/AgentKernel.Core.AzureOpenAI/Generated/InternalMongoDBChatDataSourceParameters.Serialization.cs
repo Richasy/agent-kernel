@@ -8,11 +8,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
+namespace Azure.AI.OpenAI.Chat
 {
     internal partial class InternalMongoDBChatDataSourceParameters : IJsonModel<InternalMongoDBChatDataSourceParameters>
     {
         void IJsonModel<InternalMongoDBChatDataSourceParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InternalMongoDBChatDataSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -20,7 +29,6 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
                 throw new FormatException($"The model {nameof(InternalMongoDBChatDataSourceParameters)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (SerializedAdditionalRawData?.ContainsKey("top_n_documents") != true && Optional.IsDefined(TopNDocuments))
             {
                 writer.WritePropertyName("top_n_documents"u8);
@@ -115,7 +123,6 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         InternalMongoDBChatDataSourceParameters IJsonModel<InternalMongoDBChatDataSourceParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

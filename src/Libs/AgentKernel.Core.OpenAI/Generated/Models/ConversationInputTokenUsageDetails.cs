@@ -9,28 +9,24 @@ namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation
 {
     public partial class ConversationInputTokenUsageDetails
     {
-        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
-        internal ConversationInputTokenUsageDetails(int cachedTokens, int textTokens, int audioTokens)
-        {
-            CachedTokens = cachedTokens;
-            TextTokens = textTokens;
-            AudioTokens = audioTokens;
-        }
-
-        internal ConversationInputTokenUsageDetails(int cachedTokens, int textTokens, int audioTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            CachedTokens = cachedTokens;
-            TextTokens = textTokens;
-            AudioTokens = audioTokens;
-            SerializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         internal ConversationInputTokenUsageDetails()
         {
         }
 
-        public int CachedTokens { get; }
-        public int TextTokens { get; }
-        public int AudioTokens { get; }
+        internal ConversationInputTokenUsageDetails(int audioTokenCount, int cachedTokenCount, int textTokenCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            AudioTokenCount = audioTokenCount;
+            CachedTokenCount = cachedTokenCount;
+            TextTokenCount = textTokenCount;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData
+        {
+            get => _additionalBinaryDataProperties;
+            set => _additionalBinaryDataProperties = value;
+        }
     }
 }

@@ -9,22 +9,23 @@ namespace Richasy.AgentKernel.Core.OpenAI.Chat
 {
     public partial class ChatInputTokenUsageDetails
     {
-        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
-        internal ChatInputTokenUsageDetails(int audioTokenCount, int cachedTokenCount)
-        {
-            AudioTokenCount = audioTokenCount;
-            CachedTokenCount = cachedTokenCount;
-        }
-
-        internal ChatInputTokenUsageDetails(int audioTokenCount, int cachedTokenCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            AudioTokenCount = audioTokenCount;
-            CachedTokenCount = cachedTokenCount;
-            SerializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         internal ChatInputTokenUsageDetails()
         {
+        }
+
+        internal ChatInputTokenUsageDetails(int audioTokenCount, int cachedTokenCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            AudioTokenCount = audioTokenCount;
+            CachedTokenCount = cachedTokenCount;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData
+        {
+            get => _additionalBinaryDataProperties;
+            set => _additionalBinaryDataProperties = value;
         }
     }
 }

@@ -2,8 +2,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation
 {
     internal static partial class ConversationUpdateKindExtensions

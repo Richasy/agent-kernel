@@ -1,12 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Richasy.AgentKernel.Core.OpenAI.Files;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Files;
+namespace Azure.AI.OpenAI.Files;
 
 /// <summary>
 /// The scenario client used for Files operations with the Azure OpenAI service.
@@ -28,7 +29,7 @@ internal partial class AzureFileClient : OpenAIFileClient
         options ??= new();
 
         _endpoint = endpoint;
-        _apiVersion = options.Version;
+        _apiVersion = options.GetRawServiceApiValueForClient(this);
     }
 
     protected AzureFileClient()

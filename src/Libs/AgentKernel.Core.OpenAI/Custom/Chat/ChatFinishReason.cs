@@ -85,6 +85,6 @@ public enum ChatFinishReason
     [CodeGenMember("FunctionCall")]
     FunctionCall,
 
-    [CodeGenMember("Unspecific")]
-    Unspecific,
+    [CodeGenMember("Unknown")]
+    Unknown,
 }

@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices.ComTypes;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     public partial class ChatMessageImageContentItem : ChatMessageContentItem
     {

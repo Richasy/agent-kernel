@@ -4,11 +4,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Richasy.AgentKernel.Core.AzureInference;
+using Azure.Core;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
-    [CodeGenSuppress("global::System.ClientModel.Primitives.IJsonModel<Richasy.AgentKernel.Core.AzureInference.ChatCompletionsOptions>.Write", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
+    [CodeGenSuppress("global::System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsOptions>.Write", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
     public partial class ChatCompletionsOptions : IJsonModel<ChatCompletionsOptions>
     {
         // CUSTOM CODE NOTE:

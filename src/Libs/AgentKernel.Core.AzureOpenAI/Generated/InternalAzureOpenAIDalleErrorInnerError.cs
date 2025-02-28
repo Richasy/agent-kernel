@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI
+namespace Azure.AI.OpenAI
 {
     /// <summary> The AzureOpenAIDalleErrorInnerError. </summary>
     internal partial class InternalAzureOpenAIDalleErrorInnerError

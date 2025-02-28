@@ -8,22 +8,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
-using Richasy.AgentKernel.Core.OpenAI.Chat;
 using Microsoft.Extensions.AI;
+using Richasy.AgentKernel.Core.OpenAI.Chat;
 
 namespace Richasy.AgentKernel.Extensions.AI;
 
 internal static partial class OpenAIModelMappers
 {
-    public static OpenAIChatCompletionRequest FromOpenAIChatCompletionRequest(Core.OpenAI.Chat.ChatCompletionOptions chatCompletionOptions)
+    public static ChatRole ChatRoleDeveloper { get; } = new ChatRole("developer");
+
+    public static OpenAIChatCompletionRequest FromOpenAIChatCompletionRequest(ChatCompletionOptions chatCompletionOptions)
     {
         ChatOptions chatOptions = FromOpenAIOptions(chatCompletionOptions);
-        IList<Microsoft.Extensions.AI.ChatMessage> messages = FromOpenAIChatMessages(_getMessagesAccessor(chatCompletionOptions)).ToList();
+        var messages = FromOpenAIChatMessages(_getMessagesAccessor(chatCompletionOptions)).ToList();
         return new()
         {
             Messages = messages,
-            Options = chatOptions,
             ModelId = chatOptions.ModelId,
+            Options = chatOptions,
             Stream = _getStreamAccessor(chatCompletionOptions) ?? false,
         };
     }
@@ -32,8 +34,6 @@ internal static partial class OpenAIModelMappers
     {
         // Maps all of the OpenAI types to the corresponding M.E.AI types.
         // Unrecognized or non-processable content is ignored.
-
-        Dictionary<string, string>? functionCalls = null;
 
         foreach (Core.OpenAI.Chat.ChatMessage input in inputs)
         {
@@ -45,6 +45,15 @@ internal static partial class OpenAIModelMappers
                         Role = ChatRole.System,
                         AuthorName = systemMessage.ParticipantName,
                         Contents = FromOpenAIChatContent(systemMessage.Content),
+                    };
+                    break;
+
+                case DeveloperChatMessage developerMessage:
+                    yield return new Microsoft.Extensions.AI.ChatMessage
+                    {
+                        Role = ChatRoleDeveloper,
+                        AuthorName = developerMessage.ParticipantName,
+                        Contents = FromOpenAIChatContent(developerMessage.Content),
                     };
                     break;
 
@@ -74,11 +83,10 @@ internal static partial class OpenAIModelMappers
 #pragma warning restore CA1031 // Do not catch general exception types
                     }
 
-                    string functionName = functionCalls?.TryGetValue(toolMessage.ToolCallId, out string? name) is true ? name : string.Empty;
                     yield return new Microsoft.Extensions.AI.ChatMessage
                     {
                         Role = ChatRole.Tool,
-                        Contents = new AIContent[] { new FunctionResultContent(toolMessage.ToolCallId, functionName, result) },
+                        Contents = [new FunctionResultContent(toolMessage.ToolCallId, result)],
                     };
                     break;
 
@@ -99,7 +107,6 @@ internal static partial class OpenAIModelMappers
                             callContent.RawRepresentation = toolCall;
 
                             message.Contents.Add(callContent);
-                            (functionCalls ??= new()).Add(toolCall.Id, toolCall.FunctionName);
                         }
                     }
 
@@ -121,13 +128,16 @@ internal static partial class OpenAIModelMappers
         // Maps all of the M.E.AI types to the corresponding OpenAI types.
         // Unrecognized or non-processable content is ignored.
 
-        foreach (Microsoft.Extensions.AI.ChatMessage input in inputs)
+        foreach (var input in inputs)
         {
-            if (input.Role == ChatRole.System || input.Role == ChatRole.User)
+            if (input.Role == ChatRole.System ||
+                input.Role == ChatRole.User ||
+                input.Role == ChatRoleDeveloper)
             {
                 var parts = ToOpenAIChatContent(input.Contents);
-                yield return input.Role == ChatRole.System ?
-                    new SystemChatMessage(parts) { ParticipantName = input.AuthorName } :
+                yield return
+                    input.Role == ChatRole.System ? new SystemChatMessage(parts) { ParticipantName = input.AuthorName } :
+                    input.Role == OpenAIModelMappers.ChatRoleDeveloper ? new DeveloperChatMessage(parts) { ParticipantName = input.AuthorName } :
                     new UserChatMessage(parts) { ParticipantName = input.AuthorName };
             }
             else if (input.Role == ChatRole.Tool)
@@ -186,7 +196,7 @@ internal static partial class OpenAIModelMappers
 
     private static List<AIContent> FromOpenAIChatContent(IList<ChatMessageContentPart> openAiMessageContentParts)
     {
-        List<AIContent> contents = new();
+        List<AIContent> contents = [];
         foreach (var openAiContentPart in openAiMessageContentParts)
         {
             switch (openAiContentPart.Kind)
@@ -195,14 +205,13 @@ internal static partial class OpenAIModelMappers
                     contents.Add(new TextContent(openAiContentPart.Text));
                     break;
 
-                case ChatMessageContentPartKind.Image when (openAiContentPart.ImageBytes is { } bytes):
-                    contents.Add(new ImageContent(bytes.ToArray(), openAiContentPart.ImageBytesMediaType));
+                case ChatMessageContentPartKind.Image when openAiContentPart.ImageBytes is { } bytes:
+                    contents.Add(new DataContent(bytes.ToArray(), openAiContentPart.ImageBytesMediaType));
                     break;
 
                 case ChatMessageContentPartKind.Image:
-                    contents.Add(new ImageContent(openAiContentPart.ImageUri?.ToString() ?? string.Empty));
+                    contents.Add(new DataContent(openAiContentPart.ImageUri?.ToString() ?? string.Empty));
                     break;
-
             }
         }
 
@@ -221,12 +230,29 @@ internal static partial class OpenAIModelMappers
                     parts.Add(ChatMessageContentPart.CreateTextPart(textContent.Text));
                     break;
 
-                case ImageContent imageContent when imageContent.Data is { IsEmpty: false } data:
-                    parts.Add(ChatMessageContentPart.CreateImagePart(BinaryData.FromBytes(data), imageContent.MediaType));
+                case DataContent dataContent when dataContent.MediaTypeStartsWith("image/"):
+                    if (dataContent.Data.HasValue)
+                    {
+                        parts.Add(ChatMessageContentPart.CreateImagePart(BinaryData.FromBytes(dataContent.Data.Value), dataContent.MediaType));
+                    }
+                    else if (dataContent.Uri is string uri)
+                    {
+                        parts.Add(ChatMessageContentPart.CreateImagePart(new Uri(uri)));
+                    }
+
                     break;
 
-                case ImageContent imageContent when imageContent.Uri is string uri:
-                    parts.Add(ChatMessageContentPart.CreateImagePart(new Uri(uri)));
+                case DataContent dataContent when dataContent.MediaTypeStartsWith("audio/") && dataContent.Data.HasValue:
+                    var audioData = BinaryData.FromBytes(dataContent.Data.Value);
+                    if (dataContent.MediaTypeStartsWith("audio/mpeg"))
+                    {
+                        parts.Add(ChatMessageContentPart.CreateInputAudioPart(audioData, ChatInputAudioFormat.Mp3));
+                    }
+                    else if (dataContent.MediaTypeStartsWith("audio/wav"))
+                    {
+                        parts.Add(ChatMessageContentPart.CreateInputAudioPart(audioData, ChatInputAudioFormat.Wav));
+                    }
+
                     break;
             }
         }

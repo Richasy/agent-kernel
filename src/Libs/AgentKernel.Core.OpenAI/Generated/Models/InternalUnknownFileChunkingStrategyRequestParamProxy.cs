@@ -9,11 +9,7 @@ namespace Richasy.AgentKernel.Core.OpenAI.VectorStores
 {
     internal partial class InternalUnknownFileChunkingStrategyRequestParamProxy : InternalFileChunkingStrategyRequestParam
     {
-        internal InternalUnknownFileChunkingStrategyRequestParamProxy(string type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
-        {
-        }
-
-        internal InternalUnknownFileChunkingStrategyRequestParamProxy()
+        internal InternalUnknownFileChunkingStrategyRequestParamProxy(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

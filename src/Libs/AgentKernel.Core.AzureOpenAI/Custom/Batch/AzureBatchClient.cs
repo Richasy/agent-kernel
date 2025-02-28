@@ -5,7 +5,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Batch;
+namespace Azure.AI.OpenAI.Batch;
 
 /// <summary>
 /// The scenario client used for Files operations with the Azure OpenAI service.
@@ -27,7 +27,7 @@ internal partial class AzureBatchClient : BatchClient
         options ??= new();
 
         _endpoint = endpoint;
-        _apiVersion = options.Version;
+        _apiVersion = options.GetRawServiceApiValueForClient(this);
     }
 
     protected AzureBatchClient()

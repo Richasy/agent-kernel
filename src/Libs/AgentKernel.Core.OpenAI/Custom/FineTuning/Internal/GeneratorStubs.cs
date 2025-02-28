@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace Richasy.AgentKernel.Core.OpenAI.FineTuning;
 
@@ -107,9 +108,9 @@ internal enum FineTuningJobEventLevel
 }
 
 [CodeGenModel("FineTuningJobHyperparameters")]
+[StructLayout(LayoutKind.Auto)]
 internal readonly partial struct FineTuningJobHyperparameters
 {
-    internal readonly IDictionary<string, BinaryData> SerializedAdditionalRawData { get; }
     public BinaryData NEpochs { get; }
     public BinaryData BatchSize { get; }
     public BinaryData LearningRateMultiplier { get; }
@@ -135,3 +136,32 @@ internal partial class HyperparameterOptions { }
 
 [CodeGenModel("CreateFineTuningJobRequestWandbIntegration")]
 internal partial class WeightsAndBiasesIntegration { }
+
+// TODO: not yet integrated
+
+[CodeGenModel("FineTuneChatRequestInput")]
+internal partial class InternalTodoFineTuneChatRequestInput { }
+
+[CodeGenModel("FineTuneCompletionRequestInput")]
+internal partial class InternalTodoFineTuneCompletionRequestInput { }
+
+[CodeGenModel("FineTuneDPOMethod")]
+internal partial class InternalTodoFineTuneDPOMethod { }
+
+[CodeGenModel("FineTuneDPOMethodHyperparameters")]
+internal partial class InternalTodoFineTuneDPOMethodHyperparameters { }
+
+[CodeGenModel("FineTuneMethod")]
+internal partial class InternalTodoFineTuneMethod { }
+
+[CodeGenModel("FineTuneMethodType")]
+internal readonly partial struct InternalTodoFineTuneMethodType { }
+
+[CodeGenModel("FineTuneSupervisedMethod")]
+internal partial class InternalTodoFineTuneSupervisedMethod { }
+
+[CodeGenModel("FineTuneSupervisedMethodHyperparameters")]
+internal partial class InternalFineTuneSupervisedMethodHyperparameters { }
+
+[CodeGenModel("FineTuningJobEventType")]
+internal readonly partial struct InternalFineTuningJobEventType { }

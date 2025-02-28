@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Richasy.AgentKernel.Core.AzureInference;
+using Azure.Core;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     public partial class ChatRequestAssistantMessage : IUtf8JsonSerializable, IJsonModel<ChatRequestAssistantMessage>
     {
@@ -37,15 +37,8 @@ namespace Richasy.AgentKernel.Core.AzureInference
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Content))
             {
-                if (Content != null)
-                {
-                    writer.WritePropertyName("content"u8);
-                    writer.WriteStringValue(Content);
-                }
-                else
-                {
-                    writer.WriteNull("content");
-                }
+                writer.WritePropertyName("content"u8);
+                writer.WriteStringValue(Content);
             }
             if (Optional.IsCollectionDefined(ToolCalls))
             {
@@ -88,11 +81,6 @@ namespace Richasy.AgentKernel.Core.AzureInference
             {
                 if (property.NameEquals("content"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        content = null;
-                        continue;
-                    }
                     content = property.Value.GetString();
                     continue;
                 }

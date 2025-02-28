@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Richasy.AgentKernel.Core.OpenAI
 {
-    internal class Utf8JsonBinaryContent : BinaryContent
+    internal partial class Utf8JsonBinaryContent : BinaryContent
     {
         private readonly MemoryStream _stream;
         private readonly BinaryContent _content;

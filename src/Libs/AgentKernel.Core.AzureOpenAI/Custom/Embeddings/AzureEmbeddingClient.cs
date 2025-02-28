@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Richasy.AgentKernel.Core.OpenAI.Embeddings;
 using System.ClientModel.Primitives;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Embeddings;
+namespace Azure.AI.OpenAI.Embeddings;
 
 /// <summary>
 /// The scenario client used for embedding operations with the Azure OpenAI service.
@@ -27,7 +28,7 @@ internal partial class AzureEmbeddingClient : EmbeddingClient
 
         _deploymentName = deploymentName;
         _endpoint = endpoint;
-        _apiVersion = options.Version;
+        _apiVersion = options.GetRawServiceApiValueForClient(this);
     }
 
     protected AzureEmbeddingClient()

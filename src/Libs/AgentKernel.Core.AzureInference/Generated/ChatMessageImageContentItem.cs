@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary> A structured chat content item containing an image reference. </summary>
     public partial class ChatMessageImageContentItem : ChatMessageContentItem

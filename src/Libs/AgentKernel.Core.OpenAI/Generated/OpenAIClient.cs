@@ -5,34 +5,20 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Threading;
-using Richasy.AgentKernel.Core.OpenAI.Assistants;
-using Richasy.AgentKernel.Core.OpenAI.Audio;
-using Richasy.AgentKernel.Core.OpenAI.Batch;
-using Richasy.AgentKernel.Core.OpenAI.Chat;
-using Richasy.AgentKernel.Core.OpenAI.Embeddings;
-using Richasy.AgentKernel.Core.OpenAI.Files;
-using Richasy.AgentKernel.Core.OpenAI.FineTuning;
-using Richasy.AgentKernel.Core.OpenAI.Images;
-using Richasy.AgentKernel.Core.OpenAI.LegacyCompletions;
-using Richasy.AgentKernel.Core.OpenAI.Models;
-using Richasy.AgentKernel.Core.OpenAI.Moderations;
-using Richasy.AgentKernel.Core.OpenAI.RealtimeConversation;
-using Richasy.AgentKernel.Core.OpenAI.VectorStores;
 
 namespace Richasy.AgentKernel.Core.OpenAI
 {
-    // Data plane generated client.
     public partial class OpenAIClient
     {
+        private readonly Uri _endpoint;
         private const string AuthorizationHeader = "Authorization";
         private readonly ApiKeyCredential _keyCredential;
         private const string AuthorizationApiKeyPrefix = "Bearer";
-        private readonly ClientPipeline _pipeline;
-        private readonly Uri _endpoint;
 
         protected OpenAIClient()
         {
         }
+
+        public ClientPipeline Pipeline { get; }
     }
 }

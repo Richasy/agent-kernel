@@ -8,11 +8,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI
+namespace Azure.AI.OpenAI
 {
     public partial class ResponseContentFilterResult : IJsonModel<ResponseContentFilterResult>
     {
         void IJsonModel<ResponseContentFilterResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResponseContentFilterResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -20,7 +29,6 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI
                 throw new FormatException($"The model {nameof(ResponseContentFilterResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (SerializedAdditionalRawData?.ContainsKey("sexual") != true && Optional.IsDefined(Sexual))
             {
                 writer.WritePropertyName("sexual"u8);
@@ -54,7 +62,7 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI
             if (SerializedAdditionalRawData?.ContainsKey("error") != true && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue<InternalAzureContentFilterResultForPromptContentFilterResultsError>(Error, options);
+                writer.WriteObjectValue<InternalAzureContentFilterResultForChoiceError>(Error, options);
             }
             if (SerializedAdditionalRawData?.ContainsKey("protected_material_text") != true && Optional.IsDefined(ProtectedMaterialText))
             {
@@ -65,6 +73,11 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI
             {
                 writer.WritePropertyName("protected_material_code"u8);
                 writer.WriteObjectValue(ProtectedMaterialCode, options);
+            }
+            if (SerializedAdditionalRawData?.ContainsKey("ungrounded_material") != true && Optional.IsDefined(UngroundedMaterial))
+            {
+                writer.WritePropertyName("ungrounded_material"u8);
+                writer.WriteObjectValue<ContentFilterTextSpanResult>(UngroundedMaterial, options);
             }
             if (SerializedAdditionalRawData != null)
             {
@@ -85,7 +98,6 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ResponseContentFilterResult IJsonModel<ResponseContentFilterResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -114,9 +126,10 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI
             ContentFilterSeverityResult selfHarm = default;
             ContentFilterDetectionResult profanity = default;
             ContentFilterBlocklistResult customBlocklists = default;
-            InternalAzureContentFilterResultForPromptContentFilterResultsError error = default;
+            InternalAzureContentFilterResultForChoiceError error = default;
             ContentFilterDetectionResult protectedMaterialText = default;
             ContentFilterProtectedMaterialResult protectedMaterialCode = default;
+            ContentFilterTextSpanResult ungroundedMaterial = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +194,7 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI
                     {
                         continue;
                     }
-                    error = InternalAzureContentFilterResultForPromptContentFilterResultsError.DeserializeInternalAzureContentFilterResultForPromptContentFilterResultsError(property.Value, options);
+                    error = InternalAzureContentFilterResultForChoiceError.DeserializeInternalAzureContentFilterResultForChoiceError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protected_material_text"u8))
@@ -202,6 +215,15 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI
                     protectedMaterialCode = ContentFilterProtectedMaterialResult.DeserializeContentFilterProtectedMaterialResult(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("ungrounded_material"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ungroundedMaterial = ContentFilterTextSpanResult.DeserializeContentFilterTextSpanResult(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary ??= new Dictionary<string, BinaryData>();
@@ -219,6 +241,7 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI
                 error,
                 protectedMaterialText,
                 protectedMaterialCode,
+                ungroundedMaterial,
                 serializedAdditionalRawData);
         }
 

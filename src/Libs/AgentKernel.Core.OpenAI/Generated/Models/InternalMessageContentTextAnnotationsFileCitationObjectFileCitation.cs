@@ -4,12 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using Richasy.AgentKernel.Core.OpenAI;
 
 namespace Richasy.AgentKernel.Core.OpenAI.Assistants
 {
     internal partial class InternalMessageContentTextAnnotationsFileCitationObjectFileCitation
     {
-        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
+        private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         public InternalMessageContentTextAnnotationsFileCitationObjectFileCitation(string fileId)
         {
             Argument.AssertNotNull(fileId, nameof(fileId));
@@ -17,16 +19,18 @@ namespace Richasy.AgentKernel.Core.OpenAI.Assistants
             FileId = fileId;
         }
 
-        internal InternalMessageContentTextAnnotationsFileCitationObjectFileCitation(string fileId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalMessageContentTextAnnotationsFileCitationObjectFileCitation(string fileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FileId = fileId;
-            SerializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        internal InternalMessageContentTextAnnotationsFileCitationObjectFileCitation()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         public string FileId { get; set; }
+
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData
+        {
+            get => _additionalBinaryDataProperties;
+            set => _additionalBinaryDataProperties = value;
+        }
     }
 }

@@ -3,12 +3,11 @@
 
 #if !AZURE_OPENAI_GA
 
-using Richasy.AgentKernel.Core.OpenAI.VectorStores;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.VectorStores;
+namespace Azure.AI.OpenAI.VectorStores;
 
 [Experimental("OPENAI001")]
 internal partial class AzureCreateVectorStoreOperation : CreateVectorStoreOperation

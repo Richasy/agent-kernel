@@ -6,9 +6,10 @@
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
-using Richasy.AgentKernel.Core.AzureOpenAI.Utility;
+using Azure.AI.OpenAI.Utility;
+using Richasy.AgentKernel.Core.OpenAI.Assistants;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Assistants;
+namespace Azure.AI.OpenAI.Assistants;
 
 [Experimental("OPENAI001")]
 internal partial class AzureAssistantClient : AssistantClient
@@ -521,7 +522,7 @@ internal partial class AzureAssistantClient : AssistantClient
     private new PipelineMessage CreateCreateAssistantRequest(BinaryContent content, RequestOptions options = null)
         => NewJsonPostBuilder(content, options).WithPath("assistants").Build();
 
-    private new PipelineMessage CreateGetAssistantsRequest(int? limit, string order, string after, string before, RequestOptions options)
+    private PipelineMessage CreateGetAssistantsRequest(int? limit, string order, string after, string before, RequestOptions options)
         => NewGetListBuilder(limit, order, after, before, options).WithPath("assistants").Build();
 
     private new PipelineMessage CreateGetAssistantRequest(string assistantId, RequestOptions options)

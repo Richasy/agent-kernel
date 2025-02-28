@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     public partial class ChatCompletionsToolCall
     {

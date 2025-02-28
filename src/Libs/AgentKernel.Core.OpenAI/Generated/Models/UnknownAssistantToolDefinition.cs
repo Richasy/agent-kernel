@@ -9,11 +9,7 @@ namespace Richasy.AgentKernel.Core.OpenAI.Assistants
 {
     internal partial class UnknownAssistantToolDefinition : ToolDefinition
     {
-        internal UnknownAssistantToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
-        {
-        }
-
-        internal UnknownAssistantToolDefinition()
+        internal UnknownAssistantToolDefinition(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

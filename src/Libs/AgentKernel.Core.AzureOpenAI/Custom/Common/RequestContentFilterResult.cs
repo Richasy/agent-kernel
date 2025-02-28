@@ -3,7 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI;
+namespace Azure.AI.OpenAI;
 
 [Experimental("AOAI001")]
 [CodeGenModel("AzureContentFilterResultForPrompt")]
@@ -15,7 +15,7 @@ public partial class RequestContentFilterResult
     internal InternalAzureContentFilterResultForPromptContentFilterResults InternalResults { get; }
 
     /// <inheritdoc cref="InternalAzureContentFilterResultForPromptContentFilterResults.Error"/>
-    internal InternalAzureContentFilterResultForPromptContentFilterResultsError Error { get; set; }
+    internal InternalAzureContentFilterResultForChoiceError Error { get; set; }
 
     /// <inheritdoc cref="InternalAzureContentFilterResultForPromptContentFilterResults.Sexual"/>
     public ContentFilterSeverityResult Sexual => InternalResults?.Sexual;

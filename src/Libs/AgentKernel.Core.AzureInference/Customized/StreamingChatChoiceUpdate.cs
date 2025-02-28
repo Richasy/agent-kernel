@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary>
     /// Represents an update to a single prompt completion when the service is streaming updates

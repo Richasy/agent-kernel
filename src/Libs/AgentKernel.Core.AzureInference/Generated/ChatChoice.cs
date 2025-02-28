@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary>
     /// The representation of a single prompt completion as part of an overall chat completions request.

@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 
 #nullable enable
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Batch;
+namespace Azure.AI.OpenAI.Batch;
 
 /// <summary>
 /// A long-running operation for executing a batch from an uploaded file of requests.

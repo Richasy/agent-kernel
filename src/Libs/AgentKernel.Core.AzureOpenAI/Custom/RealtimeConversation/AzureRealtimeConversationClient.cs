@@ -6,7 +6,7 @@
 using Azure.Core;
 using System.ClientModel;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.RealtimeConversation;
+namespace Azure.AI.OpenAI.RealtimeConversation;
 
 /// <summary>
 /// The scenario client used for Files operations with the Azure OpenAI service.
@@ -26,9 +26,12 @@ internal partial class AzureRealtimeConversationClient : RealtimeConversationCli
         : base(deploymentName, credential, new OpenAIClientOptions() { Endpoint = endpoint })
     {
         options ??= new();
-        _endpoint = GetEndpoint(endpoint, deploymentName, options.Version);
+        _endpoint = GetEndpoint(
+            endpoint,
+            deploymentName,
+            options.GetRawServiceApiValueForClient(this));
         _credential = credential;
-        Azure.Core.TelemetryDetails telemetryDetails = new(typeof(AzureOpenAIClient).Assembly, options?.UserAgentApplicationId);
+        Core.TelemetryDetails telemetryDetails = new(typeof(AzureOpenAIClient).Assembly, options?.UserAgentApplicationId);
         _userAgent = telemetryDetails.ToString();
     }
 
@@ -36,10 +39,13 @@ internal partial class AzureRealtimeConversationClient : RealtimeConversationCli
         : base(deploymentName, credential: new("placeholder") , new OpenAIClientOptions() { Endpoint = endpoint })
     {
         options ??= new();
-        _endpoint = GetEndpoint(endpoint, deploymentName, options.Version);
+        _endpoint = GetEndpoint(
+            endpoint,
+            deploymentName,
+            options.GetRawServiceApiValueForClient(this));
         _tokenCredential = credential;
         _tokenAuthorizationScopes = [options?.Audience?.ToString() ?? AzureOpenAIAudience.AzurePublicCloud.ToString()];
-        Azure.Core.TelemetryDetails telemetryDetails = new(typeof(AzureOpenAIClient).Assembly, options?.UserAgentApplicationId);
+        Core.TelemetryDetails telemetryDetails = new(typeof(AzureOpenAIClient).Assembly, options?.UserAgentApplicationId);
         _userAgent = telemetryDetails.ToString();
     }
 

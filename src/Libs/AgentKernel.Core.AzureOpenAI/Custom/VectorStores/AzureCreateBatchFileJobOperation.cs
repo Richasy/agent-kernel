@@ -8,7 +8,7 @@ using System.ClientModel.Primitives;
 using System.ClientModel;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.VectorStores;
+namespace Azure.AI.OpenAI.VectorStores;
 
 [Experimental("OPENAI001")]
 internal partial class AzureCreateBatchFileJobOperation : CreateBatchFileJobOperation

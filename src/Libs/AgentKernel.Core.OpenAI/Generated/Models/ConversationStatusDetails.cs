@@ -7,17 +7,26 @@ using System.Collections.Generic;
 
 namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation
 {
-    public abstract partial class ConversationStatusDetails
+    public partial class ConversationStatusDetails
     {
-        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
-        protected ConversationStatusDetails()
+        private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        internal ConversationStatusDetails()
         {
         }
 
-        internal ConversationStatusDetails(ConversationStatus statusKind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationStatusDetails(ConversationStatus statusKind, ConversationIncompleteReason? incompleteReason, InternalRealtimeResponseStatusDetailsError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StatusKind = statusKind;
-            SerializedAdditionalRawData = serializedAdditionalRawData;
+            IncompleteReason = incompleteReason;
+            Error = error;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData
+        {
+            get => _additionalBinaryDataProperties;
+            set => _additionalBinaryDataProperties = value;
         }
     }
 }

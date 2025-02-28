@@ -7,10 +7,10 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.AI;
 using Microsoft.Shared.Diagnostics;
 using Richasy.AgentKernel.Core.OpenAI;
 using Richasy.AgentKernel.Core.OpenAI.Chat;
-using Microsoft.Extensions.AI;
 
 #pragma warning disable S1067 // Expressions should not be too complex
 #pragma warning disable S3011 // Reflection should not be used to increase accessibility of classes, methods, or fields
@@ -19,11 +19,14 @@ using Microsoft.Extensions.AI;
 
 namespace Richasy.AgentKernel.Extensions.AI;
 
-/// <summary>Represents an <see cref="IChatClient"/> for an OpenAI <see cref="OpenAIClient"/> or <see cref="Core.OpenAI.Chat.ChatClient"/>.</summary>
+/// <summary>Represents an <see cref="IChatClient"/> for an OpenAI <see cref="OpenAIClient"/> or <see cref="ChatClient"/>.</summary>
 public sealed class OpenAIChatClient : IChatClient
 {
-    /// <summary>Default OpenAI endpoint.</summary>
-    private static readonly Uri _defaultOpenAIEndpoint = new("https://api.openai.com/v1");
+    /// <summary>Gets the default OpenAI endpoint.</summary>
+    internal static Uri DefaultOpenAIEndpoint { get; } = new("https://api.openai.com/v1");
+
+    /// <summary>Metadata about the client.</summary>
+    private readonly ChatClientMetadata _metadata;
 
     /// <summary>The underlying <see cref="OpenAIClient" />.</summary>
     private readonly OpenAIClient? _openAIClient;
@@ -50,9 +53,9 @@ public sealed class OpenAIChatClient : IChatClient
         // implement the abstractions directly rather than providing adapters on top of the public APIs,
         // the package can provide such implementations separate from what's exposed in the public API.
         Uri providerUrl = typeof(OpenAIClient).GetField("_endpoint", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-            ?.GetValue(openAIClient) as Uri ?? _defaultOpenAIEndpoint;
+            ?.GetValue(openAIClient) as Uri ?? DefaultOpenAIEndpoint;
 
-        Metadata = new("openai", providerUrl, modelId);
+        _metadata = new("openai", providerUrl, modelId);
     }
 
     /// <summary>Initializes a new instance of the <see cref="OpenAIChatClient"/> class for the specified <see cref="ChatClient"/>.</summary>
@@ -68,11 +71,11 @@ public sealed class OpenAIChatClient : IChatClient
         // implement the abstractions directly rather than providing adapters on top of the public APIs,
         // the package can provide such implementations separate from what's exposed in the public API.
         Uri providerUrl = typeof(ChatClient).GetField("_endpoint", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-            ?.GetValue(chatClient) as Uri ?? _defaultOpenAIEndpoint;
+            ?.GetValue(chatClient) as Uri ?? DefaultOpenAIEndpoint;
         string? model = typeof(ChatClient).GetField("_model", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
             ?.GetValue(chatClient) as string;
 
-        Metadata = new("openai", providerUrl, model);
+        _metadata = new("openai", providerUrl, model);
     }
 
     /// <summary>Gets or sets <see cref="JsonSerializerOptions"/> to use for any serialization activities related to tool call arguments and results.</summary>
@@ -83,15 +86,13 @@ public sealed class OpenAIChatClient : IChatClient
     }
 
     /// <inheritdoc />
-    public ChatClientMetadata Metadata { get; }
-
-    /// <inheritdoc />
-    public object? GetService(Type serviceType, object? serviceKey = null)
+    object? IChatClient.GetService(Type serviceType, object? serviceKey)
     {
         _ = Throw.IfNull(serviceType);
 
         return
             serviceKey is not null ? null :
+            serviceType == typeof(ChatClientMetadata) ? _metadata :
             serviceType == typeof(OpenAIClient) ? _openAIClient :
             serviceType == typeof(ChatClient) ? _chatClient :
             serviceType.IsInstanceOfType(this) ? this :
@@ -99,28 +100,28 @@ public sealed class OpenAIChatClient : IChatClient
     }
 
     /// <inheritdoc />
-    public async Task<Microsoft.Extensions.AI.ChatCompletion> CompleteAsync(
+    public async Task<ChatResponse> GetResponseAsync(
         IList<Microsoft.Extensions.AI.ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
     {
         _ = Throw.IfNull(chatMessages);
 
         var openAIChatMessages = OpenAIModelMappers.ToOpenAIChatMessages(chatMessages, ToolCallJsonSerializerOptions);
-        var openAIOptions = OpenAIModelMappers.ToOpenAIOptions(options, Metadata.ModelId);
+        var openAIOptions = OpenAIModelMappers.ToOpenAIOptions(options);
 
         // Make the call to OpenAI.
         var response = await _chatClient.CompleteChatAsync(openAIChatMessages, openAIOptions, cancellationToken).ConfigureAwait(false);
 
-        return OpenAIModelMappers.FromOpenAIChatCompletion(response.Value, options);
+        return OpenAIModelMappers.FromOpenAIChatCompletion(response.Value, options, openAIOptions);
     }
 
     /// <inheritdoc />
-    public IAsyncEnumerable<Microsoft.Extensions.AI.StreamingChatCompletionUpdate> CompleteStreamingAsync(
+    public IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(
         IList<Microsoft.Extensions.AI.ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
     {
         _ = Throw.IfNull(chatMessages);
 
         var openAIChatMessages = OpenAIModelMappers.ToOpenAIChatMessages(chatMessages, ToolCallJsonSerializerOptions);
-        var openAIOptions = OpenAIModelMappers.ToOpenAIOptions(options, Metadata.ModelId);
+        var openAIOptions = OpenAIModelMappers.ToOpenAIOptions(options);
 
         // Make the call to OpenAI.
         var chatCompletionUpdates = _chatClient.CompleteChatStreamingAsync(openAIChatMessages, openAIOptions, cancellationToken);

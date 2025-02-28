@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Richasy.AgentKernel.Core.AzureInference;
+using Azure.Core;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     public partial class StreamingChatResponseMessageUpdate : IUtf8JsonSerializable, IJsonModel<StreamingChatResponseMessageUpdate>
     {

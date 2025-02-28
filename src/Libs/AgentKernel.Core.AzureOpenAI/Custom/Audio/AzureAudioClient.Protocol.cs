@@ -4,8 +4,9 @@
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
+using Richasy.AgentKernel.Core.OpenAI.Audio;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Audio;
+namespace Azure.AI.OpenAI.Audio;
 
 internal partial class AzureAudioClient : AudioClient
 {

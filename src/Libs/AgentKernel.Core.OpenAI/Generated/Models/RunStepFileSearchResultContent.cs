@@ -9,18 +9,26 @@ namespace Richasy.AgentKernel.Core.OpenAI.Assistants
 {
     public partial class RunStepFileSearchResultContent
     {
-        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
-        internal RunStepFileSearchResultContent()
+        private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        internal RunStepFileSearchResultContent(string text)
         {
+            Text = text;
         }
 
-        internal RunStepFileSearchResultContent(RunStepFileSearchResultContentKind kind, string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RunStepFileSearchResultContent(string text, Assistants.RunStepFileSearchResultContentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Kind = kind;
             Text = text;
-            SerializedAdditionalRawData = serializedAdditionalRawData;
+            Kind = kind;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         public string Text { get; }
+
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData
+        {
+            get => _additionalBinaryDataProperties;
+            set => _additionalBinaryDataProperties = value;
+        }
     }
 }

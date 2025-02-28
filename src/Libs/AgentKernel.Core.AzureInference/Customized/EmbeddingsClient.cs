@@ -6,17 +6,21 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
-using Richasy.AgentKernel.Core.AzureInference;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using System.Diagnostics.CodeAnalysis;
 using Richasy.AgentKernel.Core.AzureInference.Pipeline;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     // CUSTOM CODE NOTE:
     //   Modified code for the ChatCompletionsClient
 
     /// <summary> The Embeddings service client. </summary>
-    [CodeGenSuppress("Embed", typeof(EmbeddingsOptions), typeof(ExtraParameters?), typeof(CancellationToken))]
-    [CodeGenSuppress("EmbedAsync", typeof(EmbeddingsOptions), typeof(ExtraParameters?), typeof(CancellationToken))]
+
+    [SuppressMessage("Azure Analysis", "AZC0007", Justification = "Analyzer is incorrectly flagging valid overloads.")]
+    [CodeGenSuppress("Embed", typeof(IEnumerable<string>), typeof(int?), typeof(EmbeddingEncodingFormat?), typeof(EmbeddingInputType?), typeof(string), typeof(ExtraParameters?), typeof(CancellationToken))]
+    [CodeGenSuppress("EmbedAsync", typeof(IEnumerable<string>), typeof(int?), typeof(EmbeddingEncodingFormat?), typeof(EmbeddingInputType?), typeof(string), typeof(ExtraParameters?), typeof(CancellationToken))]
     public partial class EmbeddingsClient
     {
         /// <summary> Initializes a new instance of EmbeddingsClient. </summary>
@@ -97,7 +101,7 @@ namespace Richasy.AgentKernel.Core.AzureInference
         /// <list type="bullet">
         /// <item>
         /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Richasy.AgentKernel.Core.AzureInference/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
         /// <item>
@@ -141,7 +145,7 @@ namespace Richasy.AgentKernel.Core.AzureInference
         /// <list type="bullet">
         /// <item>
         /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Richasy.AgentKernel.Core.AzureInference/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
         /// <item>

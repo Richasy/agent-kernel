@@ -1,0 +1,15 @@
+﻿using System.ClientModel.Primitives;
+using System.Data;
+using System.Text.Json;
+using System;
+using System.Collections;
+
+namespace Richasy.AgentKernel.Core.OpenAI.Chat;
+
+[CodeGenModel("ChatOutputPredictionContent")]
+internal partial class InternalChatOutputPredictionContent
+{
+    // CUSTOM: Assign type to a collection of content parts
+    [CodeGenMember("Content")]
+    public ChatMessageContent Content { get; set; } = new();
+}

@@ -12,9 +12,9 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text.Json;
 using System.Xml;
-using Richasy.AgentKernel.Core.AzureInference;
+using Azure.Core;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     internal static class ModelSerializationExtensions
     {

@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI
+namespace Azure.AI.OpenAI
 {
     /// <summary> A structured representation of an error an Azure OpenAI request. </summary>
     internal partial class AzureOpenAIChatErrorResponse

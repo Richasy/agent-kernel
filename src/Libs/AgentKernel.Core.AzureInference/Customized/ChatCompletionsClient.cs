@@ -2,26 +2,27 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using Richasy.AgentKernel.Core.AzureInference.Telemetry;
+using Azure.AI.Inference.Telemetry;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.Core.Sse;
 using Richasy.AgentKernel.Core.AzureInference;
 using Richasy.AgentKernel.Core.AzureInference.Pipeline;
-using Richasy.AgentKernel.Core.AzureInference.Sse;
-using Azure;
-using Azure.Core.Pipeline;
-using Azure.Core;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     // CUSTOM CODE NOTE:
     //   Modified code for the ChatCompletionsClient
 
     /// <summary> The ChatCompletions service client. </summary>
 
-    [CodeGenSuppress("Complete", typeof(ChatCompletionsOptions), typeof(ExtraParameters?), typeof(CancellationToken))]
-    [CodeGenSuppress("CompleteAsync", typeof(ChatCompletionsOptions), typeof(ExtraParameters?), typeof(CancellationToken))]
+    [SuppressMessage("Azure Analysis", "AZC0007", Justification = "Analyzer is incorrectly flagging valid overloads.")]
+    [CodeGenSuppress("Complete", typeof(IEnumerable<ChatRequestMessage>), typeof(float?), typeof(bool?), typeof(float?), typeof(float?), typeof(float?), typeof(int?), typeof(ChatCompletionsResponseFormat), typeof(IEnumerable<string>), typeof(IEnumerable<ChatCompletionsToolDefinition>), typeof(BinaryData), typeof(long?), typeof(string), typeof(ExtraParameters?), typeof(CancellationToken))]
+    [CodeGenSuppress("CompleteAsync", typeof(IEnumerable<ChatRequestMessage>), typeof(float?), typeof(bool?), typeof(float?), typeof(float?), typeof(float?), typeof(int?), typeof(ChatCompletionsResponseFormat), typeof(IEnumerable<string>), typeof(IEnumerable<ChatCompletionsToolDefinition>), typeof(BinaryData), typeof(long?), typeof(string), typeof(ExtraParameters?), typeof(CancellationToken))]
     public partial class ChatCompletionsClient
     {
         /// <summary> Initializes a new instance of ChatCompletionsClient. </summary>
@@ -255,7 +256,7 @@ namespace Richasy.AgentKernel.Core.AzureInference
         /// <list type="bullet">
         /// <item>
         /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Richasy.AgentKernel.Core.AzureInference/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
         /// <item>
@@ -297,7 +298,7 @@ namespace Richasy.AgentKernel.Core.AzureInference
         /// <list type="bullet">
         /// <item>
         /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Richasy.AgentKernel.Core.AzureInference/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
         /// <item>

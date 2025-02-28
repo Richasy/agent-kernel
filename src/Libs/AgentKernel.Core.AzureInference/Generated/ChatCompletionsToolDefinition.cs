@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary> The definition of a chat completions tool that can call a function. </summary>
     public partial class ChatCompletionsToolDefinition

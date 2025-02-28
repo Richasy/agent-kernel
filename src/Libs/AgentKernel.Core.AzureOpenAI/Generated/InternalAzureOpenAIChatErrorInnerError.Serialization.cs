@@ -8,11 +8,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI
+namespace Azure.AI.OpenAI
 {
     internal partial class InternalAzureOpenAIChatErrorInnerError : IJsonModel<InternalAzureOpenAIChatErrorInnerError>
     {
         void IJsonModel<InternalAzureOpenAIChatErrorInnerError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InternalAzureOpenAIChatErrorInnerError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -20,7 +29,6 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI
                 throw new FormatException($"The model {nameof(InternalAzureOpenAIChatErrorInnerError)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (SerializedAdditionalRawData?.ContainsKey("code") != true && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
@@ -55,7 +63,6 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         InternalAzureOpenAIChatErrorInnerError IJsonModel<InternalAzureOpenAIChatErrorInnerError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

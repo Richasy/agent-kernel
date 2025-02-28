@@ -10,12 +10,12 @@ using System.Globalization;
 using System.Text.Json;
 using System.Xml;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI
+namespace Azure.AI.OpenAI
 {
     internal static class ModelSerializationExtensions
     {
         internal static readonly ModelReaderWriterOptions WireOptions = new ModelReaderWriterOptions("W");
-        internal static readonly BinaryData SentinelValue = BinaryData.FromObjectAsJson("__EMPTY__", SourceGenerationContext.Default.String);
+        internal static readonly BinaryData SentinelValue = BinaryData.FromBytes("\"__EMPTY__\""u8.ToArray());
 
         public static object GetObject(this JsonElement element)
         {

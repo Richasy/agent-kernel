@@ -3,13 +3,11 @@
 
 #if !AZURE_OPENAI_GA
 
-using Richasy.AgentKernel.Core.OpenAI;
-using Richasy.AgentKernel.Core.OpenAI.VectorStores;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.VectorStores;
+namespace Azure.AI.OpenAI.VectorStores;
 
 /// <summary>
 /// The scenario client used for vector store operations with the Azure OpenAI service.
@@ -31,7 +29,7 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
         options ??= new();
 
         _endpoint = endpoint;
-        _apiVersion = options.Version;
+        _apiVersion = options.GetRawServiceApiValueForClient(this);
     }
 
     protected AzureVectorStoreClient()

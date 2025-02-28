@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary> A structured chat content item containing plain text. </summary>
     public partial class ChatMessageTextContentItem : ChatMessageContentItem

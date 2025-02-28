@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary> An update to the function tool call information requested by the AI model. </summary>
     public partial class StreamingChatResponseToolCallUpdate

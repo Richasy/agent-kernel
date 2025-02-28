@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using Richasy.AgentKernel.Core.AzureInference;
+using Azure.Core;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     public partial class ChatRequestAssistantMessage : ChatRequestMessage
     {

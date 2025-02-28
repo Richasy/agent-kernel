@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Richasy.AgentKernel.Core.AzureInference;
+using Azure.Core;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     [PersistableModelProxy(typeof(UnknownChatCompletionsResponseFormat))]
     public partial class ChatCompletionsResponseFormat : IUtf8JsonSerializable, IJsonModel<ChatCompletionsResponseFormat>
@@ -77,7 +77,8 @@ namespace Richasy.AgentKernel.Core.AzureInference
             {
                 switch (discriminator.GetString())
                 {
-                    case "json_object": return ChatCompletionsResponseFormatJSON.DeserializeChatCompletionsResponseFormatJSON(element, options);
+                    case "json_object": return ChatCompletionsResponseFormatJsonObject.DeserializeChatCompletionsResponseFormatJsonObject(element, options);
+                    case "json_schema": return ChatCompletionsResponseFormatJsonSchema.DeserializeChatCompletionsResponseFormatJsonSchema(element, options);
                     case "text": return ChatCompletionsResponseFormatText.DeserializeChatCompletionsResponseFormatText(element, options);
                 }
             }

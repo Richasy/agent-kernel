@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary> Represents a generic policy for how a chat completions tool may be selected. </summary>
     public readonly partial struct ChatCompletionsToolChoicePreset : IEquatable<ChatCompletionsToolChoicePreset>

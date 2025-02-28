@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Richasy.AgentKernel.Core.AzureInference.Sse
+namespace Azure.Core.Sse
 {
     // SSE specification: https://html.spec.whatwg.org/multipage/server-sent-events.html#parsing-an-event-stream
     internal readonly struct SseLine

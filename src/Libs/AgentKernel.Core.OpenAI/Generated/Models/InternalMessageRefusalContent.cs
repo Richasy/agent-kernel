@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Richasy.AgentKernel.Core.OpenAI;
 
 namespace Richasy.AgentKernel.Core.OpenAI.Assistants
 {
@@ -16,14 +17,10 @@ namespace Richasy.AgentKernel.Core.OpenAI.Assistants
             InternalRefusal = internalRefusal;
         }
 
-        internal InternalMessageRefusalContent(IDictionary<string, BinaryData> serializedAdditionalRawData, string type, string internalRefusal) : base(serializedAdditionalRawData)
+        internal InternalMessageRefusalContent(IDictionary<string, BinaryData> additionalBinaryDataProperties, string internalRefusal, string @type) : base(additionalBinaryDataProperties)
         {
-            _type = type;
             InternalRefusal = internalRefusal;
-        }
-
-        internal InternalMessageRefusalContent()
-        {
+            _type = @type;
         }
     }
 }

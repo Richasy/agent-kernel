@@ -5,7 +5,7 @@ using Richasy.AgentKernel.Core.OpenAI;
 using Richasy.AgentKernel.Core.OpenAI.Audio;
 using System.ClientModel.Primitives;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Audio;
+namespace Azure.AI.OpenAI.Audio;
 
 /// <summary>
 /// The scenario client used for audio operations with the Azure OpenAI service.
@@ -29,7 +29,7 @@ internal partial class AzureAudioClient : AudioClient
 
         _deploymentName = deploymentName;
         _endpoint = endpoint;
-        _apiVersion = options.Version;
+        _apiVersion = options.GetRawServiceApiValueForClient(this);
     }
 
     protected AzureAudioClient()

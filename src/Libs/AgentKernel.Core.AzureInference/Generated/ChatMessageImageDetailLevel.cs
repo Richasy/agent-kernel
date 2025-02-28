@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary> A representation of the possible image detail levels for image-based chat completions message content. </summary>
     public readonly partial struct ChatMessageImageDetailLevel : IEquatable<ChatMessageImageDetailLevel>

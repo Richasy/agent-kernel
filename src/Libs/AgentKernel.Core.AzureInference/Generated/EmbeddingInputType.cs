@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary> Represents the input types used for embedding search. </summary>
     public readonly partial struct EmbeddingInputType : IEquatable<EmbeddingInputType>

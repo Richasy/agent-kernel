@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Richasy.AgentKernel.Core.AzureInference;
+using Azure.Core;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     [PersistableModelProxy(typeof(UnknownChatRequestMessage))]
     public partial class ChatRequestMessage : IUtf8JsonSerializable, IJsonModel<ChatRequestMessage>
@@ -78,6 +78,7 @@ namespace Richasy.AgentKernel.Core.AzureInference
                 switch (discriminator.GetString())
                 {
                     case "assistant": return ChatRequestAssistantMessage.DeserializeChatRequestAssistantMessage(element, options);
+                    case "developer": return ChatRequestDeveloperMessage.DeserializeChatRequestDeveloperMessage(element, options);
                     case "system": return ChatRequestSystemMessage.DeserializeChatRequestSystemMessage(element, options);
                     case "tool": return ChatRequestToolMessage.DeserializeChatRequestToolMessage(element, options);
                     case "user": return ChatRequestUserMessage.DeserializeChatRequestUserMessage(element, options);

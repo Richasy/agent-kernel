@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary> A tool selection of a specific, named function tool that will limit chat completions to using the named function. </summary>
     public partial class ChatCompletionsNamedToolChoiceFunction

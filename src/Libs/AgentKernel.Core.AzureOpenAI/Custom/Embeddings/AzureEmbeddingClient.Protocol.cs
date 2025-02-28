@@ -4,8 +4,9 @@
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
+using Richasy.AgentKernel.Core.OpenAI.Embeddings;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Embeddings;
+namespace Azure.AI.OpenAI.Embeddings;
 
 internal partial class AzureEmbeddingClient : EmbeddingClient
 {

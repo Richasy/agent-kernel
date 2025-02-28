@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Richasy.AgentKernel.Core.OpenAI.Assistants;
 
 [Experimental("OPENAI001")]
-[CodeGenModel("RunStepDetailsToolCallKind")]
+[CodeGenModel("RunStepDetailsToolCallType")]
 public enum RunStepToolCallKind
 {
     CodeInterpreter,

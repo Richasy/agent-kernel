@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary> Measurement of the amount of tokens used in this request and response. </summary>
     public partial class EmbeddingsUsage

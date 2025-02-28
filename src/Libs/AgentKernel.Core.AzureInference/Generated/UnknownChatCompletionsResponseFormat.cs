@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary> Unknown version of ChatCompletionsResponseFormat. </summary>
     internal partial class UnknownChatCompletionsResponseFormat : ChatCompletionsResponseFormat

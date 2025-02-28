@@ -8,11 +8,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI
+namespace Azure.AI.OpenAI
 {
     public partial class ContentFilterDetectionResult : IJsonModel<ContentFilterDetectionResult>
     {
         void IJsonModel<ContentFilterDetectionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContentFilterDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -20,7 +29,6 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI
                 throw new FormatException($"The model {nameof(ContentFilterDetectionResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (SerializedAdditionalRawData?.ContainsKey("filtered") != true)
             {
                 writer.WritePropertyName("filtered"u8);
@@ -50,7 +58,6 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContentFilterDetectionResult IJsonModel<ContentFilterDetectionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

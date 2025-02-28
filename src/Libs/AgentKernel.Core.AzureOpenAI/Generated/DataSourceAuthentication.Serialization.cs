@@ -7,12 +7,21 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
+namespace Azure.AI.OpenAI.Chat
 {
     [PersistableModelProxy(typeof(InternalUnknownAzureChatDataSourceAuthenticationOptions))]
     public partial class DataSourceAuthentication : IJsonModel<DataSourceAuthentication>
     {
         void IJsonModel<DataSourceAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataSourceAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -20,7 +29,6 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
                 throw new FormatException($"The model {nameof(DataSourceAuthentication)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (SerializedAdditionalRawData?.ContainsKey("type") != true)
             {
                 writer.WritePropertyName("type"u8);
@@ -45,7 +53,6 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataSourceAuthentication IJsonModel<DataSourceAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

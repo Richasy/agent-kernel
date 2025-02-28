@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
+namespace Azure.AI.OpenAI.Chat
 {
     /// <summary> The AzureSearchChatDataSourceParametersFieldsMapping. </summary>
     public partial class DataSourceFieldMappings

@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
+namespace Azure.AI.OpenAI.Chat
 {
     /// <summary> The AzureSearchChatDataSourceParametersQueryType. </summary>
     public readonly partial struct DataSourceQueryType : IEquatable<DataSourceQueryType>
@@ -39,7 +39,7 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
         public static bool operator ==(DataSourceQueryType left, DataSourceQueryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataSourceQueryType"/> values are not the same. </summary>
         public static bool operator !=(DataSourceQueryType left, DataSourceQueryType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataSourceQueryType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataSourceQueryType"/>. </summary>
         public static implicit operator DataSourceQueryType(string value) => new DataSourceQueryType(value);
 
         /// <inheritdoc />

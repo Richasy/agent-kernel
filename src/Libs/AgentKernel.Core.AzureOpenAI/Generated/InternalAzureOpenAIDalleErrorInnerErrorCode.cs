@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI
+namespace Azure.AI.OpenAI
 {
     /// <summary> The AzureOpenAIDalleErrorInnerError_code. </summary>
     internal readonly partial struct InternalAzureOpenAIDalleErrorInnerErrorCode : IEquatable<InternalAzureOpenAIDalleErrorInnerErrorCode>
@@ -27,7 +27,7 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI
         public static bool operator ==(InternalAzureOpenAIDalleErrorInnerErrorCode left, InternalAzureOpenAIDalleErrorInnerErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InternalAzureOpenAIDalleErrorInnerErrorCode"/> values are not the same. </summary>
         public static bool operator !=(InternalAzureOpenAIDalleErrorInnerErrorCode left, InternalAzureOpenAIDalleErrorInnerErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InternalAzureOpenAIDalleErrorInnerErrorCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InternalAzureOpenAIDalleErrorInnerErrorCode"/>. </summary>
         public static implicit operator InternalAzureOpenAIDalleErrorInnerErrorCode(string value) => new InternalAzureOpenAIDalleErrorInnerErrorCode(value);
 
         /// <inheritdoc />

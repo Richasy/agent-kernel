@@ -5,15 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
-using Richasy.AgentKernel.Core.AzureInference;
-using static Richasy.AgentKernel.Core.AzureInference.Telemetry.OpenTelemetryConstants;
+using Azure.Core;
+using static Azure.AI.Inference.Telemetry.OpenTelemetryConstants;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Threading;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Richasy.AgentKernel.Core.AzureInference.Telemetry
+namespace Azure.AI.Inference.Telemetry
 {
     internal class OpenTelemetryScope : IDisposable
     {
@@ -88,6 +88,7 @@ namespace Richasy.AgentKernel.Core.AzureInference.Telemetry
             {
                 _activity?.SetTag(kv.Key, kv.Value);
             }
+            _activity?.SetTag(AzNamespaceKey, AzureRpNamespaceValue);
             SetTagMaybe(GenAiRequestMaxTokensKey, requestOptions.MaxTokens);
             SetTagMaybe(GenAiRequestTemperatureKey, requestOptions.Temperature);
             SetTagMaybe(GenAiRequestTopPKey, requestOptions.NucleusSamplingFactor);

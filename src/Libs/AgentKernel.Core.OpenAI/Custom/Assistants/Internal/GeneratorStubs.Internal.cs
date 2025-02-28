@@ -43,7 +43,7 @@ internal partial class InternalMessageDeltaContentImageUrlObject { }
 internal partial class InternalMessageDeltaObjectDelta
 {
     [CodeGenMember("Role")]
-    internal MessageRole Role { get; }
+    internal MessageRole? Role { get; }
 }
 
 [CodeGenModel("MessageDeltaContentTextObject")]
@@ -206,7 +206,11 @@ internal partial class InternalRunStepDeltaStepDetailsMessageCreationObject { }
 internal partial class InternalRunStepDeltaStepDetailsToolCallsObject { }
 
 [CodeGenModel("RunStepDeltaStepDetailsToolCallsFileSearchObject")]
-internal partial class InternalRunStepDeltaStepDetailsToolCallsFileSearchObject { }
+internal partial class InternalRunStepDeltaStepDetailsToolCallsFileSearchObject
+{
+    [CodeGenMember("FileSearch")]
+    public InternalRunStepDetailsToolCallsFileSearchObjectFileSearch FileSearch { get; set; }
+}
 
 [CodeGenModel("RunStepDeltaStepDetailsToolCallsFunctionObject")]
 internal partial class InternalRunStepDeltaStepDetailsToolCallsFunctionObject { }

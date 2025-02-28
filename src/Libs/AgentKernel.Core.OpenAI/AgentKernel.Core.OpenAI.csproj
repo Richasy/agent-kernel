@@ -31,6 +31,8 @@
     <NoWarn>$(NoWarn),OPENAI001;OPENAI002</NoWarn>
 
     <Configurations>Debug;Release</Configurations>
+	<IsTrimmable Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</IsTrimmable>
+	<IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
 
   <Import Project="$(RepoRoot)/src/nuget-package.props" />
@@ -56,18 +58,9 @@
 
   <ItemGroup>
     <PackageReference Include="System.ClientModel" />
-    <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 
   <ItemGroup>
   	<Analyzer Remove="@(Analyzer)" />
   </ItemGroup>
-
-  <PropertyGroup Label="Trimmable" Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
-  	<IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
-  	<EnableTrimAnalyzer>true</EnableTrimAnalyzer>
-  	<IsTrimmable>true</IsTrimmable>
-  	<SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
-  	<TrimmerSingleWarn>false</TrimmerSingleWarn>
-  </PropertyGroup>
 </Project>

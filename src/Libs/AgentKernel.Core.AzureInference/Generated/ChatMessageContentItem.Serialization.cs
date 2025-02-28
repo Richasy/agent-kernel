@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Richasy.AgentKernel.Core.AzureInference;
+using Azure.Core;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     [PersistableModelProxy(typeof(UnknownChatMessageContentItem))]
     public partial class ChatMessageContentItem : IUtf8JsonSerializable, IJsonModel<ChatMessageContentItem>
@@ -77,7 +77,9 @@ namespace Richasy.AgentKernel.Core.AzureInference
             {
                 switch (discriminator.GetString())
                 {
+                    case "audio_url": return ChatMessageAudioUrlContentItem.DeserializeChatMessageAudioUrlContentItem(element, options);
                     case "image_url": return ChatMessageImageContentItem.DeserializeChatMessageImageContentItem(element, options);
+                    case "input_audio": return ChatMessageAudioDataContentItem.DeserializeChatMessageAudioDataContentItem(element, options);
                     case "text": return ChatMessageTextContentItem.DeserializeChatMessageTextContentItem(element, options);
                 }
             }

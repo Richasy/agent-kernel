@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
+namespace Azure.AI.OpenAI.Chat
 {
     /// <summary> The AzureSearchChatDataSourceParameters. </summary>
     internal partial class InternalAzureSearchChatDataSourceParameters

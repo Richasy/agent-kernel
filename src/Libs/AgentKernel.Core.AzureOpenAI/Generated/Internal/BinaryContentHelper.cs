@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI
+namespace Azure.AI.OpenAI
 {
     internal static class BinaryContentHelper
     {

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary> The ChatCompletionsToolDefinition_type. </summary>
     public readonly partial struct ChatCompletionsToolDefinitionType : IEquatable<ChatCompletionsToolDefinitionType>

@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
+namespace Azure.AI.OpenAI.Chat
 {
     /// <summary> Unknown version of AzureChatDataSourceVectorizationSource. </summary>
     internal partial class InternalUnknownAzureChatDataSourceVectorizationSource : DataSourceVectorizer

@@ -9,37 +9,30 @@ namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation
 {
     public partial class ConversationTokenUsage
     {
-        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
-        internal ConversationTokenUsage(int totalTokens, int inputTokens, int outputTokens, ConversationInputTokenUsageDetails inputTokenDetails, ConversationOutputTokenUsageDetails outputTokenDetails)
-        {
-            Argument.AssertNotNull(inputTokenDetails, nameof(inputTokenDetails));
-            Argument.AssertNotNull(outputTokenDetails, nameof(outputTokenDetails));
-
-            TotalTokens = totalTokens;
-            InputTokens = inputTokens;
-            OutputTokens = outputTokens;
-            InputTokenDetails = inputTokenDetails;
-            OutputTokenDetails = outputTokenDetails;
-        }
-
-        internal ConversationTokenUsage(int totalTokens, int inputTokens, int outputTokens, ConversationInputTokenUsageDetails inputTokenDetails, ConversationOutputTokenUsageDetails outputTokenDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            TotalTokens = totalTokens;
-            InputTokens = inputTokens;
-            OutputTokens = outputTokens;
-            InputTokenDetails = inputTokenDetails;
-            OutputTokenDetails = outputTokenDetails;
-            SerializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         internal ConversationTokenUsage()
         {
         }
 
-        public int TotalTokens { get; }
-        public int InputTokens { get; }
-        public int OutputTokens { get; }
+        internal ConversationTokenUsage(ConversationInputTokenUsageDetails inputTokenDetails, ConversationOutputTokenUsageDetails outputTokenDetails, int inputTokenCount, int outputTokenCount, int totalTokenCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            InputTokenDetails = inputTokenDetails;
+            OutputTokenDetails = outputTokenDetails;
+            InputTokenCount = inputTokenCount;
+            OutputTokenCount = outputTokenCount;
+            TotalTokenCount = totalTokenCount;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
         public ConversationInputTokenUsageDetails InputTokenDetails { get; }
+
         public ConversationOutputTokenUsageDetails OutputTokenDetails { get; }
+
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData
+        {
+            get => _additionalBinaryDataProperties;
+            set => _additionalBinaryDataProperties = value;
+        }
     }
 }

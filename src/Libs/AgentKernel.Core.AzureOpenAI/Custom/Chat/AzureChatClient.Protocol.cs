@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Richasy.AgentKernel.Core.OpenAI.Chat;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat;
+namespace Azure.AI.OpenAI.Chat;
 
 internal partial class AzureChatClient : ChatClient
 {

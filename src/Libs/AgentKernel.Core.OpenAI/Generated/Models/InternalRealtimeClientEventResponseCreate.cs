@@ -9,23 +9,15 @@ namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation
 {
     internal partial class InternalRealtimeClientEventResponseCreate : InternalRealtimeClientEvent
     {
-        public InternalRealtimeClientEventResponseCreate(InternalRealtimeClientEventResponseCreateResponse response)
+        public InternalRealtimeClientEventResponseCreate() : base(InternalRealtimeClientEventType.ResponseCreate)
         {
-            Argument.AssertNotNull(response, nameof(response));
-
-            Kind = InternalRealtimeClientEventType.ResponseCreate;
-            Response = response;
         }
 
-        internal InternalRealtimeClientEventResponseCreate(InternalRealtimeClientEventType kind, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalRealtimeClientEventResponseCreateResponse response) : base(kind, eventId, serializedAdditionalRawData)
+        internal InternalRealtimeClientEventResponseCreate(InternalRealtimeClientEventType kind, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConversationResponseOptions response) : base(kind, eventId, additionalBinaryDataProperties)
         {
             Response = response;
         }
 
-        internal InternalRealtimeClientEventResponseCreate()
-        {
-        }
-
-        public InternalRealtimeClientEventResponseCreateResponse Response { get; }
+        public ConversationResponseOptions Response { get; set; }
     }
 }

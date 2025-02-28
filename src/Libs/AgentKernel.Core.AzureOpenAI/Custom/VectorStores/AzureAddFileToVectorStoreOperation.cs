@@ -6,9 +6,8 @@
 using System.ClientModel.Primitives;
 using System.ClientModel;
 using System.Diagnostics.CodeAnalysis;
-using Richasy.AgentKernel.Core.OpenAI.VectorStores;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.VectorStores;
+namespace Azure.AI.OpenAI.VectorStores;
 [Experimental("OPENAI001")]
 internal partial class AzureAddFileToVectorStoreOperation : AddFileToVectorStoreOperation
 {

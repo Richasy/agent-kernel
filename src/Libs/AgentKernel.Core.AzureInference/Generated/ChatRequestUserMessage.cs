@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary> A request chat message representing user input to the assistant. </summary>
     public partial class ChatRequestUserMessage : ChatRequestMessage

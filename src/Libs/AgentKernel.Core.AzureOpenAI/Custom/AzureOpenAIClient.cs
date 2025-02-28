@@ -13,27 +13,32 @@ global using Richasy.AgentKernel.Core.OpenAI.Images;
 global using Richasy.AgentKernel.Core.OpenAI.Models;
 global using Richasy.AgentKernel.Core.OpenAI.Moderations;
 global using Richasy.AgentKernel.Core.OpenAI.VectorStores;
+#if !AZURE_OPENAI_GA
 global using Richasy.AgentKernel.Core.OpenAI.RealtimeConversation;
+#endif
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using Richasy.AgentKernel.Core.AzureOpenAI.Audio;
-using Richasy.AgentKernel.Core.AzureOpenAI.Batch;
-using Richasy.AgentKernel.Core.AzureOpenAI.Chat;
-using Richasy.AgentKernel.Core.AzureOpenAI.Embeddings;
-using Richasy.AgentKernel.Core.AzureOpenAI.Files;
-using Richasy.AgentKernel.Core.AzureOpenAI.Images;
+using Azure.AI.OpenAI.Audio;
+using Azure.AI.OpenAI.Batch;
+using Azure.AI.OpenAI.Chat;
+using Azure.AI.OpenAI.Embeddings;
+using Azure.AI.OpenAI.Files;
+using Azure.AI.OpenAI.Images;
 using Azure.Core;
-using Richasy.AgentKernel.Core.AzureOpenAI.Assistants;
-using Richasy.AgentKernel.Core.AzureOpenAI.FineTuning;
-using Richasy.AgentKernel.Core.AzureOpenAI.RealtimeConversation;
-using Richasy.AgentKernel.Core.AzureOpenAI.VectorStores;
+
+#if !AZURE_OPENAI_GA
+using Azure.AI.OpenAI.Assistants;
+using Azure.AI.OpenAI.FineTuning;
+using Azure.AI.OpenAI.RealtimeConversation;
+using Azure.AI.OpenAI.VectorStores;
+#endif
 
 #pragma warning disable AZC0007
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI;
+namespace Azure.AI.OpenAI;
 
 /// <summary>
 /// The top-level client for the Azure OpenAI service.
@@ -148,8 +153,16 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// Gets a new <see cref="AssistantClient"/> instance configured for assistant operation use with the Azure OpenAI service.
     /// </summary>
     /// <returns> A new <see cref="AssistantClient"/> instance. </returns>
+#if AZURE_OPENAI_GA
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#endif
+    [Experimental("OPENAI001")]
     public override AssistantClient GetAssistantClient()
+#if !AZURE_OPENAI_GA
         => new AzureAssistantClient(Pipeline, _endpoint, _options);
+#else
+        => throw new InvalidOperationException($"The preview Assistants feature area is not available in this GA release of the Azure OpenAI Service. To use this capability, please use a preview version of the library.");
+#endif
 
     /// <summary>
     /// Gets a new <see cref="AudioClient"/> instance configured for audio operation use with the Azure OpenAI service.
@@ -195,9 +208,16 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// Gets a new <see cref="FineTuningClient"/> instance configured for fine-tuning operation use with the Azure OpenAI service.
     /// </summary>
     /// <returns> A new <see cref="FineTuningClient"/> instance. </returns>
+#if AZURE_OPENAI_GA
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#endif
     [Experimental("OPENAI001")]
     public override FineTuningClient GetFineTuningClient()
+#if !AZURE_OPENAI_GA
         => new AzureFineTuningClient(Pipeline, _endpoint, _options);
+#else
+        => throw new InvalidOperationException($"Fine-tuning is not yet supported in the GA version of the library. Please use a preview version.");
+#endif
 
     /// <summary>
     /// Gets a new <see cref="ImageClient"/> instance configured for image operation use with the Azure OpenAI service.
@@ -229,10 +249,18 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// Azure OpenAI service.
     /// </summary>
     /// <returns> A new <see cref="VectorStoreClient"/> instance. </returns>
+#if AZURE_OPENAI_GA
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#endif
     [Experimental("OPENAI001")]
     public override VectorStoreClient GetVectorStoreClient()
+#if !AZURE_OPENAI_GA
     => new AzureVectorStoreClient(Pipeline, _endpoint, _options);
+#else
+        => throw new InvalidOperationException($"VectorStoreClient is not supported with this GA version of the library. Please use a preview version of the library for this functionality.");
+#endif
 
+#if !AZURE_OPENAI_GA
     [Experimental("OPENAI002")]
     public override RealtimeConversationClient GetRealtimeConversationClient(string deploymentName)
     {
@@ -245,6 +273,9 @@ public partial class AzureOpenAIClient : OpenAIClient
             return new AzureRealtimeConversationClient(_endpoint, deploymentName, _keyCredential, _options);
         }
     }
+#else
+    // Not yet present in OpenAI GA dependency
+#endif
 
     private static ClientPipeline CreatePipeline(PipelinePolicy authenticationPolicy, AzureOpenAIClientOptions options)
         => ClientPipeline.Create(
@@ -276,7 +307,7 @@ public partial class AzureOpenAIClient : OpenAIClient
 
     private static PipelinePolicy CreateAddUserAgentHeaderPolicy(AzureOpenAIClientOptions options = null)
     {
-        Azure.Core.TelemetryDetails telemetryDetails = new(typeof(AzureOpenAIClient).Assembly, options?.UserAgentApplicationId);
+        Core.TelemetryDetails telemetryDetails = new(typeof(AzureOpenAIClient).Assembly, options?.UserAgentApplicationId);
         return new GenericActionPipelinePolicy(
             requestAction: request =>
             {

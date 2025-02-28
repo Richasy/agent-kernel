@@ -9,11 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Richasy.AgentKernel.Core.AzureInference;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     public partial class ModelInfo : IUtf8JsonSerializable, IJsonModel<ModelInfo>
     {

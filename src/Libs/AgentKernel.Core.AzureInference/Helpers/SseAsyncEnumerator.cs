@@ -9,9 +9,9 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Richasy.AgentKernel.Core.AzureInference.Telemetry;
+using Azure.AI.Inference.Telemetry;
 
-namespace Richasy.AgentKernel.Core.AzureInference.Sse
+namespace Azure.Core.Sse
 {
     internal static class SseAsyncEnumerator<T>
     {

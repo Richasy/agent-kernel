@@ -9,13 +9,15 @@ namespace Richasy.AgentKernel.Core.OpenAI.RealtimeConversation
 {
     internal partial class InternalRealtimeClientEventResponseCancel : InternalRealtimeClientEvent
     {
-        public InternalRealtimeClientEventResponseCancel()
+        public InternalRealtimeClientEventResponseCancel() : base(InternalRealtimeClientEventType.ResponseCancel)
         {
-            Kind = InternalRealtimeClientEventType.ResponseCancel;
         }
 
-        internal InternalRealtimeClientEventResponseCancel(InternalRealtimeClientEventType kind, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, eventId, serializedAdditionalRawData)
+        internal InternalRealtimeClientEventResponseCancel(InternalRealtimeClientEventType kind, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId) : base(kind, eventId, additionalBinaryDataProperties)
         {
+            ResponseId = responseId;
         }
+
+        public string ResponseId { get; set; }
     }
 }

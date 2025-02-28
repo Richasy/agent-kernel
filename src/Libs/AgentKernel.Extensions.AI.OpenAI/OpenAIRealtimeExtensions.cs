@@ -8,9 +8,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.AI;
 using Microsoft.Shared.Diagnostics;
 using Richasy.AgentKernel.Core.OpenAI.RealtimeConversation;
-using Microsoft.Extensions.AI;
 
 namespace Richasy.AgentKernel.Extensions.AI;
 
@@ -19,8 +19,6 @@ namespace Richasy.AgentKernel.Extensions.AI;
 /// </summary>
 public static class OpenAIRealtimeExtensions
 {
-    private static readonly JsonElement _defaultParameterSchema = JsonDocument.Parse("{}").RootElement;
-
     /// <summary>
     /// Converts a <see cref="AIFunction"/> into a <see cref="ConversationFunctionTool"/> so that
     /// it can be used with <see cref="RealtimeConversationClient"/>.
@@ -30,22 +28,13 @@ public static class OpenAIRealtimeExtensions
     {
         _ = Throw.IfNull(aiFunction);
 
-        var parametersSchema = new ConversationFunctionToolParametersSchema
-        {
-            Type = "object",
-            Properties = aiFunction.Metadata.Parameters
-                .ToDictionary(p => p.Name, GetParameterSchema),
-            Required = aiFunction.Metadata.Parameters
-                .Where(p => p.IsRequired)
-                .Select(p => p.Name),
-        };
-
+        ConversationFunctionToolParametersSchema functionToolSchema = JsonSerializer.Deserialize(aiFunction.JsonSchema, OpenAIJsonContext.Default.ConversationFunctionToolParametersSchema)!;
+        BinaryData functionParameters = new(JsonSerializer.SerializeToUtf8Bytes(functionToolSchema, OpenAIJsonContext.Default.ConversationFunctionToolParametersSchema));
         return new ConversationFunctionTool
         {
-            Name = aiFunction.Metadata.Name,
-            Description = aiFunction.Metadata.Description,
-            Parameters = new BinaryData(JsonSerializer.SerializeToUtf8Bytes(
-                parametersSchema, OpenAIJsonContext.Default.ConversationFunctionToolParametersSchema))
+            Name = aiFunction.Name,
+            Description = aiFunction.Description,
+            Parameters = functionParameters
         };
     }
 
@@ -96,15 +85,6 @@ public static class OpenAIRealtimeExtensions
         }
     }
 
-    private static JsonElement GetParameterSchema(AIFunctionParameterMetadata parameterMetadata)
-    {
-        return parameterMetadata switch
-        {
-            { Schema: JsonElement jsonElement } => jsonElement,
-            _ => _defaultParameterSchema,
-        };
-    }
-
     private static async Task<ConversationItem?> GetFunctionCallOutputAsync(
         this ConversationItemStreamingFinishedUpdate update,
         IReadOnlyList<AIFunction> tools,
@@ -113,7 +93,7 @@ public static class OpenAIRealtimeExtensions
         CancellationToken cancellationToken = default)
     {
         if (!string.IsNullOrEmpty(update.FunctionName)
-            && tools.FirstOrDefault(t => t.Metadata.Name == update.FunctionName) is AIFunction aiFunction)
+            && tools.FirstOrDefault(t => t.Name == update.FunctionName) is AIFunction aiFunction)
         {
             var jsonOptions = jsonSerializerOptions ?? AIJsonUtilities.DefaultOptions;
 

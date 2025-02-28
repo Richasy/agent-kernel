@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Richasy.AgentKernel.Core.AzureInference.Sse
+namespace Azure.Core.Sse
 {
     // SSE specification: https://html.spec.whatwg.org/multipage/server-sent-events.html#parsing-an-event-stream
     internal sealed class SseReader : IDisposable

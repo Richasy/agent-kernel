@@ -2,8 +2,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Richasy.AgentKernel.Core.OpenAI.Moderations
 {
     internal static partial class ModerationApplicableInputKindsExtensions

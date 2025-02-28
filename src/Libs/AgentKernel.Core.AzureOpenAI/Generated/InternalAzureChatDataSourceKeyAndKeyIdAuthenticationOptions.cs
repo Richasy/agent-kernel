@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
+namespace Azure.AI.OpenAI.Chat
 {
     /// <summary> The AzureChatDataSourceKeyAndKeyIdAuthenticationOptions. </summary>
     internal partial class InternalAzureChatDataSourceKeyAndKeyIdAuthenticationOptions : DataSourceAuthentication
@@ -25,7 +25,7 @@ namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceKeyAndKeyIdAuthenticationOptions"/>. </summary>
-        /// <param name="type"> Discriminator. </param>
+        /// <param name="type"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="key"></param>
         /// <param name="keyId"></param>

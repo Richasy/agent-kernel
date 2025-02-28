@@ -3,9 +3,9 @@
 
 using System;
 using System.ComponentModel;
-using Richasy.AgentKernel.Core.AzureInference;
+using Azure.Core;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary>
     /// The format of the embeddings result.

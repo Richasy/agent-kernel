@@ -7,7 +7,7 @@ using System.ClientModel.Primitives;
 
 namespace Richasy.AgentKernel.Core.OpenAI
 {
-    internal class ErrorResult<T> : ClientResult<T>
+    internal partial class ErrorResult<T> : ClientResult<T>
     {
         private readonly PipelineResponse _response;
         private readonly ClientResultException _exception;

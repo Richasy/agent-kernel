@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Richasy.AgentKernel.Core.OpenAI;
 
 namespace Richasy.AgentKernel.Core.OpenAI.Assistants
 {
@@ -16,16 +17,12 @@ namespace Richasy.AgentKernel.Core.OpenAI.Assistants
             InternalText = internalText;
         }
 
-        internal InternalRequestMessageTextContent(IDictionary<string, BinaryData> serializedAdditionalRawData, InternalMessageRequestContentTextObjectType type, string internalText) : base(serializedAdditionalRawData)
+        internal InternalRequestMessageTextContent(IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalMessageRequestContentTextObjectType @type, string internalText) : base(additionalBinaryDataProperties)
         {
-            Type = type;
+            Type = @type;
             InternalText = internalText;
         }
 
-        internal InternalRequestMessageTextContent()
-        {
-        }
-
-        public InternalMessageRequestContentTextObjectType Type { get; } = InternalMessageRequestContentTextObjectType.Text;
+        public InternalMessageRequestContentTextObjectType Type { get; } = "text";
     }
 }

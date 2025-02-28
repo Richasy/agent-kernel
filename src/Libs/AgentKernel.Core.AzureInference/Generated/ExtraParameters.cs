@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Richasy.AgentKernel.Core.AzureInference
+namespace Azure.AI.Inference
 {
     /// <summary> Controls what happens if extra parameters, undefined by the REST API, are passed in the JSON request payload. </summary>
-    public readonly partial struct ExtraParameters : IEquatable<ExtraParameters>
+    internal readonly partial struct ExtraParameters : IEquatable<ExtraParameters>
     {
         private readonly string _value;
 
