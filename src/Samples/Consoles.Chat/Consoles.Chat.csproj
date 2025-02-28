@@ -30,6 +30,7 @@
     <ProjectReference Include="..\..\Connectors\Connectors.Mistral\Connectors.Mistral.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.Moonshot\Connectors.Moonshot.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.Ollama\Connectors.Ollama.csproj" />
+    <ProjectReference Include="..\..\Connectors\Connectors.Onnx\Connectors.Onnx.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.OpenAI\Connectors.OpenAI.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.OpenRouter\Connectors.OpenRouter.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.Perplexity\Connectors.Perplexity.csproj" />

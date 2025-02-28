@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+  <PropertyGroup>
+  	<AssemblyName>Richasy.AgentKernel.Connectors.Onnx</AssemblyName>
+  	<RootNamespace>$(AssemblyName)</RootNamespace>
+  	<TargetFramework>net9.0</TargetFramework>
+  	<NoWarn>$(NoWarn)</NoWarn>
+  	<IsAotCompatible>true</IsAotCompatible>
+  </PropertyGroup>
+  
+  <Import Project="$(RepoRoot)/src/nuget-package.props" />
+  
+  <PropertyGroup>
+  	<!-- NuGet Package Settings -->
+  	<Title>Agent Kernel - Onnx connectors</Title>
+  	<Description>Agent Kernel connectors for Onnx.</Description>
+  </PropertyGroup>
+  
+  <ItemGroup>
+  	<PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI" />
+  	<PackageReference Include="RichasyKernel.Abstractions" />
+  </ItemGroup>
+  
+  <ItemGroup>
+  	<ProjectReference Include="..\..\AgentKernel.Core\AgentKernel.Core.csproj" />
+  </ItemGroup>
+  
+</Project>

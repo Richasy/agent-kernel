@@ -121,6 +121,11 @@ public enum ChatProviderType
     /// xAI.
     /// </summary>
     XAI,
+
+    /// <summary>
+    /// ONNX.
+    /// </summary>
+    Onnx,
 }
 
 /// <summary>
@@ -155,6 +160,7 @@ public sealed class ChatProviderTypeConverter : JsonConverter<ChatProviderType>
             "silicon_flow" or "siliconflow" => ChatProviderType.SiliconFlow,
             "doubao" => ChatProviderType.Doubao,
             "xai" => ChatProviderType.XAI,
+            "onnx" => ChatProviderType.Onnx,
             _ => throw new JsonException(),
         };
     }
@@ -186,6 +192,7 @@ public sealed class ChatProviderTypeConverter : JsonConverter<ChatProviderType>
             ChatProviderType.SiliconFlow => "siliconflow",
             ChatProviderType.Doubao => "doubao",
             ChatProviderType.XAI => "xai",
+            ChatProviderType.Onnx => "onnx",
             _ => throw new JsonException(),
         };
 

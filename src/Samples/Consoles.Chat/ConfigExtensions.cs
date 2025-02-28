@@ -5,6 +5,7 @@ using Richasy.AgentKernel;
 using Richasy.AgentKernel.Connectors.Baidu.Models;
 using Richasy.AgentKernel.Connectors.Mistral.Models;
 using Richasy.AgentKernel.Connectors.Ollama.Models;
+using Richasy.AgentKernel.Connectors.Onnx.Models;
 using Richasy.AgentKernel.Connectors.OpenAI.Models;
 using Richasy.AgentKernel.Models;
 using System.Diagnostics.CodeAnalysis;
@@ -42,6 +43,13 @@ internal static class ConfigExtensions
         return config is null || string.IsNullOrWhiteSpace(config.Endpoint)
              ? throw new ArgumentException("The configuration is not valid.", nameof(config))
              : new OllamaServiceConfig(string.Empty, new Uri(config.Endpoint));
+    }
+
+    public static AIServiceConfig? ToAIServiceConfig(this OnnxChatConfig? config)
+    {
+        return config is null || !config.IsCustomModelNotEmpty()
+             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
+             : new OnnxServiceConfig(string.Empty);
     }
 
     public static AIServiceConfig? ToAIServiceConfig(this ErnieChatConfig? config)

@@ -98,6 +98,7 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
             ChatProviderType.Mistral => "Mistral",
             ChatProviderType.Ollama => "Ollama",
             ChatProviderType.Perplexity => "Perplexity",
+            ChatProviderType.Onnx => "ONNX",
             _ => throw new NotSupportedException(),
         };
     }
