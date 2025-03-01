@@ -9,7 +9,7 @@ namespace Richasy.AgentKernel.Connectors.Onnx.Models;
 /// ONNX 服务配置.
 /// </summary>
 /// <param name="modelFolder"></param>
-public sealed class OnnxServiceConfig(string modelFolder) : AIServiceConfig(string.Empty, modelFolder)
+public class OnnxServiceConfig(string modelFolder) : AIServiceConfig(string.Empty, modelFolder)
 {
     /// <inheritdoc/>
     public override bool Equals(object? obj) => obj is OnnxServiceConfig config && base.Equals(obj) && Model == config.Model;
