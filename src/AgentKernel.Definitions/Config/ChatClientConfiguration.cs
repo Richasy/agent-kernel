@@ -356,7 +356,7 @@ public class OllamaChatConfig : ChatEndpointConfigBase
 /// <summary>
 /// ONNX 客户端配置.
 /// </summary>
-public sealed class OnnxChatConfig : ChatClientConfigBase
+public class OnnxChatConfig : ChatClientConfigBase
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="OnnxChatConfig"/> class.
