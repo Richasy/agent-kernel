@@ -31,24 +31,14 @@ public sealed class OnnxChatClient : IChatClient
     /// Initializes a new instance of the <see cref="OnnxChatClient"/> class.
     /// </summary>
     public OnnxChatClient(string? modelDir)
-    {
-        Metadata = new("onnx", default, modelDir);
-    }
+        => Metadata = new("onnx", default, modelDir);
 
     /// <inheritdoc/>
     public ChatClientMetadata Metadata { get; }
 
     /// <inheritdoc/>
-    public async Task<ChatResponse> GetResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
-    {
-        var responseText = new StringBuilder();
-        await foreach (var completion in GetStreamingResponseAsync(chatMessages, options, cancellationToken).ConfigureAwait(false))
-        {
-            responseText.Append(completion.Text);
-        }
-
-        return new(new ChatMessage(ChatRole.Assistant, responseText.ToString()));
-    }
+    public Task<ChatResponse> GetResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
+        => GetStreamingResponseAsync(chatMessages, options, cancellationToken).ToChatResponseAsync(cancellationToken: cancellationToken);
 
     /// <inheritdoc/>
     public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation]CancellationToken cancellationToken = default)

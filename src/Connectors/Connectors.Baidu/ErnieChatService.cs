@@ -41,7 +41,7 @@ public sealed class ErnieChatService : IChatService
     ];
 
     /// <inheritdoc/>
-    public void Initialize(AIServiceConfig config)
+    public void Initialize(AIServiceConfig? config)
     {
         if (config is not ErnieServiceConfig ernieConfig)
         {

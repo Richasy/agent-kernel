@@ -24,7 +24,7 @@ public sealed class AzureAIChatService : IChatService
     public AIServiceConfig? Config => _config;
 
     /// <inheritdoc/>
-    public void Initialize(AIServiceConfig config)
+    public void Initialize(AIServiceConfig? config)
     {
         if (config is not AzureOpenAIServiceConfig azureConfig)
         {

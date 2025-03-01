@@ -126,6 +126,11 @@ public enum ChatProviderType
     /// ONNX.
     /// </summary>
     Onnx,
+
+    /// <summary>
+    /// Windows.
+    /// </summary>
+    Windows,
 }
 
 /// <summary>
@@ -161,6 +166,7 @@ public sealed class ChatProviderTypeConverter : JsonConverter<ChatProviderType>
             "doubao" => ChatProviderType.Doubao,
             "xai" => ChatProviderType.XAI,
             "onnx" => ChatProviderType.Onnx,
+            "windows" => ChatProviderType.Windows,
             _ => throw new JsonException(),
         };
     }
@@ -193,6 +199,7 @@ public sealed class ChatProviderTypeConverter : JsonConverter<ChatProviderType>
             ChatProviderType.Doubao => "doubao",
             ChatProviderType.XAI => "xai",
             ChatProviderType.Onnx => "onnx",
+            ChatProviderType.Windows => "windows",
             _ => throw new JsonException(),
         };
 

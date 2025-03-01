@@ -26,7 +26,7 @@ public sealed class OnnxChatService : IChatService
     public IReadOnlyList<ChatModel> GetPredefinedModels() => [];
 
     /// <inheritdoc/>
-    public void Initialize(AIServiceConfig config)
+    public void Initialize(AIServiceConfig? config)
     {
         if (config is not OnnxServiceConfig onnxConfig)
         {

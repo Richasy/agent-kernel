@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+  	<TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
+  	<TargetPlatformMinVersion>10.0.26100.0</TargetPlatformMinVersion>
+  	<AssemblyName>Richasy.AgentKernel.Connectors.Windows.Preview</AssemblyName>
+  	<RootNamespace>$(AssemblyName)</RootNamespace>
+  	<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+  	<UseWinUI>true</UseWinUI>
+  	<IsAotCompatible>true</IsAotCompatible>
+  	<EnableMsixTooling>true</EnableMsixTooling>
+  </PropertyGroup>
+  
+  <Import Project="$(RepoRoot)/src/nuget-package.props" />
+  
+  <PropertyGroup>
+  	<!-- NuGet Package Settings -->
+  	<Title>Agent Kernel - Windows connectors with preview feature</Title>
+  	<Description>Agent Kernel connectors for Windows, include PhiSilica support.</Description>
+  </PropertyGroup>
+  
+  <ItemGroup>
+  	<PackageReference Include="Microsoft.Windows.SDK.BuildTools" />
+  	<PackageReference Include="Microsoft.WindowsAppSDK" VersionOverride="1.7.250127003-experimental3" />
+  	<PackageReference Include="RichasyKernel.Abstractions" />
+  	<PackageReference Include="RichasyKernel.Core" />
+  </ItemGroup>
+  
+  <ItemGroup>
+  	<ProjectReference Include="..\..\AgentKernel.Core\AgentKernel.Core.csproj" />
+  </ItemGroup>
+</Project>

@@ -24,7 +24,7 @@ public interface IDrawService
     /// Initialize the service.
     /// </summary>
     /// <param name="config">Configuration.</param>
-    void Initialize(AIServiceConfig config);
+    void Initialize(AIServiceConfig? config);
 
     /// <summary>
     /// Get the predefined models.

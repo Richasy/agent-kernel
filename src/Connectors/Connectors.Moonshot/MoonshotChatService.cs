@@ -24,7 +24,7 @@ public sealed class MoonshotChatService : IChatService
     public AIServiceConfig? Config => _config;
 
     /// <inheritdoc/>
-    public void Initialize(AIServiceConfig config)
+    public void Initialize(AIServiceConfig? config)
     {
         if (config is not MoonshotServiceConfig moonshotConfig)
         {

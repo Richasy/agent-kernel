@@ -79,6 +79,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.Windows", "Conne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.Onnx", "Connectors\Connectors.Onnx\Connectors.Onnx.csproj", "{CEC88340-DB88-4BBF-B759-903E801F63AF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connectors.Windows.Preview", "Connectors\Connectors.Windows.Preview\Connectors.Windows.Preview.csproj", "{42949074-81F3-47DA-B938-EA460E0BBC1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -225,6 +227,10 @@ Global
 		{CEC88340-DB88-4BBF-B759-903E801F63AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEC88340-DB88-4BBF-B759-903E801F63AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEC88340-DB88-4BBF-B759-903E801F63AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42949074-81F3-47DA-B938-EA460E0BBC1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42949074-81F3-47DA-B938-EA460E0BBC1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42949074-81F3-47DA-B938-EA460E0BBC1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42949074-81F3-47DA-B938-EA460E0BBC1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -263,6 +269,7 @@ Global
 		{F1AFC394-0835-4F42-9EDE-D1A71313BBAD} = {11B7F1A3-1179-44DD-B461-1C3449081BF1}
 		{B98BB8B5-3E3F-469D-9D7A-1B24CBE7F569} = {BE6BB6A9-68C9-489A-8EDB-59BDCA239D6D}
 		{CEC88340-DB88-4BBF-B759-903E801F63AF} = {BE6BB6A9-68C9-489A-8EDB-59BDCA239D6D}
+		{42949074-81F3-47DA-B938-EA460E0BBC1D} = {BE6BB6A9-68C9-489A-8EDB-59BDCA239D6D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {75EFBD6D-9C6C-4E70-9AEA-80654AA48D1A}

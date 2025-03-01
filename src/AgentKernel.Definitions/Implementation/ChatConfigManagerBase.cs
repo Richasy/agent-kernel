@@ -42,6 +42,7 @@ public abstract class ChatConfigManagerBase : IChatConfigManager
             ChatProviderType.Doubao => Configuration?.Doubao,
             ChatProviderType.XAI => Configuration?.XAI,
             ChatProviderType.Onnx => Configuration?.Onnx,
+            ChatProviderType.Windows => null,
             _ => throw new NotImplementedException(),
         };
     }
@@ -140,6 +141,8 @@ public abstract class ChatConfigManagerBase : IChatConfigManager
                     break;
                 case ChatProviderType.Onnx:
                     Configuration.Onnx = item.Value as OnnxChatConfig;
+                    break;
+                case ChatProviderType.Windows:
                     break;
                 default:
                     throw new NotImplementedException();

@@ -25,7 +25,7 @@ public interface IChatService
     /// Initialize the service.
     /// </summary>
     /// <param name="config">Service configuration.</param>
-    void Initialize(AIServiceConfig config);
+    void Initialize(AIServiceConfig? config);
 
     /// <summary>
     /// Get the predefined models.
