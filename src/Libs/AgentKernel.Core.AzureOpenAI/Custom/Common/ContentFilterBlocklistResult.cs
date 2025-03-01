@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 
 #nullable disable
 
-namespace Azure.AI.OpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 [Experimental("AOAI001")]
 [CodeGenModel("AzureContentFilterBlocklistResult")]

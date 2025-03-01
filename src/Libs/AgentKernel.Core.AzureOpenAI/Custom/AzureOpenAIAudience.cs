@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace Azure.AI.OpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 /// <summary>
 /// Represents cloud authentication audiences available for Azure OpenAI.

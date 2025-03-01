@@ -3,7 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.OpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 [Experimental("AOAI001")]
 [CodeGenModel("AzureContentFilterResultForPrompt")]

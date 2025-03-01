@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     [PersistableModelProxy(typeof(UnknownChatMessageContentItem))]
     public partial class ChatMessageContentItem : IUtf8JsonSerializable, IJsonModel<ChatMessageContentItem>

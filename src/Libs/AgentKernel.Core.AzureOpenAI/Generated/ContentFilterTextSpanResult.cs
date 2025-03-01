@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.AI.OpenAI
+namespace Richasy.AgentKernel.Core.AzureOpenAI
 {
     /// <summary> The AzureContentFilterCompletionTextSpanDetectionResult. </summary>
     public partial class ContentFilterTextSpanResult

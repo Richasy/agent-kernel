@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     /// <summary> The EmbedRequest. </summary>
     internal partial class EmbedRequest

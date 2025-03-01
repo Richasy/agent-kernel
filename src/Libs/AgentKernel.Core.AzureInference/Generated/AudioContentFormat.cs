@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     /// <summary> A representation of the possible audio formats for audio. </summary>
     public readonly partial struct AudioContentFormat : IEquatable<AudioContentFormat>

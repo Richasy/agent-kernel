@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.AI.OpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct, AllowMultiple = true)]
 internal class CodeGenSuppressAttribute : Attribute

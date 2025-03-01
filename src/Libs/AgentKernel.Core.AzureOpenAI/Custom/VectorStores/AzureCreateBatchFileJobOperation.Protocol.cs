@@ -6,7 +6,7 @@
 using System.ClientModel;
 using System.ClientModel.Primitives;
 
-namespace Azure.AI.OpenAI.VectorStores;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.VectorStores;
 internal partial class AzureCreateBatchFileJobOperation
 {
     internal override PipelineMessage CreateGetVectorStoreFileBatchRequest(string vectorStoreId, string batchId, RequestOptions options)

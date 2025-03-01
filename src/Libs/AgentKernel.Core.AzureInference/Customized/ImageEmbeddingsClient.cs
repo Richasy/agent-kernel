@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
-using Azure.AI.Inference.Telemetry;
+using Richasy.AgentKernel.Core.AzureInference.Telemetry;
 using Richasy.AgentKernel.Core.AzureInference.Pipeline;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     [SuppressMessage("Azure Analysis", "AZC0007", Justification = "Analyzer is incorrectly flagging valid overloads.")]
     [CodeGenSuppress("Embed", typeof(IEnumerable<ImageEmbeddingInput>), typeof(int?), typeof(EmbeddingEncodingFormat?), typeof(EmbeddingInputType?), typeof(string), typeof(ExtraParameters?), typeof(CancellationToken))]

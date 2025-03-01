@@ -9,7 +9,7 @@ namespace Richasy.AgentKernel.Connectors.Google;
 [JsonSourceGenerationOptions(WriteIndented = true)]
 [JsonSerializable(typeof(GeminiRequest))]
 [JsonSerializable(typeof(GeminiResponse))]
-[JsonSerializable(typeof(OpenAIChatToolJson))]
+[JsonSerializable(typeof(GeminiFunctionToolParameters))]
 internal sealed partial class JsonGenContext : JsonSerializerContext
 {
 }

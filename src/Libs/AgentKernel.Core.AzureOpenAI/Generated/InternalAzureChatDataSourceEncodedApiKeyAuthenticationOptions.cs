@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.OpenAI.Chat
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
 {
     /// <summary> The AzureChatDataSourceEncodedApiKeyAuthenticationOptions. </summary>
     internal partial class InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions : DataSourceAuthentication

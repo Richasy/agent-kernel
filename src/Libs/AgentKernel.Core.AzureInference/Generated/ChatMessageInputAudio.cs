@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     /// <summary> The details of the input audio data. </summary>
     public partial class ChatMessageInputAudio

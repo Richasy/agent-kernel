@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.Json;
 
-namespace Azure.AI.OpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 [Experimental("AOAI001")]
 [CodeGenModel("AzureOpenAIDalleError")]

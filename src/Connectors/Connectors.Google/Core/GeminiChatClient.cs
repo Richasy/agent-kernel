@@ -16,7 +16,6 @@ namespace Richasy.AgentKernel.Connectors.Google;
 /// </summary>
 public sealed class GeminiChatClient : IChatClient
 {
-    private static readonly JsonElement _defaultParameterSchema = JsonDocument.Parse("{}").RootElement;
     private readonly Uri _chatGenerationEndpoint;
     private readonly Uri _chatStreamingEndpoint;
     private readonly HttpClient _httpClient;
@@ -38,7 +37,7 @@ public sealed class GeminiChatClient : IChatClient
     public ChatClientMetadata Metadata { get; }
 
     /// <inheritdoc/>
-    public async Task<Microsoft.Extensions.AI.ChatCompletion> CompleteAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
+    public async Task<ChatResponse> GetResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
     {
         var request = GetGeminiRequest(chatMessages, options);
         var response = await GetGeminiResponseAsync(_chatGenerationEndpoint, request, cancellationToken).ConfigureAwait(false);
@@ -59,7 +58,7 @@ public sealed class GeminiChatClient : IChatClient
     }
 
     /// <inheritdoc/>
-    public async IAsyncEnumerable<StreamingChatCompletionUpdate> CompleteStreamingAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         var request = GetGeminiRequest(chatMessages, options);
         HttpResponseMessage? response = null;
@@ -101,7 +100,7 @@ public sealed class GeminiChatClient : IChatClient
 
                 var messageContents = GetChatMessageContentsFromResponse(geminiResponse);
                 var firstContent = messageContents[0];
-                var update = new StreamingChatCompletionUpdate
+                var update = new ChatResponseUpdate
                 {
                     Role = firstContent.Role,
                     CreatedAt = DateTimeOffset.Now,
@@ -200,7 +199,7 @@ public sealed class GeminiChatClient : IChatClient
         else if (part?.FunctionResponse != null)
         {
             var resultText = part.FunctionResponse.Response.Content?.ToString();
-            var functionResultContent = new FunctionResultContent(part.FunctionResponse.FunctionName, part.FunctionResponse.FunctionName, resultText);
+            var functionResultContent = new FunctionResultContent(part.FunctionResponse.FunctionName, resultText);
             msg.Contents = [functionResultContent];
         }
         else
@@ -279,33 +278,13 @@ public sealed class GeminiChatClient : IChatClient
     {
         if (tool is AIFunction function)
         {
-            var parameters = function.Metadata.Parameters;
-            var resultParameters = OpenAIChatToolJson.ZeroFunctionParametersSchema;
-            if (parameters is { Count: > 0 })
-            {
-                OpenAIChatToolJson toolJson = new();
-
-                foreach (var parameter in parameters)
-                {
-                    toolJson.Properties.Add(parameter.Name, parameter.Schema is JsonElement e ? e : _defaultParameterSchema);
-
-                    if (parameter.IsRequired)
-                    {
-                        _ = toolJson.Required.Add(parameter.Name);
-                    }
-                }
-
-                resultParameters = BinaryData.FromBytes(
-                    JsonSerializer.SerializeToUtf8Bytes(toolJson, JsonGenContext.Default.OpenAIChatToolJson));
-            }
-
             return new GeminiTool
             {
                 Functions = [new GeminiTool.FunctionDeclaration
                 {
-                    Name = function.Metadata.Name,
-                    Description = function.Metadata.Description,
-                    Parameters = resultParameters,
+                    Name = function.Name,
+                    Description = function.Description,
+                    Parameters = function.JsonSchema.Deserialize(JsonGenContext.Default.GeminiFunctionToolParameters),
                 }],
             };
         }

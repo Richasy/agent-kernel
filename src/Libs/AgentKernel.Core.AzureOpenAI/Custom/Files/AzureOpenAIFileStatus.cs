@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.AI.OpenAI.Files;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Files;
 
 public enum AzureOpenAIFileStatus
 {

@@ -3,7 +3,7 @@
 
 #nullable enable
 
-using Azure.AI.Inference;
+using Richasy.AgentKernel.Core.AzureInference;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 

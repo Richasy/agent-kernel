@@ -3,7 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat;
 
 /// <summary>
 /// The <c>include_context</c> flags to request for an On Your Data retrieval result, which control what information

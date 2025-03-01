@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     internal partial class ChatCompletionsResponseFormatJsonSchemaDefinition : IUtf8JsonSerializable, IJsonModel<ChatCompletionsResponseFormatJsonSchemaDefinition>
     {

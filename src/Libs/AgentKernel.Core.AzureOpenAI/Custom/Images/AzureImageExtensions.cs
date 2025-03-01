@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.OpenAI.Internal;
+using Richasy.AgentKernel.Core.AzureOpenAI.Internal;
 using Richasy.AgentKernel.Core.OpenAI.Images;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.OpenAI.Images;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Images;
 
 [Experimental("AOAI001")]
 public static class AzureImageExtensions

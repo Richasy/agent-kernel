@@ -20,9 +20,9 @@ namespace Richasy.AgentKernel.Connectors.Baidu;
 [JsonSerializable(typeof(ErnieGetImageRequest))]
 [JsonSerializable(typeof(ErnieBasicGetImageResponse))]
 [JsonSerializable(typeof(ErnieAdvancedGetImageResponse))]
-[JsonSerializable(typeof(OpenAIChatToolJson))]
 [JsonSerializable(typeof(BaiduTranslateResponse))]
 [JsonSerializable(typeof(ErnieWebSearchParameters))]
+[JsonSerializable(typeof(ErnieFunctionToolParameters))]
 internal sealed partial class JsonGenContext : JsonSerializerContext
 {
 }

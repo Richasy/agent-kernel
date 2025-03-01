@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.OpenAI.Chat;
+using Richasy.AgentKernel.Core.AzureOpenAI.Chat;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.AI.OpenAI.Internal;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Internal;
 
 #pragma warning disable AOAI001
 internal static class AdditionalPropertyHelpers

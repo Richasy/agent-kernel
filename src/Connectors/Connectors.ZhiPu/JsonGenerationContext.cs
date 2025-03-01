@@ -15,5 +15,6 @@ namespace Richasy.AgentKernel.Connectors.ZhiPu;
 [JsonSerializable(typeof(ZhiPuChatRequestAssistantMessage))]
 [JsonSerializable(typeof(ZhiPuChatRequestContentMessage))]
 [JsonSerializable(typeof(ZhiPuChatRequestToolMessage))]
+[JsonSerializable(typeof(ZhiPuFunctionToolParameters))]
 [JsonSerializable(typeof(ZhiPuErrorResponse))]
 internal sealed partial class JsonGenerationContext : JsonSerializerContext;

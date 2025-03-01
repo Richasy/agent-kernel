@@ -8,7 +8,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.OpenAI.Chat
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
 {
     internal partial class InternalUnknownAzureChatDataSourceAuthenticationOptions : IJsonModel<DataSourceAuthentication>
     {

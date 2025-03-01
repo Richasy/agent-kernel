@@ -11,7 +11,7 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.AI.OpenAI
+namespace Richasy.AgentKernel.Core.AzureOpenAI
 {
     internal class MultipartFormDataBinaryContent : BinaryContent
     {

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     /// <summary> Representation of a single embeddings relatedness comparison. </summary>
     public partial class EmbeddingItem

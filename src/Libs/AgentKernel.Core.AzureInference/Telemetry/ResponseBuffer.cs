@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Azure.AI.Inference.Telemetry
+namespace Richasy.AgentKernel.Core.AzureInference.Telemetry
 {
     internal class ResponseBuffer
     {

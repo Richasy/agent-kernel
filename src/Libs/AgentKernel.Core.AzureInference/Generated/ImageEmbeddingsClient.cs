@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Richasy.AgentKernel.Core.AzureInference.Pipeline;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     // Data plane generated client.
     /// <summary> The ImageEmbeddings service client. </summary>

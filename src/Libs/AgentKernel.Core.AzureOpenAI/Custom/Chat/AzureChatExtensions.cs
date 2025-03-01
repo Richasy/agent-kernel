@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.OpenAI.Internal;
+using Richasy.AgentKernel.Core.AzureOpenAI.Internal;
 using System.Diagnostics.CodeAnalysis;
 
 #pragma warning disable AZC0112
 
-namespace Azure.AI.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat;
 
 [Experimental("AOAI001")]
 public static partial class AzureChatExtensions

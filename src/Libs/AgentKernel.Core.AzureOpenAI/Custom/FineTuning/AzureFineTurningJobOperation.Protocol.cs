@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 
 #nullable enable
 
-namespace Azure.AI.OpenAI.FineTuning;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.FineTuning;
 
 /// <summary>
 /// A long-running operation for creating a new model from a given dataset.

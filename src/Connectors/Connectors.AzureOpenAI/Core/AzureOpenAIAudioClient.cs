@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-using Richasy.AgentKernel.Core.AzureOpenAI;
 using Richasy.AgentKernel.Core.OpenAI.Audio;
 using Richasy.AgentKernel.Audio;
 using Richasy.AgentKernel.Connectors.Azure.Models;
 using Richasy.AgentKernel.Models;
 using System.ClientModel;
+using Richasy.AgentKernel.Core.AzureOpenAI;
 
 namespace Richasy.AgentKernel.Connectors.Azure.Core;
 

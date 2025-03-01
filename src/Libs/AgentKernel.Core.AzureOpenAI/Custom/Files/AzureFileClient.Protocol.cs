@@ -6,7 +6,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 
-namespace Azure.AI.OpenAI.Files;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Files;
 
 internal partial class AzureFileClient : OpenAIFileClient
 {

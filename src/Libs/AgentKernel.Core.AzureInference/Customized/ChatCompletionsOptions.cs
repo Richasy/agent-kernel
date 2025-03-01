@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Richasy.AgentKernel.Core.AzureInference;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     // CUSTOM CODE NOTE:
     // Allow for "init" pattern using property setters.

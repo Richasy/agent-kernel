@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Inference.Telemetry;
+using Richasy.AgentKernel.Core.AzureInference.Telemetry;
 
 namespace Azure.Core.Sse
 {

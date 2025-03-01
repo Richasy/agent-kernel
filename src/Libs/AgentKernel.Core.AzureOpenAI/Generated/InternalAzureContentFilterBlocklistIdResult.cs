@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.OpenAI
+namespace Richasy.AgentKernel.Core.AzureOpenAI
 {
     /// <summary>
     /// A content filter result item that associates an existing custom blocklist ID with a value indicating whether or not

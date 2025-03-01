@@ -14,7 +14,7 @@ using System.Text.Json;
 using System.Xml;
 using Azure.Core;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     internal static class ModelSerializationExtensions
     {

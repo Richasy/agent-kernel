@@ -3,9 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using static Azure.AI.Inference.StreamingChatCompletionsUpdate;
+using static Richasy.AgentKernel.Core.AzureInference.StreamingChatCompletionsUpdate;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     /// <summary> A representation of a chat message update as received in a streaming response. </summary>
     public partial class StreamingChatResponseMessageUpdate

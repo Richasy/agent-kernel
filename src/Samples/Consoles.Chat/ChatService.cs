@@ -175,7 +175,7 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
                 //    responseMessage += message.Text;
                 //}
 
-                var response = await client.CompleteAsync(chatMessages, options, cancellationToken: cancellationToken);
+                var response = await client.GetResponseAsync(chatMessages, options, cancellationToken: cancellationToken);
                 if (response.Message.AdditionalProperties?.ContainsKey("reasoning_content") ?? false)
                 {
                     var reasoningContent = response.Message.AdditionalProperties["reasoning_content"];

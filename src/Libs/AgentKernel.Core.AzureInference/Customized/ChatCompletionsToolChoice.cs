@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     /// <summary>
     /// Represents an optional control that specifies which, if any, tools may be called by the model while processing a

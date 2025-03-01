@@ -10,6 +10,6 @@ namespace Richasy.AgentKernel.Connectors.Mistral;
 [JsonSerializable(typeof(MistralChatRequest))]
 [JsonSerializable(typeof(MistralChatResponse))]
 [JsonSerializable(typeof(MistralErrorResponse))]
-[JsonSerializable(typeof(OpenAIChatToolJson))]
+[JsonSerializable(typeof(MistralFunctionToolParameters))]
 [JsonSerializable(typeof(string))]
 internal sealed partial class JsonGenContext : JsonSerializerContext;

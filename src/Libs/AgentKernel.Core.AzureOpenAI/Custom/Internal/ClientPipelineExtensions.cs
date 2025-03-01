@@ -4,7 +4,7 @@
 using System.ClientModel;
 using System.ClientModel.Primitives;
 
-namespace Azure.AI.OpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 #pragma warning disable AOAI001
 

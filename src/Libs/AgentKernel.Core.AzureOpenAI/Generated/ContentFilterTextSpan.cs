@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.OpenAI
+namespace Richasy.AgentKernel.Core.AzureOpenAI
 {
     /// <summary> A representation of a span of completion text as used by Azure OpenAI content filter results. </summary>
     public partial class ContentFilterTextSpan

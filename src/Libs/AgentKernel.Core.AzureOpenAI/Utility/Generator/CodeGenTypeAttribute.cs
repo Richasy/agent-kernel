@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Azure.AI.OpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 [AttributeUsage(AttributeTargets.Class)]
 internal class CodeGenTypeAttribute : Attribute

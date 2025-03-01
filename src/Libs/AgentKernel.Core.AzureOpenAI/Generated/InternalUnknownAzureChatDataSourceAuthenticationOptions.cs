@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.OpenAI.Chat
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
 {
     /// <summary> Unknown version of AzureChatDataSourceAuthenticationOptions. </summary>
     internal partial class InternalUnknownAzureChatDataSourceAuthenticationOptions : DataSourceAuthentication

@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.AI.OpenAI.FineTuning;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.FineTuning;
 
 internal partial class AzureFineTuningClient : FineTuningClient
 {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat;
 
 [Experimental("AOAI001")]
 [CodeGenModel("AzureSearchChatDataSourceParameters")]

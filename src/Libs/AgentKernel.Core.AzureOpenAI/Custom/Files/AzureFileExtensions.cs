@@ -3,9 +3,9 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-using Azure.AI.OpenAI.Files;
+using Richasy.AgentKernel.Core.AzureOpenAI.Files;
 
-namespace Azure.AI.OpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 #pragma warning disable CS0618
 

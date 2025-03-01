@@ -12,7 +12,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Inference;
 using Microsoft.Extensions.AI;
 using Microsoft.Shared.Diagnostics;
 
@@ -164,7 +163,7 @@ public sealed class AzureAIInferenceChatClient : IChatClient
         await foreach (StreamingChatCompletionsUpdate chatCompletionUpdate in updates.ConfigureAwait(false))
         {
             // The role and finish reason may arrive during any update, but once they've arrived, the same value should be the same for all subsequent updates.
-            streamedRole ??= chatCompletionUpdate.Role is global::Azure.AI.Inference.ChatRole role ? ToChatRole(role) : null;
+            streamedRole ??= chatCompletionUpdate.Role is global::Richasy.AgentKernel.Core.AzureInference.ChatRole role ? ToChatRole(role) : null;
             finishReason ??= chatCompletionUpdate.FinishReason is CompletionsFinishReason reason ? ToFinishReason(reason) : null;
             responseId ??= chatCompletionUpdate.Id;
             createdAt ??= chatCompletionUpdate.Created;
@@ -272,12 +271,12 @@ public sealed class AzureAIInferenceChatClient : IChatClient
     }
 
     /// <summary>Converts an AzureAI role to an Extensions role.</summary>
-    private static Microsoft.Extensions.AI.ChatRole ToChatRole(global::Azure.AI.Inference.ChatRole role) =>
-        role.Equals(global::Azure.AI.Inference.ChatRole.System) ? Microsoft.Extensions.AI.ChatRole.System :
-        role.Equals(global::Azure.AI.Inference.ChatRole.User) ? Microsoft.Extensions.AI.ChatRole.User :
-        role.Equals(global::Azure.AI.Inference.ChatRole.Assistant) ? Microsoft.Extensions.AI.ChatRole.Assistant :
-        role.Equals(global::Azure.AI.Inference.ChatRole.Tool) ? Microsoft.Extensions.AI.ChatRole.Tool :
-        role.Equals(global::Azure.AI.Inference.ChatRole.Developer) ? ChatRoleDeveloper :
+    private static Microsoft.Extensions.AI.ChatRole ToChatRole(global::Richasy.AgentKernel.Core.AzureInference.ChatRole role) =>
+        role.Equals(global::Richasy.AgentKernel.Core.AzureInference.ChatRole.System) ? Microsoft.Extensions.AI.ChatRole.System :
+        role.Equals(global::Richasy.AgentKernel.Core.AzureInference.ChatRole.User) ? Microsoft.Extensions.AI.ChatRole.User :
+        role.Equals(global::Richasy.AgentKernel.Core.AzureInference.ChatRole.Assistant) ? Microsoft.Extensions.AI.ChatRole.Assistant :
+        role.Equals(global::Richasy.AgentKernel.Core.AzureInference.ChatRole.Tool) ? Microsoft.Extensions.AI.ChatRole.Tool :
+        role.Equals(global::Richasy.AgentKernel.Core.AzureInference.ChatRole.Developer) ? ChatRoleDeveloper :
         new Microsoft.Extensions.AI.ChatRole(role.ToString());
 
     /// <summary>Converts an AzureAI finish reason to an Extensions finish reason.</summary>

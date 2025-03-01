@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.OpenAI.Files;
+using Richasy.AgentKernel.Core.AzureOpenAI.Files;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.OpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 [Experimental("AOAI001")]
 public static partial class OpenAIFileExtensions

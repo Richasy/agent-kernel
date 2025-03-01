@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 using Richasy.AgentKernel.Core.AzureInference;
 using Richasy.AgentKernel.Core.AzureInference.Pipeline;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     // Data plane generated client.
     /// <summary> The ChatCompletions service client. </summary>

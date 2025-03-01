@@ -7,7 +7,7 @@ using Richasy.AgentKernel.Core.OpenAI;
 using Richasy.AgentKernel.Core.OpenAI.Assistants;
 using System.ClientModel.Primitives;
 
-namespace Azure.AI.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Assistants;
 
 /// <summary>
 /// The scenario client used for assistant operations with the Azure OpenAI service.

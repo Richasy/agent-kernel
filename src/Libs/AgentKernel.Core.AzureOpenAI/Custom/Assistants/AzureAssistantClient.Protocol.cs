@@ -6,10 +6,10 @@
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
-using Azure.AI.OpenAI.Utility;
+using Richasy.AgentKernel.Core.AzureOpenAI.Utility;
 using Richasy.AgentKernel.Core.OpenAI.Assistants;
 
-namespace Azure.AI.OpenAI.Assistants;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Assistants;
 
 [Experimental("OPENAI001")]
 internal partial class AzureAssistantClient : AssistantClient

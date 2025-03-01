@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     // CUSTOM CODE NOTE:
     //  This nested type is internalized to facilitate better abstraction of internet- vs. local-data-based images via

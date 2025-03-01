@@ -21,24 +21,25 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using Azure.AI.OpenAI.Audio;
-using Azure.AI.OpenAI.Batch;
-using Azure.AI.OpenAI.Chat;
-using Azure.AI.OpenAI.Embeddings;
-using Azure.AI.OpenAI.Files;
-using Azure.AI.OpenAI.Images;
+using Richasy.AgentKernel.Core.AzureOpenAI.Audio;
+using Richasy.AgentKernel.Core.AzureOpenAI.Batch;
+using Richasy.AgentKernel.Core.AzureOpenAI.Chat;
+using Richasy.AgentKernel.Core.AzureOpenAI.Embeddings;
+using Richasy.AgentKernel.Core.AzureOpenAI.Files;
+using Richasy.AgentKernel.Core.AzureOpenAI.Images;
 using Azure.Core;
 
 #if !AZURE_OPENAI_GA
-using Azure.AI.OpenAI.Assistants;
-using Azure.AI.OpenAI.FineTuning;
-using Azure.AI.OpenAI.RealtimeConversation;
-using Azure.AI.OpenAI.VectorStores;
+using Richasy.AgentKernel.Core.AzureOpenAI.Assistants;
+using Richasy.AgentKernel.Core.AzureOpenAI.FineTuning;
+using Richasy.AgentKernel.Core.AzureOpenAI.RealtimeConversation;
+using Richasy.AgentKernel.Core.AzureOpenAI.VectorStores;
+using TelemetryDetails = Azure.Core.TelemetryDetails;
 #endif
 
 #pragma warning disable AZC0007
 
-namespace Azure.AI.OpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 /// <summary>
 /// The top-level client for the Azure OpenAI service.
@@ -307,7 +308,7 @@ public partial class AzureOpenAIClient : OpenAIClient
 
     private static PipelinePolicy CreateAddUserAgentHeaderPolicy(AzureOpenAIClientOptions options = null)
     {
-        Core.TelemetryDetails telemetryDetails = new(typeof(AzureOpenAIClient).Assembly, options?.UserAgentApplicationId);
+        TelemetryDetails telemetryDetails = new(typeof(AzureOpenAIClient).Assembly, options?.UserAgentApplicationId);
         return new GenericActionPipelinePolicy(
             requestAction: request =>
             {

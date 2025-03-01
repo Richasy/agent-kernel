@@ -6,7 +6,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 
-namespace Azure.AI.OpenAI
+namespace Richasy.AgentKernel.Core.AzureOpenAI
 {
     internal static partial class ClientPipelineExtensions
     {

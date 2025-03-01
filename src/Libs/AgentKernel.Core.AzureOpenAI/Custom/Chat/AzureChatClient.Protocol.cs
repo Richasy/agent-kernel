@@ -6,7 +6,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 
-namespace Azure.AI.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat;
 
 internal partial class AzureChatClient : ChatClient
 {

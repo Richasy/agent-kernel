@@ -4,7 +4,7 @@
 using Richasy.AgentKernel.Core.OpenAI.Embeddings;
 using System.ClientModel.Primitives;
 
-namespace Azure.AI.OpenAI.Embeddings;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Embeddings;
 
 /// <summary>
 /// The scenario client used for embedding operations with the Azure OpenAI service.

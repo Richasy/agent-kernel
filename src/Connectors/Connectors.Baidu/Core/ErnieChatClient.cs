@@ -16,7 +16,6 @@ namespace Richasy.AgentKernel.Connectors.Baidu.Core;
 public sealed class ErnieChatClient : IChatClient
 {
     private const string _apiEndpoint = "https://qianfan.baidubce.com/v2/chat/completions";
-    private static readonly JsonElement _defaultParameterSchema = JsonDocument.Parse("{}").RootElement;
     private readonly HttpClient _httpClient;
     private readonly ErnieServiceConfig _config;
     private BearerToken? _token;
@@ -38,7 +37,7 @@ public sealed class ErnieChatClient : IChatClient
     public ChatClientMetadata Metadata { get; }
 
     /// <inheritdoc/>
-    public async Task<Microsoft.Extensions.AI.ChatCompletion> CompleteAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
+    public async Task<ChatResponse> GetResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(chatMessages);
         await CheckBearerTokenAsync(cancellationToken).ConfigureAwait(false);
@@ -58,7 +57,7 @@ public sealed class ErnieChatClient : IChatClient
         var responseObj = JsonSerializer.Deserialize(responseJson, JsonGenContext.Default.ErnieChatResponse);
         return new([FromErnieChoice(responseObj?.Choices?.First() ?? throw new KernelException("Empty response"))])
         {
-            CompletionId = responseObj.Id,
+            ResponseId = responseObj.Id,
             ModelId = responseObj?.Model ?? options?.ModelId ?? Metadata.ModelId,
             CreatedAt = DateTimeOffset.FromUnixTimeSeconds(responseObj?.Created ?? 0),
             FinishReason = ToFinishReason(responseObj!),
@@ -67,7 +66,7 @@ public sealed class ErnieChatClient : IChatClient
     }
 
     /// <inheritdoc/>
-    public async IAsyncEnumerable<StreamingChatCompletionUpdate> CompleteStreamingAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(chatMessages);
         await CheckBearerTokenAsync(cancellationToken).ConfigureAwait(false);
@@ -102,7 +101,7 @@ public sealed class ErnieChatClient : IChatClient
                 }
 
                 var modelId = chunk.Model ?? options?.ModelId ?? Metadata.ModelId;
-                var update = new StreamingChatCompletionUpdate
+                var update = new ChatResponseUpdate
                 {
                     Role = string.IsNullOrEmpty(chunk.Choices?.FirstOrDefault()?.Delta?.Content) ? ChatRole.Tool : ChatRole.Assistant,
                     CreatedAt = DateTimeOffset.FromUnixTimeSeconds(chunk.Created),
@@ -298,24 +297,10 @@ public sealed class ErnieChatClient : IChatClient
     {
         if (tool is AIFunction function)
         {
-            var parameters = function.Metadata.Parameters;
             var resultParameters = OpenAIChatToolJson.ZeroFunctionParametersSchema;
-            if (parameters is { Count: > 0 })
+            if (function.UnderlyingMethod != null)
             {
-                OpenAIChatToolJson toolJson = new();
-
-                foreach (var parameter in parameters)
-                {
-                    toolJson.Properties.Add(parameter.Name, parameter.Schema is JsonElement e ? e : _defaultParameterSchema);
-
-                    if (parameter.IsRequired)
-                    {
-                        _ = toolJson.Required.Add(parameter.Name);
-                    }
-                }
-
-                resultParameters = BinaryData.FromBytes(
-                    JsonSerializer.SerializeToUtf8Bytes(toolJson, JsonGenContext.Default.OpenAIChatToolJson));
+                resultParameters = BinaryData.FromString(function.JsonSchema.ToString());
             }
 
             return new()
@@ -323,9 +308,9 @@ public sealed class ErnieChatClient : IChatClient
                 Type = "function",
                 Function = new()
                 {
-                    Name = function.Metadata.Name,
-                    Description = function.Metadata.Description,
-                    Parameters = resultParameters,
+                    Name = function.Name,
+                    Description = function.Description,
+                    Parameters = function.JsonSchema.Deserialize(JsonGenContext.Default.ErnieFunctionToolParameters),
                 },
             };
         }

@@ -5,7 +5,7 @@
 using System.ClientModel;
 using System.ClientModel.Primitives;
 
-namespace Azure.AI.OpenAI
+namespace Richasy.AgentKernel.Core.AzureOpenAI
 {
     internal class ErrorResult<T> : ClientResult<T>
     {

@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Inference {
+namespace Richasy.AgentKernel.Core.AzureInference {
     public partial class ChatCompletionsToolDefinition
     {
         // CUSTOM CODE NOTE:

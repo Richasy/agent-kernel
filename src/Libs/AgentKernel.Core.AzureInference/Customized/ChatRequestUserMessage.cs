@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     // CUSTOM CODE NOTE:
     //   Depending on the model being used, "Content" may either be a plain string or an array of content items.

@@ -11,7 +11,7 @@ using Azure.Core.Pipeline;
 using System.Diagnostics.CodeAnalysis;
 using Richasy.AgentKernel.Core.AzureInference.Pipeline;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     // CUSTOM CODE NOTE:
     //   Modified code for the ChatCompletionsClient

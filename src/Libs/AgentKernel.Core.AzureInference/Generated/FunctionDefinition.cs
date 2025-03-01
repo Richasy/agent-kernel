@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     /// <summary> The definition of a caller-specified function that chat completions may invoke in response to matching user input. </summary>
     public partial class FunctionDefinition

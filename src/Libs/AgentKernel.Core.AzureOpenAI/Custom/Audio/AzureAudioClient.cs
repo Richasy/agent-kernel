@@ -5,7 +5,7 @@ using Richasy.AgentKernel.Core.OpenAI;
 using Richasy.AgentKernel.Core.OpenAI.Audio;
 using System.ClientModel.Primitives;
 
-namespace Azure.AI.OpenAI.Audio;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Audio;
 
 /// <summary>
 /// The scenario client used for audio operations with the Azure OpenAI service.

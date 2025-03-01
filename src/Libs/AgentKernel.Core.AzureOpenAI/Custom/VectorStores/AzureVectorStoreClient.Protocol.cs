@@ -5,9 +5,9 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using Azure.AI.OpenAI.Utility;
+using Richasy.AgentKernel.Core.AzureOpenAI.Utility;
 
-namespace Azure.AI.OpenAI.VectorStores;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.VectorStores;
 
 internal partial class AzureVectorStoreClient : VectorStoreClient
 {

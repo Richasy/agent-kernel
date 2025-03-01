@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     // CUSTOM CODE NOTE:
     //   This portion of the partial class ensures we have factory exposure for all needed types, including ones

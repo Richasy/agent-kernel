@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     public partial class StreamingChatResponseMessageUpdate : IUtf8JsonSerializable, IJsonModel<StreamingChatResponseMessageUpdate>
     {

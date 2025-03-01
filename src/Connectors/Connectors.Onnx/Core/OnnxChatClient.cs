@@ -39,10 +39,10 @@ public sealed class OnnxChatClient : IChatClient
     public ChatClientMetadata Metadata { get; }
 
     /// <inheritdoc/>
-    public async Task<ChatCompletion> CompleteAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
+    public async Task<ChatResponse> GetResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
     {
         var responseText = new StringBuilder();
-        await foreach (var completion in CompleteStreamingAsync(chatMessages, options, cancellationToken).ConfigureAwait(false))
+        await foreach (var completion in GetStreamingResponseAsync(chatMessages, options, cancellationToken).ConfigureAwait(false))
         {
             responseText.Append(completion.Text);
         }
@@ -51,7 +51,7 @@ public sealed class OnnxChatClient : IChatClient
     }
 
     /// <inheritdoc/>
-    public async IAsyncEnumerable<StreamingChatCompletionUpdate> CompleteStreamingAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation]CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation]CancellationToken cancellationToken = default)
     {
         var systemTemplate = options?.AdditionalProperties?.GetValueOrDefault("system_template") as string;
         var userTemplate = options?.AdditionalProperties?.GetValueOrDefault("user_template") as string;

@@ -16,7 +16,6 @@ namespace Richasy.AgentKernel.Connectors.Mistral.Core;
 public sealed class MistralChatClient : IChatClient
 {
     private readonly string _apiEndpoint;
-    private static readonly JsonElement _defaultParameterSchema = JsonDocument.Parse("{}").RootElement;
     private readonly HttpClient _httpClient;
     private readonly string _accessKey;
 
@@ -36,7 +35,7 @@ public sealed class MistralChatClient : IChatClient
     public ChatClientMetadata Metadata { get; }
 
     /// <inheritdoc/>
-    public async Task<Microsoft.Extensions.AI.ChatCompletion> CompleteAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
+    public async Task<ChatResponse> GetResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(chatMessages);
         var chatRequest = ToMistralChatRequest(chatMessages, options, stream: false);
@@ -56,7 +55,7 @@ public sealed class MistralChatClient : IChatClient
         var responseObj = JsonSerializer.Deserialize(responseJson, JsonGenContext.Default.MistralChatResponse);
         return new([FromMistralChoice(responseObj?.Choices?.First() ?? throw new KernelException("Empty response"))])
         {
-            CompletionId = responseObj.Id,
+            ResponseId = responseObj.Id,
             ModelId = responseObj?.Model ?? options?.ModelId ?? Metadata.ModelId,
             CreatedAt = DateTimeOffset.FromUnixTimeSeconds(responseObj?.Created ?? 0),
             FinishReason = ToFinishReason(responseObj!),
@@ -65,7 +64,7 @@ public sealed class MistralChatClient : IChatClient
     }
 
     /// <inheritdoc/>
-    public async IAsyncEnumerable<StreamingChatCompletionUpdate> CompleteStreamingAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(chatMessages);
         var chatRequest = ToMistralChatRequest(chatMessages, options, stream: true);
@@ -100,7 +99,7 @@ public sealed class MistralChatClient : IChatClient
                 }
 
                 var modelId = chunk.Model ?? options?.ModelId ?? Metadata.ModelId;
-                var update = new StreamingChatCompletionUpdate
+                var update = new ChatResponseUpdate
                 {
                     CreatedAt = DateTimeOffset.FromUnixTimeSeconds(chunk.Created),
                     FinishReason = ToFinishReason(chunk),
@@ -217,7 +216,7 @@ public sealed class MistralChatClient : IChatClient
                     return new MistralChatMessage
                     {
                         ToolCallId = frc.CallId,
-                        Name = frc.Name,
+                        Name = frc.CallId,
                         Content = frc.Result?.ToString() ?? string.Empty,
                         Role = "tool",
                     };
@@ -272,34 +271,14 @@ public sealed class MistralChatClient : IChatClient
     {
         if (tool is AIFunction function)
         {
-            var parameters = function.Metadata.Parameters;
-            var resultParameters = OpenAIChatToolJson.ZeroFunctionParametersSchema;
-            if (parameters is { Count: > 0 })
-            {
-                OpenAIChatToolJson toolJson = new();
-
-                foreach (var parameter in parameters)
-                {
-                    toolJson.Properties.Add(parameter.Name, parameter.Schema is JsonElement e ? e : _defaultParameterSchema);
-
-                    if (parameter.IsRequired)
-                    {
-                        _ = toolJson.Required.Add(parameter.Name);
-                    }
-                }
-
-                resultParameters = BinaryData.FromBytes(
-                    JsonSerializer.SerializeToUtf8Bytes(toolJson, JsonGenContext.Default.OpenAIChatToolJson));
-            }
-
             return new()
             {
                 Type = "function",
                 Function = new()
                 {
-                    Name = function.Metadata.Name,
-                    Description = function.Metadata.Description,
-                    Parameters = resultParameters,
+                    Name = function.Name,
+                    Description = function.Description,
+                    Parameters = function.JsonSchema.Deserialize(JsonGenContext.Default.MistralFunctionToolParameters),
                 },
             };
         }
@@ -312,11 +291,7 @@ public sealed class MistralChatClient : IChatClient
         var callContent = new FunctionCallContent(call.Id ?? call.Function.Name, call.Function.Name ?? string.Empty);
         var argumentJson = call.Function.Arguments?.ToString() ?? "\"{\"}";
         var unescapedJson = JsonSerializer.Deserialize(argumentJson, JsonGenContext.Default.String);
-        var functionCallContent = new FunctionCallContent(call.Id ?? call.Function.Name ?? string.Empty, call.Function.Name ?? string.Empty)
-        {
-            Arguments = JsonToolkit.JsonElementToDictionary(JsonDocument.Parse(unescapedJson!).RootElement),
-        };
-
+        callContent.Arguments = JsonToolkit.JsonElementToDictionary(JsonDocument.Parse(unescapedJson!).RootElement);
         return callContent;
     }
 

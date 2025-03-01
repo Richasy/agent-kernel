@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     /// <summary> A description of the intended purpose of a message within a chat completions interaction. </summary>
     public readonly partial struct ChatRole : IEquatable<ChatRole>

@@ -3,7 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.OpenAI.Chat;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat;
 
 [Experimental("AOAI001")]
 [CodeGenModel("AzureChatDataSourceEndpointVectorizationSource")]

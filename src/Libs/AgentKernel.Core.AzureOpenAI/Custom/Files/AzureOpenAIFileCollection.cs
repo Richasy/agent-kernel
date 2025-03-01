@@ -3,7 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.OpenAI.Files;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Files;
 
 [Experimental("AOAI001")]
 internal partial class AzureOpenAIFileCollection : OpenAIFileCollection

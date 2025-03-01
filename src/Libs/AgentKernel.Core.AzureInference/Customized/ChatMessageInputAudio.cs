@@ -6,7 +6,7 @@
 using System;
 using System.IO;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     public partial class ChatMessageInputAudio
     {

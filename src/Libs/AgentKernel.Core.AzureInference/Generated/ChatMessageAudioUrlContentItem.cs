@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     /// <summary> A structured chat content item for audio content passed as a url. </summary>
     internal partial class ChatMessageAudioUrlContentItem : ChatMessageContentItem

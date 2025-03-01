@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     /// <summary> An internet location from which the model may retrieve an image. </summary>
     internal partial class ChatMessageImageUrl

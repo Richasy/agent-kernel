@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     /// <summary> Unknown version of ChatRequestMessage. </summary>
     internal partial class UnknownChatRequestMessage : ChatRequestMessage

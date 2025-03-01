@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     internal static class Optional
     {

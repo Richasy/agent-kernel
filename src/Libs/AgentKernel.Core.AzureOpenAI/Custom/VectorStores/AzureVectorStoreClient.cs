@@ -7,7 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.OpenAI.VectorStores;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.VectorStores;
 
 /// <summary>
 /// The scenario client used for vector store operations with the Azure OpenAI service.

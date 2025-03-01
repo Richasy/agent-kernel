@@ -3,7 +3,7 @@
 
 #nullable enable
 
-namespace Azure.AI.OpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = true, Inherited = true)]
 internal class CodeGenSerializationAttribute : Attribute

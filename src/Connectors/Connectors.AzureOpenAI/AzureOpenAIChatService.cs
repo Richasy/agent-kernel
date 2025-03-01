@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-using Richasy.AgentKernel.Core.AzureOpenAI;
 using Richasy.AgentKernel.Extensions.AI;
 using Microsoft.Extensions.AI;
 using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Azure.Models;
 using Richasy.AgentKernel.Models;
 using System.ClientModel;
+using Richasy.AgentKernel.Core.AzureOpenAI;
 
 namespace Richasy.AgentKernel.Connectors.Azure;
 

@@ -17,7 +17,6 @@ namespace Richasy.AgentKernel.Connectors.ZhiPu;
 /// </summary>
 public sealed class ZhiPuChatClient : IChatClient
 {
-    private static readonly JsonElement _defaultParameterSchema = JsonDocument.Parse("{}").RootElement;
     private const string _apiEndpoint = "https://open.bigmodel.cn/api/paas/v4/chat/completions";
     private readonly HttpClient _httpClient;
 
@@ -40,7 +39,7 @@ public sealed class ZhiPuChatClient : IChatClient
     public ChatClientMetadata Metadata { get; }
 
     /// <inheritdoc/>
-    public async Task<Microsoft.Extensions.AI.ChatCompletion> CompleteAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
+    public async Task<ChatResponse> GetResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(chatMessages);
 
@@ -63,7 +62,7 @@ public sealed class ZhiPuChatClient : IChatClient
         var response = JsonSerializer.Deserialize(responseText, JsonGenerationContext.Default.ZhiPuChatResponse)!;
         return new([FromZhiPuMessage(response.Choices?.First() ?? throw new KernelException("Empty response"))])
         {
-            CompletionId = response.Id,
+            ResponseId = response.Id,
             ModelId = response.Model ?? options?.ModelId ?? Metadata.ModelId,
             CreatedAt = DateTimeOffset.FromUnixTimeSeconds(response.Created),
             FinishReason = ToFinishReason(response),
@@ -72,7 +71,7 @@ public sealed class ZhiPuChatClient : IChatClient
     }
 
     /// <inheritdoc/>
-    public async IAsyncEnumerable<StreamingChatCompletionUpdate> CompleteStreamingAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(chatMessages);
         var chatRequest = ToZhiPuChatRequest(chatMessages, options, stream: true);
@@ -112,7 +111,7 @@ public sealed class ZhiPuChatClient : IChatClient
                 }
 
                 var modelId = chunk.Model ?? options?.ModelId ?? Metadata.ModelId;
-                var update = new StreamingChatCompletionUpdate
+                var update = new ChatResponseUpdate
                 {
                     Role = chunk.Choices?.FirstOrDefault()?.Delta?.Role is not null ? new(chunk.Choices[0].Delta!.Role) : null,
                     CreatedAt = DateTimeOffset.FromUnixTimeSeconds(chunk.Created),
@@ -233,7 +232,7 @@ public sealed class ZhiPuChatClient : IChatClient
                     case TextContent textContent:
                         contentMsg.Content.Add(ZhiPuChatContent.CreateTextMessage(textContent.Text));
                         break;
-                    case ImageContent imgContent when imgContent.Uri != null:
+                    case DataContent imgContent when imgContent.Uri != null:
                         contentMsg.Content.Add(ZhiPuChatContent.CreateImageMessage(imgContent.Uri));
                         break;
                     case VideoContent videoContent when videoContent.Uri != null:
@@ -331,13 +330,9 @@ public sealed class ZhiPuChatClient : IChatClient
                 Type = "function",
                 Function = new()
                 {
-                    Name = function.Metadata.Name,
-                    Description = function.Metadata.Description,
-                    Parameters = new ZhiPuFunctionToolParameters
-                    {
-                        Properties = function.Metadata.Parameters.ToDictionary(p => p.Name, p => p.Schema is JsonElement e ? e : _defaultParameterSchema),
-                        Required = [.. function.Metadata.Parameters.Where(p => p.IsRequired).Select(p => p.Name)],
-                    }
+                    Name = function.Name,
+                    Description = function.Description,
+                    Parameters = JsonSerializer.Deserialize(function.JsonSchema, JsonGenerationContext.Default.ZhiPuFunctionToolParameters),
                 }
             };
         }

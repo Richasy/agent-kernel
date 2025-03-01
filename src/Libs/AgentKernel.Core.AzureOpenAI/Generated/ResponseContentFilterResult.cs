@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.OpenAI
+namespace Richasy.AgentKernel.Core.AzureOpenAI
 {
     /// <summary> A content filter result for a single response item produced by a generative AI system. </summary>
     public partial class ResponseContentFilterResult

@@ -3,7 +3,7 @@
 
 using System.ClientModel.Primitives;
 
-namespace Azure.AI.OpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 internal partial class GenericActionPipelinePolicy : PipelinePolicy
 {

@@ -6,14 +6,14 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Inference.Telemetry;
+using Richasy.AgentKernel.Core.AzureInference.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Sse;
 using Richasy.AgentKernel.Core.AzureInference;
 using Richasy.AgentKernel.Core.AzureInference.Pipeline;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     // CUSTOM CODE NOTE:
     //   Modified code for the ChatCompletionsClient

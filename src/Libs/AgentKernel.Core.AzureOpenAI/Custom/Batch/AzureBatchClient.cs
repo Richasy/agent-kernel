@@ -5,7 +5,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.OpenAI.Batch;
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Batch;
 
 /// <summary>
 /// The scenario client used for Files operations with the Azure OpenAI service.

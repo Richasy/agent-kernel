@@ -68,13 +68,13 @@ internal sealed class GeminiRequest
     public static GeminiPart CreateGeminiPart(AIContent content) => content switch
     {
         TextContent textContent => new GeminiPart { Text = textContent.Text },
-        ImageContent imageContent => CreateGeminiPartFromImage(imageContent),
+        DataContent imageContent => CreateGeminiPartFromImage(imageContent),
         FunctionCallContent fcc => CreateGeminiPartFromFunctionCall(fcc),
         FunctionResultContent frc => CreateGeminiPartFromFunctionResult(frc),
         _ => throw new NotSupportedException($"Unsupported content type. {content.GetType().Name} is not supported by Gemini.")
     };
 
-    private static GeminiPart CreateGeminiPartFromImage(ImageContent imageContent)
+    private static GeminiPart CreateGeminiPartFromImage(DataContent imageContent)
     {
         // Binary data takes precedence over URI as per the ImageContent.ToString() implementation.
         return imageContent.Data is { IsEmpty: false }
@@ -120,17 +120,17 @@ internal sealed class GeminiRequest
         {
             FunctionResponse = new GeminiPart.FunctionResponsePart
             {
-                FunctionName = functionResultContent.Name,
+                FunctionName = functionResultContent.CallId,
                 Response = new GeminiPart.FunctionResponsePart.FunctionResponseEntity
                 {
-                    Name = functionResultContent.Name,
+                    Name = functionResultContent.CallId,
                     Content = BinaryData.FromString(functionResultContent.Result?.ToString() ?? string.Empty),
                 }
             }
         };
     }
 
-    private static string GetMimeTypeFromImageContent(ImageContent imageContent)
+    private static string GetMimeTypeFromImageContent(DataContent imageContent)
     {
         return imageContent.MediaType
                ?? throw new InvalidOperationException("Image content MimeType is empty.");

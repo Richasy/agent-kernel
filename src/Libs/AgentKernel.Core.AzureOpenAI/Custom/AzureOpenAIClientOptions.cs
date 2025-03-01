@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.OpenAI.Files;
-using Azure.AI.OpenAI.RealtimeConversation;
+using Richasy.AgentKernel.Core.AzureOpenAI.Files;
+using Richasy.AgentKernel.Core.AzureOpenAI.RealtimeConversation;
 using System.ClientModel.Primitives;
 
-namespace Azure.AI.OpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 #pragma warning disable AOAI001
 

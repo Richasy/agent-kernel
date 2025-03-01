@@ -3,9 +3,9 @@
 
 using System;
 
-using Azure.AI.OpenAI.Files;
+using Richasy.AgentKernel.Core.AzureOpenAI.Files;
 
-namespace Azure.AI.OpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 internal static partial class AzureOpenAIFileStatusExtensions
 {

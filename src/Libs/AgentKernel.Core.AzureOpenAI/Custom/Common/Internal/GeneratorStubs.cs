@@ -4,7 +4,7 @@
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.OpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 [Experimental("AOAI001")][CodeGenModel("AzureContentFilterBlocklistIdResult")] internal partial class InternalAzureContentFilterBlocklistIdResult { }
 [Experimental("AOAI001")][CodeGenModel("AzureContentFilterBlocklistResultDetail")] internal partial class InternalAzureContentFilterBlocklistResultDetail { }

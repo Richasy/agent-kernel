@@ -5,7 +5,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     public partial class ChatCompletions
     {

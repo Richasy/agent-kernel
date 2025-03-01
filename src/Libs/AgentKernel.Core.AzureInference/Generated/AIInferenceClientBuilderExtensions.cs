@@ -7,7 +7,7 @@
 
 using System;
 using Azure;
-using Azure.AI.Inference;
+using Richasy.AgentKernel.Core.AzureInference;
 using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure

@@ -9,5 +9,5 @@ internal sealed class ZhiPuFunctionTool
 
     public required string Description { get; set; }
 
-    public required ZhiPuFunctionToolParameters Parameters { get; set; }
+    public ZhiPuFunctionToolParameters? Parameters { get; set; }
 }

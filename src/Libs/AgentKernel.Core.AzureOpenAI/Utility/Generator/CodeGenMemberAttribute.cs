@@ -3,7 +3,7 @@
 
 #nullable enable
 
-namespace Azure.AI.OpenAI;
+namespace Richasy.AgentKernel.Core.AzureOpenAI;
 
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
 internal class CodeGenMemberAttribute : CodeGenTypeAttribute

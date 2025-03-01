@@ -4,7 +4,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     [CodeGenSuppress("FromResponse", typeof(Response))]
     [CodeGenSuppress("ToRequestContent")]

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     /// <summary> A response format for Chat Completions that emits text responses. This is the default response format. </summary>
     public partial class ChatCompletionsResponseFormatText : ChatCompletionsResponseFormat

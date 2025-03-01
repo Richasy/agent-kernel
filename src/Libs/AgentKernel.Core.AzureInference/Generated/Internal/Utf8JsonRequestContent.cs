@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     internal class Utf8JsonRequestContent : RequestContent
     {

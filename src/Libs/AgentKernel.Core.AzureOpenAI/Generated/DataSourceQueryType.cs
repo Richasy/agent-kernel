@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.OpenAI.Chat
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
 {
     /// <summary> The AzureSearchChatDataSourceParametersQueryType. </summary>
     public readonly partial struct DataSourceQueryType : IEquatable<DataSourceQueryType>

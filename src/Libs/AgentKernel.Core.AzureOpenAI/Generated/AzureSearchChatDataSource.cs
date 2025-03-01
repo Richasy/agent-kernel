@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.OpenAI.Chat
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
 {
     /// <summary> Represents a data source configuration that will use an Azure Search resource. </summary>
     public partial class AzureSearchChatDataSource : ChatDataSource

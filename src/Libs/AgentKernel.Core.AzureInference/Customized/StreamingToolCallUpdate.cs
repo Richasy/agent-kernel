@@ -3,7 +3,7 @@
 
 using System.Text.Json;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     /// <summary>
     /// Represents an incremental update to a streaming tool call that is part of a streaming chat completions choice.

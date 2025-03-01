@@ -3,7 +3,7 @@
 
 using System.Data;
 
-namespace Azure.AI.Inference
+namespace Richasy.AgentKernel.Core.AzureInference
 {
     public partial class ChatRequestToolMessage
     {

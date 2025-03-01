@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.Json.Serialization;
-
 namespace Richasy.AgentKernel.Connectors.Mistral.Models;
 
 internal sealed class MistralFunction
@@ -11,6 +9,5 @@ internal sealed class MistralFunction
 
     public string? Description { get; set; }
 
-    [JsonConverter(typeof(BinaryJsonSchemaConverter))]
-    public BinaryData? Parameters { get; set; }
+    public MistralFunctionToolParameters? Parameters { get; set; }
 }

@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.OpenAI
+namespace Richasy.AgentKernel.Core.AzureOpenAI
 {
     /// <summary> The AzureOpenAIChatErrorInnerError. </summary>
     internal partial class InternalAzureOpenAIChatErrorInnerError

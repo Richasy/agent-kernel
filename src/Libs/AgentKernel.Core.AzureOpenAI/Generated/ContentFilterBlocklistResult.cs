@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.OpenAI
+namespace Richasy.AgentKernel.Core.AzureOpenAI
 {
     /// <summary> A collection of true/false filtering results for configured custom blocklists. </summary>
     public partial class ContentFilterBlocklistResult

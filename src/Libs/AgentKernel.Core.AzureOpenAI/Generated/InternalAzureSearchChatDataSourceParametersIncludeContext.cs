@@ -5,7 +5,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.OpenAI.Chat
+namespace Richasy.AgentKernel.Core.AzureOpenAI.Chat
 {
     /// <summary> The AzureSearchChatDataSourceParametersIncludeContext. </summary>
     internal readonly partial struct InternalAzureSearchChatDataSourceParametersIncludeContext : IEquatable<InternalAzureSearchChatDataSourceParametersIncludeContext>
