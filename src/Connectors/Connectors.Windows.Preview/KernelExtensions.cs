@@ -17,7 +17,7 @@ public static class KernelExtensions
     /// Add ONNX chat completion service.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
-    public static IKernelBuilder AddOnnxChatService(this IKernelBuilder builder)
+    public static IKernelBuilder AddWindowsChatService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IChatService, WindowsChatService>("Windows");
         return builder;
