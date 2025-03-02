@@ -1,7 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  
   <PropertyGroup>
-  	<AssemblyName>Richasy.AgentKernel.Connectors.Onnx</AssemblyName>
+  	<USE_CUDA Condition="'$(USE_CUDA)' == ''">False</USE_CUDA>
+	<DefineConstants Condition="'$(USE_CUDA)' == 'True'">USE_CUDA</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup>
+	<AssemblyName Condition="'$(USE_CUDA)' == 'True'">Richasy.AgentKernel.Connectors.Onnx.Cuda</AssemblyName>
+	<AssemblyName Condition="'$(USE_CUDA)' != 'True'">Richasy.AgentKernel.Connectors.Onnx</AssemblyName>
   	<RootNamespace>$(AssemblyName)</RootNamespace>
   	<TargetFramework>net9.0</TargetFramework>
   	<NoWarn>$(NoWarn)</NoWarn>
@@ -17,7 +21,8 @@
   </PropertyGroup>
   
   <ItemGroup>
-  	<PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.Cuda" />
+	<PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.Cuda" Condition="'$(USE_CUDA)' == 'True'" />
+	<PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI" Condition="'$(USE_CUDA)' != 'True'" />
   	<PackageReference Include="RichasyKernel.Abstractions" />
   </ItemGroup>
   

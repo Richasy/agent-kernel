@@ -34,6 +34,7 @@ public sealed class OnnxChatClient : IChatClient
     private string? _defaultAssistantTemplate;
     private string? _defaultPromptTemplate;
 
+#if USE_CUDA
     /// <summary>
     /// Initializes a new instance of the <see cref="OnnxChatClient"/> class.
     /// </summary>
@@ -42,6 +43,16 @@ public sealed class OnnxChatClient : IChatClient
         _useCuda = useCuda;
         Metadata = new("onnx", default, modelDir);
     }
+#else
+    /// <summary>
+    /// Initializes a new instance of the <see cref="OnnxChatClient"/> class.
+    /// </summary>
+    public OnnxChatClient(string? modelDir)
+    {
+        _useCuda = false;
+        Metadata = new("onnx", default, modelDir);
+    }
+#endif
 
     /// <inheritdoc/>
     public ChatClientMetadata Metadata { get; }
@@ -288,6 +299,7 @@ public sealed class OnnxChatClient : IChatClient
         catch (Exception)
         {
             Dispose();
+            throw;
         }
         finally
         {

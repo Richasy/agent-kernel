@@ -34,6 +34,8 @@ function Get-NugetPackages {
     return $nugetPackages
 }
 
+$onnxProjectName = "Connectors.Onnx"
+
 foreach ($projectFile in $projectFiles) {
     # 排除 Samples 文件夹和 Libs 文件夹下的 .csproj 文件
     if ($projectFile.FullName -notmatch "\\Samples\\") {
@@ -59,8 +61,20 @@ foreach ($projectFile in $projectFiles) {
         # 恢复 NuGet 包
         dotnet restore $projectFile.FullName
 
-        # 打包 NuGet 包
-        dotnet pack $projectFile.FullName -c Release
+        # 检查是否为 ONNX 项目
+        if ($projectFile.Name -eq "$onnxProjectName.csproj") {
+            Write-Host "检测到 ONNX 项目，将分别构建 CUDA 和非 CUDA 版本。"
+
+            # 构建 CUDA 版本
+            Write-Host "构建 CUDA 版本..."
+            dotnet pack $projectFile.FullName -c Release /p:USE_CUDA=True
+
+            # 构建非 CUDA 版本
+            Write-Host "构建非 CUDA 版本..."
+            dotnet pack $projectFile.FullName -c Release /p:USE_CUDA=False
+        } else {
+            dotnet pack $projectFile.FullName -c Release
+        }
 
         # 获取打包后的 NuGet 包文件（包括 .nupkg 和 .snupkg 文件）
         $releasePath = "$($projectFile.DirectoryName)\bin\Release"

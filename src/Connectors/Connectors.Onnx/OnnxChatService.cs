@@ -33,13 +33,24 @@ public sealed class OnnxChatService : IChatService
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }
 
+#if USE_CUDA
         if (_config != null && onnxConfig.Equals(_config) && onnxConfig.UseCuda == _config.UseCuda)
         {
             return;
         }
+#else
+        if (_config != null && onnxConfig.Equals(_config))
+        {
+            return;
+        }
+#endif
 
         _config = onnxConfig;
         Client?.Dispose();
+#if USE_CUDA
         Client = new OnnxChatClient(_config.Model, _config.UseCuda);
+#else
+        Client = new OnnxChatClient(_config.Model);
+#endif
     }
 }
