@@ -49,7 +49,7 @@ internal static class ConfigExtensions
     {
         return config is null || !config.IsCustomModelNotEmpty()
              ? throw new ArgumentException("The configuration is not valid.", nameof(config))
-             : new OnnxServiceConfig(string.Empty);
+             : new OnnxServiceConfig(string.Empty, config.UseCuda);
     }
 
     public static AIServiceConfig? ToAIServiceConfig(this ErnieChatConfig? config)

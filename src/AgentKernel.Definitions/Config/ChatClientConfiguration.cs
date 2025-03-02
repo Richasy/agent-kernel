@@ -363,6 +363,12 @@ public class OnnxChatConfig : ChatClientConfigBase
     /// </summary>
     public OnnxChatConfig() => Key = "onnx";
 
+    /// <summary>
+    /// 是否使用 CUDA.
+    /// </summary>
+    [JsonPropertyName("use_cuda")]
+    public bool UseCuda { get; set; }
+
     /// <inheritdoc/>
     public override bool IsValid()
         => IsCustomModelNotEmpty();

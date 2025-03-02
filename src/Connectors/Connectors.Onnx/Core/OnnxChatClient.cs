@@ -6,6 +6,7 @@ using Microsoft.ML.OnnxRuntimeGenAI;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 
 namespace Richasy.AgentKernel.Connectors.Onnx.Core;
 
@@ -24,14 +25,23 @@ public sealed class OnnxChatClient : IChatClient
 
     private static readonly SemaphoreSlim _createSemaphore = new(1, 1);
     private static OgaHandle? _ogaHandle;
+    private readonly bool _useCuda;
+    private Config? _config;
     private Model? _model;
     private Tokenizer? _tokenizer;
+    private string? _defaultSystemTemplate;
+    private string? _defaultUserTemplate;
+    private string? _defaultAssistantTemplate;
+    private string? _defaultPromptTemplate;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="OnnxChatClient"/> class.
     /// </summary>
-    public OnnxChatClient(string? modelDir)
-        => Metadata = new("onnx", default, modelDir);
+    public OnnxChatClient(string? modelDir, bool useCuda)
+    {
+        _useCuda = useCuda;
+        Metadata = new("onnx", default, modelDir);
+    }
 
     /// <inheritdoc/>
     public ChatClientMetadata Metadata { get; }
@@ -41,30 +51,19 @@ public sealed class OnnxChatClient : IChatClient
         => GetStreamingResponseAsync(chatMessages, options, cancellationToken).ToChatResponseAsync(cancellationToken: cancellationToken);
 
     /// <inheritdoc/>
-    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation]CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        var systemTemplate = options?.AdditionalProperties?.GetValueOrDefault("system_template") as string;
-        var userTemplate = options?.AdditionalProperties?.GetValueOrDefault("user_template") as string;
-        var assistantTemplate = options?.AdditionalProperties?.GetValueOrDefault("assistant_template") as string;
-        var promptTemplate = options?.AdditionalProperties?.GetValueOrDefault("prompt_template") as string;
-        var stops = options?.StopSequences?.ToArray();
         var modelId = options?.ModelId ?? Metadata.ModelId;
-        if (string.IsNullOrEmpty(systemTemplate)
-            && string.IsNullOrEmpty(userTemplate)
-            && string.IsNullOrEmpty(assistantTemplate))
+        if (_defaultSystemTemplate == null)
         {
-            var inferenceModelFile = Path.Combine(modelId!, "inference_model.json");
-            if (File.Exists(inferenceModelFile))
-            {
-                var content = await File.ReadAllTextAsync(inferenceModelFile, cancellationToken).ConfigureAwait(false);
-                var inferenceModel = JsonSerializer.Deserialize(content, JsonGenContext.Default.InferenceModel);
-                systemTemplate = inferenceModel?.PromptTemplate?.system;
-                userTemplate = inferenceModel?.PromptTemplate?.user;
-                assistantTemplate = inferenceModel?.PromptTemplate?.assistant;
-                promptTemplate = inferenceModel?.PromptTemplate?.prompt;
-            }
+            await LoadDefaultModelTemplateAsync(modelId!).ConfigureAwait(false);
         }
-        
+
+        var systemTemplate = GetValueFromChatOptions("system_template", options, _defaultSystemTemplate, JsonGenContext.Default.String);
+        var userTemplate = GetValueFromChatOptions("user_template", options, _defaultUserTemplate, JsonGenContext.Default.String);
+        var assistantTemplate = GetValueFromChatOptions("assistant_template", options, _defaultAssistantTemplate, JsonGenContext.Default.String);
+        var promptTemplate = GetValueFromChatOptions("prompt_template", options, _defaultPromptTemplate, JsonGenContext.Default.String);
+        var stops = options?.StopSequences?.ToArray();
         await InitializeAsync(modelId!, cancellationToken).ConfigureAwait(false);
         var prompt = GetPrompt(chatMessages, systemTemplate, userTemplate, assistantTemplate, promptTemplate, stops);
 
@@ -74,13 +73,9 @@ public sealed class OnnxChatClient : IChatClient
 
         using var sequences = _tokenizer!.Encode(prompt);
 
-        void TransferMetadataValue(string propertyName, object defaultValue)
+        void TransferMetadataValue<T>(string propertyName, T defaultValue, JsonTypeInfo<T> typeInfo)
         {
-            object? val = null;
-            options?.AdditionalProperties?.TryGetValue(propertyName, out val);
-
-            val ??= defaultValue;
-
+            var val = GetValueFromChatOptions(propertyName, options, defaultValue, typeInfo);
             if (val is int intVal)
             {
                 generatorParams.SetSearchOption(propertyName, intVal);
@@ -97,8 +92,8 @@ public sealed class OnnxChatClient : IChatClient
 
         if (options != null)
         {
-            TransferMetadataValue("min_length", DefaultMinLength);
-            TransferMetadataValue("do_sample", DefaultDoSample);
+            TransferMetadataValue("min_length", DefaultMinLength, JsonGenContext.Default.Int32);
+            TransferMetadataValue("do_sample", DefaultDoSample, JsonGenContext.Default.Boolean);
             generatorParams.SetSearchOption("temperature", (double)(options.Temperature ?? DefaultTemperature));
             generatorParams.SetSearchOption("top_p", (double)(options.TopP ?? DefaultTopP));
             generatorParams.SetSearchOption("top_k", options.TopK ?? DefaultTopK);
@@ -159,9 +154,15 @@ public sealed class OnnxChatClient : IChatClient
     /// <inheritdoc/>
     public void Dispose()
     {
+        _config?.Dispose();
         _model?.Dispose();
         _tokenizer?.Dispose();
         _ogaHandle?.Dispose();
+
+        _config = null;
+        _model = null;
+        _tokenizer = null;
+        _ogaHandle = null;
     }
 
     /// <inheritdoc/>
@@ -171,8 +172,96 @@ public sealed class OnnxChatClient : IChatClient
         return serviceKey is null && serviceType.IsInstanceOfType(this) ? this : null;
     }
 
+    private async Task LoadDefaultModelTemplateAsync(string modelFolder)
+    {
+        var inferenceModelFile = Path.Combine(modelFolder, "model_template.json");
+        if (File.Exists(inferenceModelFile))
+        {
+            var content = await File.ReadAllTextAsync(inferenceModelFile).ConfigureAwait(false);
+            var inferenceModel = JsonSerializer.Deserialize(content, JsonGenContext.Default.ModelTemplate);
+            _defaultSystemTemplate = inferenceModel?.system;
+            _defaultUserTemplate = inferenceModel?.user;
+            _defaultAssistantTemplate = inferenceModel?.assistant;
+            _defaultPromptTemplate = inferenceModel?.prompt;
+            return;
+        }
+        else
+        {
+            var genAIConfig = Path.Combine(modelFolder, "genai_config.json");
+            if (File.Exists(genAIConfig))
+            {
+                var content = await File.ReadAllTextAsync(genAIConfig).ConfigureAwait(false);
+                var genAIConfigModel = JsonDocument.Parse(content);
+                if (genAIConfigModel?.RootElement.TryGetProperty("model", out var modelProp) == true)
+                {
+                    if (modelProp.TryGetProperty("type", out var typeProp) == true)
+                    {
+                        var modelType = typeProp.GetString() ?? string.Empty;
+                        if (modelType.StartsWith("phi2", StringComparison.OrdinalIgnoreCase) || modelType.StartsWith("phi3", StringComparison.OrdinalIgnoreCase))
+                        {
+                            _defaultSystemTemplate = "<|system|>\n{Content}<|end>\n";
+                            _defaultUserTemplate = "<|user|>\n{Content}<|end>\n";
+                            _defaultAssistantTemplate = "<|assistant|>\n{Content}<|end>\n";
+                            _defaultPromptTemplate = "<|user|>\n{Content}<|end>\n<|assistant|>\n";
+                            return;
+                        }
+                        else if (modelType.StartsWith("phi4", StringComparison.OrdinalIgnoreCase))
+                        {
+                            _defaultSystemTemplate = "<|im_start|>system<|im_sep|>\n{Content}<|im_end|>\n";
+                            _defaultUserTemplate = "<|im_start|>user<|im_sep|>\n{Content}<|im_end|>\n";
+                            _defaultAssistantTemplate = "<|im_start|>assistant<|im_sep|>\n{Content}<|im_end|>\n";
+                            _defaultPromptTemplate = "<|im_start|>user<|im_sep|>\n{Content}<|im_end|>\n<|im_start|>assistant<|im_sep|>\n";
+                            return;
+                        }
+                        else if (modelType.StartsWith("llama", StringComparison.OrdinalIgnoreCase))
+                        {
+                            _defaultSystemTemplate = "<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n{Content}<|eot_id|>\n";
+                            _defaultUserTemplate = "<|start_header_id|>user<|end_header_id|>\n{Content}<|eot_id|>\n";
+                            _defaultAssistantTemplate = "<|start_header_id|>assistant<|end_header_id|>\n{Content}<|eot_id|>\n";
+                            _defaultPromptTemplate = "<|start_header_id|>user<|end_header_id|>\n{Content}<|eot_id|>\n<|start_header_id|>assistant<|end_header_id|>\n";
+                            return;
+                        }
+                        else if (modelType.StartsWith("qwen2", StringComparison.OrdinalIgnoreCase))
+                        {
+                            _defaultSystemTemplate = "<|im_start|>system\n{Content}<|im_end|>\n\n";
+                            _defaultUserTemplate = "<|im_start|>user\n{Content}<|im_end|>\n\n";
+                            _defaultAssistantTemplate = "<|im_start|>assistant\n{Content}<|im_end|>\n\n";
+                            _defaultPromptTemplate = "<|im_start|>user\n{Content}<|im_end|>\n<|im_start|>assistant\n\n";
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        _defaultSystemTemplate = string.Empty;
+        _defaultUserTemplate = string.Empty;
+        _defaultAssistantTemplate = string.Empty;
+        _defaultPromptTemplate = string.Empty;
+    }
+
+    private static T? GetValueFromChatOptions<T>(string key, ChatOptions? options, T defaultValue, JsonTypeInfo<T> typeInfo)
+    {
+        if (options?.AdditionalProperties?.Count > 0)
+        {
+            if (options?.AdditionalProperties?.GetValueOrDefault(key) is BinaryData data)
+            {
+                return JsonSerializer.Deserialize(data.ToString(), typeInfo);
+            }
+
+            return options?.AdditionalProperties?.GetValueOrDefault(key) is T value ? value : defaultValue;
+        }
+
+        return defaultValue;
+    }
+
     private async Task InitializeAsync(string modelDir, CancellationToken cancellationToken)
     {
+        if (_model != null)
+        {
+            return;
+        }
+
         var lockAcquired = false;
 
 #pragma warning disable CA1031 // 不捕获常规异常类型
@@ -183,7 +272,14 @@ public sealed class OnnxChatClient : IChatClient
             cancellationToken.ThrowIfCancellationRequested();
             await Task.Run(() =>
             {
-                _model = new Model(modelDir);
+                _config = new Config(modelDir);
+                if (_useCuda)
+                {
+                    _config.AppendProvider("cuda");
+                    _config.SetProviderOption("cuda", "enable_cuda_graph", "0");
+                }
+
+                _model = new Model(_config);
                 cancellationToken.ThrowIfCancellationRequested();
                 _tokenizer = new Tokenizer(_model);
             }, cancellationToken).ConfigureAwait(false);
@@ -222,7 +318,7 @@ public sealed class OnnxChatClient : IChatClient
             && string.IsNullOrEmpty(promptTemplate)
             && (stop is null || stop.Length == 0))
         {
-            return string.Join(". ", history.Select(item => item.Text));
+            return string.Join("\n", history.Select(item => item.Text));
         }
 
         var prompt = new StringBuilder();

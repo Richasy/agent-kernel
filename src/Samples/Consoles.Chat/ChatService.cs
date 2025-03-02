@@ -44,7 +44,7 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
 
     private ChatProviderType AskProvider()
     {
-        var providers = Enum.GetValues<ChatProviderType>();
+        var providers = Enum.GetValues<ChatProviderType>().Where(p => p is not ChatProviderType.Windows);
         return AnsiConsole.Prompt(new SelectionPrompt<ChatProviderType>()
             .Title("Select a provider")
             .PageSize(20)
@@ -154,6 +154,7 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
                 // var responseMessage = response.Message.Text;
                 var responseMessage = string.Empty;
                 var options = GetChatOptions(provider);
+
                 options.ModelId = service.Config?.Model;
 
                 if (_model?.ToolSupport ?? false)

@@ -17,7 +17,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-  	<PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI" />
+  	<PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.Cuda" />
   	<PackageReference Include="RichasyKernel.Abstractions" />
   </ItemGroup>
   

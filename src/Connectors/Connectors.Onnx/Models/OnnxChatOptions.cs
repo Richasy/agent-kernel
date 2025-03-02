@@ -47,4 +47,76 @@ public sealed class OnnxChatOptions : ChatOptions
             }
         }
     }
+
+    /// <summary>
+    /// 系统提示词模板.
+    /// </summary>
+    [JsonPropertyName("system_template")]
+    public string? SystemTemplate
+    {
+        get => field;
+        set
+        {
+            if (field != value)
+            {
+                field = value;
+                AdditionalProperties ??= [];
+                AdditionalProperties["system_template"] = BinaryData.FromString(JsonSerializer.Serialize(value, JsonGenContext.Default.String));
+            }
+        }
+    }
+
+    /// <summary>
+    /// 用户消息模板.
+    /// </summary>
+    [JsonPropertyName("user_template")]
+    public string? UserTemplate
+    {
+        get => field;
+        set
+        {
+            if (field != value)
+            {
+                field = value;
+                AdditionalProperties ??= [];
+                AdditionalProperties["user_template"] = BinaryData.FromString(JsonSerializer.Serialize(value, JsonGenContext.Default.String));
+            }
+        }
+    }
+
+    /// <summary>
+    /// 助手消息模板.
+    /// </summary>
+    [JsonPropertyName("assistant_template")]
+    public string? AssistantTemplate
+    {
+        get => field;
+        set
+        {
+            if (field != value)
+            {
+                field = value;
+                AdditionalProperties ??= [];
+                AdditionalProperties["assistant_template"] = BinaryData.FromString(JsonSerializer.Serialize(value, JsonGenContext.Default.String));
+            }
+        }
+    }
+
+    /// <summary>
+    /// 提示词模板.
+    /// </summary>
+    [JsonPropertyName("prompt_template")]
+    public string? PromptTemplate
+    {
+        get => field;
+        set
+        {
+            if (field != value)
+            {
+                field = value;
+                AdditionalProperties ??= [];
+                AdditionalProperties["prompt_template"] = BinaryData.FromString(JsonSerializer.Serialize(value, JsonGenContext.Default.String));
+            }
+        }
+    }
 }
