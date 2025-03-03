@@ -69,9 +69,13 @@ foreach ($projectFile in $projectFiles) {
             Write-Host "构建 CUDA 版本..."
             dotnet pack $projectFile.FullName -c Release /p:USE_CUDA=True
 
+            # 构建 QNN 版本
+            Write-Host "构建 CUDA 版本..."
+            dotnet pack $projectFile.FullName -c Release /p:USE_QNN=True /p:USE_CUDA=False
+
             # 构建非 CUDA 版本
-            Write-Host "构建非 CUDA 版本..."
-            dotnet pack $projectFile.FullName -c Release /p:USE_CUDA=False
+            Write-Host "构建基础版本..."
+            dotnet pack $projectFile.FullName -c Release /p:USE_CUDA=False /p:USE_QNN=False
         } else {
             dotnet pack $projectFile.FullName -c Release
         }

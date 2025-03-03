@@ -148,21 +148,18 @@ public sealed class WindowsChatClient : IChatClient
         for (var i = 0; i < history.Count; i++)
         {
             var message = history[i];
-            if (message.Role == ChatRole.System)
+            var msgText = message.Text ?? string.Empty;
+            if (message.Role == ChatRole.System && i != 0)
             {
-                if (i > 0)
-                {
-                    throw new ArgumentException("Only first message can be a system message");
-                }
+                prompt += $"<|system|>\n{msgText}\n";
             }
             else if (message.Role == ChatRole.User)
             {
-                var msgText = message.Text ?? string.Empty;
-                prompt += msgText;
+                prompt += $"<|user|>\n{msgText}\n";
             }
             else if (message.Role == ChatRole.Assistant)
             {
-                prompt += message.Text;
+                prompt += $"<|assistant|>\n{msgText}\n";
             }
         }
 

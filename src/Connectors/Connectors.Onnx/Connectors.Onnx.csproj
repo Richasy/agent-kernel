@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
   	<USE_CUDA Condition="'$(USE_CUDA)' == ''">False</USE_CUDA>
+	<USE_QNN Condition="'$(USE_QNN)' == ''">False</USE_QNN>
 	<DefineConstants Condition="'$(USE_CUDA)' == 'True'">USE_CUDA</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
 	<AssemblyName Condition="'$(USE_CUDA)' == 'True'">Richasy.AgentKernel.Connectors.Onnx.Cuda</AssemblyName>
-	<AssemblyName Condition="'$(USE_CUDA)' != 'True'">Richasy.AgentKernel.Connectors.Onnx</AssemblyName>
+	<AssemblyName Condition="'$(USE_QNN)' == 'True'">Richasy.AgentKernel.Connectors.Onnx.Qnn</AssemblyName>
+	<AssemblyName Condition="'$(USE_CUDA)' != 'True' and '$(USE_QNN)' != 'True'">Richasy.AgentKernel.Connectors.Onnx</AssemblyName>
   	<RootNamespace>$(AssemblyName)</RootNamespace>
   	<TargetFramework>net9.0</TargetFramework>
   	<NoWarn>$(NoWarn)</NoWarn>
@@ -21,8 +23,10 @@
   </PropertyGroup>
   
   <ItemGroup>
+	<PackageReference Include="Microsoft.ML.OnnxRuntime.QNN" Condition="'$(USE_QNN)' == 'True'" />
 	<PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.Cuda" Condition="'$(USE_CUDA)' == 'True'" />
-	<PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI" Condition="'$(USE_CUDA)' != 'True'" />
+	<PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI" Condition="'$(USE_CUDA)' != 'True' and '$(USE_QNN)' != 'True'" />
+	<PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI.QNN" Condition="'$(USE_QNN)' == 'True'" />
   	<PackageReference Include="RichasyKernel.Abstractions" />
   </ItemGroup>
   
