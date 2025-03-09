@@ -98,7 +98,7 @@ public sealed class WindowsChatClient : IChatClient
 
         var languageModelOptions = new LanguageModelOptions
         {
-            Skill = options.AdditionalProperties?.TryGetValue("skill", out LanguageModelSkill skill) == true ? skill : DefaultLanguageModelSkill,
+            Skill = options.AdditionalProperties?.TryGetValue("skill", out int skill) == true ? (LanguageModelSkill)skill : DefaultLanguageModelSkill,
             Temp = options.Temperature ?? DefaultTemperature,
             Top_k = (uint)(options.TopK ?? DefaultTopK),
             Top_p = (uint)(options.TopP ?? DefaultTopP),
@@ -106,25 +106,25 @@ public sealed class WindowsChatClient : IChatClient
 
         var contentFilterOptions = new ContentFilterOptions();
 
-        if (options.AdditionalProperties?.TryGetValue("input_moderation", out SeverityLevel inputModeration) == true && inputModeration != SeverityLevel.None)
+        if (options.AdditionalProperties?.TryGetValue("input_moderation", out int inputModeration) == true && (SeverityLevel)inputModeration != SeverityLevel.None)
         {
             contentFilterOptions.PromptMinSeverityLevelToBlock = new TextContentFilterSeverity
             {
-                HateContentSeverity = inputModeration,
-                SexualContentSeverity = inputModeration,
-                ViolentContentSeverity = inputModeration,
-                SelfHarmContentSeverity = inputModeration
+                HateContentSeverity = (SeverityLevel)inputModeration,
+                SexualContentSeverity = (SeverityLevel)inputModeration,
+                ViolentContentSeverity = (SeverityLevel)inputModeration,
+                SelfHarmContentSeverity = (SeverityLevel)inputModeration
             };
         }
 
-        if (options.AdditionalProperties?.TryGetValue("output_moderation", out SeverityLevel outputModeration) == true && outputModeration != SeverityLevel.None)
+        if (options.AdditionalProperties?.TryGetValue("output_moderation", out int outputModeration) == true && (SeverityLevel)outputModeration != SeverityLevel.None)
         {
             contentFilterOptions.ResponseMinSeverityLevelToBlock = new TextContentFilterSeverity
             {
-                HateContentSeverity = outputModeration,
-                SexualContentSeverity = outputModeration,
-                ViolentContentSeverity = outputModeration,
-                SelfHarmContentSeverity = outputModeration
+                HateContentSeverity = (SeverityLevel)outputModeration,
+                SexualContentSeverity = (SeverityLevel)outputModeration,
+                ViolentContentSeverity = (SeverityLevel)outputModeration,
+                SelfHarmContentSeverity = (SeverityLevel)outputModeration
             };
         }
 

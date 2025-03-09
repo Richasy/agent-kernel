@@ -182,20 +182,18 @@ public sealed class ZhiPuChatClient : IChatClient
         else
         {
             List<ZhiPuTool>? theTools = options?.Tools is { Count: > 0 } tools ? [.. tools.Select(ToZhiPuTool)] : null;
-            if (options is ZhiPuChatOptions chatOptions)
+            if (options?.AdditionalProperties?.TryGetValue("search", out string? webSearch) is true)
             {
-                if (chatOptions.Search is ZhiPuWebSearchParameters searchParam)
-                {
-                    theTools ??= [];
-                    theTools.Add(new ZhiPuTool { Type = "web_search", WebSearch = searchParam });
-                }
-
-                if (chatOptions.Retrieval is ZhiPuRetrievalParameters retrievalParam)
-                {
-                    theTools ??= [];
-                    theTools.Add(new ZhiPuTool { Type = "retrieval", Retrieval = retrievalParam });
-                }
+                theTools ??= [];
+                theTools.Add(new ZhiPuTool { Type = "web_search", WebSearch = JsonSerializer.Deserialize(webSearch, JsonGenerationContext.Default.ZhiPuWebSearchParameters) });
             }
+
+            if (options?.AdditionalProperties?.TryGetValue("retrieval", out string? retrieval) is true)
+            {
+                theTools ??= [];
+                theTools.Add(new ZhiPuTool { Type = "retrieval", Retrieval = JsonSerializer.Deserialize(retrieval, JsonGenerationContext.Default.ZhiPuRetrievalParameters) });
+            }
+
             request = new ZhiPuBasicChatRequest()
             {
                 ResponseFormat = options?.ResponseFormat is ChatResponseFormatJson ? ZhiPuResponseFormat.JsonFormat : default,

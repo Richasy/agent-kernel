@@ -186,12 +186,7 @@ public sealed class ErnieChatClient : IChatClient
                 : null;
         }
 
-        if (options is ErnieChatOptions chatOptions)
-        {
-            request.ParallelToolCalls = chatOptions.ParallelToolCalls;
-            request.WebSearch = chatOptions.WebSearch;
-        }
-        else if (options?.AdditionalProperties is { Count: > 0 } additionalProperties)
+        if (options?.AdditionalProperties is { Count: > 0 } additionalProperties)
         {
             foreach (var prop in additionalProperties)
             {
@@ -199,9 +194,9 @@ public sealed class ErnieChatClient : IChatClient
                 {
                     request.ParallelToolCalls = ptc;
                 }
-                else if (prop.Key == "web_search" && prop.Value is ErnieWebSearchParameters webParam)
+                else if (prop.Key == "web_search" && prop.Value is string webParam)
                 {
-                    request.WebSearch = webParam;
+                    request.WebSearch = JsonSerializer.Deserialize(webParam, JsonGenContext.Default.ErnieWebSearchParameters);
                 }
             }
         }

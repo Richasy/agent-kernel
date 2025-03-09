@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.AI;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Richasy.AgentKernel.Connectors.Baidu.Models;
@@ -42,7 +43,7 @@ public sealed class ErnieChatOptions : ChatOptions
             {
                 field = value;
                 AdditionalProperties ??= [];
-                AdditionalProperties.Add("web_search", value);
+                AdditionalProperties.Add("web_search", JsonSerializer.Serialize(value, JsonGenContext.Default.ErnieWebSearchParameters));
             }
         }
     }
