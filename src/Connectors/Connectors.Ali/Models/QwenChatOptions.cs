@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.AI;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Richasy.AgentKernel.Connectors.Ali.Models;
@@ -25,7 +24,7 @@ public sealed class QwenChatOptions : ChatOptions
             {
                 field = value;
                 AdditionalProperties ??= [];
-                AdditionalProperties.Add("parallel_tool_calls", BinaryData.FromString(JsonSerializer.Serialize(value, JsonGenContext.Default.Boolean)));
+                AdditionalProperties.Add("parallel_tool_calls", value);
             }
         }
     }
@@ -43,7 +42,7 @@ public sealed class QwenChatOptions : ChatOptions
             {
                 field = value;
                 AdditionalProperties ??= [];
-                AdditionalProperties.Add("enable_search", BinaryData.FromString(JsonSerializer.Serialize(value, JsonGenContext.Default.Boolean)));
+                AdditionalProperties.Add("enable_search", value);
             }
         }
     }

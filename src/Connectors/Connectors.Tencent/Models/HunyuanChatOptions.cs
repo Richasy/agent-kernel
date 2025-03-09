@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.AI;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Richasy.AgentKernel.Connectors.Tencent.Models;
@@ -29,7 +28,7 @@ public sealed class HunyuanChatOptions : ChatOptions
             {
                 field = value;
                 AdditionalProperties ??= [];
-                AdditionalProperties.Add("citation", BinaryData.FromString(JsonSerializer.Serialize(value, JsonGenContext.Default.NullableBoolean)));
+                AdditionalProperties.Add("citation", value);
             }
         }
     }
@@ -47,7 +46,7 @@ public sealed class HunyuanChatOptions : ChatOptions
             {
                 field = value;
                 AdditionalProperties ??= [];
-                AdditionalProperties.Add("enable_deep_search", BinaryData.FromString(JsonSerializer.Serialize(value, JsonGenContext.Default.NullableBoolean)));
+                AdditionalProperties.Add("enable_deep_search", value);
             }
         }
     }
@@ -65,7 +64,7 @@ public sealed class HunyuanChatOptions : ChatOptions
             {
                 field = value;
                 AdditionalProperties ??= [];
-                AdditionalProperties.Add("enable_enhancement", BinaryData.FromString(JsonSerializer.Serialize(value, JsonGenContext.Default.NullableBoolean)));
+                AdditionalProperties.Add("enable_enhancement", value);
             }
         }
     }
@@ -83,7 +82,7 @@ public sealed class HunyuanChatOptions : ChatOptions
             {
                 field = value;
                 AdditionalProperties ??= [];
-                AdditionalProperties.Add("enable_multimedia", BinaryData.FromString(JsonSerializer.Serialize(value, JsonGenContext.Default.NullableBoolean)));
+                AdditionalProperties.Add("enable_multimedia", value);
             }
         }
     }
@@ -101,7 +100,7 @@ public sealed class HunyuanChatOptions : ChatOptions
             {
                 field = value;
                 AdditionalProperties ??= [];
-                AdditionalProperties.Add("enable_speed_search", BinaryData.FromString(JsonSerializer.Serialize(value, JsonGenContext.Default.NullableBoolean)));
+                AdditionalProperties.Add("enable_speed_search", value);
             }
         }
     }
@@ -119,7 +118,7 @@ public sealed class HunyuanChatOptions : ChatOptions
             {
                 field = value;
                 AdditionalProperties ??= [];
-                AdditionalProperties.Add("force_search_enhancement", BinaryData.FromString(JsonSerializer.Serialize(value, JsonGenContext.Default.NullableBoolean)));
+                AdditionalProperties.Add("force_search_enhancement", value);
             }
         }
     }
@@ -137,7 +136,7 @@ public sealed class HunyuanChatOptions : ChatOptions
             {
                 field = value;
                 AdditionalProperties ??= [];
-                AdditionalProperties.Add("search_info", BinaryData.FromString(JsonSerializer.Serialize(value, JsonGenContext.Default.NullableBoolean)));
+                AdditionalProperties.Add("search_info", value);
             }
         }
     }

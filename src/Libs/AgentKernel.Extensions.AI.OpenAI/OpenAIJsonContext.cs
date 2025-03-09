@@ -16,4 +16,11 @@ namespace Richasy.AgentKernel.Extensions.AI;
 [JsonSerializable(typeof(OpenAIModelMappers.OpenAIChatToolJson))]
 [JsonSerializable(typeof(IDictionary<string, object?>))]
 [JsonSerializable(typeof(string[]))]
+[JsonSerializable(typeof(bool))]
+[JsonSerializable(typeof(int))]
+[JsonSerializable(typeof(double))]
+[JsonSerializable(typeof(float))]
+[JsonSerializable(typeof(long))]
+[JsonSerializable(typeof(DateTime))]
+[JsonSerializable(typeof(DateTimeOffset))]
 internal sealed partial class OpenAIJsonContext : JsonSerializerContext;

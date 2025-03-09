@@ -25,7 +25,7 @@ public sealed class OnnxChatOptions : ChatOptions
             {
                 field = value;
                 AdditionalProperties ??= [];
-                AdditionalProperties["min_length"] = BinaryData.FromString(JsonSerializer.Serialize(value, JsonGenContext.Default.Int32));
+                AdditionalProperties["min_length"] = value;
             }
         }
     }
@@ -43,7 +43,7 @@ public sealed class OnnxChatOptions : ChatOptions
             {
                 field = value;
                 AdditionalProperties ??= [];
-                AdditionalProperties["do_sample"] = BinaryData.FromString(JsonSerializer.Serialize(value, JsonGenContext.Default.Boolean));
+                AdditionalProperties["do_sample"] = value;
             }
         }
     }

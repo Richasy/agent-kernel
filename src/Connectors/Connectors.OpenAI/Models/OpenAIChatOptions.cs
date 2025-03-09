@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.AI;
-using System.Text.Json;
+using Richasy.AgentKernel.Core.OpenAI.Chat;
 using System.Text.Json.Serialization;
 
 namespace Richasy.AgentKernel.Connectors.OpenAI.Models;
@@ -16,7 +16,7 @@ public sealed class OpenAIChatOptions : ChatOptions
     /// The model to use for the chat.
     /// </summary>
     [JsonPropertyName("reasoning_effort")]
-    public OpenAIReasoningEffort? ReasoningEffort
+    public ChatReasoningEffortLevel? ReasoningEffort
     {
         get => field;
         set
@@ -25,7 +25,7 @@ public sealed class OpenAIChatOptions : ChatOptions
             {
                 field = value;
                 AdditionalProperties ??= [];
-                AdditionalProperties.Add("reasoning_effort", BinaryData.FromString(JsonSerializer.Serialize(value, JsonGenContext.Default.OpenAIReasoningEffort)));
+                AdditionalProperties.Add(nameof(ChatCompletionOptions.ReasoningEffortLevel), value);
             }
         }
     }
@@ -43,7 +43,7 @@ public sealed class OpenAIChatOptions : ChatOptions
             {
                 field = value;
                 AdditionalProperties ??= [];
-                AdditionalProperties.Add("parallel_tool_calls", BinaryData.FromString(JsonSerializer.Serialize(value, JsonGenContext.Default.Boolean)));
+                AdditionalProperties.Add(nameof(ChatCompletionOptions.AllowParallelToolCalls), value);
             }
         }
     }

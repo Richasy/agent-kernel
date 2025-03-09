@@ -310,24 +310,30 @@ internal static partial class OpenAIModelMappers
 
             if (options.AdditionalProperties is { Count: > 0 } additionalProperties)
             {
+                List<string> matchedProperties = [];
+
                 if (additionalProperties.TryGetValue(nameof(result.AllowParallelToolCalls), out bool allowParallelToolCalls))
                 {
                     result.AllowParallelToolCalls = allowParallelToolCalls;
+                    matchedProperties.Add(nameof(result.AllowParallelToolCalls));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.AudioOptions), out ChatAudioOptions? audioOptions))
                 {
                     result.AudioOptions = audioOptions;
+                    matchedProperties.Add(nameof(result.AudioOptions));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.EndUserId), out string? endUserId))
                 {
                     result.EndUserId = endUserId;
+                    matchedProperties.Add(nameof(result.EndUserId));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.IncludeLogProbabilities), out bool includeLogProbabilities))
                 {
                     result.IncludeLogProbabilities = includeLogProbabilities;
+                    matchedProperties.Add(nameof(result.IncludeLogProbabilities));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.LogitBiases), out IDictionary<int, int>? logitBiases))
@@ -336,6 +342,8 @@ internal static partial class OpenAIModelMappers
                     {
                         result.LogitBiases[kvp.Key] = kvp.Value;
                     }
+
+                    matchedProperties.Add(nameof(result.LogitBiases));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.Metadata), out IDictionary<string, string>? metadata))
@@ -344,85 +352,135 @@ internal static partial class OpenAIModelMappers
                     {
                         result.Metadata[kvp.Key] = kvp.Value;
                     }
+
+                    matchedProperties.Add(nameof(result.Metadata));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.OutputPrediction), out ChatOutputPrediction? outputPrediction))
                 {
                     result.OutputPrediction = outputPrediction;
+                    matchedProperties.Add(nameof(result.OutputPrediction));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.ReasoningEffortLevel), out ChatReasoningEffortLevel reasoningEffortLevel))
                 {
                     result.ReasoningEffortLevel = reasoningEffortLevel;
+                    matchedProperties.Add(nameof(result.ReasoningEffortLevel));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.ResponseModalities), out ChatResponseModalities responseModalities))
                 {
                     result.ResponseModalities = responseModalities;
+                    matchedProperties.Add(nameof(result.ResponseModalities));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.StoredOutputEnabled), out bool storeOutputEnabled))
                 {
                     result.StoredOutputEnabled = storeOutputEnabled;
+                    matchedProperties.Add(nameof(result.StoredOutputEnabled));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.TopLogProbabilityCount), out int topLogProbabilityCountInt))
                 {
                     result.TopLogProbabilityCount = topLogProbabilityCountInt;
+                    matchedProperties.Add(nameof(result.TopLogProbabilityCount));
                 }
 
-                foreach (var kv in additionalProperties.Where(p => p.Value is BinaryData))
+                foreach (var kv in additionalProperties)
                 {
-                    result.SerializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-                    result.SerializedAdditionalRawData[kv.Key] = (BinaryData)kv.Value;
-                }
-            }
-
-            if (options.Tools is { Count: > 0 } tools)
-            {
-                foreach (AITool tool in tools)
-                {
-                    if (tool is AIFunction af)
+                    if (matchedProperties.Contains(kv.Key) || (result.SerializedAdditionalRawData?.ContainsKey(kv.Key) ?? false))
                     {
-                        result.Tools.Add(ToOpenAIChatTool(af));
+                        continue;
+                    }
+
+                    result.SerializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
+                    if (kv.Value is string strValue)
+                    {
+                        result.SerializedAdditionalRawData[kv.Key] = BinaryData.FromString(strValue);
+                    }
+                    else if (kv.Value is BinaryData binaryData)
+                    {
+                        result.SerializedAdditionalRawData[kv.Key] = binaryData;
+                    }
+                    else if (kv.Value is int intValue)
+                    {
+                        result.SerializedAdditionalRawData[kv.Key] = BinaryData.FromString(JsonSerializer.Serialize(intValue, OpenAIJsonContext.Default.Int32));
+                    }
+                    else if (kv.Value is long longValue)
+                    {
+                        result.SerializedAdditionalRawData[kv.Key] = BinaryData.FromString(JsonSerializer.Serialize(longValue, OpenAIJsonContext.Default.Int64));
+                    }
+                    else if (kv.Value is double doubleValue)
+                    {
+                        result.SerializedAdditionalRawData[kv.Key] = BinaryData.FromString(JsonSerializer.Serialize(doubleValue, OpenAIJsonContext.Default.Double));
+                    }
+                    else if (kv.Value is float floatValue)
+                    {
+                        result.SerializedAdditionalRawData[kv.Key] = BinaryData.FromString(JsonSerializer.Serialize(floatValue, OpenAIJsonContext.Default.Single));
+                    }
+                    else if (kv.Value is bool boolValue)
+                    {
+                        result.SerializedAdditionalRawData[kv.Key] = BinaryData.FromString(JsonSerializer.Serialize(boolValue, OpenAIJsonContext.Default.Boolean));
+                    }
+                    else if (kv.Value is DateTime dateTimeValue)
+                    {
+                        result.SerializedAdditionalRawData[kv.Key] = BinaryData.FromString(JsonSerializer.Serialize(dateTimeValue, OpenAIJsonContext.Default.DateTime));
+                    }
+                    else if (kv.Value is DateTimeOffset dateTimeOffsetValue)
+                    {
+                        result.SerializedAdditionalRawData[kv.Key] = BinaryData.FromString(JsonSerializer.Serialize(dateTimeOffsetValue, OpenAIJsonContext.Default.DateTimeOffset));
+                    }
+                    else
+                    {
+                        result.SerializedAdditionalRawData[kv.Key] = BinaryData.FromString(kv.Value.ToString());
                     }
                 }
 
-                switch (options.ToolMode)
+                if (options.Tools is { Count: > 0 } tools)
                 {
-                    case NoneChatToolMode:
-                        result.ToolChoice = ChatToolChoice.CreateNoneChoice();
-                        break;
+                    foreach (AITool tool in tools)
+                    {
+                        if (tool is AIFunction af)
+                        {
+                            result.Tools.Add(ToOpenAIChatTool(af));
+                        }
+                    }
 
-                    case AutoChatToolMode:
-                    case null:
-                        result.ToolChoice = ChatToolChoice.CreateAutoChoice();
-                        break;
+                    switch (options.ToolMode)
+                    {
+                        case NoneChatToolMode:
+                            result.ToolChoice = ChatToolChoice.CreateNoneChoice();
+                            break;
 
-                    case RequiredChatToolMode required:
-                        result.ToolChoice = required.RequiredFunctionName is null ?
-                            ChatToolChoice.CreateRequiredChoice() :
-                            ChatToolChoice.CreateFunctionChoice(required.RequiredFunctionName);
-                        break;
+                        case AutoChatToolMode:
+                        case null:
+                            result.ToolChoice = ChatToolChoice.CreateAutoChoice();
+                            break;
+
+                        case RequiredChatToolMode required:
+                            result.ToolChoice = required.RequiredFunctionName is null ?
+                                ChatToolChoice.CreateRequiredChoice() :
+                                ChatToolChoice.CreateFunctionChoice(required.RequiredFunctionName);
+                            break;
+                    }
+                }
+
+                if (options.ResponseFormat is ChatResponseFormatText)
+                {
+                    result.ResponseFormat = Core.OpenAI.Chat.ChatResponseFormat.CreateTextFormat();
+                }
+                else if (options.ResponseFormat is ChatResponseFormatJson jsonFormat)
+                {
+                    result.ResponseFormat = jsonFormat.Schema is { } jsonSchema ?
+                        Core.OpenAI.Chat.ChatResponseFormat.CreateJsonSchemaFormat(
+                            jsonFormat.SchemaName ?? "json_schema",
+                            BinaryData.FromBytes(
+                                JsonSerializer.SerializeToUtf8Bytes(jsonSchema, OpenAIJsonContext.Default.JsonElement)),
+                            jsonFormat.SchemaDescription) :
+                        Core.OpenAI.Chat.ChatResponseFormat.CreateJsonObjectFormat();
                 }
             }
-
-            if (options.ResponseFormat is ChatResponseFormatText)
-            {
-                result.ResponseFormat = Core.OpenAI.Chat.ChatResponseFormat.CreateTextFormat();
-            }
-            else if (options.ResponseFormat is ChatResponseFormatJson jsonFormat)
-            {
-                result.ResponseFormat = jsonFormat.Schema is { } jsonSchema ?
-                    Core.OpenAI.Chat.ChatResponseFormat.CreateJsonSchemaFormat(
-                        jsonFormat.SchemaName ?? "json_schema",
-                        BinaryData.FromBytes(
-                            JsonSerializer.SerializeToUtf8Bytes(jsonSchema, OpenAIJsonContext.Default.JsonElement)),
-                        jsonFormat.SchemaDescription) :
-                    Core.OpenAI.Chat.ChatResponseFormat.CreateJsonObjectFormat();
-            }
         }
-
         return result;
     }
 

@@ -4,7 +4,6 @@
 using Microsoft.Extensions.AI;
 using Microsoft.Windows.AI.ContentModeration;
 using Microsoft.Windows.AI.Generative;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Richasy.AgentKernel.Connectors.Windows.Preview.Models;
@@ -33,7 +32,7 @@ public sealed class WindowsChatOptions : ChatOptions
                 }
                 else
                 {
-                    AdditionalProperties["skill"] = BinaryData.FromString(JsonSerializer.Serialize((int)value, JsonGenContext.Default.Int32));
+                    AdditionalProperties["skill"] = (int)value;
                 }
             }
         }
@@ -58,7 +57,7 @@ public sealed class WindowsChatOptions : ChatOptions
                 }
                 else
                 {
-                    AdditionalProperties["input_moderation"] = BinaryData.FromString(JsonSerializer.Serialize((int)value, JsonGenContext.Default.Int32));
+                    AdditionalProperties["input_moderation"] = (int)value;
                 }
             }
         }
@@ -82,7 +81,7 @@ public sealed class WindowsChatOptions : ChatOptions
                 }
                 else
                 {
-                    AdditionalProperties["output_moderation"] = BinaryData.FromString(JsonSerializer.Serialize((int)value, JsonGenContext.Default.Int32));
+                    AdditionalProperties["output_moderation"] = (int)value;
                 }
             }
         }
