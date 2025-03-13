@@ -3,13 +3,18 @@
 
 #pragma warning disable SA1204 // Static elements should appear before instance elements
 
+using Microsoft.Extensions.AI;
+using Microsoft.Shared.Diagnostics;
+using Richasy.AgentKernel.Core.OpenAI.Chat;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Text.Json;
-using Microsoft.Extensions.AI;
-using Richasy.AgentKernel.Core.OpenAI.Chat;
+using System.Text.Json.Serialization;
 
 namespace Richasy.AgentKernel.Extensions.AI;
 
@@ -17,10 +22,10 @@ internal static partial class OpenAIModelMappers
 {
     public static ChatRole ChatRoleDeveloper { get; } = new ChatRole("developer");
 
-    public static OpenAIChatCompletionRequest FromOpenAIChatCompletionRequest(ChatCompletionOptions chatCompletionOptions)
+    public static OpenAIChatCompletionRequest FromOpenAIChatCompletionRequest(Core.OpenAI.Chat.ChatCompletionOptions chatCompletionOptions)
     {
         ChatOptions chatOptions = FromOpenAIOptions(chatCompletionOptions);
-        var messages = FromOpenAIChatMessages(_getMessagesAccessor(chatCompletionOptions)).ToList();
+        IList<Microsoft.Extensions.AI.ChatMessage> messages = FromOpenAIChatMessages(_getMessagesAccessor(chatCompletionOptions)).ToList();
         return new()
         {
             Messages = messages,
@@ -128,7 +133,7 @@ internal static partial class OpenAIModelMappers
         // Maps all of the M.E.AI types to the corresponding OpenAI types.
         // Unrecognized or non-processable content is ignored.
 
-        foreach (var input in inputs)
+        foreach (Microsoft.Extensions.AI.ChatMessage input in inputs)
         {
             if (input.Role == ChatRole.System ||
                 input.Role == ChatRole.User ||
@@ -206,11 +211,11 @@ internal static partial class OpenAIModelMappers
                     break;
 
                 case ChatMessageContentPartKind.Image when openAiContentPart.ImageBytes is { } bytes:
-                    contents.Add(new DataContent(bytes.ToArray(), openAiContentPart.ImageBytesMediaType));
+                    contents.Add(new DataContent(bytes.ToMemory(), openAiContentPart.ImageBytesMediaType));
                     break;
 
-                case ChatMessageContentPartKind.Image:
-                    contents.Add(new DataContent(openAiContentPart.ImageUri?.ToString() ?? string.Empty));
+                case ChatMessageContentPartKind.Image when openAiContentPart.ImageUri is { } uri:
+                    contents.Add(new UriContent(uri, "image/*"));
                     break;
             }
         }
@@ -230,25 +235,21 @@ internal static partial class OpenAIModelMappers
                     parts.Add(ChatMessageContentPart.CreateTextPart(textContent.Text));
                     break;
 
-                case DataContent dataContent when dataContent.MediaTypeStartsWith("image/"):
-                    if (dataContent.Data.HasValue)
-                    {
-                        parts.Add(ChatMessageContentPart.CreateImagePart(BinaryData.FromBytes(dataContent.Data.Value), dataContent.MediaType));
-                    }
-                    else if (dataContent.Uri is string uri)
-                    {
-                        parts.Add(ChatMessageContentPart.CreateImagePart(new Uri(uri)));
-                    }
-
+                case UriContent uriContent when uriContent.HasTopLevelMediaType("image"):
+                    parts.Add(ChatMessageContentPart.CreateImagePart(uriContent.Uri));
                     break;
 
-                case DataContent dataContent when dataContent.MediaTypeStartsWith("audio/") && dataContent.Data.HasValue:
-                    var audioData = BinaryData.FromBytes(dataContent.Data.Value);
-                    if (dataContent.MediaTypeStartsWith("audio/mpeg"))
+                case DataContent dataContent when dataContent.HasTopLevelMediaType("image"):
+                    parts.Add(ChatMessageContentPart.CreateImagePart(BinaryData.FromBytes(dataContent.Data), dataContent.MediaType));
+                    break;
+
+                case DataContent dataContent when dataContent.HasTopLevelMediaType("audio"):
+                    var audioData = BinaryData.FromBytes(dataContent.Data);
+                    if (dataContent.MediaType.Equals("audio/mpeg", StringComparison.OrdinalIgnoreCase))
                     {
                         parts.Add(ChatMessageContentPart.CreateInputAudioPart(audioData, ChatInputAudioFormat.Mp3));
                     }
-                    else if (dataContent.MediaTypeStartsWith("audio/wav"))
+                    else if (dataContent.MediaType.Equals("audio/wav", StringComparison.OrdinalIgnoreCase))
                     {
                         parts.Add(ChatMessageContentPart.CreateInputAudioPart(audioData, ChatInputAudioFormat.Wav));
                     }

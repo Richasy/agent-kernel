@@ -37,9 +37,9 @@ public sealed class GeminiChatClient : IChatClient
     public ChatClientMetadata Metadata { get; }
 
     /// <inheritdoc/>
-    public async Task<ChatResponse> GetResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
+    public async Task<ChatResponse> GetResponseAsync(IEnumerable<ChatMessage> messages, ChatOptions? options = null, CancellationToken cancellationToken = default)
     {
-        var request = GetGeminiRequest(chatMessages, options);
+        var request = GetGeminiRequest(messages, options);
         var response = await GetGeminiResponseAsync(_chatGenerationEndpoint, request, cancellationToken).ConfigureAwait(false);
         var messageContents = GetChatMessageContentsFromResponse(response);
         var firstContent = messageContents[0];
@@ -58,9 +58,9 @@ public sealed class GeminiChatClient : IChatClient
     }
 
     /// <inheritdoc/>
-    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IEnumerable<ChatMessage> messages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        var request = GetGeminiRequest(chatMessages, options);
+        var request = GetGeminiRequest(messages, options);
         HttpResponseMessage? response = null;
         Stream? responseStream = null;
         try
@@ -226,7 +226,7 @@ public sealed class GeminiChatClient : IChatClient
             ResponseSafetyRatings = candidate.SafetyRatings?.ToList(),
         };
 
-    private GeminiRequest GetGeminiRequest(IList<ChatMessage> chatMessages, ChatOptions? options)
+    private GeminiRequest GetGeminiRequest(IEnumerable<ChatMessage> chatMessages, ChatOptions? options)
     {
         ArgumentNullException.ThrowIfNull(chatMessages);
         var modelId = options?.ModelId ?? Metadata.ModelId;

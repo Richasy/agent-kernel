@@ -323,6 +323,9 @@ dotnet_diagnostic.CA2227.severity = none
 # CA1826: 不要在可索引的集合上使用 Enumerable 方法
 dotnet_diagnostic.CA1826.severity = none
 
+# CA1851: “IEnumerable”集合可能的多个枚举
+dotnet_diagnostic.CA1851.severity = none
+
 [*.{cs,vb}]
 dotnet_style_qualification_for_field = false:silent
 dotnet_style_qualification_for_property = false:silent

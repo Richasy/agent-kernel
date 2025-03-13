@@ -71,21 +71,21 @@ internal sealed class OpenAIAssistantClient : IChatClient
 
     /// <inheritdoc />
     public Task<ChatResponse> GetResponseAsync(
-        IList<Microsoft.Extensions.AI.ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default) =>
-        GetStreamingResponseAsync(chatMessages, options, cancellationToken).ToChatResponseAsync(coalesceContent: true, cancellationToken);
+        IEnumerable<Microsoft.Extensions.AI.ChatMessage> messages, ChatOptions? options = null, CancellationToken cancellationToken = default) =>
+        GetStreamingResponseAsync(messages, options, cancellationToken).ToChatResponseAsync(cancellationToken);
 
     /// <inheritdoc />
     public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(
-        IList<Microsoft.Extensions.AI.ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        IEnumerable<Microsoft.Extensions.AI.ChatMessage> messages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        // Extract necessary state from chatMessages and options.
-        (RunCreationOptions runOptions, List<FunctionResultContent>? toolResults) = CreateRunOptions(chatMessages, options);
+        // Extract necessary state from messages and options.
+        (RunCreationOptions runOptions, List<FunctionResultContent>? toolResults) = CreateRunOptions(messages, options);
 
         // Get the thread ID.
         string? threadId = options?.ChatThreadId ?? _threadId;
         if (threadId is null && toolResults is not null)
         {
-            Throw.ArgumentException(nameof(chatMessages), "No thread ID was provided, but chat messages includes tool results.");
+            Throw.ArgumentException(nameof(messages), "No thread ID was provided, but chat messages includes tool results.");
         }
 
         // Get the updates to process from the assistant. If we have any tool results, this means submitting those and ignoring
@@ -113,17 +113,17 @@ internal sealed class OpenAIAssistantClient : IChatClient
         }
 
         // Process each update.
+        string? responseId = null;
         await foreach (var update in updates.ConfigureAwait(false))
         {
             switch (update)
             {
                 case MessageContentUpdate mcu:
-                    yield return new()
+                    yield return new(mcu.Role == MessageRole.User ? ChatRole.User : ChatRole.Assistant, mcu.Text)
                     {
                         ChatThreadId = threadId,
                         RawRepresentation = mcu,
-                        Role = mcu.Role == MessageRole.User ? ChatRole.User : ChatRole.Assistant,
-                        Text = mcu.Text,
+                        ResponseId = responseId,
                     };
                     break;
 
@@ -133,6 +133,7 @@ internal sealed class OpenAIAssistantClient : IChatClient
 
                 case RunUpdate ru:
                     threadId ??= ru.Value.ThreadId;
+                    responseId ??= ru.Value.Id;
 
                     ChatResponseUpdate ruUpdate = new()
                     {
@@ -141,7 +142,7 @@ internal sealed class OpenAIAssistantClient : IChatClient
                         CreatedAt = ru.Value.CreatedAt,
                         ModelId = ru.Value.Model,
                         RawRepresentation = ru,
-                        ResponseId = ru.Value.Id,
+                        ResponseId = responseId,
                         Role = ChatRole.Assistant,
                     };
 
@@ -177,9 +178,10 @@ internal sealed class OpenAIAssistantClient : IChatClient
     }
 
     /// <summary>Adds the provided messages to the thread and returns the options to use for the request.</summary>
-    private static (RunCreationOptions RunOptions, List<FunctionResultContent>? ToolResults) CreateRunOptions(IList<Microsoft.Extensions.AI.ChatMessage> chatMessages, ChatOptions? options)
+    private static (RunCreationOptions RunOptions, List<FunctionResultContent>? ToolResults) CreateRunOptions(
+        IEnumerable<Microsoft.Extensions.AI.ChatMessage> messages, ChatOptions? options)
     {
-        _ = Throw.IfNull(chatMessages);
+        _ = Throw.IfNull(messages);
 
         RunCreationOptions runOptions = new();
 
@@ -274,7 +276,7 @@ internal sealed class OpenAIAssistantClient : IChatClient
         // Handle ChatMessages. System messages are turned into additional instructions.
         StringBuilder? instructions = null;
         List<FunctionResultContent>? functionResults = null;
-        foreach (var chatMessage in chatMessages)
+        foreach (var chatMessage in messages)
         {
             List<MessageContent> messageContents = [];
 
@@ -298,7 +300,7 @@ internal sealed class OpenAIAssistantClient : IChatClient
                         messageContents.Add(MessageContent.FromText(tc.Text));
                         break;
 
-                    case DataContent dc when dc.MediaTypeStartsWith("image/"):
+                    case DataContent dc when dc.HasTopLevelMediaType("image"):
                         messageContents.Add(MessageContent.FromImageUri(new(dc.Uri)));
                         break;
 

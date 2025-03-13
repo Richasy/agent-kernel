@@ -40,6 +40,8 @@ public sealed class OpenAIChatClient : IChatClient
     /// <summary>Initializes a new instance of the <see cref="OpenAIChatClient"/> class for the specified <see cref="OpenAIClient"/>.</summary>
     /// <param name="openAIClient">The underlying client.</param>
     /// <param name="modelId">The model to use.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="openAIClient"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="modelId"/> is empty or composed entirely of whitespace.</exception>
     public OpenAIChatClient(OpenAIClient openAIClient, string modelId)
     {
         _ = Throw.IfNull(openAIClient);
@@ -60,6 +62,7 @@ public sealed class OpenAIChatClient : IChatClient
 
     /// <summary>Initializes a new instance of the <see cref="OpenAIChatClient"/> class for the specified <see cref="ChatClient"/>.</summary>
     /// <param name="chatClient">The underlying client.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="chatClient"/> is <see langword="null"/>.</exception>
     public OpenAIChatClient(ChatClient chatClient)
     {
         _ = Throw.IfNull(chatClient);
@@ -101,11 +104,11 @@ public sealed class OpenAIChatClient : IChatClient
 
     /// <inheritdoc />
     public async Task<ChatResponse> GetResponseAsync(
-        IList<Microsoft.Extensions.AI.ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
+        IEnumerable<Microsoft.Extensions.AI.ChatMessage> messages, ChatOptions? options = null, CancellationToken cancellationToken = default)
     {
-        _ = Throw.IfNull(chatMessages);
+        _ = Throw.IfNull(messages);
 
-        var openAIChatMessages = OpenAIModelMappers.ToOpenAIChatMessages(chatMessages, ToolCallJsonSerializerOptions);
+        var openAIChatMessages = OpenAIModelMappers.ToOpenAIChatMessages(messages, ToolCallJsonSerializerOptions);
         var openAIOptions = OpenAIModelMappers.ToOpenAIOptions(options);
 
         // Make the call to OpenAI.
@@ -116,11 +119,11 @@ public sealed class OpenAIChatClient : IChatClient
 
     /// <inheritdoc />
     public IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(
-        IList<Microsoft.Extensions.AI.ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
+        IEnumerable<Microsoft.Extensions.AI.ChatMessage> messages, ChatOptions? options = null, CancellationToken cancellationToken = default)
     {
-        _ = Throw.IfNull(chatMessages);
+        _ = Throw.IfNull(messages);
 
-        var openAIChatMessages = OpenAIModelMappers.ToOpenAIChatMessages(chatMessages, ToolCallJsonSerializerOptions);
+        var openAIChatMessages = OpenAIModelMappers.ToOpenAIChatMessages(messages, ToolCallJsonSerializerOptions);
         var openAIOptions = OpenAIModelMappers.ToOpenAIOptions(options);
 
         // Make the call to OpenAI.

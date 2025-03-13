@@ -58,11 +58,11 @@ public sealed class OnnxChatClient : IChatClient
     public ChatClientMetadata Metadata { get; }
 
     /// <inheritdoc/>
-    public Task<ChatResponse> GetResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
-        => GetStreamingResponseAsync(chatMessages, options, cancellationToken).ToChatResponseAsync(cancellationToken: cancellationToken);
+    public Task<ChatResponse> GetResponseAsync(IEnumerable<ChatMessage> messages, ChatOptions? options = null, CancellationToken cancellationToken = default)
+        => GetStreamingResponseAsync(messages, options, cancellationToken).ToChatResponseAsync(cancellationToken: cancellationToken);
 
     /// <inheritdoc/>
-    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IEnumerable<ChatMessage> messages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         var modelId = options?.ModelId ?? Metadata.ModelId;
         if (_defaultSystemTemplate == null)
@@ -76,7 +76,7 @@ public sealed class OnnxChatClient : IChatClient
         var promptTemplate = GetValueFromChatOptions("prompt_template", options, _defaultPromptTemplate, JsonGenContext.Default.String);
         var stops = options?.StopSequences?.ToArray();
         await InitializeAsync(modelId!, cancellationToken).ConfigureAwait(false);
-        var prompt = GetPrompt(chatMessages, systemTemplate, userTemplate, assistantTemplate, promptTemplate, stops);
+        var prompt = GetPrompt(messages, systemTemplate, userTemplate, assistantTemplate, promptTemplate, stops);
 
         await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
 
@@ -157,7 +157,7 @@ public sealed class OnnxChatClient : IChatClient
             yield return new()
             {
                 Role = ChatRole.Assistant,
-                Text = part,
+                Contents = [new TextContent(part)],
             };
         }
     }
@@ -312,7 +312,7 @@ public sealed class OnnxChatClient : IChatClient
     }
 
     private static string GetPrompt(
-        IList<ChatMessage> history,
+        IEnumerable<ChatMessage> history,
         string? systemTemplate,
         string? userTemplate,
         string? assistantTemplate,
@@ -336,9 +336,9 @@ public sealed class OnnxChatClient : IChatClient
         var prompt = new StringBuilder();
         var systemMsgWithoutSystemTemplate = string.Empty;
 
-        for (var i = 0; i < history.Count - 1; i++)
+        for (var i = 0; i < history.Count() - 1; i++)
         {
-            var message = history[i];
+            var message = history.ElementAt(i);
             if (message.Role == ChatRole.System)
             {
                 // ignore system prompts that aren't at the beginning
@@ -374,7 +374,7 @@ public sealed class OnnxChatClient : IChatClient
             }
         }
 
-        var lastMessage = history[^1]?.Text ?? string.Empty;
+        var lastMessage = history.Last()?.Text ?? string.Empty;
         if (string.IsNullOrEmpty(promptTemplate))
         {
             var userMsg = string.IsNullOrWhiteSpace(userTemplate) ?

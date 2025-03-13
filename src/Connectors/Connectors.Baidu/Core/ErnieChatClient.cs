@@ -37,11 +37,11 @@ public sealed class ErnieChatClient : IChatClient
     public ChatClientMetadata Metadata { get; }
 
     /// <inheritdoc/>
-    public async Task<ChatResponse> GetResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
+    public async Task<ChatResponse> GetResponseAsync(IEnumerable<ChatMessage> messages, ChatOptions? options = null, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(chatMessages);
+        ArgumentNullException.ThrowIfNull(messages);
         await CheckBearerTokenAsync(cancellationToken).ConfigureAwait(false);
-        var chatRequest = ToErnieChatRequest(chatMessages, options, stream: false);
+        var chatRequest = ToErnieChatRequest(messages, options, stream: false);
         var json = JsonSerializer.Serialize(chatRequest, JsonGenContext.Default.ErnieChatRequest);
         var httpRequest = new HttpRequestMessage(HttpMethod.Post, _apiEndpoint);
         httpRequest.Headers.Add("Authorization", $"Bearer {_token!.Token}");
@@ -66,11 +66,11 @@ public sealed class ErnieChatClient : IChatClient
     }
 
     /// <inheritdoc/>
-    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IEnumerable<ChatMessage> messages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(chatMessages);
+        ArgumentNullException.ThrowIfNull(messages);
         await CheckBearerTokenAsync(cancellationToken).ConfigureAwait(false);
-        var chatRequest = ToErnieChatRequest(chatMessages, options, stream: true);
+        var chatRequest = ToErnieChatRequest(messages, options, stream: true);
         var json = JsonSerializer.Serialize(chatRequest, JsonGenContext.Default.ErnieChatRequest);
         var httpRequest = new HttpRequestMessage(HttpMethod.Post, _apiEndpoint);
         httpRequest.Headers.Add("Authorization", $"Bearer {_token!.Token}");
@@ -163,7 +163,7 @@ public sealed class ErnieChatClient : IChatClient
         _token = await AuthorizeTool.GenerateBearerTokenAsync(_config.AccessKey, _config.SecretKey, cancellationToken).ConfigureAwait(false);
     }
 
-    private ErnieChatRequest ToErnieChatRequest(IList<ChatMessage> chatMessages, ChatOptions? options, bool stream)
+    private ErnieChatRequest ToErnieChatRequest(IEnumerable<ChatMessage> chatMessages, ChatOptions? options, bool stream)
     {
         var request = new ErnieChatRequest
         {

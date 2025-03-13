@@ -38,7 +38,7 @@ public class VideoContent : DataContent
     /// </summary>
     /// <param name="data">The byte contents.</param>
     /// <param name="mediaType">The media type (also known as MIME type) represented by the content.</param>
-    public VideoContent(ReadOnlyMemory<byte> data, string? mediaType = null)
+    public VideoContent(ReadOnlyMemory<byte> data, string mediaType)
         : base(data, mediaType)
     {
     }

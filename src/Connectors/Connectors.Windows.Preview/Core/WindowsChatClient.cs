@@ -58,11 +58,11 @@ public sealed class WindowsChatClient : IChatClient
     }
 
     /// <inheritdoc/>
-    public Task<ChatResponse> GetResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
-        => GetStreamingResponseAsync(chatMessages, options, cancellationToken).ToChatResponseAsync(cancellationToken: cancellationToken);
+    public Task<ChatResponse> GetResponseAsync(IEnumerable<ChatMessage> messages, ChatOptions? options = null, CancellationToken cancellationToken = default)
+        => GetStreamingResponseAsync(messages, options, cancellationToken).ToChatResponseAsync(cancellationToken: cancellationToken);
 
     /// <inheritdoc/>
-    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IEnumerable<ChatMessage> messages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         await InitializeAsync(cancellationToken).ConfigureAwait(false);
         if (_model == null)
@@ -70,14 +70,14 @@ public sealed class WindowsChatClient : IChatClient
             throw new InvalidOperationException("Language model is not loaded.");
         }
 
-        var prompt = GetPrompt(chatMessages);
+        var prompt = GetPrompt(messages);
 
         await foreach (var part in GenerateStreamResponseAsync(prompt, options, cancellationToken).ConfigureAwait(false))
         {
             yield return new ChatResponseUpdate
             {
                 Role = ChatRole.Assistant,
-                Text = part,
+                Contents = [new TextContent(part)]
             };
         }
     }
@@ -131,7 +131,7 @@ public sealed class WindowsChatClient : IChatClient
         return (languageModelOptions, contentFilterOptions);
     }
 
-    private string GetPrompt(IList<ChatMessage> history)
+    private string GetPrompt(IEnumerable<ChatMessage> history)
     {
         if (!history.Any())
         {
@@ -145,9 +145,9 @@ public sealed class WindowsChatClient : IChatClient
             _model?.CreateContext(firstMessage.Text, new ContentFilterOptions()) :
             _model?.CreateContext();
 
-        for (var i = 0; i < history.Count; i++)
+        for (var i = 0; i < history.Count(); i++)
         {
-            var message = history[i];
+            var message = history.ElementAt(i);
             var msgText = message.Text ?? string.Empty;
             if (message.Role == ChatRole.System && i != 0)
             {

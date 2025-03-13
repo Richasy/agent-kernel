@@ -31,23 +31,25 @@ internal static partial class OpenAIModelMappers
     {
         _ = Throw.IfNull(response);
 
-        if (response.Choices.Count > 1)
-        {
-            throw new NotSupportedException("Creating OpenAI ChatCompletion models with multiple choices is currently not supported.");
-        }
-
         List<ChatToolCall>? toolCalls = null;
-        foreach (AIContent content in response.Message.Contents)
+        ChatRole? role = null;
+        List<AIContent> allContents = [];
+        foreach (var message in response.Messages)
         {
-            if (content is FunctionCallContent callRequest)
+            role = message.Role;
+            foreach (AIContent content in message.Contents)
             {
-                toolCalls ??= [];
-                toolCalls.Add(ChatToolCall.CreateFunctionToolCall(
-                    callRequest.CallId,
-                    callRequest.Name,
-                    new(JsonSerializer.SerializeToUtf8Bytes(
-                        callRequest.Arguments,
-                        options.GetTypeInfo(typeof(IDictionary<string, object?>))))));
+                allContents.Add(content);
+                if (content is FunctionCallContent callRequest)
+                {
+                    toolCalls ??= [];
+                    toolCalls.Add(ChatToolCall.CreateFunctionToolCall(
+                        callRequest.CallId,
+                        callRequest.Name,
+                        new(JsonSerializer.SerializeToUtf8Bytes(
+                            callRequest.Arguments,
+                            options.GetTypeInfo(typeof(IDictionary<string, object?>))))));
+                }
             }
         }
 
@@ -61,9 +63,9 @@ internal static partial class OpenAIModelMappers
             id: response.ResponseId ?? CreateCompletionId(),
             model: response.ModelId,
             createdAt: response.CreatedAt ?? DateTimeOffset.UtcNow,
-            role: ToOpenAIChatRole(response.Message.Role).Value,
+            role: ToOpenAIChatRole(role) ?? ChatMessageRole.Assistant,
             finishReason: ToOpenAIFinishReason(response.FinishReason),
-            content: new(ToOpenAIChatContent(response.Message.Contents)),
+            content: new(ToOpenAIChatContent(allContents)),
             toolCalls: toolCalls,
             refusal: response.AdditionalProperties.GetValueOrDefault<string>(nameof(ChatCompletion.Refusal)),
             contentTokenLogProbabilities: response.AdditionalProperties.GetValueOrDefault<IReadOnlyList<ChatTokenLogProbabilityDetails>>(nameof(ChatCompletion.ContentTokenLogProbabilities)),
@@ -82,15 +84,6 @@ internal static partial class OpenAIModelMappers
             RawRepresentation = openAICompletion,
             Role = FromOpenAIChatRole(openAICompletion.Role),
         };
-
-        if (openAICompletion.ContentAdditionalRawData is { Count: > 0 } contentAdditionalRawData)
-        {
-            returnMessage.AdditionalProperties ??= new();
-            foreach (var kv in contentAdditionalRawData)
-            {
-                returnMessage.AdditionalProperties.Add(kv.Key, kv.Value);
-            }
-        }
 
         // Populate its content from those in the OpenAI response content.
         foreach (ChatMessageContentPart contentPart in openAICompletion.Content)
@@ -148,7 +141,7 @@ internal static partial class OpenAIModelMappers
         }
 
         // Wrap the content in a ChatResponse to return.
-        var response = new ChatResponse([returnMessage])
+        var response = new ChatResponse(returnMessage)
         {
             CreatedAt = openAICompletion.CreatedAt,
             FinishReason = FromOpenAIFinishReason(openAICompletion.FinishReason),
@@ -298,7 +291,6 @@ internal static partial class OpenAIModelMappers
 #pragma warning disable OPENAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
             result.Seed = options.Seed;
 #pragma warning restore OPENAI001
-            result.Model = options.ModelId;
 
             if (options.StopSequences is { Count: > 0 } stopSequences)
             {
@@ -310,30 +302,24 @@ internal static partial class OpenAIModelMappers
 
             if (options.AdditionalProperties is { Count: > 0 } additionalProperties)
             {
-                List<string> matchedProperties = [];
-
                 if (additionalProperties.TryGetValue(nameof(result.AllowParallelToolCalls), out bool allowParallelToolCalls))
                 {
                     result.AllowParallelToolCalls = allowParallelToolCalls;
-                    matchedProperties.Add(nameof(result.AllowParallelToolCalls));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.AudioOptions), out ChatAudioOptions? audioOptions))
                 {
                     result.AudioOptions = audioOptions;
-                    matchedProperties.Add(nameof(result.AudioOptions));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.EndUserId), out string? endUserId))
                 {
                     result.EndUserId = endUserId;
-                    matchedProperties.Add(nameof(result.EndUserId));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.IncludeLogProbabilities), out bool includeLogProbabilities))
                 {
                     result.IncludeLogProbabilities = includeLogProbabilities;
-                    matchedProperties.Add(nameof(result.IncludeLogProbabilities));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.LogitBiases), out IDictionary<int, int>? logitBiases))
@@ -342,8 +328,6 @@ internal static partial class OpenAIModelMappers
                     {
                         result.LogitBiases[kvp.Key] = kvp.Value;
                     }
-
-                    matchedProperties.Add(nameof(result.LogitBiases));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.Metadata), out IDictionary<string, string>? metadata))
@@ -352,135 +336,79 @@ internal static partial class OpenAIModelMappers
                     {
                         result.Metadata[kvp.Key] = kvp.Value;
                     }
-
-                    matchedProperties.Add(nameof(result.Metadata));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.OutputPrediction), out ChatOutputPrediction? outputPrediction))
                 {
                     result.OutputPrediction = outputPrediction;
-                    matchedProperties.Add(nameof(result.OutputPrediction));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.ReasoningEffortLevel), out ChatReasoningEffortLevel reasoningEffortLevel))
                 {
                     result.ReasoningEffortLevel = reasoningEffortLevel;
-                    matchedProperties.Add(nameof(result.ReasoningEffortLevel));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.ResponseModalities), out ChatResponseModalities responseModalities))
                 {
                     result.ResponseModalities = responseModalities;
-                    matchedProperties.Add(nameof(result.ResponseModalities));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.StoredOutputEnabled), out bool storeOutputEnabled))
                 {
                     result.StoredOutputEnabled = storeOutputEnabled;
-                    matchedProperties.Add(nameof(result.StoredOutputEnabled));
                 }
 
                 if (additionalProperties.TryGetValue(nameof(result.TopLogProbabilityCount), out int topLogProbabilityCountInt))
                 {
                     result.TopLogProbabilityCount = topLogProbabilityCountInt;
-                    matchedProperties.Add(nameof(result.TopLogProbabilityCount));
-                }
-
-                foreach (var kv in additionalProperties)
-                {
-                    if (matchedProperties.Contains(kv.Key) || (result.SerializedAdditionalRawData?.ContainsKey(kv.Key) ?? false))
-                    {
-                        continue;
-                    }
-
-                    result.SerializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-                    if (kv.Value is string strValue)
-                    {
-                        result.SerializedAdditionalRawData[kv.Key] = BinaryData.FromString(strValue);
-                    }
-                    else if (kv.Value is BinaryData binaryData)
-                    {
-                        result.SerializedAdditionalRawData[kv.Key] = binaryData;
-                    }
-                    else if (kv.Value is int intValue)
-                    {
-                        result.SerializedAdditionalRawData[kv.Key] = BinaryData.FromString(JsonSerializer.Serialize(intValue, OpenAIJsonContext.Default.Int32));
-                    }
-                    else if (kv.Value is long longValue)
-                    {
-                        result.SerializedAdditionalRawData[kv.Key] = BinaryData.FromString(JsonSerializer.Serialize(longValue, OpenAIJsonContext.Default.Int64));
-                    }
-                    else if (kv.Value is double doubleValue)
-                    {
-                        result.SerializedAdditionalRawData[kv.Key] = BinaryData.FromString(JsonSerializer.Serialize(doubleValue, OpenAIJsonContext.Default.Double));
-                    }
-                    else if (kv.Value is float floatValue)
-                    {
-                        result.SerializedAdditionalRawData[kv.Key] = BinaryData.FromString(JsonSerializer.Serialize(floatValue, OpenAIJsonContext.Default.Single));
-                    }
-                    else if (kv.Value is bool boolValue)
-                    {
-                        result.SerializedAdditionalRawData[kv.Key] = BinaryData.FromString(JsonSerializer.Serialize(boolValue, OpenAIJsonContext.Default.Boolean));
-                    }
-                    else if (kv.Value is DateTime dateTimeValue)
-                    {
-                        result.SerializedAdditionalRawData[kv.Key] = BinaryData.FromString(JsonSerializer.Serialize(dateTimeValue, OpenAIJsonContext.Default.DateTime));
-                    }
-                    else if (kv.Value is DateTimeOffset dateTimeOffsetValue)
-                    {
-                        result.SerializedAdditionalRawData[kv.Key] = BinaryData.FromString(JsonSerializer.Serialize(dateTimeOffsetValue, OpenAIJsonContext.Default.DateTimeOffset));
-                    }
-                    else
-                    {
-                        result.SerializedAdditionalRawData[kv.Key] = BinaryData.FromString(kv.Value.ToString());
-                    }
-                }
-
-                if (options.Tools is { Count: > 0 } tools)
-                {
-                    foreach (AITool tool in tools)
-                    {
-                        if (tool is AIFunction af)
-                        {
-                            result.Tools.Add(ToOpenAIChatTool(af));
-                        }
-                    }
-
-                    switch (options.ToolMode)
-                    {
-                        case NoneChatToolMode:
-                            result.ToolChoice = ChatToolChoice.CreateNoneChoice();
-                            break;
-
-                        case AutoChatToolMode:
-                        case null:
-                            result.ToolChoice = ChatToolChoice.CreateAutoChoice();
-                            break;
-
-                        case RequiredChatToolMode required:
-                            result.ToolChoice = required.RequiredFunctionName is null ?
-                                ChatToolChoice.CreateRequiredChoice() :
-                                ChatToolChoice.CreateFunctionChoice(required.RequiredFunctionName);
-                            break;
-                    }
-                }
-
-                if (options.ResponseFormat is ChatResponseFormatText)
-                {
-                    result.ResponseFormat = Core.OpenAI.Chat.ChatResponseFormat.CreateTextFormat();
-                }
-                else if (options.ResponseFormat is ChatResponseFormatJson jsonFormat)
-                {
-                    result.ResponseFormat = jsonFormat.Schema is { } jsonSchema ?
-                        Core.OpenAI.Chat.ChatResponseFormat.CreateJsonSchemaFormat(
-                            jsonFormat.SchemaName ?? "json_schema",
-                            BinaryData.FromBytes(
-                                JsonSerializer.SerializeToUtf8Bytes(jsonSchema, OpenAIJsonContext.Default.JsonElement)),
-                            jsonFormat.SchemaDescription) :
-                        Core.OpenAI.Chat.ChatResponseFormat.CreateJsonObjectFormat();
                 }
             }
+
+            if (options.Tools is { Count: > 0 } tools)
+            {
+                foreach (AITool tool in tools)
+                {
+                    if (tool is AIFunction af)
+                    {
+                        result.Tools.Add(ToOpenAIChatTool(af));
+                    }
+                }
+
+                switch (options.ToolMode)
+                {
+                    case NoneChatToolMode:
+                        result.ToolChoice = ChatToolChoice.CreateNoneChoice();
+                        break;
+
+                    case AutoChatToolMode:
+                    case null:
+                        result.ToolChoice = ChatToolChoice.CreateAutoChoice();
+                        break;
+
+                    case RequiredChatToolMode required:
+                        result.ToolChoice = required.RequiredFunctionName is null ?
+                            ChatToolChoice.CreateRequiredChoice() :
+                            ChatToolChoice.CreateFunctionChoice(required.RequiredFunctionName);
+                        break;
+                }
+            }
+
+            if (options.ResponseFormat is ChatResponseFormatText)
+            {
+                result.ResponseFormat = Core.OpenAI.Chat.ChatResponseFormat.CreateTextFormat();
+            }
+            else if (options.ResponseFormat is ChatResponseFormatJson jsonFormat)
+            {
+                result.ResponseFormat = jsonFormat.Schema is { } jsonSchema ?
+                    Core.OpenAI.Chat.ChatResponseFormat.CreateJsonSchemaFormat(
+                        jsonFormat.SchemaName ?? "json_schema",
+                        BinaryData.FromBytes(
+                            JsonSerializer.SerializeToUtf8Bytes(jsonSchema, OpenAIJsonContext.Default.JsonElement)),
+                        jsonFormat.SchemaDescription) :
+                    Core.OpenAI.Chat.ChatResponseFormat.CreateJsonObjectFormat();
+            }
         }
+
         return result;
     }
 
@@ -639,15 +567,14 @@ internal static partial class OpenAIModelMappers
         }
         else if (contentPart.Kind == ChatMessageContentPartKind.Image)
         {
-            DataContent? imageContent;
-            aiContent = imageContent =
-                contentPart.ImageUri is not null ? new DataContent(contentPart.ImageUri, contentPart.ImageBytesMediaType) :
+            aiContent =
+                contentPart.ImageUri is not null ? new UriContent(contentPart.ImageUri, "image/*") :
                 contentPart.ImageBytes is not null ? new DataContent(contentPart.ImageBytes.ToMemory(), contentPart.ImageBytesMediaType) :
                 null;
 
-            if (imageContent is not null && contentPart.ImageDetailLevel?.ToString() is string detail)
+            if (aiContent is not null && contentPart.ImageDetailLevel?.ToString() is string detail)
             {
-                (imageContent.AdditionalProperties ??= [])[nameof(contentPart.ImageDetailLevel)] = detail;
+                (aiContent.AdditionalProperties ??= [])[nameof(contentPart.ImageDetailLevel)] = detail;
             }
         }
 

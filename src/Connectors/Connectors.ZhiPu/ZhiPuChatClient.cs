@@ -39,11 +39,11 @@ public sealed class ZhiPuChatClient : IChatClient
     public ChatClientMetadata Metadata { get; }
 
     /// <inheritdoc/>
-    public async Task<ChatResponse> GetResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
+    public async Task<ChatResponse> GetResponseAsync(IEnumerable<ChatMessage> messages, ChatOptions? options = null, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(chatMessages);
+        ArgumentNullException.ThrowIfNull(messages);
 
-        var chatRequest = ToZhiPuChatRequest(chatMessages, options, stream: false);
+        var chatRequest = ToZhiPuChatRequest(messages, options, stream: false);
         var json = chatRequest is ZhiPuBasicChatRequest basicRequest
             ? JsonSerializer.Serialize(basicRequest, JsonGenerationContext.Default.ZhiPuBasicChatRequest)
             : JsonSerializer.Serialize((ZhiPuContentChatRequest)chatRequest, JsonGenerationContext.Default.ZhiPuContentChatRequest);
@@ -71,10 +71,10 @@ public sealed class ZhiPuChatClient : IChatClient
     }
 
     /// <inheritdoc/>
-    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IEnumerable<ChatMessage> messages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(chatMessages);
-        var chatRequest = ToZhiPuChatRequest(chatMessages, options, stream: true);
+        ArgumentNullException.ThrowIfNull(messages);
+        var chatRequest = ToZhiPuChatRequest(messages, options, stream: true);
         var json = chatRequest is ZhiPuBasicChatRequest basicRequest
             ? JsonSerializer.Serialize(basicRequest, JsonGenerationContext.Default.ZhiPuBasicChatRequest)
             : JsonSerializer.Serialize((ZhiPuContentChatRequest)chatRequest, JsonGenerationContext.Default.ZhiPuContentChatRequest);
@@ -163,7 +163,7 @@ public sealed class ZhiPuChatClient : IChatClient
         return serviceKey is null && serviceType.IsInstanceOfType(this) ? this : null;
     }
 
-    private ZhiPuChatRequest ToZhiPuChatRequest(IList<ChatMessage> chatMessages, ChatOptions? options, bool stream)
+    private ZhiPuChatRequest ToZhiPuChatRequest(IEnumerable<ChatMessage> chatMessages, ChatOptions? options, bool stream)
     {
         var model = options?.ModelId ?? Metadata.ModelId ?? string.Empty;
         // TODO: 进行更严谨的判断.

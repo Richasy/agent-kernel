@@ -35,10 +35,10 @@ public sealed class MistralChatClient : IChatClient
     public ChatClientMetadata Metadata { get; }
 
     /// <inheritdoc/>
-    public async Task<ChatResponse> GetResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, CancellationToken cancellationToken = default)
+    public async Task<ChatResponse> GetResponseAsync(IEnumerable<ChatMessage> messages, ChatOptions? options = null, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(chatMessages);
-        var chatRequest = ToMistralChatRequest(chatMessages, options, stream: false);
+        ArgumentNullException.ThrowIfNull(messages);
+        var chatRequest = ToMistralChatRequest(messages, options, stream: false);
         var json = JsonSerializer.Serialize(chatRequest, JsonGenContext.Default.MistralChatRequest);
         var httpRequest = new HttpRequestMessage(HttpMethod.Post, _apiEndpoint);
         httpRequest.Headers.Add("Authorization", $"Bearer {_accessKey}");
@@ -64,10 +64,10 @@ public sealed class MistralChatClient : IChatClient
     }
 
     /// <inheritdoc/>
-    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IEnumerable<ChatMessage> messages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(chatMessages);
-        var chatRequest = ToMistralChatRequest(chatMessages, options, stream: true);
+        ArgumentNullException.ThrowIfNull(messages);
+        var chatRequest = ToMistralChatRequest(messages, options, stream: true);
         var json = JsonSerializer.Serialize(chatRequest, JsonGenContext.Default.MistralChatRequest);
         var httpRequest = new HttpRequestMessage(HttpMethod.Post, _apiEndpoint);
         httpRequest.Headers.Add("Authorization", $"Bearer {_accessKey}");
@@ -156,7 +156,7 @@ public sealed class MistralChatClient : IChatClient
         return serviceKey is null && serviceType.IsInstanceOfType(this) ? this : null;
     }
 
-    private MistralChatRequest ToMistralChatRequest(IList<ChatMessage> chatMessages, ChatOptions? options, bool stream)
+    private MistralChatRequest ToMistralChatRequest(IEnumerable<ChatMessage> chatMessages, ChatOptions? options, bool stream)
     {
         var request = new MistralChatRequest
         {

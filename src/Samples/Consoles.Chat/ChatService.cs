@@ -176,9 +176,9 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
                 //}
 
                 var response = await client.GetResponseAsync(chatMessages, options, cancellationToken: cancellationToken);
-                if (response.Message.AdditionalProperties?.ContainsKey("reasoning_content") ?? false)
+                if (response.AdditionalProperties?.ContainsKey("reasoning_content") ?? false)
                 {
-                    var reasoningContent = response.Message.AdditionalProperties["reasoning_content"];
+                    var reasoningContent = response.AdditionalProperties["reasoning_content"];
                     if (reasoningContent is BinaryData binaryData)
                     {
                         var content = binaryData.ToString();
@@ -190,7 +190,7 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
                     }
                 }
 
-                responseMessage = response.Message.Text;
+                responseMessage = response.Text;
                 chatMessages.Add(new ChatMessage(ChatRole.Assistant, responseMessage?.Trim()));
                 PrintAssistantMessage(chatMessages.Last());
             }

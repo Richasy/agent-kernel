@@ -83,7 +83,7 @@ internal sealed class GeminiRequest
                 InlineData = new GeminiPart.InlineDataPart
                 {
                     MimeType = GetMimeTypeFromImageContent(imageContent),
-                    InlineData = Convert.ToBase64String(imageContent.Data.Value.ToArray())
+                    InlineData = Convert.ToBase64String(imageContent.Data.ToArray())
                 }
             }
             : imageContent.Uri is not null
