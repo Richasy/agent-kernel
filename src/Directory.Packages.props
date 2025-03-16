@@ -12,6 +12,8 @@
     <PackageVersion Include="Azure.Core" Version="1.45.0" />
     <PackageVersion Include="Google.Cloud.Translate.V3" Version="3.9.0" />
     <PackageVersion Include="Google_Gemini" Version="0.9.1-dev.9" />
+    <PackageVersion Include="McpDotNet.Extensions.AI" Version="1.1.0.1" />
+    <PackageVersion Include="MCPSharp" Version="1.0.10" />
     <PackageVersion Include="Microsoft.Bcl.HashCode" Version="1.1.1" />
     <PackageVersion Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Bcl.Numerics" Version="9.0.0" />

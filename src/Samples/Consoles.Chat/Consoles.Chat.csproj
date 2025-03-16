@@ -5,12 +5,13 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PublishAot>true</PublishAot>
+    <PublishAot>false</PublishAot>
     <TrimmerSingleWarn>false</TrimmerSingleWarn>
     <NoWarn>$(NoWarn);IL2067</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="McpDotNet.Extensions.AI" />
     <PackageReference Include="Microsoft.Extensions.AI" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Spectre.Console" />
@@ -44,6 +45,9 @@
 
   <ItemGroup>
     <None Update="env.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="mcp.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

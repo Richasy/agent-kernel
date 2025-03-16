@@ -9,6 +9,7 @@ namespace Consoles.Chat;
 [JsonSourceGenerationOptions(DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 [JsonSerializable(typeof(ChatClientConfiguration))]
 [JsonSerializable(typeof(string))]
+[JsonSerializable(typeof(McpServers))]
 internal sealed partial class JsonGenerationContext : JsonSerializerContext
 {
 }
