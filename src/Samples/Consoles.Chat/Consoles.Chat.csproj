@@ -11,9 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="McpDotNet.Extensions.AI" />
     <PackageReference Include="Microsoft.Extensions.AI" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" />
     <PackageReference Include="Spectre.Console" />
   </ItemGroup>
 
@@ -41,6 +41,7 @@
     <ProjectReference Include="..\..\Connectors\Connectors.Volcano\Connectors.Volcano.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.XAI\Connectors.XAI.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.ZhiPu\Connectors.ZhiPu.csproj" />
+    <ProjectReference Include="..\..\Libs\AgentKernel.Core.Mcp\AgentKernel.Core.Mcp.csproj" />
   </ItemGroup>
 
   <ItemGroup>
