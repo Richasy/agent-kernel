@@ -13,8 +13,9 @@ using Richasy.AgentKernel.Connectors.Baidu.Models;
 using Richasy.AgentKernel.Connectors.Tencent.Models;
 using Richasy.AgentKernel.Connectors.ZhiPu.Models;
 using Richasy.AgentKernel.Core.Mcp;
-using Richasy.AgentKernel.Core.Mcp.Core;
-using Richasy.AgentKernel.Core.Mcp.Models;
+using Richasy.AgentKernel.Core.Mcp.Client;
+using Richasy.AgentKernel.Core.Mcp.Configuration;
+using Richasy.AgentKernel.Core.Mcp.Protocol.Transport;
 using Richasy.AgentKernel.Models;
 using RichasyKernel;
 using Spectre.Console;
@@ -34,7 +35,7 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        McpGlobalConfig.UseCmdAsDefaultCommand = true;
+        McpGlobalConfig.UseCmdAsDefaultClientCommand = true;
         _chatTask = Task.Run(() => RunChatAsync(_stopCts.Token), cancellationToken);
         return Task.CompletedTask;
     }
@@ -134,16 +135,37 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
 
 #if USE_MCP
             var mcpConfigJson = await File.ReadAllTextAsync("mcp.json", cancellationToken);
-            var mcpConfig = JsonSerializer.Deserialize(mcpConfigJson, JsonGenerationContext.Default.McpServerList);
-            var firstServer = mcpConfig!.First();
+            var mcpList = JsonSerializer.Deserialize(mcpConfigJson, JsonGenerationContext.Default.McpServerDefinitionCollection);
+            var firstServer = mcpList!.First();
             var firstServerName = firstServer.Key;
             var firstServerDef = firstServer.Value;
-            var firstServerConfig = new McpServerConfig(firstServerDef.Command!, firstServerDef.Arguments, firstServerDef.Environments);
+            var mcpConfig = new McpServerConfig
+            {
+                Id = firstServerName,
+                Name = firstServerName,
+                TransportType = TransportTypes.StdIo,
+                TransportOptions = new()
+                {
+                    ["command"] = firstServerDef.Command!,
+                    ["arguments"] = string.Join(' ', firstServerDef.Arguments!),
+                },
+                Location = firstServerDef.WorkingDirectory,
+            };
 
-            var logger = _loggerFactory.CreateLogger<McpClient>();
-            await using var mcpClient = new McpClient(firstServerName, firstServerConfig, McpTransportType.StandardInputOutput, logger);
-            await mcpClient.RunAsync(cancellationToken);
-            var isOnline = await mcpClient.PingAsync(cancellationToken);
+            if (firstServerDef.Environments is not null)
+            {
+                foreach (var env in firstServerDef.Environments)
+                {
+                    mcpConfig.TransportOptions.Add($"env:{env.Key}", env.Value);
+                }
+            }
+
+            var clientOptions = new McpClientOptions
+            {
+                ClientInfo = new() { Name = "ChatConsole", Version = "1.0.0" },
+            };
+
+            await using var mcpClient = await McpClientFactory.CreateAsync(mcpConfig, clientOptions, loggerFactory: _loggerFactory, cancellationToken: cancellationToken);
 #endif
 
             while (!cancellationToken.IsCancellationRequested)
@@ -179,6 +201,8 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
                 if (_model?.ToolSupport ?? false)
                 {
 #if USE_MCP
+                    var tools = await mcpClient.GetAIFunctionsAsync(cancellationToken);
+                    options.Tools = [.. tools];
 #endif
 
                     //options.Tools = [

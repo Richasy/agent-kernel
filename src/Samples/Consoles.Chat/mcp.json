@@ -3,7 +3,8 @@
     "command": "npx",
     "args": [
       "-y",
-      "@modelcontextprotocol/server-everything"
+      "@modelcontextprotocol/server-filesystem",
+      "\"C:\\Users\\anranzhang\\OneDrive - Microsoft\\Desktop\""
     ]
   }
 }
