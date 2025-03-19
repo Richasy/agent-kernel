@@ -17,4 +17,10 @@ public class JsonSchemaProperty
     /// </summary>
     [System.Text.Json.Serialization.JsonPropertyName("description")]
     public string? Description { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Items definition for array types.
+    /// </summary>
+    [System.Text.Json.Serialization.JsonPropertyName("items")]
+    public JsonSchema? Items { get; set; }
 }
