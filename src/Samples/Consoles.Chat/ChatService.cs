@@ -12,7 +12,6 @@ using Richasy.AgentKernel.Connectors.Ali.Models;
 using Richasy.AgentKernel.Connectors.Baidu.Models;
 using Richasy.AgentKernel.Connectors.Tencent.Models;
 using Richasy.AgentKernel.Connectors.ZhiPu.Models;
-using Richasy.AgentKernel.Core.Mcp;
 using Richasy.AgentKernel.Core.Mcp.Client;
 using Richasy.AgentKernel.Core.Mcp.Configuration;
 using Richasy.AgentKernel.Core.Mcp.Protocol.Transport;
@@ -35,7 +34,6 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        McpGlobalConfig.UseCmdAsDefaultClientCommand = true;
         _chatTask = Task.Run(() => RunChatAsync(_stopCts.Token), cancellationToken);
         return Task.CompletedTask;
     }
