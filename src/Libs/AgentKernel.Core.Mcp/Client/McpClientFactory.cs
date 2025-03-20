@@ -1,11 +1,13 @@
-﻿using System.Globalization;
-using System.Runtime.InteropServices;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Richasy.AgentKernel.Core.Mcp.Configuration;
 using Richasy.AgentKernel.Core.Mcp.Logging;
 using Richasy.AgentKernel.Core.Mcp.Protocol.Transport;
+using Richasy.AgentKernel.Core.Mcp.Shared;
 using Richasy.AgentKernel.Core.Mcp.Utils;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
+using System.Globalization;
+using System.Runtime.InteropServices;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Richasy.AgentKernel.Core.Mcp.Client;
 
@@ -64,6 +66,57 @@ public static class McpClientFactory
             await transport.DisposeAsync().ConfigureAwait(false);
             throw;
         }
+    }
+
+    /// <summary>Creates an <see cref="IMcpClient"/>, connecting it to the specified server.</summary>
+    /// <param name="serverName">Server definition name.</param>
+    /// <param name="transportType">Server transport type.</param>
+    /// <param name="serverDef">Configuration for the target server to which the client should connect.</param>
+    /// <param name="clientOptions">A client configuration object which specifies client capabilities and protocol version.</param>
+    /// <param name="createTransportFunc">An optional factory method which returns transport implementations based on a server configuration.</param>
+    /// <param name="loggerFactory">A logger factory for creating loggers for clients.</param>
+    /// <param name="cancellationToken">A token to cancel the operation.</param>
+    /// <returns>An <see cref="IMcpClient"/> that's connected to the specified server.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="serverDef"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="clientOptions"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="serverDef"/> contains invalid information.</exception>
+    /// <exception cref="InvalidOperationException"><paramref name="createTransportFunc"/> returns an invalid transport.</exception>
+    public static Task<IMcpClient> CreateAsync(
+        string serverName,
+        string transportType,
+        McpServerDefinition serverDef,
+        McpClientOptions clientOptions,
+        Func<McpServerConfig, ILoggerFactory?, IClientTransport>? createTransportFunc = null,
+        ILoggerFactory? loggerFactory = null,
+        CancellationToken cancellationToken = default)
+    {
+        Throw.IfNull(serverDef);
+        var mcpConfig = new McpServerConfig
+        {
+            Id = serverName,
+            Name = serverName,
+            TransportType = transportType,
+            Location = serverDef.WorkingDirectory,
+            TransportOptions = new()
+            {
+                ["command"] = serverDef.Command!,
+            },
+        };
+
+        if (serverDef.Arguments?.Length > 0)
+        {
+            mcpConfig.TransportOptions["arguments"] = string.Join(" ", serverDef.Arguments);
+        }
+
+        if (serverDef.Environments is not null)
+        {
+            foreach (var env in serverDef.Environments)
+            {
+                mcpConfig.TransportOptions.Add($"env:{env.Key}", env.Value);
+            }
+        }
+
+        return CreateAsync(mcpConfig, clientOptions, createTransportFunc, loggerFactory, cancellationToken);
     }
 
     private static IClientTransport CreateTransport(McpServerConfig serverConfig, ILoggerFactory? loggerFactory)

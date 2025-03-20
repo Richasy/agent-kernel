@@ -13,7 +13,6 @@ using Richasy.AgentKernel.Connectors.Baidu.Models;
 using Richasy.AgentKernel.Connectors.Tencent.Models;
 using Richasy.AgentKernel.Connectors.ZhiPu.Models;
 using Richasy.AgentKernel.Core.Mcp.Client;
-using Richasy.AgentKernel.Core.Mcp.Configuration;
 using Richasy.AgentKernel.Core.Mcp.Protocol.Transport;
 using Richasy.AgentKernel.Models;
 using RichasyKernel;
@@ -137,33 +136,13 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
             var firstServer = mcpList!.First();
             var firstServerName = firstServer.Key;
             var firstServerDef = firstServer.Value;
-            var mcpConfig = new McpServerConfig
-            {
-                Id = firstServerName,
-                Name = firstServerName,
-                TransportType = TransportTypes.StdIo,
-                TransportOptions = new()
-                {
-                    ["command"] = firstServerDef.Command!,
-                    ["arguments"] = string.Join(' ', firstServerDef.Arguments!),
-                },
-                Location = firstServerDef.WorkingDirectory,
-            };
-
-            if (firstServerDef.Environments is not null)
-            {
-                foreach (var env in firstServerDef.Environments)
-                {
-                    mcpConfig.TransportOptions.Add($"env:{env.Key}", env.Value);
-                }
-            }
 
             var clientOptions = new McpClientOptions
             {
                 ClientInfo = new() { Name = "ChatConsole", Version = "1.0.0" },
             };
 
-            await using var mcpClient = await McpClientFactory.CreateAsync(mcpConfig, clientOptions, loggerFactory: _loggerFactory, cancellationToken: cancellationToken);
+            await using var mcpClient = await McpClientFactory.CreateAsync(firstServerName, TransportTypes.StdIo, firstServerDef, clientOptions, loggerFactory: _loggerFactory, cancellationToken: cancellationToken);
 #endif
 
             while (!cancellationToken.IsCancellationRequested)
@@ -199,8 +178,11 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
                 if (_model?.ToolSupport ?? false)
                 {
 #if USE_MCP
-                    var tools = await mcpClient.GetAIFunctionsAsync(cancellationToken);
-                    options.Tools = [.. tools];
+                    options.Tools ??= [];
+                    await foreach (var tool in mcpClient.ListToolsAsync(cancellationToken))
+                    {
+                        options.Tools.Add(tool);
+                    }
 #endif
 
                     //options.Tools = [

@@ -5,7 +5,7 @@ namespace Richasy.AgentKernel.Core.Mcp.Shared;
 /// <summary>
 /// Config definition for an MCP server.
 /// </summary>
-public sealed class McpServerDefinition
+public class McpServerDefinition
 {
     /// <summary>
     /// The command to run.
@@ -35,4 +35,4 @@ public sealed class McpServerDefinition
 /// <summary>
 /// Collection of server definitions.
 /// </summary>
-public sealed class McpServerDefinitionCollection : Dictionary<string, McpServerDefinition>;
+public class McpServerDefinitionCollection : Dictionary<string, McpServerDefinition>;

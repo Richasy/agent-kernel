@@ -68,11 +68,9 @@ internal static partial class JsonSerializerOptionsExtensions
     [JsonSerializable(typeof(ListRootsResult))]
     [JsonSerializable(typeof(ListToolsResult))]
     [JsonSerializable(typeof(InitializeResult))]
-    [JsonSerializable(typeof(JsonSchema))]
     [JsonSerializable(typeof(CallToolResponse))]
     [JsonSerializable(typeof(InitializeRequestParams))]
     [JsonSerializable(typeof(CreateMessageRequestParams))]
     [JsonSerializable(typeof(ListRootsRequestParams))]
-    [JsonSerializable(typeof(Dictionary<string, JsonSchemaProperty>))]
     internal sealed partial class JsonContext : JsonSerializerContext;
 }
