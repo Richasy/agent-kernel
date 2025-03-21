@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\AgentKernel.Core\AgentKernel.Core.csproj" />
-	<ProjectReference Include="..\..\Libs\AgentKernel.Extensions.AI.OpenAI\AgentKernel.Extensions.AI.OpenAI.csproj"/>
+	<ProjectReference Include="..\..\Libs\AgentKernel.Extensions.AI.OpenAI\AgentKernel.Extensions.AI.OpenAI.csproj" />
   </ItemGroup>
 
 </Project>

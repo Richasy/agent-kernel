@@ -5,20 +5,24 @@
 
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Richasy.AgentKernel;
 using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Ali.Models;
 using Richasy.AgentKernel.Connectors.Baidu.Models;
 using Richasy.AgentKernel.Connectors.Tencent.Models;
 using Richasy.AgentKernel.Connectors.ZhiPu.Models;
+
+#if USE_MCP
+using Microsoft.Extensions.Logging;
 using Richasy.AgentKernel.Core.Mcp.Client;
 using Richasy.AgentKernel.Core.Mcp.Protocol.Transport;
+#endif
 using Richasy.AgentKernel.Models;
 using RichasyKernel;
 using Spectre.Console;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
+using Richasy.AgentKernel.Core.Mcp;
 
 namespace Consoles.Chat;
 
@@ -27,7 +31,9 @@ namespace Consoles.Chat;
 internal sealed class ChatService(Kernel kernel, IChatConfigManager configManager, IHostApplicationLifetime lifetime) : IHostedService
 {
     private readonly CancellationTokenSource _stopCts = new();
+#if USE_MCP
     private readonly ILoggerFactory _loggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); builder.AddDebug(); });
+#endif
     private Task? _chatTask;
     private ChatModel? _model;
 
@@ -131,6 +137,13 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
 #endif
 
 #if USE_MCP
+            McpGlobalHandler.ConsentHandler = (clientId, method, req) =>
+            {
+                AnsiConsole.WriteLine();
+                AnsiConsole.WriteLine($"Consent request: {clientId}: {method}");
+                return Task.FromResult(AnsiConsole.Prompt(new ConfirmationPrompt("Do you agree to the request?")));
+            };
+
             var mcpConfigJson = await File.ReadAllTextAsync("mcp.json", cancellationToken);
             var mcpList = JsonSerializer.Deserialize(mcpConfigJson, JsonGenerationContext.Default.McpServerDefinitionCollection);
             var firstServer = mcpList!.First();
@@ -196,9 +209,17 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
 
                 // options.AdditionalProperties!.Add("visual", true);
 
-                //await foreach (var message in client.CompleteStreamingAsync(chatMessages, options, cancellationToken: cancellationToken))
+                //await foreach (var message in client.GetStreamingResponseAsync(chatMessages, options, cancellationToken: cancellationToken))
                 //{
-                //    System.Diagnostics.Debug.WriteLine(message.Text);
+                //    if (message.AdditionalProperties?.ContainsKey("reasoning_content") ?? false)
+                //    {
+                //        var reasoningContent = message.AdditionalProperties["reasoning_content"];
+                //        if (reasoningContent is string c)
+                //        {
+                //            PrintReasoningMessage(c);
+                //        }
+                //    }
+
                 //    responseMessage += message.Text;
                 //}
 
@@ -206,14 +227,9 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
                 if (response.AdditionalProperties?.ContainsKey("reasoning_content") ?? false)
                 {
                     var reasoningContent = response.AdditionalProperties["reasoning_content"];
-                    if (reasoningContent is BinaryData binaryData)
+                    if (reasoningContent is string c)
                     {
-                        var content = binaryData.ToString();
-                        content = JsonSerializer.Deserialize(content, JsonGenerationContext.Default.String);
-                        if (content != null)
-                        {
-                            PrintReasoningMessage(content);
-                        }
+                        PrintReasoningMessage(c);
                     }
                 }
 

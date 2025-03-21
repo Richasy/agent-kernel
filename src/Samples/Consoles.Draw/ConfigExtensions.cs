@@ -7,6 +7,8 @@ using Richasy.AgentKernel.Connectors.Baidu.Models;
 using Richasy.AgentKernel.Connectors.IFlyTek.Models;
 using Richasy.AgentKernel.Connectors.OpenAI.Models;
 using Richasy.AgentKernel.Connectors.Tencent.Models;
+using Richasy.AgentKernel.Connectors.XAI.Models;
+using Richasy.AgentKernel.Connectors.ZhiPu.Models;
 using Richasy.AgentKernel.Models;
 
 namespace Consoles.Draw;
@@ -47,5 +49,19 @@ internal static class ConfigExtensions
         return config is null || string.IsNullOrWhiteSpace(config.Key) || string.IsNullOrEmpty(config.AppId)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
             : new SparkDrawServiceConfig(config.Key, config.Secret!, config.AppId, string.Empty);
+    }
+
+    public static AIServiceConfig ToAIServiceConfig(this XAIDrawConfig? config)
+    {
+        return config is null || string.IsNullOrWhiteSpace(config.Key)
+            ? throw new ArgumentException("The configuration is not valid.", nameof(config))
+            : new XAIServiceConfig(config.Key, string.Empty);
+    }
+
+    public static AIServiceConfig ToAIServiceConfig(this ZhiPuDrawConfig? config)
+    {
+        return config is null || string.IsNullOrWhiteSpace(config.Key)
+            ? throw new ArgumentException("The configuration is not valid.", nameof(config))
+            : new ZhiPuServiceConfig(config.Key, string.Empty);
     }
 }

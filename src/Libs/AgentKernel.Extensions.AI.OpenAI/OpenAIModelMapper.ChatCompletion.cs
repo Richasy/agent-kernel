@@ -94,6 +94,14 @@ internal static partial class OpenAIModelMappers
             }
         }
 
+        if (openAICompletion.ContentAdditionalRawData is { Count: > 0 } additionalRawData)
+        {
+            if (additionalRawData.TryGetValue("reasoning_content", out var contentData))
+            {
+                (returnMessage.AdditionalProperties ??= [])["reasoning_content"] = JsonSerializer.Deserialize(contentData.ToString(), OpenAIJsonContext.Default.String);
+            }
+        }
+
         // Output audio is handled separately from message content parts.
         if (openAICompletion.OutputAudio is ChatOutputAudio audio)
         {
@@ -148,6 +156,7 @@ internal static partial class OpenAIModelMappers
             ModelId = openAICompletion.Model,
             RawRepresentation = openAICompletion,
             ResponseId = openAICompletion.Id,
+            AdditionalProperties = returnMessage.AdditionalProperties,
         };
 
         if (openAICompletion.Usage is ChatTokenUsage tokenUsage)
@@ -288,6 +297,7 @@ internal static partial class OpenAIModelMappers
             result.TopP = options.TopP;
             result.PresencePenalty = options.PresencePenalty;
             result.Temperature = options.Temperature;
+            result.Model = options.ModelId;
 #pragma warning disable OPENAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
             result.Seed = options.Seed;
 #pragma warning restore OPENAI001

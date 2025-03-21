@@ -24,6 +24,8 @@ public abstract class DrawConfigManagerBase : IDrawConfigManager
             DrawProviderType.Ernie => Configuration?.Ernie,
             DrawProviderType.OpenAI => Configuration?.OpenAI,
             DrawProviderType.AzureOpenAI => Configuration?.AzureOpenAI,
+            DrawProviderType.XAI => Configuration?.XAI,
+            DrawProviderType.ZhiPu => Configuration?.ZhiPu,
             _ => throw new NotImplementedException(),
         };
     }
@@ -55,6 +57,12 @@ public abstract class DrawConfigManagerBase : IDrawConfigManager
                     break;
                 case DrawProviderType.AzureOpenAI:
                     Configuration.AzureOpenAI = item.Value as AzureOpenAIDrawConfig;
+                    break;
+                case DrawProviderType.XAI:
+                    Configuration.XAI = item.Value as XAIDrawConfig;
+                    break;
+                case DrawProviderType.ZhiPu:
+                    Configuration.ZhiPu = item.Value as ZhiPuDrawConfig;
                     break;
                 default:
                     throw new NotImplementedException();

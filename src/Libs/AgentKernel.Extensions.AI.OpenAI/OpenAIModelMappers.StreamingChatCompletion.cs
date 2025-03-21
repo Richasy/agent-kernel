@@ -124,6 +124,13 @@ internal static partial class OpenAIModelMappers
                     }
                 }
             }
+            else if (update.InternalChoiceDelta.SerializedAdditionalRawData is { Count: > 0 } rawData)
+            {
+                if (rawData.ContainsKey("reasoning_content"))
+                {
+                    (responseUpdate.AdditionalProperties ??= [])["reasoning_content"] = JsonSerializer.Deserialize(rawData["reasoning_content"].ToString(), OpenAIJsonContext.Default.String);
+                }
+            }
 
             // Transfer over refusal updates.
             if (update.RefusalUpdate is not null)

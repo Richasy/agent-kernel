@@ -49,7 +49,8 @@ public sealed class TogetherAIChatService : IChatService
     /// <inheritdoc/>
     public IReadOnlyList<ChatModel> GetPredefinedModels() =>
     [
-        new("meta-llama/Llama-3.3-70B-Instruct-Turbo", "Llama 3.3 70B Instruct Turbo"),
-        new("Qwen/QwQ-32B-Preview", "Qwen QwQ 32B Preview"),
+        new("deepseek-ai/DeepSeek-V3", "DeepSeek V3"),
+        new("deepseek-ai/DeepSeek-R1", "DeepSeek R1"),
+        new("Qwen/QwQ-32B", "Qwen QwQ 32B"),
     ];
 }

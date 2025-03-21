@@ -36,6 +36,16 @@ public enum DrawProviderType
     /// 讯飞星火.
     /// </summary>
     Spark,
+
+    /// <summary>
+    /// x.AI.
+    /// </summary>
+    XAI,
+
+    /// <summary>
+    /// 智谱.
+    /// </summary>
+    ZhiPu,
 }
 
 /// <summary>
@@ -53,6 +63,8 @@ public sealed class DrawProviderTypeConverter : JsonConverter<DrawProviderType>
             "ernie" => DrawProviderType.Ernie,
             "hunyuan" => DrawProviderType.Hunyuan,
             "spark" => DrawProviderType.Spark,
+            "xai" => DrawProviderType.XAI,
+            "zhipu" => DrawProviderType.ZhiPu,
             _ => throw new JsonException(),
         };
     }
@@ -67,6 +79,8 @@ public sealed class DrawProviderTypeConverter : JsonConverter<DrawProviderType>
             DrawProviderType.Ernie => "ernie",
             DrawProviderType.Hunyuan => "hunyuan",
             DrawProviderType.Spark => "spark",
+            DrawProviderType.XAI => "xai",
+            DrawProviderType.ZhiPu => "zhipu",
             _ => throw new JsonException(),
         };
 

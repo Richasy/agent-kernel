@@ -81,6 +81,8 @@ internal sealed class DrawService(Kernel kernel, IDrawConfigManager configManage
             DrawProviderType.Ernie => "文心一言",
             DrawProviderType.Hunyuan => "混元",
             DrawProviderType.Spark => "星火",
+            DrawProviderType.XAI => "x.AI",
+            DrawProviderType.ZhiPu => "智谱",
             _ => throw new NotSupportedException(),
         };
     }
@@ -148,7 +150,7 @@ internal sealed class DrawService(Kernel kernel, IDrawConfigManager configManage
     {
         var config = await configManager.GetServiceConfigAsync(provider, _model!).ConfigureAwait(true);
         var service = kernel.GetRequiredService<IDrawService>(provider.ToString());
-        service.Initialize(config!);
+        service.Initialize(config);
         return service;
     }
 }

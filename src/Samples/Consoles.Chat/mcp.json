@@ -1,10 +1,8 @@
 ﻿{
-  "filesystem": {
-    "command": "npx",
+  "fetch": {
+    "command": "uvx",
     "args": [
-      "-y",
-      "@modelcontextprotocol/server-filesystem",
-      "\"C:\\Users\\anranzhang\\OneDrive - Microsoft\\Desktop\""
+      "mcp-server-fetch"
     ]
   }
 }

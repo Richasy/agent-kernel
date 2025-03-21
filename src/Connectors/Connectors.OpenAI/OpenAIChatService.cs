@@ -58,6 +58,7 @@ public sealed class OpenAIChatService : IChatService
     [
         new("gpt-4o", "GPT-4o", toolSupport: true, visionSupport: true),
         new("gpt-4o-mini", "GPT-4o Mini", toolSupport: true, visionSupport: true),
+        new("gpt-4.5-preview", "GPT-4.5 Preview", toolSupport: true, visionSupport: true),
         new("o3-mini", "O3 Mini", toolSupport: true),
         new("o1", "O1", toolSupport: true, visionSupport: true),
         new("o1-mini", "O1 Mini", toolSupport: true, visionSupport: true),

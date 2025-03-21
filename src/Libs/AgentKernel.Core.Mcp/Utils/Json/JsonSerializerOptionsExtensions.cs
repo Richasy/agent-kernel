@@ -68,6 +68,7 @@ internal static partial class JsonSerializerOptionsExtensions
     [JsonSerializable(typeof(ListRootsResult))]
     [JsonSerializable(typeof(ListToolsResult))]
     [JsonSerializable(typeof(InitializeResult))]
+    [JsonSerializable(typeof(CallToolRequestParams))]
     [JsonSerializable(typeof(CallToolResponse))]
     [JsonSerializable(typeof(InitializeRequestParams))]
     [JsonSerializable(typeof(CreateMessageRequestParams))]

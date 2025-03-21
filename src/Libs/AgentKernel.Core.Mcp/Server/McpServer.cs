@@ -68,6 +68,8 @@ internal sealed class McpServer : McpJsonRpcEndpoint, IMcpServer
     public override string EndpointName =>
         $"Server ({_options.ServerInfo.Name} {_options.ServerInfo.Version}), Client ({ClientInfo?.Name} {ClientInfo?.Version})";
 
+    public override string ClientId => _options.ServerInfo?.Name ?? "Unknown";
+
     /// <inheritdoc />
     public async Task StartAsync(CancellationToken cancellationToken = default)
     {

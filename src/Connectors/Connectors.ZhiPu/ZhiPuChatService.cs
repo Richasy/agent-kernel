@@ -3,6 +3,7 @@
 
 using Microsoft.Extensions.AI;
 using Richasy.AgentKernel.Chat;
+using Richasy.AgentKernel.Connectors.ZhiPu.Core;
 using Richasy.AgentKernel.Connectors.ZhiPu.Models;
 using Richasy.AgentKernel.Models;
 

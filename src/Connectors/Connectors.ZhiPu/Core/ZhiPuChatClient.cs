@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 
-namespace Richasy.AgentKernel.Connectors.ZhiPu;
+namespace Richasy.AgentKernel.Connectors.ZhiPu.Core;
 
 /// <summary>
 /// 智谱聊天客户端.
@@ -25,10 +25,7 @@ public sealed class ZhiPuChatClient : IChatClient
     /// </summary>
     public ZhiPuChatClient(string accessKey, string? modelId = null)
     {
-        if (modelId != null && string.IsNullOrWhiteSpace(modelId))
-        {
-            throw new ArgumentNullException(nameof(modelId));
-        }
+        ArgumentNullException.ThrowIfNullOrWhiteSpace(accessKey, nameof(accessKey));
 
         _httpClient = HttpExtensions.CreateHttpClient();
         _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessKey);
@@ -88,7 +85,7 @@ public sealed class ZhiPuChatClient : IChatClient
             cancellationToken).ConfigureAwait(false);
         using var httpResponseStream = await httpResponse.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
         using var streamReader = new StreamReader(httpResponseStream);
-        while ((await streamReader.ReadLineAsync(cancellationToken).ConfigureAwait(false)) is { } line)
+        while (await streamReader.ReadLineAsync(cancellationToken).ConfigureAwait(false) is { } line)
         {
             if (line.StartsWith("{\"error\"", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -100,15 +97,11 @@ public sealed class ZhiPuChatClient : IChatClient
             {
                 line = line[5..].Trim();
                 if (line == "[Done]" || !line.StartsWith('{'))
-                {
                     break;
-                }
 
                 var chunk = JsonSerializer.Deserialize(line, JsonGenerationContext.Default.ZhiPuChatResponse);
                 if (chunk == null)
-                {
                     continue;
-                }
 
                 var modelId = chunk.Model ?? options?.ModelId ?? Metadata.ModelId;
                 var update = new ChatResponseUpdate
@@ -129,23 +122,17 @@ public sealed class ZhiPuChatClient : IChatClient
                             {
                                 var content = ToFunctionCallContent(toolCall);
                                 if (content is not null)
-                                {
                                     update.Contents.Add(content);
-                                }
                             }
                         }
                     }
 
                     if (message.Content?.Length > 0 || update.Contents.Count == 0)
-                    {
                         update.Contents.Insert(0, new TextContent(message.Content));
-                    }
                 }
 
                 if (ParseZhiPuChatResponseUsage(chunk) is { } usage)
-                {
                     update.Contents.Add(new UsageContent(usage));
-                }
 
                 yield return update;
             }
@@ -210,9 +197,7 @@ public sealed class ZhiPuChatClient : IChatClient
             request.Temperature = options.Temperature;
             request.TopP = options.TopP;
             if (options.AdditionalProperties?.TryGetValue("do_sample", out var doSample) is true)
-            {
                 request.DoSample = Convert.ToBoolean(doSample, CultureInfo.InvariantCulture);
-            }
         }
 
         return request;
@@ -292,17 +277,13 @@ public sealed class ZhiPuChatClient : IChatClient
                 {
                     var content = ToFunctionCallContent(toolCall);
                     if (content is not null)
-                    {
                         contents.Add(content);
-                    }
                 }
             }
         }
 
         if (message.Content?.Length > 0 || contents.Count == 0)
-        {
             contents.Insert(0, new TextContent(message.Content));
-        }
 
         return new ChatMessage(new(message.Role), contents);
     }
@@ -330,7 +311,7 @@ public sealed class ZhiPuChatClient : IChatClient
                 {
                     Name = function.Name,
                     Description = function.Description,
-                    Parameters = JsonSerializer.Deserialize(function.JsonSchema, JsonGenerationContext.Default.ZhiPuFunctionToolParameters),
+                    Parameters = function.JsonSchema.Deserialize(JsonGenerationContext.Default.ZhiPuFunctionToolParameters),
                 }
             };
         }

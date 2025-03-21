@@ -37,6 +37,18 @@ public sealed class DrawClientConfiguration
     /// </summary>
     [JsonPropertyName("spark")]
     public SparkDrawConfig? Spark { get; set; }
+
+    /// <summary>
+    /// xAI 客户端配置.
+    /// </summary>
+    [JsonPropertyName("xai")]
+    public XAIDrawConfig? XAI { get; set; }
+
+    /// <summary>
+    /// 智谱客户端配置.
+    /// </summary>
+    [JsonPropertyName("zhipu")]
+    public ZhiPuDrawConfig? ZhiPu { get; set; }
 }
 
 /// <summary>
@@ -63,6 +75,16 @@ public class AzureOpenAIDrawConfig : DrawClientEndpointConfigBase
             && !string.IsNullOrEmpty(Endpoint);
     }
 }
+
+/// <summary>
+/// xAI 客户端配置.
+/// </summary>
+public class XAIDrawConfig : DrawClientConfigBase;
+
+/// <summary>
+/// 智谱客户端配置.
+/// </summary>
+public class ZhiPuDrawConfig : DrawClientConfigBase;
 
 /// <summary>
 /// 文心一言客户端配置.

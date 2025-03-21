@@ -55,6 +55,7 @@ public sealed class QwenChatService : IChatService
             new("qwen-plus", "通义千问-Plus", toolSupport: true),
             new("qwen-turbo", "通义千问-Turbo", toolSupport: true),
             new("qwen-long", "Qwen-Long"),
+            new("qwq-plus-latest", "QwQ 推理", toolSupport: true),
             new("qwen-vl-max", "通义千问 VL", visionSupport: true),
             new("qwen2.5-72b-instruct", "通义千问 2.5-开源版"),
             new("qwen2-72b", "通义千问 2-开源版"),

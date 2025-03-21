@@ -23,6 +23,8 @@
   	<ProjectReference Include="..\..\Connectors\Connectors.IFlyTek\Connectors.IFlyTek.csproj" />
   	<ProjectReference Include="..\..\Connectors\Connectors.OpenAI\Connectors.OpenAI.csproj" />
   	<ProjectReference Include="..\..\Connectors\Connectors.Tencent\Connectors.Tencent.csproj" />
+  	<ProjectReference Include="..\..\Connectors\Connectors.XAI\Connectors.XAI.csproj" />
+  	<ProjectReference Include="..\..\Connectors\Connectors.ZhiPu\Connectors.ZhiPu.csproj" />
   </ItemGroup>
   
   <ItemGroup>

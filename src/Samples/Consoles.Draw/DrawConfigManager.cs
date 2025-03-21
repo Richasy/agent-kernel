@@ -35,6 +35,8 @@ internal sealed class DrawConfigManager : DrawConfigManagerBase
             ErnieDrawConfig ernieConfig => ernieConfig.ToAIServiceConfig(),
             HunyuanDrawConfig hunyuanConfig => hunyuanConfig.ToAIServiceConfig(),
             SparkDrawConfig sparkConfig => sparkConfig.ToAIServiceConfig(),
+            XAIDrawConfig xaiConfig => xaiConfig.ToAIServiceConfig(),
+            ZhiPuDrawConfig zhiPuConfig => zhiPuConfig.ToAIServiceConfig(),
             _ => null,
         };
     }

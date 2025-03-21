@@ -50,6 +50,7 @@ public sealed class XAIChatService : IChatService
     public IReadOnlyList<ChatModel> GetPredefinedModels() =>
     [
         new("grok-2-latest", "Grok 2", toolSupport: true),
+        new("grok-2-vision", "Grok 2 Vision", toolSupport: true, visionSupport: true),
         new("grok-beta", "Grok Beta", toolSupport: true),
     ];
 }

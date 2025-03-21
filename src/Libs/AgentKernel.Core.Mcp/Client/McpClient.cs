@@ -35,6 +35,7 @@ internal sealed class McpClient : McpJsonRpcEndpoint, IMcpClient
         _clientTransport = transport;
 
         EndpointName = $"Client ({serverConfig.Id}: {serverConfig.Name})";
+        ClientId = serverConfig.Id;
 
         if (options.Capabilities?.Sampling is { } samplingCapability)
         {
@@ -72,6 +73,9 @@ internal sealed class McpClient : McpJsonRpcEndpoint, IMcpClient
 
     /// <inheritdoc/>
     public override string EndpointName { get; }
+
+    /// <inheritdoc/>
+    public override string ClientId { get; }
 
     /// <inheritdoc/>
     public async Task ConnectAsync(CancellationToken cancellationToken = default)

@@ -17,6 +17,8 @@ var kernel = Kernel.CreateBuilder()
     .AddErnieDrawService()
     .AddHunyuanDrawService()
     .AddSparkDrawService()
+    .AddXAIDrawService()
+    .AddZhiPuDrawService()
     .Build();
 
 builder.Services.AddSingleton(kernel);

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 using System.Collections.Concurrent;
 using System.Text.Json;
+using Richasy.AgentKernel.Core.Mcp.Protocol.Types;
 
 namespace Richasy.AgentKernel.Core.Mcp.Shared;
 
@@ -22,6 +23,7 @@ namespace Richasy.AgentKernel.Core.Mcp.Shared;
 /// </summary>
 internal abstract class McpJsonRpcEndpoint : IAsyncDisposable
 {
+    private readonly string[] _whiteCalls = ["initialize", "tools/list", "notifications/initialized"];
     private readonly ITransport _transport;
     private readonly ConcurrentDictionary<RequestId, TaskCompletionSource<IJsonRpcMessage>> _pendingRequests;
     private readonly ConcurrentDictionary<string, List<Func<JsonRpcNotification, Task>>> _notificationHandlers;
@@ -59,6 +61,11 @@ internal abstract class McpJsonRpcEndpoint : IAsyncDisposable
     /// Gets the name of the endpoint for logging and debug purposes.
     /// </summary>
     public abstract string EndpointName { get; }
+
+    /// <summary>
+    /// Gets the name of current client.
+    /// </summary>
+    public abstract string ClientId { get; }
 
     /// <summary>
     /// Gets the transport implementation for the endpoint. Should generally not be needed outside of tests.
@@ -223,6 +230,27 @@ internal abstract class McpJsonRpcEndpoint : IAsyncDisposable
         {
             _logger.EndpointNotConnected(EndpointName);
             throw new McpClientException("Transport is not connected");
+        }
+
+        if (!_whiteCalls.Contains(request.Method)
+            && McpGlobalHandler.ConsentHandler != null)
+        {
+            var consent = false;
+            if (request.Method == "tools/call")
+            {
+                var paramJson = JsonSerializer.Deserialize(request.Params.ToString(), JsonSerializerOptionsExtensions.JsonContext.Default.CallToolRequestParams);
+                consent = await McpGlobalHandler.ConsentHandler.Invoke(ClientId, paramJson.Name, request);
+            }
+            else
+            {
+                consent = await McpGlobalHandler.ConsentHandler.Invoke(ClientId, request.Method, request);
+            }
+
+            if (!consent)
+            {
+                _logger.LogInformation("Consent handler denied request: {Method}", request.Method);
+                return default;
+            }
         }
 
         // Set request ID
