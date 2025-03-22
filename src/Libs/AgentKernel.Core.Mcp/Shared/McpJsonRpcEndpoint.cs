@@ -23,7 +23,7 @@ namespace Richasy.AgentKernel.Core.Mcp.Shared;
 /// </summary>
 internal abstract class McpJsonRpcEndpoint : IAsyncDisposable
 {
-    private readonly string[] _whiteCalls = ["initialize", "tools/list", "notifications/initialized"];
+    private readonly List<string> _whiteCalls = ["initialize", "ping", "tools/list", "notifications/initialized"];
     private readonly ITransport _transport;
     private readonly ConcurrentDictionary<RequestId, TaskCompletionSource<IJsonRpcMessage>> _pendingRequests;
     private readonly ConcurrentDictionary<string, List<Func<JsonRpcNotification, Task>>> _notificationHandlers;
@@ -232,7 +232,8 @@ internal abstract class McpJsonRpcEndpoint : IAsyncDisposable
             throw new McpClientException("Transport is not connected");
         }
 
-        if (!_whiteCalls.Contains(request.Method)
+        var whiteCalls = McpGlobalHandler.ToolCallWhiteList ?? _whiteCalls;
+        if (!whiteCalls.Contains(request.Method)
             && McpGlobalHandler.ConsentHandler != null)
         {
             var consent = false;

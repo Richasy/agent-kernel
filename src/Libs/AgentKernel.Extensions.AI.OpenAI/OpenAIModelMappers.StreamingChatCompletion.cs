@@ -124,7 +124,7 @@ internal static partial class OpenAIModelMappers
                     }
                 }
             }
-            else if (update.InternalChoiceDelta.SerializedAdditionalRawData is { Count: > 0 } rawData)
+            else if (update.InternalChoiceDelta?.SerializedAdditionalRawData is { Count: > 0 } rawData)
             {
                 if (rawData.ContainsKey("reasoning_content"))
                 {

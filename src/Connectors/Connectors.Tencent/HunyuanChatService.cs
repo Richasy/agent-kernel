@@ -52,7 +52,9 @@ public sealed class HunyuanChatService : IChatService
     /// <inheritdoc/>
     public IReadOnlyList<ChatModel> GetPredefinedModels() =>
     [
-        new("hunyuan-turbo-latest", "Hunyuan Turbo Latest", toolSupport: true),
+        new("hunyuan-turbos-latest", "Hunyuan TurboS", toolSupport: true),
+        new("hunyuan-t1-latest", "Hunyuan T1"),
+        new("hunyuan-turbo-latest", "Hunyuan Turbo", toolSupport: true),
         new("hunyuan-large", "Hunyuan Large"),
         new("hunyuan-large-longcontext", "Hunyuan Large Long Context"),
         new("hunyuan-standard-256k", "Hunyuan Standard 256K"),

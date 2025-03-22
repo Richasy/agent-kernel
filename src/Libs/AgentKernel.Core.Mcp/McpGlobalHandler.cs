@@ -19,4 +19,9 @@ public static class McpGlobalHandler
     /// Input value: Client id, Method name, Request message.
     /// </remarks>
     public static Func<string, string, JsonRpcRequest, Task<bool>>? ConsentHandler { get; set; }
+
+    /// <summary>
+    /// Used to handle the consent of the user.
+    /// </summary>
+    public static List<string>? ToolCallWhiteList { get; set; }
 }

@@ -209,31 +209,31 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
 
                 // options.AdditionalProperties!.Add("visual", true);
 
-                //await foreach (var message in client.GetStreamingResponseAsync(chatMessages, options, cancellationToken: cancellationToken))
-                //{
-                //    if (message.AdditionalProperties?.ContainsKey("reasoning_content") ?? false)
-                //    {
-                //        var reasoningContent = message.AdditionalProperties["reasoning_content"];
-                //        if (reasoningContent is string c)
-                //        {
-                //            PrintReasoningMessage(c);
-                //        }
-                //    }
-
-                //    responseMessage += message.Text;
-                //}
-
-                var response = await client.GetResponseAsync(chatMessages, options, cancellationToken: cancellationToken);
-                if (response.AdditionalProperties?.ContainsKey("reasoning_content") ?? false)
+                await foreach (var message in client.GetStreamingResponseAsync(chatMessages, options, cancellationToken: cancellationToken))
                 {
-                    var reasoningContent = response.AdditionalProperties["reasoning_content"];
-                    if (reasoningContent is string c)
+                    if (message.AdditionalProperties?.ContainsKey("reasoning_content") ?? false)
                     {
-                        PrintReasoningMessage(c);
+                        var reasoningContent = message.AdditionalProperties["reasoning_content"];
+                        if (reasoningContent is string c)
+                        {
+                            PrintReasoningMessage(c);
+                        }
                     }
+
+                    responseMessage += message.Text;
                 }
 
-                responseMessage = response.Text;
+                //var response = await client.GetResponseAsync(chatMessages, options, cancellationToken: cancellationToken);
+                //if (response.AdditionalProperties?.ContainsKey("reasoning_content") ?? false)
+                //{
+                //    var reasoningContent = response.AdditionalProperties["reasoning_content"];
+                //    if (reasoningContent is string c)
+                //    {
+                //        PrintReasoningMessage(c);
+                //    }
+                //}
+
+                //responseMessage = response.Text;
                 chatMessages.Add(new ChatMessage(ChatRole.Assistant, responseMessage?.Trim()));
                 PrintAssistantMessage(chatMessages.Last());
             }
