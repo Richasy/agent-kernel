@@ -7,6 +7,7 @@ using Richasy.AgentKernel.Core.Mcp.Utils;
 using Richasy.AgentKernel.Core.Mcp.Utils.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using System.Text;
 
 #pragma warning disable CA2213 // Disposable fields should be disposed
 
@@ -63,6 +64,9 @@ public sealed class StdioClientTransport : TransportBase, IClientTransport
             var startInfo = new ProcessStartInfo
             {
                 FileName = _options.Command,
+                StandardOutputEncoding = Encoding.UTF8,
+                StandardErrorEncoding = Encoding.UTF8,
+                StandardInputEncoding = Encoding.Default,
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
@@ -203,8 +207,8 @@ public sealed class StdioClientTransport : TransportBase, IClientTransport
     private async Task ProcessMessageAsync(string line, CancellationToken cancellationToken)
     {
         try
-        {                    
-            line=line.Trim();//Fixes an error when the service prefixes nonprintable characters
+        {
+            line = line.Trim();//Fixes an error when the service prefixes nonprintable characters
             var message = JsonSerializer.Deserialize(line, _jsonOptions.GetTypeInfo<IJsonRpcMessage>());
             if (message != null)
             {
@@ -267,7 +271,7 @@ public sealed class StdioClientTransport : TransportBase, IClientTransport
             try
             {
                 _logger.TransportWaitingForReadTask(EndpointName);
-                await _readTask.WaitAsync(TimeSpan.FromSeconds(5), cancellationToken).ConfigureAwait(false);
+                await _readTask.WaitAsync(McpGlobalHandler.ReadMessageTimeOut ?? TimeSpan.FromSeconds(5), cancellationToken).ConfigureAwait(false);
             }
             catch (TimeoutException)
             {

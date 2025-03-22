@@ -24,4 +24,9 @@ public static class McpGlobalHandler
     /// Used to handle the consent of the user.
     /// </summary>
     public static List<string>? ToolCallWhiteList { get; set; }
+
+    /// <summary>
+    /// Represents the timeout duration for reading messages.
+    /// </summary>
+    public static TimeSpan? ReadMessageTimeOut { get; set; }
 }

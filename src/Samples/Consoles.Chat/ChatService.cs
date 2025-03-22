@@ -122,7 +122,7 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
             _model = await AskModelAsync(provider);
             var service = await DispatchServiceAsync(provider);
             var client = new ChatClientBuilder(service.Client!)
-                .UseFunctionInvocation(configure: client => client.MaximumIterationsPerRequest = 2)
+                .UseFunctionInvocation(configure: client => client.MaximumIterationsPerRequest = 10)
                 .Build();
             List<ChatMessage> chatMessages = [];
 #if USE_SYSTEM_PROMPT
@@ -192,10 +192,8 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
                 {
 #if USE_MCP
                     options.Tools ??= [];
-                    await foreach (var tool in mcpClient.ListToolsAsync(cancellationToken))
-                    {
-                        options.Tools.Add(tool);
-                    }
+                    var tools = await mcpClient.ListToolsAsync(cancellationToken).ToListAsync(cancellationToken);
+                    options.Tools = [.. tools];
 #endif
 
                     //options.Tools = [
