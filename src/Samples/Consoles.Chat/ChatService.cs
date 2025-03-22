@@ -144,6 +144,17 @@ internal sealed class ChatService(Kernel kernel, IChatConfigManager configManage
                 return Task.FromResult(AnsiConsole.Prompt(new ConfirmationPrompt("Do you agree to the request?")));
             };
 
+            McpGlobalHandler.ResponseHandler = (clientId, method, responseJson) =>
+            {
+                var toolMessage = new ChatMessage(ChatRole.Tool, responseJson);
+                toolMessage.AdditionalProperties ??= [];
+                toolMessage.AdditionalProperties.Add("clientId", clientId);
+                toolMessage.AdditionalProperties.Add("method", method);
+                chatMessages.Add(toolMessage);
+                AnsiConsole.WriteLine("已添加工具消息.");
+                return Task.CompletedTask;
+            };
+
             var mcpConfigJson = await File.ReadAllTextAsync("mcp.json", cancellationToken);
             var mcpList = JsonSerializer.Deserialize(mcpConfigJson, JsonGenerationContext.Default.McpServerDefinitionCollection);
             var firstServer = mcpList!.First();

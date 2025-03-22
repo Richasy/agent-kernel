@@ -21,6 +21,11 @@ public static class McpGlobalHandler
     public static Func<string, string, JsonRpcRequest, Task<bool>>? ConsentHandler { get; set; }
 
     /// <summary>
+    /// A static property that holds a function for handling JSON-RPC responses.
+    /// </summary>
+    public static Func<string, string, string, Task>? ResponseHandler { get; set; }
+
+    /// <summary>
     /// Used to handle the consent of the user.
     /// </summary>
     public static List<string>? ToolCallWhiteList { get; set; }

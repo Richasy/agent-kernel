@@ -233,6 +233,7 @@ internal abstract class McpJsonRpcEndpoint : IAsyncDisposable
         }
 
         var whiteCalls = McpGlobalHandler.ToolCallWhiteList ?? _whiteCalls;
+        var toolName = string.Empty;
         if (!whiteCalls.Contains(request.Method)
             && McpGlobalHandler.ConsentHandler != null)
         {
@@ -240,10 +241,12 @@ internal abstract class McpJsonRpcEndpoint : IAsyncDisposable
             if (request.Method == "tools/call")
             {
                 var paramJson = JsonSerializer.Deserialize(request.Params.ToString(), JsonSerializerOptionsExtensions.JsonContext.Default.CallToolRequestParams);
+                toolName = paramJson.Name;
                 consent = await McpGlobalHandler.ConsentHandler.Invoke(ClientId, paramJson.Name, request);
             }
             else
             {
+                toolName = request.Method;
                 consent = await McpGlobalHandler.ConsentHandler.Invoke(ClientId, request.Method, request);
             }
 
@@ -291,6 +294,11 @@ internal abstract class McpJsonRpcEndpoint : IAsyncDisposable
                 // Not expensive logging because we're already converting to JSON in order to get the result object
                 _logger.RequestResponseReceivedPayload(EndpointName, resultJson);
                 _logger.RequestResponseReceived(EndpointName, request.Method);
+
+                if (McpGlobalHandler.ResponseHandler != null && request.Method == "tools/call")
+                {
+                    await McpGlobalHandler.ResponseHandler.Invoke(ClientId, toolName, resultJson);
+                }
 
                 if (resultObject != null)
                 {
