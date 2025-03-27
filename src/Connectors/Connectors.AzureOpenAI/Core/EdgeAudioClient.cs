@@ -5,6 +5,7 @@ using Richasy.AgentKernel.Audio;
 using Richasy.AgentKernel.Models;
 using RichasyKernel;
 using System.Net.WebSockets;
+using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -119,7 +120,7 @@ public sealed class EdgeAudioClient : IAudioClient
         => SHA256.HashData(data);
 
     private static string ConvertToSsmlText(string lang, string voice, double speed, string text)
-        => $"<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='{lang}'><voice name='{voice}'><prosody pitch='+0Hz' rate='{FormatPercentage(speed)}'>{text}</prosody></voice></speak>";
+        => $"<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='{lang}'><voice name='{voice}'><prosody pitch='+0Hz' rate='{FormatPercentage(speed)}'>{SecurityElement.Escape(text)}</prosody></voice></speak>";
 
     private static string ConvertToAudioFormatWebSocketString(string outputformat)
         => "Content-Type:application/json; charset=utf-8\r\nPath:speech.config\r\n\r\n{\"context\":{\"synthesis\":{\"audio\":{\"metadataoptions\":{\"sentenceBoundaryEnabled\":\"false\",\"wordBoundaryEnabled\":\"false\"},\"outputFormat\":\"" + outputformat + "\"}}}}";
