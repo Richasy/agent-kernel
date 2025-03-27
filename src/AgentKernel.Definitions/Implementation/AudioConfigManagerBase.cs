@@ -22,6 +22,7 @@ public abstract class AudioConfigManagerBase : IAudioConfigManager
             AudioProviderType.Azure => Configuration?.AzureSpeech,
             AudioProviderType.AzureOpenAI => Configuration?.AzureOpenAI,
             AudioProviderType.OpenAI => Configuration?.OpenAI,
+            AudioProviderType.Volcano => Configuration?.Volcano,
             _ => default,
         };
     }
@@ -47,6 +48,9 @@ public abstract class AudioConfigManagerBase : IAudioConfigManager
                     break;
                 case AudioProviderType.Azure:
                     Configuration.AzureSpeech = item.Value as AzureAudioConfig;
+                    break;
+                case AudioProviderType.Volcano:
+                    Configuration.Volcano = item.Value as VolcanoAudioConfig;
                     break;
                 default:
                     break;

@@ -15,6 +15,7 @@ var kernel = Kernel.CreateBuilder()
     .AddAzureAudioService()
     .AddEdgeAudioService()
     .AddAzureOpenAIAudioService()
+    .AddVolcanoAudioService()
     .Build();
 
 builder.Services.AddSingleton(kernel);

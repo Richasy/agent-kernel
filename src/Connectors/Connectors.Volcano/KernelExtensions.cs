@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.DependencyInjection;
+using Richasy.AgentKernel.Audio;
 using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Volcano;
 using Richasy.AgentKernel.Translation;
@@ -31,6 +32,16 @@ public static class KernelExtensions
     public static IKernelBuilder AddVolcanoTranslationService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<ITranslateService, VolcanoTranslationService>("Volcano");
+        return builder;
+    }
+
+    /// <summary>
+    /// 添加火山音频服务.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddVolcanoAudioService(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IAudioService, VolcanoAudioService>("Volcano");
         return builder;
     }
 }

@@ -28,6 +28,12 @@ public sealed class AudioClientConfiguration
     /// </summary>
     [JsonPropertyName("azure")]
     public AzureAudioConfig? AzureSpeech { get; set; }
+
+    /// <summary>
+    /// 火山语音客户端配置.
+    /// </summary>
+    [JsonPropertyName("volcano")]
+    public VolcanoAudioConfig? Volcano { get; set; }
 }
 
 /// <summary>
@@ -69,6 +75,22 @@ public class AzureAudioConfig : AudioClientConfigBase
     /// <inheritdoc/>
     public override bool IsValid()
         => base.IsValid() && !string.IsNullOrEmpty(Region);
+}
+
+/// <summary>
+/// 火山语音客户端配置.
+/// </summary>
+public class VolcanoAudioConfig : AudioClientConfigBase
+{
+    /// <summary>
+    /// 应用 ID.
+    /// </summary>
+    [JsonPropertyName("appId")]
+    public string? AppId { get; set; }
+
+    /// <inheritdoc/>
+    public override bool IsValid()
+        => base.IsValid() && !string.IsNullOrEmpty(AppId);
 }
 
 /// <summary>

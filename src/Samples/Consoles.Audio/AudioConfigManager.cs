@@ -30,6 +30,7 @@ internal sealed class AudioConfigManager : AudioConfigManagerBase
             OpenAIAudioConfig openAIConfig => openAIConfig.ToAIServiceConfig(),
             AzureOpenAIAudioConfig azureOaiConfig => azureOaiConfig.ToAIServiceConfig(),
             AzureAudioConfig azureConfig => azureConfig.ToAIServiceConfig(),
+            VolcanoAudioConfig volcanoConfig => volcanoConfig.ToAIServiceConfig(),
             _ => null,
         };
     }

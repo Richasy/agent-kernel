@@ -36,6 +36,11 @@ public enum AudioProviderType
     /// Windows 语音服务.
     /// </summary>
     Windows,
+
+    /// <summary>
+    /// 火山语音服务.
+    /// </summary>
+    Volcano,
 }
 
 /// <summary>
@@ -53,6 +58,7 @@ public sealed class AudioProviderTypeConverter : JsonConverter<AudioProviderType
             "azure_speech" or "azurespeech" or "azure" => AudioProviderType.Azure,
             "edge_speech" or "edgespeech" or "edge" => AudioProviderType.Edge,
             "windows_speech" or "windowsspeech" or "windows" => AudioProviderType.Windows,
+            "volcano" => AudioProviderType.Volcano,
             _ => throw new JsonException(),
         };
     }
@@ -67,6 +73,7 @@ public sealed class AudioProviderTypeConverter : JsonConverter<AudioProviderType
             AudioProviderType.Azure => "azure",
             AudioProviderType.Edge => "edge",
             AudioProviderType.Windows => "windows",
+            AudioProviderType.Volcano => "volcano",
             _ => throw new JsonException(),
         };
 
