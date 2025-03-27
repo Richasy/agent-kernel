@@ -23,6 +23,7 @@ public abstract class AudioConfigManagerBase : IAudioConfigManager
             AudioProviderType.AzureOpenAI => Configuration?.AzureOpenAI,
             AudioProviderType.OpenAI => Configuration?.OpenAI,
             AudioProviderType.Volcano => Configuration?.Volcano,
+            AudioProviderType.Tencent => Configuration?.Tencent,
             _ => default,
         };
     }
@@ -51,6 +52,9 @@ public abstract class AudioConfigManagerBase : IAudioConfigManager
                     break;
                 case AudioProviderType.Volcano:
                     Configuration.Volcano = item.Value as VolcanoAudioConfig;
+                    break;
+                case AudioProviderType.Tencent:
+                    Configuration.Tencent = item.Value as TencentAudioConfig;
                     break;
                 default:
                     break;

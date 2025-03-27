@@ -41,6 +41,7 @@ internal sealed class AudioService(Kernel kernel, IAudioConfigManager configMana
             AudioProviderType.Edge,
             AudioProviderType.AzureOpenAI,
             AudioProviderType.Volcano,
+            AudioProviderType.Tencent,
         ];
         return AnsiConsole.Prompt(new SelectionPrompt<AudioProviderType>()
             .Title("Select a provider")
@@ -93,6 +94,7 @@ internal sealed class AudioService(Kernel kernel, IAudioConfigManager configMana
             AudioProviderType.Edge => "Edge",
             AudioProviderType.AzureOpenAI => "Azure OpenAI",
             AudioProviderType.Volcano => "火山",
+            AudioProviderType.Tencent => "腾讯",
             _ => throw new NotSupportedException(),
         };
     }

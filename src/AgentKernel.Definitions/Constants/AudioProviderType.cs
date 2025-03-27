@@ -41,6 +41,11 @@ public enum AudioProviderType
     /// 火山语音服务.
     /// </summary>
     Volcano,
+
+    /// <summary>
+    /// 腾讯语音服务.
+    /// </summary>
+    Tencent,
 }
 
 /// <summary>
@@ -59,6 +64,7 @@ public sealed class AudioProviderTypeConverter : JsonConverter<AudioProviderType
             "edge_speech" or "edgespeech" or "edge" => AudioProviderType.Edge,
             "windows_speech" or "windowsspeech" or "windows" => AudioProviderType.Windows,
             "volcano" => AudioProviderType.Volcano,
+            "tencent" => AudioProviderType.Tencent,
             _ => throw new JsonException(),
         };
     }
@@ -74,6 +80,7 @@ public sealed class AudioProviderTypeConverter : JsonConverter<AudioProviderType
             AudioProviderType.Edge => "edge",
             AudioProviderType.Windows => "windows",
             AudioProviderType.Volcano => "volcano",
+            AudioProviderType.Tencent => "tencent",
             _ => throw new JsonException(),
         };
 

@@ -34,6 +34,12 @@ public sealed class AudioClientConfiguration
     /// </summary>
     [JsonPropertyName("volcano")]
     public VolcanoAudioConfig? Volcano { get; set; }
+
+    /// <summary>
+    /// 腾讯云语音客户端配置.
+    /// </summary>
+    [JsonPropertyName("tencent")]
+    public TencentAudioConfig? Tencent { get; set; }
 }
 
 /// <summary>
@@ -85,12 +91,28 @@ public class VolcanoAudioConfig : AudioClientConfigBase
     /// <summary>
     /// 应用 ID.
     /// </summary>
-    [JsonPropertyName("appId")]
+    [JsonPropertyName("app_id")]
     public string? AppId { get; set; }
 
     /// <inheritdoc/>
     public override bool IsValid()
         => base.IsValid() && !string.IsNullOrEmpty(AppId);
+}
+
+/// <summary>
+/// 腾讯云语音客户端配置.
+/// </summary>
+public class TencentAudioConfig : AudioClientConfigBase
+{
+    /// <summary>
+    /// 密钥ID.
+    /// </summary>
+    [JsonPropertyName("secret_id")]
+    public string? SecretId { get; set; }
+
+    /// <inheritdoc/>
+    public override bool IsValid()
+        => base.IsValid() && !string.IsNullOrEmpty(SecretId);
 }
 
 /// <summary>

@@ -20,6 +20,7 @@
     <ProjectReference Include="..\..\AgentKernel.Definitions\AgentKernel.Definitions.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.AzureOpenAI\Connectors.Azure.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.OpenAI\Connectors.OpenAI.csproj" />
+    <ProjectReference Include="..\..\Connectors\Connectors.Tencent\Connectors.Tencent.csproj" />
     <ProjectReference Include="..\..\Connectors\Connectors.Volcano\Connectors.Volcano.csproj" />
   </ItemGroup>
 

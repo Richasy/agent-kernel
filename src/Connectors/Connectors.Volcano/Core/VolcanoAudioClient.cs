@@ -64,10 +64,10 @@ public sealed class VolcanoAudioClient : IAudioClient
         };
 
         var reqJson = JsonSerializer.Serialize(req, JsonGenContext.Default.VolcanoAudioRequest);
-        var request = new HttpRequestMessage(HttpMethod.Post, _apiEndpoint);
+        using var request = new HttpRequestMessage(HttpMethod.Post, _apiEndpoint);
         request.Headers.TryAddWithoutValidation("Authorization", $"Bearer;{_config.AccessKey}");
         request.Content = new StringContent(reqJson, Encoding.UTF8, "application/json");
-        var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+        using var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
         var content = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
         var result = JsonSerializer.Deserialize(content, JsonGenContext.Default.VolcanoAudioResponse)
             ?? throw new KernelException("服务器返回空结果");

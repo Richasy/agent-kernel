@@ -4,6 +4,7 @@
 using Richasy.AgentKernel;
 using Richasy.AgentKernel.Connectors.Azure.Models;
 using Richasy.AgentKernel.Connectors.OpenAI.Models;
+using Richasy.AgentKernel.Connectors.Tencent.Models;
 using Richasy.AgentKernel.Connectors.Volcano.Models;
 using Richasy.AgentKernel.Models;
 
@@ -38,5 +39,12 @@ internal static class ConfigExtensions
         return config is null || string.IsNullOrWhiteSpace(config.Key) || string.IsNullOrEmpty(config.AppId)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
             : new VolcanoAudioServiceConfig(config.Key, config.AppId, string.Empty);
+    }
+
+    public static AIServiceConfig ToAIServiceConfig(this TencentAudioConfig? config)
+    {
+        return config is null || string.IsNullOrWhiteSpace(config.Key) || string.IsNullOrEmpty(config.SecretId)
+            ? throw new ArgumentException("The configuration is not valid.", nameof(config))
+            : new TencentAudioServiceConfig(config.SecretId, config.Key, string.Empty);
     }
 }

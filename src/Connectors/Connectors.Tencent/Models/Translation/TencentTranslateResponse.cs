@@ -19,13 +19,6 @@ internal sealed class TencentTranslateResponse
 
         public int UsedAmount { get; set; }
 
-        public TextTranslateError? Error { get; set; }
-    }
-
-    internal sealed class TextTranslateError
-    {
-        public string? Code { get; set; }
-
-        public string? Message { get; set; }
+        public TencentResponseError? Error { get; set; }
     }
 }

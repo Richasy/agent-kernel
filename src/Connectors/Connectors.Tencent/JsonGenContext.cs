@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
+using Richasy.AgentKernel.Connectors.Tencent.Models.Audio;
 using Richasy.AgentKernel.Connectors.Tencent.Models.Draw;
 using Richasy.AgentKernel.Connectors.Tencent.Models.Translation;
 using System.Text.Json.Serialization;
@@ -15,6 +16,8 @@ namespace Richasy.AgentKernel.Connectors.Tencent;
 [JsonSerializable(typeof(HunyuanDrawCreateResponse))]
 [JsonSerializable(typeof(HunyuanDrawQueryResponse))]
 [JsonSerializable(typeof(HunyuanDrawLiteResponse))]
+[JsonSerializable(typeof(TencentAudioRequest))]
+[JsonSerializable(typeof(TencentAudioResponse))]
 [JsonSerializable(typeof(bool?))]
 internal sealed partial class JsonGenContext : JsonSerializerContext
 {

@@ -21,7 +21,7 @@ public sealed class VolcanoAudioService : IAudioService
     public IAudioClient? Client { get; set; }
 
     /// <inheritdoc/>
-    public AIServiceConfig? Config { get; private set; }
+    public AIServiceConfig? Config => _config;
 
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig? config)

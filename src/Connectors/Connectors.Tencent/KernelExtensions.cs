@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.DependencyInjection;
+using Richasy.AgentKernel.Audio;
 using Richasy.AgentKernel.Chat;
 using Richasy.AgentKernel.Connectors.Tencent;
 using Richasy.AgentKernel.Draw;
@@ -42,6 +43,16 @@ public static class KernelExtensions
     public static IKernelBuilder AddHunyuanDrawService(this IKernelBuilder builder)
     {
         builder.Services.AddKeyedSingleton<IDrawService, HunyuanDrawService>("Hunyuan");
+        return builder;
+    }
+
+    /// <summary>
+    /// 添加腾讯云TTS服务.
+    /// </summary>
+    /// <returns><see cref="IKernelBuilder"/>.</returns>
+    public static IKernelBuilder AddTencentAudioService(this IKernelBuilder builder)
+    {
+        builder.Services.AddKeyedSingleton<IAudioService, TencentAudioService>("Tencent");
         return builder;
     }
 }
