@@ -8,7 +8,7 @@ namespace Richasy.AgentKernel.Connectors.Tencent.Models;
 /// <summary>
 /// Tencent Cloud Translation Service Configuration.
 /// </summary>
-public sealed class TencentTranslateServiceConfig(string secretId, string secretKey) : TranslateServiceConfig(secretKey)
+public sealed class TencentTranslateServiceConfig(string secretKey, string secretId) : TranslateServiceConfig(secretKey)
 {
     /// <summary>
     /// Tencent Cloud Translation Service SecretId.

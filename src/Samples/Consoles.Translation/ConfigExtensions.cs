@@ -37,6 +37,6 @@ internal static class ConfigExtensions
     {
         return config is null || string.IsNullOrWhiteSpace(config.AccessKey) || string.IsNullOrWhiteSpace(config.SecretId)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
-            : Activator.CreateInstance(typeof(TConfig), config.SecretId, config.AccessKey) as TranslateServiceConfig;
+            : Activator.CreateInstance(typeof(TConfig), config.AccessKey, config.SecretId) as TranslateServiceConfig;
     }
 }

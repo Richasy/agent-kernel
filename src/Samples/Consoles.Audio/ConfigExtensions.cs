@@ -45,6 +45,6 @@ internal static class ConfigExtensions
     {
         return config is null || string.IsNullOrWhiteSpace(config.Key) || string.IsNullOrEmpty(config.SecretId)
             ? throw new ArgumentException("The configuration is not valid.", nameof(config))
-            : new TencentAudioServiceConfig(config.SecretId, config.Key, string.Empty);
+            : new TencentAudioServiceConfig(config.Key, config.SecretId,  string.Empty);
     }
 }

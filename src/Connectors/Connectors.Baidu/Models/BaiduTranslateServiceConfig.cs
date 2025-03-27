@@ -8,7 +8,7 @@ namespace Richasy.AgentKernel.Connectors.Baidu.Models;
 /// <summary>
 /// Baidu Translation Service Configuration.
 /// </summary>
-public sealed class BaiduTranslateServiceConfig(string appId, string secret) : TranslateServiceConfig(appId)
+public sealed class BaiduTranslateServiceConfig(string secret, string appId) : TranslateServiceConfig(appId)
 {
     /// <summary>
     /// Translation Service Secret

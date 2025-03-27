@@ -8,7 +8,7 @@ namespace Richasy.AgentKernel.Connectors.Tencent.Models;
 /// <summary>
 /// Tencent Cloud TTS Service Configuration.
 /// </summary>
-public sealed class TencentAudioServiceConfig(string secretId, string secretKey, string? model) : AIServiceConfig(secretKey, model)
+public sealed class TencentAudioServiceConfig(string secretKey, string secretId,  string? model) : AIServiceConfig(secretKey, model)
 {
     /// <summary>
     /// Tencent Cloud TTS Service SecretId.

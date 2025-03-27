@@ -8,7 +8,7 @@ namespace Richasy.AgentKernel.Connectors.Volcano.Models;
 /// <summary>
 /// Configuration for the Volcano translation service.
 /// </summary>
-public sealed class VolcanoTranslateServiceConfig(string secretId, string secretKey) : TranslateServiceConfig(secretKey)
+public sealed class VolcanoTranslateServiceConfig(string secretKey, string secretId) : TranslateServiceConfig(secretKey)
 {
     /// <summary>
     /// The secret id for the Volcano translation service.
