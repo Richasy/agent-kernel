@@ -47,7 +47,6 @@ public sealed class VolcanoTranslationService : ITranslateService
         var languages = new Dictionary<string, CultureInfo?>
         {
             { "auto", null },
-            { "zh", new("zh") },
             { "zh-Hant", new("zh-Hant") },
             { "zh-Hant-hk", new("zh-Hant-hk") },
             { "zh-Hant-tw", new("zh-Hant-tw") },
