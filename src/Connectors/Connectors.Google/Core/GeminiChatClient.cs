@@ -246,7 +246,6 @@ public sealed class GeminiChatClient : IChatClient
             request.SystemInstruction = new GeminiContent
             {
                 Parts = [new GeminiPart { Text = systemPrompt }],
-                Role = ChatRole.System,
             };
         }
 

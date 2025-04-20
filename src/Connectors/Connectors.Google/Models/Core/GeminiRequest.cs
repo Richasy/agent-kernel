@@ -30,10 +30,11 @@ internal sealed class GeminiRequest
 
     public static GeminiContent CreateGeminiContentFromChatMessage(ChatMessage message)
     {
+        var role = message.Role == ChatRole.Assistant ? new("model") : message.Role;
         return new GeminiContent
         {
             Parts = CreateGeminiParts(message),
-            Role = message.Role
+            Role = role
         };
     }
 

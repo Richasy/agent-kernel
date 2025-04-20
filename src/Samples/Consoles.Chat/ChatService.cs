@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-#define USE_MCP
+#define USE_SYSTEM_PROMPT
 
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Hosting;
@@ -16,13 +16,13 @@ using Richasy.AgentKernel.Connectors.ZhiPu.Models;
 using Microsoft.Extensions.Logging;
 using Richasy.AgentKernel.Core.Mcp.Client;
 using Richasy.AgentKernel.Core.Mcp.Protocol.Transport;
+using System.Text.Json;
+using Richasy.AgentKernel.Core.Mcp;
 #endif
 using Richasy.AgentKernel.Models;
 using RichasyKernel;
 using Spectre.Console;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
-using Richasy.AgentKernel.Core.Mcp;
 
 namespace Consoles.Chat;
 
