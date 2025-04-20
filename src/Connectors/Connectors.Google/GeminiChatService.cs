@@ -42,7 +42,9 @@ public sealed class GeminiChatService : IChatService
     /// <inheritdoc/>
     public IReadOnlyList<ChatModel> GetPredefinedModels() =>
     [
-        new("gemini-2.0-flash-exp", "Gemini 2.0 Flash", toolSupport: true, visionSupport: true),
+        new("gemini-2.5-pro-preview-03-25", "Gemini 2.5 Pro Preview", toolSupport: true, visionSupport: true),
+        new("gemini-2.5-flash-preview-04-17", "Gemini 2.5 Flash Preview", toolSupport: true, visionSupport: true),
+        new("gemini-2.0-flash", "Gemini 2.0 Flash", toolSupport: true, visionSupport: true),
         new("gemini-1.5-flash", "Gemini 1.5 Flash", toolSupport: true, visionSupport: true),
         new("gemini-1.5-flash-8b", "Gemini 1.5 Flash-8B", toolSupport: true, visionSupport: true),
         new("gemini-1.5-pro", "Gemini 1.5 Pro", toolSupport: true, visionSupport: true),

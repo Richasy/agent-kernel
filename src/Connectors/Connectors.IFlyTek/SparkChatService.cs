@@ -26,20 +26,23 @@ public sealed class SparkChatService : IChatService
     /// <inheritdoc/>
     public void Initialize(AIServiceConfig? config)
     {
-        if (config is not SparkChatServiceConfig hunyuanConfig)
+        if (config is not SparkChatServiceConfig sparkConfig)
         {
             throw new ArgumentException("The configuration is not valid.", nameof(config));
         }
 
-        if (_config != null && hunyuanConfig.Equals(_config))
+        if (_config != null && sparkConfig.Equals(_config))
         {
             return;
         }
 
-        _config = hunyuanConfig;
+        _config = sparkConfig;
+        var uri = sparkConfig.Model == "x1" ?
+            new Uri("https://spark-api-open.xf-yun.com/v2/") :
+            new Uri("https://spark-api-open.xf-yun.com/v1");
         var coreClient = new OpenAIClient(new(_config.AccessKey), new OpenAIClientOptions
         {
-            Endpoint = new Uri("https://spark-api-open.xf-yun.com/v1"),
+            Endpoint = uri,
         });
 
         Client?.Dispose();
@@ -55,5 +58,6 @@ public sealed class SparkChatService : IChatService
         new("generalv3.5", "Spark Max", toolSupport : true),
         new("max-32k", "Spark Max 32K", toolSupport: true),
         new("4.0Ultra", "Spark 4.0 Ultra", toolSupport: true),
+        new("x1", "Spark X1", toolSupport: true),
     ];
 }
