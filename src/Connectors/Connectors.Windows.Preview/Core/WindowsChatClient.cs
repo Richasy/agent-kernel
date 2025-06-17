@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.AI;
-using Microsoft.Windows.AI.ContentModeration;
-using Microsoft.Windows.AI.Generative;
+using Microsoft.Windows.AI;
+using Microsoft.Windows.AI.ContentSafety;
+using Microsoft.Windows.AI.Text;
 using Microsoft.Windows.Management.Deployment;
 using System.Runtime.CompilerServices;
 using Windows.Foundation;
@@ -16,7 +17,6 @@ namespace Richasy.AgentKernel.Connectors.Windows.Preview.Core;
 public sealed class WindowsChatClient : IChatClient
 {
     // Search Options
-    private const LanguageModelSkill DefaultLanguageModelSkill = LanguageModelSkill.General;
     private const int DefaultTopK = 50;
     private const float DefaultTopP = 0.9f;
     private const float DefaultTemperature = 1;
@@ -47,7 +47,7 @@ public sealed class WindowsChatClient : IChatClient
     /// <summary>
     /// 下载模型完成.
     /// </summary>
-    public event EventHandler<PackageDeploymentResult>? ModelDownloaded;
+    public event EventHandler<AIFeatureReadyResult>? ModelDownloaded;
 #pragma warning restore CA1003 // 使用泛型事件处理程序实例
 
     /// <inheritdoc/>
@@ -89,46 +89,46 @@ public sealed class WindowsChatClient : IChatClient
         return serviceKey is null && serviceType.IsInstanceOfType(this) ? this : null;
     }
 
-    private static (LanguageModelOptions? ModelOptions, ContentFilterOptions? FilterOptions) GetModelOptions(ChatOptions? options)
+    private static LanguageModelOptions? GetModelOptions(ChatOptions? options)
     {
         if (options == null)
         {
-            return (null, null);
+            return default;
         }
 
         var languageModelOptions = new LanguageModelOptions
         {
-            Skill = options.AdditionalProperties?.TryGetValue("skill", out int skill) == true ? (LanguageModelSkill)skill : DefaultLanguageModelSkill,
-            Temp = options.Temperature ?? DefaultTemperature,
-            Top_k = (uint)(options.TopK ?? DefaultTopK),
-            Top_p = (uint)(options.TopP ?? DefaultTopP),
+            Temperature = options.Temperature ?? DefaultTemperature,
+            TopK = (uint)(options.TopK ?? DefaultTopK),
+            TopP = (uint)(options.TopP ?? DefaultTopP),
         };
 
         var contentFilterOptions = new ContentFilterOptions();
 
-        if (options.AdditionalProperties?.TryGetValue("input_moderation", out int inputModeration) == true && (SeverityLevel)inputModeration != SeverityLevel.None)
+        if (options.AdditionalProperties?.TryGetValue("input_moderation", out int inputModeration) == true)
         {
-            contentFilterOptions.PromptMinSeverityLevelToBlock = new TextContentFilterSeverity
+            contentFilterOptions.PromptMaxAllowedSeverityLevel = new TextContentFilterSeverity
             {
-                HateContentSeverity = (SeverityLevel)inputModeration,
-                SexualContentSeverity = (SeverityLevel)inputModeration,
-                ViolentContentSeverity = (SeverityLevel)inputModeration,
-                SelfHarmContentSeverity = (SeverityLevel)inputModeration
+                Hate = (SeverityLevel)inputModeration,
+                Sexual = (SeverityLevel)inputModeration,
+                Violent = (SeverityLevel)inputModeration,
+                SelfHarm = (SeverityLevel)inputModeration
             };
         }
 
-        if (options.AdditionalProperties?.TryGetValue("output_moderation", out int outputModeration) == true && (SeverityLevel)outputModeration != SeverityLevel.None)
+        if (options.AdditionalProperties?.TryGetValue("output_moderation", out int outputModeration) == true)
         {
-            contentFilterOptions.ResponseMinSeverityLevelToBlock = new TextContentFilterSeverity
+            contentFilterOptions.ResponseMaxAllowedSeverityLevel = new TextContentFilterSeverity
             {
-                HateContentSeverity = (SeverityLevel)outputModeration,
-                SexualContentSeverity = (SeverityLevel)outputModeration,
-                ViolentContentSeverity = (SeverityLevel)outputModeration,
-                SelfHarmContentSeverity = (SeverityLevel)outputModeration
+                Hate = (SeverityLevel)outputModeration,
+                Sexual = (SeverityLevel)outputModeration,
+                Violent = (SeverityLevel)outputModeration,
+                SelfHarm = (SeverityLevel)outputModeration
             };
         }
 
-        return (languageModelOptions, contentFilterOptions);
+        languageModelOptions.ContentFilterOptions = contentFilterOptions;
+        return languageModelOptions;
     }
 
     private string GetPrompt(IEnumerable<ChatMessage> history)
@@ -175,7 +175,7 @@ public sealed class WindowsChatClient : IChatClient
 #pragma warning disable CA1031 // 不捕获常规异常类型
         try
         {
-            return LanguageModel.IsAvailable();
+            return LanguageModel.GetReadyState() == Microsoft.Windows.AI.AIFeatureReadyState.Ready;
         }
         catch (Exception)
         {
@@ -194,7 +194,7 @@ public sealed class WindowsChatClient : IChatClient
         if (!IsAvailable())
         {
             StartDownloadingModel?.Invoke(this, EventArgs.Empty);
-            var operation = LanguageModel.MakeAvailableAsync();
+            var operation = LanguageModel.EnsureReadyAsync();
             operation.Progress += HandleDeploymentProgress;
         }
 
@@ -203,13 +203,17 @@ public sealed class WindowsChatClient : IChatClient
         _model = await LanguageModel.CreateAsync();
     }
 
-    private void HandleDeploymentProgress(IAsyncOperationWithProgress<PackageDeploymentResult, PackageDeploymentProgress> asyncInfo, PackageDeploymentProgress progressInfo)
+    private void HandleDeploymentProgress(IAsyncOperationWithProgress<AIFeatureReadyResult, double> asyncInfo, double progressInfo)
     {
-        if (progressInfo.Status is PackageDeploymentProgressStatus.InProgress or PackageDeploymentProgressStatus.Queued)
+        if (progressInfo >= 0 && progressInfo < 100)
         {
-            DownloadingModel?.Invoke(this, progressInfo);
+            DownloadingModel?.Invoke(this, new PackageDeploymentProgress
+            {
+                Status = PackageDeploymentProgressStatus.InProgress,
+                Progress = progressInfo,
+            });
         }
-        else
+        else if (progressInfo == 100)
         {
             ModelDownloaded?.Invoke(this, asyncInfo.GetResults());
         }
@@ -225,53 +229,48 @@ public sealed class WindowsChatClient : IChatClient
         var currentResponse = string.Empty;
         using var newPartEvent = new ManualResetEventSlim(false);
 
-        if (!_model.IsPromptLargerThanContext(prompt))
+        IAsyncOperationWithProgress<LanguageModelResponseResult, string>? progress;
+
+        var modelOptions = GetModelOptions(options);
+        if ((ulong)prompt.Length > _model.GetUsablePromptLength(_modelContext, prompt))
         {
-            IAsyncOperationWithProgress<LanguageModelResponse, string>? progress;
-            if (options == null)
-            {
-                progress = _model.GenerateResponseWithProgressAsync(new LanguageModelOptions(), prompt, new ContentFilterOptions(), _modelContext);
-            }
-            else
-            {
-                var (modelOptions, filterOptions) = GetModelOptions(options);
-                progress = _model.GenerateResponseWithProgressAsync(modelOptions, prompt, filterOptions, _modelContext);
-            }
-
-            progress.Progress = (result, value) =>
-            {
-                currentResponse = value;
-                newPartEvent.Set();
-                if (cancellationToken.IsCancellationRequested)
-                {
-                    progress.Cancel();
-                }
-            };
-
-            while (progress.Status != AsyncStatus.Completed)
-            {
-                await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
-
-                if (newPartEvent.Wait(10, cancellationToken))
-                {
-                    yield return currentResponse;
-                    newPartEvent.Reset();
-                }
-            }
-
-            var response = await progress;
-
-            yield return response?.Status switch
-            {
-                LanguageModelResponseStatus.BlockedByPolicy => "\nBlocked by policy",
-                LanguageModelResponseStatus.PromptBlockedByPolicy => "\nPrompt blocked by policy",
-                LanguageModelResponseStatus.ResponseBlockedByPolicy => "\nResponse blocked by policy",
-                _ => string.Empty,
-            };
+            yield return "\nPrompt larger than context";
+            yield break;
         }
-        else
+
+        progress = _model.GenerateResponseAsync(_modelContext, prompt, modelOptions);
+
+        progress.Progress = (_, value) =>
         {
-            yield return "Prompt is too large for this model. Please submit a smaller prompt";
+            currentResponse = value;
+            newPartEvent.Set();
+            if (cancellationToken.IsCancellationRequested)
+            {
+                progress.Cancel();
+            }
+        };
+
+        while (progress.Status != AsyncStatus.Completed)
+        {
+            await Task.CompletedTask.ConfigureAwait(ConfigureAwaitOptions.ForceYielding);
+
+            if (newPartEvent.Wait(10, cancellationToken))
+            {
+                yield return currentResponse;
+                newPartEvent.Reset();
+            }
         }
+
+        var response = await progress;
+
+        yield return response?.Status switch
+        {
+            LanguageModelResponseStatus.BlockedByPolicy => "\nBlocked by policy",
+            LanguageModelResponseStatus.PromptBlockedByContentModeration => "\nPrompt blocked by content moderation",
+            LanguageModelResponseStatus.ResponseBlockedByContentModeration => "\nResponse blocked by content moderation",
+            LanguageModelResponseStatus.PromptLargerThanContext => "\nPrompt larger than context",
+            LanguageModelResponseStatus.Error => "\nError",
+            _ => string.Empty,
+        };
     }
 }
