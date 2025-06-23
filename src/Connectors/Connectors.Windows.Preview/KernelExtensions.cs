@@ -14,7 +14,7 @@ namespace Richasy.AgentKernel;
 public static class KernelExtensions
 {
     /// <summary>
-    /// Add ONNX chat completion service.
+    /// Add Windows chat completion service.
     /// </summary>
     /// <returns><see cref="IKernelBuilder"/>.</returns>
     public static IKernelBuilder AddWindowsChatService(this IKernelBuilder builder)

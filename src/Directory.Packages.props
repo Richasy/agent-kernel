@@ -30,8 +30,8 @@
     <PackageVersion Include="Microsoft.ML.OnnxRuntime.QNN" Version="1.20.2" />
     <PackageVersion Include="Microsoft.ML.OnnxRuntimeGenAI" Version="0.7.0-rc1" />
     <PackageVersion Include="Microsoft.ML.OnnxRuntimeGenAI.Cuda" Version="0.7.0-rc1" />
-    <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
-    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.6.250205002" />
+    <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4188" />
+    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.7.250606001" />
     <PackageVersion Include="Mistral" Version="0.0.0-dev.9" />
     <PackageVersion Include="Mistral.SDK" Version="2.0.0" />
     <PackageVersion Include="OpenAI" Version="2.1.0" />

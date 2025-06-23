@@ -189,6 +189,11 @@ public sealed class WindowsChatClient : IChatClient
     /// </summary>
     private async Task InitializeAsync(CancellationToken cancellationToken = default)
     {
+        if (_model != null)
+        {
+            return;
+        }
+
         cancellationToken.ThrowIfCancellationRequested();
 
         if (!IsAvailable())
@@ -196,6 +201,7 @@ public sealed class WindowsChatClient : IChatClient
             StartDownloadingModel?.Invoke(this, EventArgs.Empty);
             var operation = LanguageModel.EnsureReadyAsync();
             operation.Progress += HandleDeploymentProgress;
+            await operation.AsTask(cancellationToken).ConfigureAwait(false);
         }
 
         cancellationToken.ThrowIfCancellationRequested();
