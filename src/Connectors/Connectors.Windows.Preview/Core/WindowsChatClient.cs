@@ -22,7 +22,6 @@ public sealed class WindowsChatClient : IChatClient
     private const float DefaultTemperature = 1;
 
     private LanguageModel? _model;
-    private LanguageModelContext? _modelContext;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="WindowsChatClient"/> class.
@@ -131,7 +130,7 @@ public sealed class WindowsChatClient : IChatClient
         return languageModelOptions;
     }
 
-    private string GetPrompt(IEnumerable<ChatMessage> history)
+    private static string GetPrompt(IEnumerable<ChatMessage> history)
     {
         if (!history.Any())
         {
@@ -140,10 +139,6 @@ public sealed class WindowsChatClient : IChatClient
 
         var prompt = string.Empty;
         var firstMessage = history.FirstOrDefault();
-
-        _modelContext = firstMessage?.Role == ChatRole.System ?
-            _model?.CreateContext(firstMessage.Text, new ContentFilterOptions()) :
-            _model?.CreateContext();
 
         for (var i = 0; i < history.Count(); i++)
         {
@@ -238,13 +233,7 @@ public sealed class WindowsChatClient : IChatClient
         IAsyncOperationWithProgress<LanguageModelResponseResult, string>? progress;
 
         var modelOptions = GetModelOptions(options);
-        if ((ulong)prompt.Length > _model.GetUsablePromptLength(_modelContext, prompt))
-        {
-            yield return "\nPrompt larger than context";
-            yield break;
-        }
-
-        progress = _model.GenerateResponseAsync(_modelContext, prompt, modelOptions);
+        progress = _model.GenerateResponseAsync(prompt, modelOptions);
 
         progress.Progress = (_, value) =>
         {

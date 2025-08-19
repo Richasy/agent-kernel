@@ -7,9 +7,9 @@
     <PackageVersion Include="AgentKernel.Core.OpenAI" Version="0.0.1-preview1" />
     <PackageVersion Include="AgentKernel.Extensions.AI.OpenAI" Version="0.0.1-preview1" />
     <PackageVersion Include="AlibabaCloud.SDK.Alimt20181012" Version="2.3.0" />
-    <PackageVersion Include="Anthropic" Version="3.4.1-dev.8" />
+    <PackageVersion Include="Anthropic" Version="3.7.1" />
     <PackageVersion Include="Azure.AI.OpenAI" Version="2.1.0-beta.2" />
-    <PackageVersion Include="Azure.Core" Version="1.45.0" />
+    <PackageVersion Include="Azure.Core" Version="1.47.2" />
     <PackageVersion Include="Google.Cloud.Translate.V3" Version="3.9.0" />
     <PackageVersion Include="Google_Gemini" Version="0.9.1-dev.9" />
     <PackageVersion Include="McpDotNet.Extensions.AI" Version="1.1.0.1" />
@@ -31,7 +31,7 @@
     <PackageVersion Include="Microsoft.ML.OnnxRuntimeGenAI" Version="0.7.0-rc1" />
     <PackageVersion Include="Microsoft.ML.OnnxRuntimeGenAI.Cuda" Version="0.7.0-rc1" />
     <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4188" />
-    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.7.250606001" />
+    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.8.250702007-experimental4" />
     <PackageVersion Include="Mistral" Version="0.0.0-dev.9" />
     <PackageVersion Include="Mistral.SDK" Version="2.0.0" />
     <PackageVersion Include="OpenAI" Version="2.1.0" />
