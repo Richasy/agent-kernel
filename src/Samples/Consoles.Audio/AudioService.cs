@@ -75,13 +75,13 @@ internal sealed class AudioService(Kernel kernel, IAudioConfigManager configMana
     private AudioVoice? AskVoice(AudioModel model)
 #pragma warning restore CA1822 // Mark members as static
     {
-        var voices = model.Voices.Where(p => p.Languages.Contains("zh") || p.Languages.Contains("zh-CN"));
+        var voices = model.Voices.Where(p => p.Languages.Contains("en") || p.Languages.Contains("en-US"));
         return voices?.Count() > 1
             ? AnsiConsole.Prompt(new SelectionPrompt<AudioVoice>()
             .Title("Select a voice")
             .PageSize(20)
             .MoreChoicesText("More")
-            .UseConverter(x => x.DisplayName + (x.Gender == VoiceGender.Male ? "♂️" : "♀️"))
+            .UseConverter(x => x.Id + (x.Gender == VoiceGender.Male ? "♂️" : "♀️"))
             .AddChoices(voices))
             : voices?.FirstOrDefault();
     }

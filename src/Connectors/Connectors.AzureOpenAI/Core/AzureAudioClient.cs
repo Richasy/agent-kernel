@@ -45,8 +45,8 @@ public sealed class AzureAudioClient(AzureAudioServiceConfig config) : IAudioCli
         var azureOptions = options as AzureAudioOptions;
         var content = $"""
             <speak version='1.0' xml:lang='{options!.LanguageCode}'>
-            <voice xml:lang='{options.LanguageCode}' xml:gender='{azureOptions?.Gender ?? string.Empty}' name='{options.VoiceId}'>
-            <prosody rate='{options.Speed}'></prosody>
+            <voice xml:lang='{options.LanguageCode ?? "en-US"}' xml:gender='{azureOptions?.Gender ?? string.Empty}' name='{options.VoiceId}'>
+            <prosody rate='{options.Speed ?? 1}'></prosody>
             {SecurityElement.Escape(text)}
             </voice>
             </speak>
