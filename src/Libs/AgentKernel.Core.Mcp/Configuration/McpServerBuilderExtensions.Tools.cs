@@ -101,7 +101,7 @@ public static partial class McpServerBuilderExtensions
                 object? result;
                 try
                 {
-                    result = await function.InvokeAsync((request.Params?.Arguments ?? [])!, cancellationToken).ConfigureAwait(false);
+                    result = await function.InvokeAsync(new((request.Params?.Arguments ?? [])!), cancellationToken).ConfigureAwait(false);
                 }
                 catch (Exception e) when (e is not OperationCanceledException)
                 {

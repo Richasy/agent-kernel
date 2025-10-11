@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
@@ -82,7 +82,7 @@ internal sealed class OpenAIAssistantClient : IChatClient
         (RunCreationOptions runOptions, List<FunctionResultContent>? toolResults) = CreateRunOptions(messages, options);
 
         // Get the thread ID.
-        string? threadId = options?.ChatThreadId ?? _threadId;
+        string? threadId = _threadId;
         if (threadId is null && toolResults is not null)
         {
             Throw.ArgumentException(nameof(messages), "No thread ID was provided, but chat messages includes tool results.");
@@ -121,7 +121,6 @@ internal sealed class OpenAIAssistantClient : IChatClient
                 case MessageContentUpdate mcu:
                     yield return new(mcu.Role == MessageRole.User ? ChatRole.User : ChatRole.Assistant, mcu.Text)
                     {
-                        ChatThreadId = threadId,
                         RawRepresentation = mcu,
                         ResponseId = responseId,
                     };
@@ -138,7 +137,6 @@ internal sealed class OpenAIAssistantClient : IChatClient
                     ChatResponseUpdate ruUpdate = new()
                     {
                         AuthorName = ru.Value.AssistantId,
-                        ChatThreadId = threadId,
                         CreatedAt = ru.Value.CreatedAt,
                         ModelId = ru.Value.Model,
                         RawRepresentation = ru,
@@ -229,10 +227,6 @@ internal sealed class OpenAIAssistantClient : IChatClient
                                     OpenAIJsonContext.Default.OpenAIChatToolJson));
 
                             runOptions.ToolsOverride.Add(ToolDefinition.CreateFunction(aiFunction.Name, aiFunction.Description, functionParameters, strict));
-                            break;
-
-                        case CodeInterpreterTool:
-                            runOptions.ToolsOverride.Add(ToolDefinition.CreateCodeInterpreter());
                             break;
                     }
                 }

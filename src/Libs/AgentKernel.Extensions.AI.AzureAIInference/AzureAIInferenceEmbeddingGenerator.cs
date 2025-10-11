@@ -164,7 +164,7 @@ public sealed class AzureAIInferenceEmbeddingGenerator :
         EmbeddingsOptions result = new(inputs)
         {
             Dimensions = options?.Dimensions ?? _dimensions,
-            Model = options?.ModelId ?? Metadata.ModelId,
+            Model = options?.ModelId,
             EncodingFormat = format,
         };
 

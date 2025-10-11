@@ -58,7 +58,7 @@ public sealed class ErnieChatClient : IChatClient
         return new([FromErnieChoice(responseObj?.Choices?.First() ?? throw new KernelException("Empty response"))])
         {
             ResponseId = responseObj.Id,
-            ModelId = responseObj?.Model ?? options?.ModelId ?? Metadata.ModelId,
+            ModelId = responseObj?.Model ?? options?.ModelId,
             CreatedAt = DateTimeOffset.FromUnixTimeSeconds(responseObj?.Created ?? 0),
             FinishReason = ToFinishReason(responseObj!),
             Usage = ParseErnieChatResponseUsage(responseObj!),
@@ -100,7 +100,7 @@ public sealed class ErnieChatClient : IChatClient
                     continue;
                 }
 
-                var modelId = chunk.Model ?? options?.ModelId ?? Metadata.ModelId;
+                var modelId = chunk.Model ?? options?.ModelId;
                 var update = new ChatResponseUpdate
                 {
                     Role = string.IsNullOrEmpty(chunk.Choices?.FirstOrDefault()?.Delta?.Content) ? ChatRole.Tool : ChatRole.Assistant,
@@ -163,12 +163,12 @@ public sealed class ErnieChatClient : IChatClient
         _token = await AuthorizeTool.GenerateBearerTokenAsync(_config.AccessKey, _config.SecretKey, cancellationToken).ConfigureAwait(false);
     }
 
-    private ErnieChatRequest ToErnieChatRequest(IEnumerable<ChatMessage> chatMessages, ChatOptions? options, bool stream)
+    private static ErnieChatRequest ToErnieChatRequest(IEnumerable<ChatMessage> chatMessages, ChatOptions? options, bool stream)
     {
         var request = new ErnieChatRequest
         {
             Messages = [.. chatMessages.Select(ToErnieChatMessage)],
-            Model = options?.ModelId ?? Metadata.ModelId ?? string.Empty,
+            Model = options?.ModelId ?? string.Empty,
             Stream = stream,
         };
 

@@ -64,7 +64,7 @@ public sealed class OnnxChatClient : IChatClient
     /// <inheritdoc/>
     public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(IEnumerable<ChatMessage> messages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        var modelId = options?.ModelId ?? Metadata.ModelId;
+        var modelId = options?.ModelId;
         if (_defaultSystemTemplate == null)
         {
             await LoadDefaultModelTemplateAsync(modelId!).ConfigureAwait(false);

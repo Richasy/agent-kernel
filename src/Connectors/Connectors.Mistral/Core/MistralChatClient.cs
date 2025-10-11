@@ -56,7 +56,7 @@ public sealed class MistralChatClient : IChatClient
         return new([FromMistralChoice(responseObj?.Choices?.First() ?? throw new KernelException("Empty response"))])
         {
             ResponseId = responseObj.Id,
-            ModelId = responseObj?.Model ?? options?.ModelId ?? Metadata.ModelId,
+            ModelId = responseObj?.Model ?? options?.ModelId,
             CreatedAt = DateTimeOffset.FromUnixTimeSeconds(responseObj?.Created ?? 0),
             FinishReason = ToFinishReason(responseObj!),
             Usage = ParseMistralChatResponseUsage(responseObj!),
@@ -98,7 +98,7 @@ public sealed class MistralChatClient : IChatClient
                     continue;
                 }
 
-                var modelId = chunk.Model ?? options?.ModelId ?? Metadata.ModelId;
+                var modelId = chunk.Model ?? options?.ModelId;
                 var update = new ChatResponseUpdate
                 {
                     CreatedAt = DateTimeOffset.FromUnixTimeSeconds(chunk.Created),
@@ -156,12 +156,12 @@ public sealed class MistralChatClient : IChatClient
         return serviceKey is null && serviceType.IsInstanceOfType(this) ? this : null;
     }
 
-    private MistralChatRequest ToMistralChatRequest(IEnumerable<ChatMessage> chatMessages, ChatOptions? options, bool stream)
+    private static MistralChatRequest ToMistralChatRequest(IEnumerable<ChatMessage> chatMessages, ChatOptions? options, bool stream)
     {
         var request = new MistralChatRequest
         {
             Messages = [.. chatMessages.Select(ToMistralChatMessage)],
-            Model = options?.ModelId ?? Metadata.ModelId ?? string.Empty,
+            Model = options?.ModelId?? string.Empty,
             Stream = stream,
         };
 

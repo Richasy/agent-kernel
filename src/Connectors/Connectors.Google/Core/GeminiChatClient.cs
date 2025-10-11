@@ -45,7 +45,7 @@ public sealed class GeminiChatClient : IChatClient
         var firstContent = messageContents[0];
         return new([firstContent])
         {
-            ModelId = options?.ModelId ?? Metadata.ModelId,
+            ModelId = options?.ModelId,
             CreatedAt = DateTimeOffset.Now,
             FinishReason = ToFinishReason(firstContent.Metadata?.FinishReason),
             Usage = new UsageDetails
@@ -106,7 +106,7 @@ public sealed class GeminiChatClient : IChatClient
                     CreatedAt = DateTimeOffset.Now,
                     FinishReason = ToFinishReason(firstContent.Metadata?.FinishReason),
                     Contents = firstContent.Contents,
-                    ModelId = Metadata.ModelId,
+                    ModelId = options?.ModelId,
                 };
 
                 if (firstContent.Metadata != null)
@@ -226,10 +226,10 @@ public sealed class GeminiChatClient : IChatClient
             ResponseSafetyRatings = candidate.SafetyRatings?.ToList(),
         };
 
-    private GeminiRequest GetGeminiRequest(IEnumerable<ChatMessage> chatMessages, ChatOptions? options)
+    private static GeminiRequest GetGeminiRequest(IEnumerable<ChatMessage> chatMessages, ChatOptions? options)
     {
         ArgumentNullException.ThrowIfNull(chatMessages);
-        var modelId = options?.ModelId ?? Metadata.ModelId;
+        var modelId = options?.ModelId;
         var contents = chatMessages.Where(p => p.Role != ChatRole.System).Select(GeminiRequest.CreateGeminiContentFromChatMessage).ToList();
         var request = new GeminiRequest { Contents = contents };
         GeminiRequest.AddConfiguration(options, request);

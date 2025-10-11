@@ -60,7 +60,7 @@ public sealed class ZhiPuChatClient : IChatClient
         return new([FromZhiPuMessage(response.Choices?.First() ?? throw new KernelException("Empty response"))])
         {
             ResponseId = response.Id,
-            ModelId = response.Model ?? options?.ModelId ?? Metadata.ModelId,
+            ModelId = response.Model ?? options?.ModelId,
             CreatedAt = DateTimeOffset.FromUnixTimeSeconds(response.Created),
             FinishReason = ToFinishReason(response),
             Usage = ParseZhiPuChatResponseUsage(response),
@@ -103,7 +103,7 @@ public sealed class ZhiPuChatClient : IChatClient
                 if (chunk == null)
                     continue;
 
-                var modelId = chunk.Model ?? options?.ModelId ?? Metadata.ModelId;
+                var modelId = chunk.Model ?? options?.ModelId;
                 var update = new ChatResponseUpdate
                 {
                     Role = chunk.Choices?.FirstOrDefault()?.Delta?.Role is not null ? new(chunk.Choices[0].Delta!.Role) : null,
@@ -150,9 +150,9 @@ public sealed class ZhiPuChatClient : IChatClient
         return serviceKey is null && serviceType.IsInstanceOfType(this) ? this : null;
     }
 
-    private ZhiPuChatRequest ToZhiPuChatRequest(IEnumerable<ChatMessage> chatMessages, ChatOptions? options, bool stream)
+    private static ZhiPuChatRequest ToZhiPuChatRequest(IEnumerable<ChatMessage> chatMessages, ChatOptions? options, bool stream)
     {
-        var model = options?.ModelId ?? Metadata.ModelId ?? string.Empty;
+        var model = options?.ModelId ?? string.Empty;
         // TODO: 进行更严谨的判断.
         var isVisionModel = model.Contains("4v", StringComparison.OrdinalIgnoreCase);
 

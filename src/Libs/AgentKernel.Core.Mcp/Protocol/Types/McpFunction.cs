@@ -30,7 +30,7 @@ public class McpTool(string name, string description, JsonElement? inputSchema) 
     public IMcpClient? Client { get; set; }
 
     /// <inheritdoc/>
-    protected override async Task<object?> InvokeCoreAsync(IEnumerable<KeyValuePair<string, object?>> arguments, CancellationToken cancellationToken)
+    protected override async ValueTask<object?> InvokeCoreAsync(AIFunctionArguments arguments, CancellationToken cancellationToken)
     {
         Throw.IfNull(arguments);
         Throw.IfNull(Client);
