@@ -50,7 +50,7 @@ public sealed partial class AliTranslateClient(AliTranslateServiceConfig config)
         var dict = new Dictionary<string, string>
         {
             { "FormatType", isHtml ? "html" : "text" },
-            { "SourceText",  text},
+            { "SourceText",  Uri.EscapeDataString(text)},
             { "SourceLanguage", options?.SourceLanguage ?? "auto" },
             { "TargetLanguage", options?.TargetLanguage ?? "en" },
         };
