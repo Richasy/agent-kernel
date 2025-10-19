@@ -7,7 +7,6 @@ using System.Text.Json.Serialization;
 
 namespace Consoles.Chat;
 
-[JsonSourceGenerationOptions(DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 [JsonSerializable(typeof(ChatClientConfiguration))]
 [JsonSerializable(typeof(string))]
 [JsonSerializable(typeof(McpServerDefinitionCollection))]

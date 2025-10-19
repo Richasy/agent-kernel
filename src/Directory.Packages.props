@@ -34,6 +34,8 @@
     <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.8.250702007-experimental4" />
     <PackageVersion Include="Mistral" Version="0.0.0-dev.9" />
     <PackageVersion Include="Mistral.SDK" Version="2.0.0" />
+    <PackageVersion Include="Ollama" Version="1.15.1-dev.38" />
+    <PackageVersion Include="OllamaSharp" Version="5.4.8" />
     <PackageVersion Include="OpenAI" Version="2.1.0" />
     <PackageVersion Include="RichasyKernel.Abstractions" Version="0.0.1" />
     <PackageVersion Include="RichasyKernel.Core" Version="0.0.1" />

@@ -96,7 +96,7 @@ public static class DictionaryToolkit
 
     private static void WriteString(StringBuilder stringBuilder, string value)
     {
-        stringBuilder.Append('\'');
+        stringBuilder.Append('\"');
         foreach (var c in value)
         {
             switch (c)
@@ -137,6 +137,6 @@ public static class DictionaryToolkit
             }
         }
 
-        stringBuilder.Append('\'');
+        stringBuilder.Append('\"');
     }
 }

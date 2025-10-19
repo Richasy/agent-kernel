@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Extensions.AI;
 using Richasy.AgentKernel.Chat;
+using Richasy.AgentKernel.Connectors.Ollama.Core;
 using Richasy.AgentKernel.Connectors.Ollama.Models;
 using Richasy.AgentKernel.Models;
 
@@ -16,7 +16,7 @@ public sealed class OllamaChatService : IChatService
     private OllamaServiceConfig? _config;
 
     /// <inheritdoc/>
-    public IChatClient? Client { get; set; }
+    public Microsoft.Extensions.AI.IChatClient? Client { get; set; }
 
     /// <inheritdoc/>
     public AIServiceConfig? Config => _config;
@@ -36,7 +36,13 @@ public sealed class OllamaChatService : IChatService
 
         _config = ollamaConfig;
         Client?.Dispose();
-        Client = new OllamaChatClient(_config.Endpoint!, _config.Model);
+        var endpoint = ollamaConfig.Endpoint?.ToString() ?? "http://localhost:11434";
+        if (!endpoint.EndsWith("/api", StringComparison.OrdinalIgnoreCase))
+        {
+            endpoint = endpoint.TrimEnd('/') + "/api";
+        }
+
+        Client = new OllamaChatClient(endpoint, ollamaConfig.Model);
     }
 
     /// <inheritdoc/>

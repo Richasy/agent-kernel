@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
     <PublishAot>true</PublishAot>
     <TrimmerSingleWarn>false</TrimmerSingleWarn>
-    <NoWarn>$(NoWarn);IL2067</NoWarn>
+    <NoWarn>$(NoWarn);IL2067;SYSLIB0020;SYSLIB1031</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
