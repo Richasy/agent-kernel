@@ -49,9 +49,11 @@ public sealed class MoonshotChatService : IChatService
     /// <inheritdoc/>
     public IReadOnlyList<ChatModel> GetPredefinedModels() =>
     [
+        new("kimi-k2-turbo-preview", "Kimi K2 Turbo Preview"),
+        new("kimi-latest", "Kimi Latest"),
         new("moonshot-v1-8k", "Moonshot V1 8K"),
-        new("moonshot-v1-128k", "Moonshot V1 128K"),
         new("moonshot-v1-32k", "Moonshot V1 32K"),
+        new("moonshot-v1-128k", "Moonshot V1 128K"),
         new("moonshot-v1-auto", "Moonshot V1 Auto"),
     ];
 }

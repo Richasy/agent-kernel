@@ -54,13 +54,15 @@ public sealed class QwenChatService : IChatService
             new("qwen-max", "通义千问-Max", toolSupport: true),
             new("qwen-plus", "通义千问-Plus", toolSupport: true),
             new("qwen-turbo", "通义千问-Turbo", toolSupport: true),
-            new("qwen-long", "Qwen-Long"),
+            new("qwen-flash", "通义千问-Flash", toolSupport: true),
             new("qwq-plus-latest", "QwQ 推理", toolSupport: true),
+            new("qwen-omni-turbo", "通义千问-Omni"),
+            new("qwen-long-latest", "通义千问-Long"),
             new("qwen-vl-max", "通义千问 VL", visionSupport: true),
+            new("qwen3-next-80b-a3b-thinking", "通义千问 3-开源版-思考模式"),
+            new("qwen3-next-80b-a3b-instruct", "通义千问 3-开源版-非思考模式"),
             new("qwen2.5-72b-instruct", "通义千问 2.5-开源版"),
             new("qwen2-72b", "通义千问 2-开源版"),
-            new("qwen1.5-110b-chat", "通义千问 1.5-开源版"),
-            new("qwen-72b-chat", "通义千问 1-开源版"),
         ];
     }
 }

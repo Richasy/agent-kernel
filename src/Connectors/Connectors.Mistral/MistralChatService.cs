@@ -45,6 +45,7 @@ public sealed class MistralChatService : IChatService
     [
         new("mistral-large-latest", "Mistral Large", toolSupport: true),
         new("pixtral-large-latest", "Pixtral Large", toolSupport: true, visionSupport: true),
+        new("magistral-medium-2509", "Magistral Medium"),
         new("ministral-3b-latest", "Ministral 3B"),
         new("ministral-8b-latest", "Ministral 8B"),
         new("ministral-small-latest", "Ministral Small"),

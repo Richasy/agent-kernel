@@ -45,9 +45,12 @@ public sealed class AnthropicChatService : IChatService
     {
         return
         [
-            new("claude-3-7-sonnet-latest", "Claude 3.7 Sonnet", toolSupport: true, visionSupport: true),
-            new("claude-3-5-haiku-latest", "Claude 3.5 Haiku", toolSupport: true, visionSupport: true),
-            new("claude-3-opus-latest", "Claude 3 Opus", toolSupport: true, visionSupport: true),
+            new("claude-sonnet-4-5", "Claude Sonnet 4.5", toolSupport: true, visionSupport: true),
+            new("claude-opus-4-1", "Claude Opus 4.1", toolSupport: true, visionSupport: true),
+            new("claude-opus-4", "Claude Opus 4", toolSupport: true, visionSupport: true),
+            new("claude-sonnet-4", "Claude Sonnet 4", toolSupport: true, visionSupport: true),
+            new("claude-3-7-sonnet-latest", "Claude Sonnet 3.7", toolSupport: true, visionSupport: true),
+            new("claude-3-5-haiku-latest", "Claude Haiku 3.5", toolSupport: true, visionSupport: true),
         ];
     }
 }

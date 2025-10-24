@@ -25,12 +25,9 @@ public sealed class ErnieChatService : IChatService
     /// <inheritdoc/>
     public IReadOnlyList<ChatModel> GetPredefinedModels() =>
     [
-        new("ernie-4.5-8k-preview", "ERNIE 4.5", toolSupport:true, visionSupport: true),
-        new("ernie-4.0-8k-latest", "ERNIE 4.0", toolSupport:true),
+        new("ernie-4.5-turbo-latest", "ERNIE 4.5 Turbo 128K", toolSupport:true, visionSupport: true),
         new("ernie-4.0-turbo-8k-latest", "ERNIE 4.0 Turbo 8K", toolSupport:true),
         new("ernie-4.0-turbo-128k", "ERNIE 4.0 Turbo 128K", toolSupport:true),
-        new("ernie-3.5-8k", "ERNIE 3.5 8K", toolSupport:true),
-        new("ernie-3.5-128k", "ERNIE 3.5 128K", toolSupport:true),
         new("ernie-speed-8k", "ERNIE Speed 8K"),
         new("ernie-speed-128k", "ERNIE Speed 128K"),
         new("ernie-speed-pro-128k", "ERNIE Speed Pro 128K", toolSupport: true),

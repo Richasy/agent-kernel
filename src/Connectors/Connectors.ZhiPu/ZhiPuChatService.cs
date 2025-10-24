@@ -43,6 +43,8 @@ public sealed class ZhiPuChatService : IChatService
     /// <inheritdoc/>
     public IReadOnlyList<ChatModel> GetPredefinedModels() =>
     [
+        new("glm-4.6", "GLM-4.6", toolSupport: true),
+        new("glm-4.5", "GLM-4.5", toolSupport: true),
         new("glm-z1-air", "GLM-Z1-Air"),
         new("glm-z1-airx", "GLM-Z1-AirX"),
         new("glm-4-plus", "GLM-4-Plus", toolSupport: true),

@@ -49,6 +49,11 @@ public sealed class XAIChatService : IChatService
     /// <inheritdoc/>
     public IReadOnlyList<ChatModel> GetPredefinedModels() =>
     [
+        new("grok-4-fast-reasoning", "Grok 4 Fast Reasoning", toolSupport: true, visionSupport: true),
+        new("grok-4-fast-non-reasoning", "Grok 4 Fast Non-Reasoning", toolSupport: true, visionSupport: true),
+        new("grok-4-0709", "Grok 4", toolSupport: true, visionSupport: true),
+        new("grok-3", "Grok 3", toolSupport: true),
+        new("grok-3-mini", "Grok 3 Mini", toolSupport: true),
         new("grok-2-latest", "Grok 2", toolSupport: true),
         new("grok-2-vision", "Grok 2 Vision", toolSupport: true, visionSupport: true),
         new("grok-beta", "Grok Beta", toolSupport: true),
