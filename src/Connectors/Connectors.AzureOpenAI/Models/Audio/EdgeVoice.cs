@@ -40,3 +40,40 @@ internal sealed class EdgeVoiceTag
     [JsonPropertyName("VoicePersonalities")]
     public string[]? VoicePersonalities { get; set; }
 }
+
+// 定义 AOT 兼容的类型
+internal sealed class EdgeSpeechConfig
+{
+    [JsonPropertyName("context")]
+    public EdgeContext? Context { get; set; }
+}
+
+internal sealed class EdgeContext
+{
+    [JsonPropertyName("synthesis")]
+    public EdgeSynthesis? Synthesis { get; set; }
+}
+
+internal sealed class EdgeSynthesis
+{
+    [JsonPropertyName("audio")]
+    public EdgeAudio? Audio { get; set; }
+}
+
+internal sealed class EdgeAudio
+{
+    [JsonPropertyName("metadataoptions")]
+    public EdgeMetadataOptions? MetadataOptions { get; set; }
+
+    [JsonPropertyName("outputFormat")]
+    public string? OutputFormat { get; set; }
+}
+
+internal sealed class EdgeMetadataOptions
+{
+    [JsonPropertyName("sentenceBoundaryEnabled")]
+    public bool SentenceBoundaryEnabled { get; set; }
+
+    [JsonPropertyName("wordBoundaryEnabled")]
+    public bool WordBoundaryEnabled { get; set; }
+}

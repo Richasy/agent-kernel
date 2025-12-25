@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using Richasy.AgentKernel.Audio;
+using Richasy.AgentKernel.Connectors.Azure.Models.Audio;
 using Richasy.AgentKernel.Models;
 using RichasyKernel;
 using System.Net.WebSockets;
 using System.Security;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 
 namespace Richasy.AgentKernel.Connectors.Azure.Core;
 
@@ -16,68 +18,83 @@ namespace Richasy.AgentKernel.Connectors.Azure.Core;
 /// </summary>
 public sealed class EdgeAudioClient : IAudioClient
 {
-    private const string _suggestCodec = "audio-24khz-48kbitrate-mono-mp3";
+    private const string EDGE_SPEECH_URL = "wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1";
+    private const string EDGE_API_TOKEN = "6A5AA1D4EAFF4E9FB37E23D68491D6F4";
+    private const string CHROMIUM_FULL_VERSION = "143.0.3650.75";
+    private const string SUGGEST_CODEC = "audio-24khz-48kbitrate-mono-mp3";
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Metadata.
+    /// </summary>
     public AudioClientMetadata Metadata { get; } = new("edge", default);
 
     /// <inheritdoc/>
-    public void Dispose()
-    {
-    }
+    public void Dispose() { }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Text to speech.
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="options"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public async Task<BinaryData> TextToSpeechAsync(string text, AudioOptions? options, CancellationToken cancellationToken = default)
     {
-        const string BinaryDelim = "Path:audio\r\n";
-        var sendRequestId = Guid.NewGuid().ToString("N");
+        var connectionId = Guid.NewGuid().ToString("N");
         var binary = new List<byte>();
-
         var taskCompletionSource = new TaskCompletionSource<BinaryData>();
+
         using var client = new ClientWebSocket();
-        await client.ConnectAsync(new Uri($"wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1?TrustedClientToken=6A5AA1D4EAFF4E9FB37E23D68491D6F4&Sec-MS-GEC={GenerateSecMsGecToken()}&Sec-MS-GEC-Version=1-130.0.2849.68"), cancellationToken).ConfigureAwait(false);
+
+        // 设置请求头
+        var majorVersion = CHROMIUM_FULL_VERSION.Split('.')[0];
+        client.Options.SetRequestHeader("User-Agent",
+            $"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/{majorVersion}.0.0.0 Safari/537.36 Edg/{majorVersion}.0.0.0");
+        client.Options.SetRequestHeader("Accept-Encoding", "gzip, deflate, br, zstd");
+        client.Options.SetRequestHeader("Accept-Language", "en-US,en;q=0.9");
+        client.Options.SetRequestHeader("Pragma", "no-cache");
+        client.Options.SetRequestHeader("Cache-Control", "no-cache");
+        client.Options.SetRequestHeader("Origin", "chrome-extension://jdiccldimpdaibmpdkjnbmckianbfold");
+        client.Options.SetRequestHeader("Cookie", $"muid={GenerateMuid()};");
+
+        // 构建完整 URL（包含 ConnectionId）
+        var url = $"{EDGE_SPEECH_URL}?ConnectionId={connectionId}&TrustedClientToken={EDGE_API_TOKEN}&Sec-MS-GEC={GenerateSecMsGecToken()}&Sec-MS-GEC-Version=1-{CHROMIUM_FULL_VERSION}";
+
+        await client.ConnectAsync(new Uri(url), cancellationToken).ConfigureAwait(false);
+
         var receiveTask = Task.Run(async () =>
         {
-            var buffer = new byte[1024 * 4];
+            var buffer = new byte[1024 * 16]; // 增大 buffer
             while (client.State == WebSocketState.Open)
             {
                 var result = await client.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None).ConfigureAwait(false);
                 if (result.MessageType == WebSocketMessageType.Text)
                 {
                     var data = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                    if (data.Contains("Path:turn.end", StringComparison.InvariantCultureIgnoreCase))
+                    if (data.Contains("Path:turn.end", StringComparison.OrdinalIgnoreCase))
                     {
                         if (binary.Count > 0)
                         {
-                            var content = new BinaryData([.. binary], "audio/mp3");
-                            taskCompletionSource.SetResult(content);
+                            taskCompletionSource.SetResult(new BinaryData([.. binary], "audio/mp3"));
                         }
                         else
                         {
                             taskCompletionSource.SetException(new KernelException("Edge speech result is empty."));
                         }
-
                         break;
                     }
                 }
                 else if (result.MessageType == WebSocketMessageType.Binary)
                 {
                     var data = new ArraySegment<byte>(buffer, 0, result.Count).ToArray();
-                    if (data.Length >= 3 && data[0] == 0x00 && data[1] == 0x67 && data[2] == 0x58)
+                    // 使用 header length 方式解析
+                    if (data.Length > 2)
                     {
-                        // Last (empty) audio fragment.
-                    }
-                    else
-                    {
-                        var index = Encoding.UTF8.GetString(data).IndexOf(BinaryDelim, StringComparison.InvariantCultureIgnoreCase) + BinaryDelim.Length;
-                        if (index < BinaryDelim.Length)
+                        var headerLength = (data[0] << 8) | data[1]; // Big-endian Int16
+                        if (data.Length > headerLength + 2)
                         {
-                            binary.AddRange(data);
-                        }
-                        else
-                        {
-                            var curVal = data[index..];
-                            binary.AddRange(curVal);
+                            var audioData = data.Skip(2 + headerLength).ToArray();
+                            binary.AddRange(audioData);
                         }
                     }
                 }
@@ -89,18 +106,37 @@ public sealed class EdgeAudioClient : IAudioClient
             }
         }, cancellationToken);
 
-        await Task.Run(() =>
+        var timestamp = DateTime.UtcNow.ToString("R");
+
+        var config = new EdgeSpeechConfig
         {
-            client.SendAsync(Encoding.UTF8.GetBytes(ConvertToAudioFormatWebSocketString(_suggestCodec)), WebSocketMessageType.Text, true, CancellationToken.None).Wait();
-            if (text.StartsWith("<speak", StringComparison.InvariantCultureIgnoreCase))
+            Context = new EdgeContext
             {
-                client.SendAsync(Encoding.UTF8.GetBytes(ConvertToWebSocketString(sendRequestId, text)), WebSocketMessageType.Text, true, CancellationToken.None).Wait();
+                Synthesis = new EdgeSynthesis
+                {
+                    Audio = new EdgeAudio
+                    {
+                        MetadataOptions = new EdgeMetadataOptions
+                        {
+                            SentenceBoundaryEnabled = false,
+                            WordBoundaryEnabled = true
+                        },
+                        OutputFormat = SUGGEST_CODEC
+                    }
+                }
             }
-            else
-            {
-                client.SendAsync(Encoding.UTF8.GetBytes(ConvertToWebSocketString(sendRequestId, ConvertToSsmlText(options!.LanguageCode!, options!.VoiceId!, options!.Speed ?? 1d, text))), WebSocketMessageType.Text, true, CancellationToken.None).Wait();
-            }
-        }, cancellationToken).ConfigureAwait(false);
+        };
+        var configJson = JsonSerializer.Serialize(config, JsonGenContext.Default.EdgeSpeechConfig);
+        var configMessage = $"Content-Type: application/json; charset=utf-8\r\nPath: speech.config\r\nX-Timestamp: {timestamp}\r\n\r\n{configJson}";
+        await client.SendAsync(Encoding.UTF8.GetBytes(configMessage), WebSocketMessageType.Text, true, cancellationToken).ConfigureAwait(false);
+
+        // 发送 SSML 消息
+        var ssml = text.StartsWith("<speak", StringComparison.OrdinalIgnoreCase)
+            ? text
+            : ConvertToSsmlText(options!.LanguageCode!, options!.VoiceId!, options!.Speed ?? 1d, text);
+
+        var ssmlMessage = $"Content-Type: application/ssml+xml\r\nPath: ssml\r\nX-RequestId: {connectionId}\r\nX-Timestamp: {timestamp}\r\n\r\n{ssml}";
+        await client.SendAsync(Encoding.UTF8.GetBytes(ssmlMessage), WebSocketMessageType.Text, true, cancellationToken).ConfigureAwait(false);
 
         await receiveTask.ConfigureAwait(false);
         return await taskCompletionSource.Task.ConfigureAwait(false);
@@ -108,26 +144,29 @@ public sealed class EdgeAudioClient : IAudioClient
 
     private static string GenerateSecMsGecToken()
     {
-        var ticks = DateTime.Now.ToFileTimeUtc();
-        ticks -= ticks % 3_000_000_000;
-        return ToHexString(HashData(Encoding.ASCII.GetBytes(ticks + "6A5AA1D4EAFF4E9FB37E23D68491D6F4")));
+        const long WIN_EPOCH_OFFSET = 11644473600L;
+        const long S_TO_NS = 10_000_000L;
+
+        long ticks = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        ticks += WIN_EPOCH_OFFSET;
+        ticks -= ticks % 300;
+        ticks *= S_TO_NS;
+
+        var strToHash = $"{ticks}{EDGE_API_TOKEN}";
+        return Convert.ToHexString(SHA256.HashData(Encoding.ASCII.GetBytes(strToHash)));
     }
 
-    private static string ToHexString(byte[] byteArray)
-        => Convert.ToHexString(byteArray).ToUpperInvariant();
-
-    private static byte[] HashData(byte[] data)
-        => SHA256.HashData(data);
+    private static string GenerateMuid()
+    {
+        var bytes = new byte[16];
+        RandomNumberGenerator.Fill(bytes);
+        return Convert.ToHexString(bytes);
+    }
 
     private static string ConvertToSsmlText(string lang, string voice, double speed, string text)
         => $"<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='{lang}'><voice name='{voice}'><prosody pitch='+0Hz' rate='{FormatPercentage(speed)}'>{SecurityElement.Escape(text)}</prosody></voice></speak>";
 
-    private static string ConvertToAudioFormatWebSocketString(string outputformat)
-        => "Content-Type:application/json; charset=utf-8\r\nPath:speech.config\r\n\r\n{\"context\":{\"synthesis\":{\"audio\":{\"metadataoptions\":{\"sentenceBoundaryEnabled\":\"false\",\"wordBoundaryEnabled\":\"false\"},\"outputFormat\":\"" + outputformat + "\"}}}}";
-
-    private static string ConvertToWebSocketString(string requestId, string msg)
-        => $"X-RequestId:{requestId}\r\nContent-Type:application/ssml+xml\r\nPath:ssml\r\n\r\n{msg}";
-
     private static string FormatPercentage(double input)
-        => ((input - 1) * 100) + "%";
+        => $"{(input - 1) * 100:+0;-0;+0}%";
 }
+

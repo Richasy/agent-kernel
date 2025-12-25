@@ -12,6 +12,7 @@ namespace Richasy.AgentKernel.Connectors.Azure;
 [JsonSerializable(typeof(List<TranslationResponse>))]
 [JsonSerializable(typeof(List<EdgeVoice>))]
 [JsonSerializable(typeof(List<AzureVoice>))]
+[JsonSerializable(typeof(EdgeSpeechConfig))]
 internal sealed partial class JsonGenContext : JsonSerializerContext
 {
 }
